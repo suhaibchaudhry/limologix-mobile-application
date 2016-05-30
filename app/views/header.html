@@ -1,9 +1,9 @@
-<header class="clearfix" ng-controller="UpdateInfoCtrl">
+<header class="clearfix">
 
   <!-- Branding -->
   <div class="branding {{main.settings.brandingColor}}">
     <a class="brand" ui-sref="app.dashboard">
-      <span><strong>LIMO</strong>LOGIX</span>
+      <span><strong>MIN</strong>OVATE</span>
     </a>
     <a href="javascript:;" class="offcanvas-toggle visible-xs-inline" offcanvas-sidebar><i class="fa fa-bars"></i></a>
   </div>
@@ -18,7 +18,7 @@
         <fa name="outdent"></fa>
       </a>
     </li>
-    <!-- <li class="dropdown divided-right settings" uib-dropdown>
+    <li class="dropdown divided-right settings" uib-dropdown>
       <a href class="dropdown-toggle" uib-dropdown-toggle>
         <fa name="cog"></fa>
       </a>
@@ -92,7 +92,7 @@
           </div>
         </li>
       </ul>
-    </li> -->
+    </li>
   </ul>
   <!-- Left-side navigation end -->
 
@@ -100,9 +100,9 @@
 
 
   <!-- Search -->
-  <!-- <div class="search" id="main-search">
+  <div class="search" id="main-search">
     <input type="text" class="form-control underline-input" placeholder="Search...">
-  </div> -->
+  </div>
   <!-- Search end -->
 
 
@@ -110,7 +110,7 @@
 
   <!-- Right-side navigation -->
   <ul class="nav-right pull-right list-inline">
-    <!-- <li class="dropdown users" uib-dropdown>
+    <li class="dropdown users" uib-dropdown>
 
       <a href class="dropdown-toggle" uib-dropdown-toggle>
         <fa name="user"></fa>
@@ -161,9 +161,9 @@
 
       </div>
 
-    </li> -->
+    </li>
 
-    <!-- <li class="dropdown messages" uib-dropdown>
+    <li class="dropdown messages" uib-dropdown>
 
       <a href class="dropdown-toggle" uib-dropdown-toggle>
         <fa name="envelope"></fa>
@@ -309,44 +309,42 @@
 
       </div>
 
-    </li> -->
+    </li>
 
     <li class="dropdown nav-profile" uib-dropdown>
 
       <a href class="dropdown-toggle" uib-dropdown-toggle>
         <img src="images/profile-photo.jpg" alt="" class="img-circle size-30x30">
-        <span>
-        {{loggedUser}}
-          <fa name="angle-down"></fa></span>
+        <span>John Douey <fa name="angle-down"></fa></span>
       </a>
-  
+
       <ul class="dropdown-menu animated littleFadeInRight" role="menu">
 
         <li>
-          <a href="#profile" ui-sref="app.profile.my_account">
+          <a href="#">
             <span class="badge bg-greensea pull-right">86%</span>
             <fa name="user"></fa>Profile
           </a>
         </li>
-        <!-- <li>
+        <li>
           <a href="#">
             <span class="label bg-lightred pull-right">new</span>
             <fa name="check"></fa>Tasks
           </a>
-        </li> -->
-       <!--  <li>
+        </li>
+        <li>
           <a href="#">
             <fa name="cog"></fa>Settings
           </a>
-        </li> -->
-       <!--  <li class="divider"></li> -->
-       <!--  <li>
+        </li>
+        <li class="divider"></li>
+        <li>
           <a href="#">
             <fa name="lock"></fa>Lock
           </a>
-        </li> -->
+        </li>
         <li>
-          <a href="#logout" ui-sref="core.logout">
+          <a href="#">
             <fa name="sign-out"></fa>Logout
           </a>
         </li>
@@ -355,7 +353,7 @@
 
     </li>
 
-    <!-- <li class="dropdown language" uib-dropdown>
+    <li class="dropdown language" uib-dropdown>
 
       <a href class="dropdown-toggle" uib-dropdown-toggle>
         <img ng-show="currentLanguage == 'en'" src="images/flags/United-States-of-America.png" alt="">
@@ -398,7 +396,7 @@
       <a href="javascript:;" ng-click="main.settings.rightbarShow = !main.settings.rightbarShow">
         <fa name="comments"></fa>
       </a>
-    </li> -->
+    </li>
   </ul>
   <!-- Right-side navigation end -->
 

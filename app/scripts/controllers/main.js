@@ -8,10 +8,10 @@
  * Controller of the minovateApp
  */
 app
-  .controller('MainCtrl', ['countriesConstant','$scope', '$http', '$translate',function (constants,$scope, $http, $translate) {
+  .controller('MainCtrl', function ($scope, $http, $translate) {
 
     $scope.main = {
-      title: 'Limo Logix',
+      title: 'Minovate',
       settings: {
         navbarHeaderColor: 'scheme-default',
         sidebarColor: 'scheme-default',
@@ -20,8 +20,7 @@ app
         headerFixed: true,
         asideFixed: true,
         rightbarShow: false
-      },
-      user: constants.user
+      }
     };
 
     $scope.ajaxFaker = function(){
@@ -39,4 +38,4 @@ app
       $scope.currentLanguage = langKey;
     };
     $scope.currentLanguage = $translate.proposedLanguage() || $translate.use();
-  }]);
+  });

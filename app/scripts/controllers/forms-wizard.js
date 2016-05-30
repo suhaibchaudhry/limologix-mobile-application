@@ -10,7 +10,7 @@
 app
   .controller('FormWizardCtrl', function ($scope) {
     $scope.page = {
-      title: 'Company Information',
-      subtitle: ''//'Place subtitle here...'
+      title: 'Form Wizard',
+      subtitle: 'Place subtitle here...'
     };
   });
