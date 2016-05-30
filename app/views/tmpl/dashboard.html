@@ -1,0 +1,33 @@
+<div class="page page-dashboard">
+
+  <div class="pageheader">
+
+    <h2>{{page.title}} <span>// {{page.subtitle}}</span></h2>
+
+    <div class="page-bar">
+
+      <ul class="page-breadcrumb">
+        <li>
+          <a ui-sref="app.dashboard"><i class="fa fa-home"></i> {{main.title}}</a>
+        </li>
+        <li>
+          <a ui-sref="app.dashboard">{{page.title}}</a>
+        </li>
+      </ul>
+
+      <div class="media-container">
+       <!--  <img class="media-preview" src="{{logoUrl}}"/> -->
+       <img class = "media-preview" src = "{{picFilePreview}}">
+      </div>
+
+     <!--  <div ng-controller="DaterangepickerCtrl" class="page-toolbar">
+        <a href="javascript:;" class="btn btn-lightred no-border" daterangepicker="rangeOptions" date-begin="startDate" date-end="endDate">
+          <i class="fa fa-calendar"></i>&nbsp;&nbsp;<span>{{startDate}} - {{endDate}}</span>&nbsp;&nbsp;<i class="fa fa-angle-down"></i>
+        </a>
+      </div> -->
+
+    </div>
+
+  </div>
+
+</div>
