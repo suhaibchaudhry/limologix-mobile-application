@@ -65,6 +65,7 @@ var app = angular
         'dragularModule',
         'cgNotify'
     ])
+
     .constant('appSettings', {
         server_address: 'http://limologix.softwaystaging.com',
         serverPath: "http://limologix.softwaystaging.com/api/v1/",
