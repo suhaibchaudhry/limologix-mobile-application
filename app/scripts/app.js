@@ -66,18 +66,19 @@ var app = angular
         'cgNotify'
     ])
 
-    .constant('appSettings', {
-        server_address: 'http://limologix.softwaystaging.com',
-        serverPath: "http://limologix.softwaystaging.com/api/v1/",
+.constant('appSettings', {
+        server_address: 'http://172.16.90.106:9000', //'http://limologix.softwaystaging.com',
+        version: 'v1',
+        serverPath: 'http://172.16.90.106:9000/api/v1/', //"http://limologix.softwaystaging.com/api/v1/",
         serviceApis: {
-            signin: 'users/sign_in',
-            registration: 'users/registration',
-            my_profile: 'users/profile/show',
-            profileupdate: 'users/profile/update',
-            logout: 'users/logout'
+            signin: 'drivers/sign_in',
+            registration: 'drivers/registration',
+            my_profile: 'drivers/profile/show',
+            profileupdate: 'drivers/profile/update',
+            logout: 'drivers/logout'
         }
     })
-       //session expired
+    //session expired
     .factory('authHttpResponseInterceptor', ['$q', '$location', function($q, $location) {
         return {
             response: function(response) {
@@ -95,7 +96,21 @@ var app = angular
             }
         }
     }])
-    .run(['$rootScope', '$state', '$stateParams', function($rootScope, $state, $stateParams) {
+    .run(['$rootScope', '$state', '$http', '$stateParams', '$window', 'AppConstants', function($rootScope, $state, $http, $stateParams, $window, constant) {
+        //If driver logged in and 
+        var driver = $window.sessionStorage['driver'] ? JSON.parse($window.sessionStorage['driver']) : {};
+        if (driver['Auth-Token']) {
+            constant.driver = driver;
+        } else {
+            constant.driver = {};
+        }
+        //sets token on evry refresh
+        if (constant.driver['Auth-Token']) {
+            $http.defaults.headers.common['Auth-Token'] = $window.sessionStorage['Auth-Token'];
+        } else {
+            $state.go('core.login')
+        }
+
         $rootScope.$state = $state;
         $rootScope.$stateParams = $stateParams;
         $rootScope.$on('$stateChangeSuccess', function(event, toState) {
@@ -121,7 +136,7 @@ var app = angular
 }])
 
 //angular-language
-.config(['$translateProvider', function($translateProvider) {
+.config(['$translateProvider', '$httpProvider', function($translateProvider, $httpProvider) {
     $translateProvider.useStaticFilesLoader({
         prefix: 'languages/',
         suffix: '.json'
@@ -129,6 +144,8 @@ var app = angular
     $translateProvider.useLocalStorage();
     $translateProvider.preferredLanguage('en');
     $translateProvider.useSanitizeValueStrategy(null);
+     //capture the response and process it before completing the call
+    $httpProvider.interceptors.push('authHttpResponseInterceptor');
 }])
 
 .config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {

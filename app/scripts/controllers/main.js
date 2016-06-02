@@ -2,16 +2,16 @@
 
 /**
  * @ngdoc function
- * @name minovateApp.controller:MainCtrl
+ * @name limoLogixApp.controller:MainCtrl
  * @description
  * # MainCtrl
- * Controller of the minovateApp
+ * Controller of the limoLogixApp
  */
 app
   .controller('MainCtrl', function ($scope, $http, $translate) {
 
     $scope.main = {
-      title: 'Minovate',
+      title: 'Limo Logix',
       settings: {
         navbarHeaderColor: 'scheme-default',
         sidebarColor: 'scheme-default',
