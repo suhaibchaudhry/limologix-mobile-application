@@ -1,0 +1,106 @@
+.splash_Container {
+    position: absolute;
+    width: 100%;
+    left: 0%;
+    top: 32%;
+    height: 100%;
+}
+
+.splash_company {
+    background-color: rgb(38, 34, 98);
+    color: #fff;
+    font-size: 40px;
+    text-align: center;
+    //height: 50%;
+    // position: relative;
+    //chrome
+    background-image: -webkit-radial-gradient(center, ellipse cover, rgb(38, 34, 98) 0%, rgb(11, 0, 47) 100%);
+    //Firefox
+    //-moz-radial-gradient(center, ellipse cover, rgb(38,34,98) 0%, rgb(11,0,47) 100%);
+}
+
+.splash_driver {
+    background-color: #16a085 !important;
+    color: #fff;
+    font-size: 40px;
+    text-align: center;
+    //height: 50%;
+    //position: relative;
+    //chrome
+    background-image: -webkit-radial-gradient(center, ellipse cover, rgb(0, 96, 95) 0%, rgb(0, 62, 64) 100%);
+    //firefox
+    background-image: -moz-radial-gradient(center, ellipse cover, rgb(0, 96, 95) 0%, rgb(0, 62, 64) 100%);
+}
+
+.splash_company span {
+    position: relative;
+    left: 15%;
+}
+
+.splash_driver span {
+    top: 25%;
+    position: relative;
+    left: 15%;
+}
+
+.color_white {
+    color: #ffffff;
+}
+
+.whiteBg {
+    background-color: #ffffff;
+}
+
+#dlImg,
+#araImg {
+    border: 2px solid #fff;
+    width: 54px;
+    height: 58px;
+}
+
+.form-tp {
+    position: relative;
+    top: 30px;
+}
+
+.signup {
+    top: 151px;
+    position: relative;
+}
+
+.splash_header {
+    background-color: white;
+    text-align: center;
+    height: 100%
+}
+
+//Visible - switch toggle
+.visible_status {
+    background: url('../images/driver/toggle-inactive.png');
+    width: 148px;
+    height: 75px;
+}
+
+.visible_status.checked {
+    background: url('../images/driver/toggle-active.png');
+    border-color: none;
+    width: 148px;
+    height: 75px;
+}
+
+.switch {
+    border: 0px;
+}
+
+.switch small {
+    background: none !important;
+    border-radius: 0px;
+    box-shadow: none;
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    transition: 0.3s ease-out all;
+    -webkit-transition: 0.3s ease-out all;
+}

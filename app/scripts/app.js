@@ -63,7 +63,8 @@ var app = angular
         'ipsum',
         'angular-intro',
         'dragularModule',
-        'cgNotify'
+        'cgNotify',
+        'uiSwitch'
     ])
 
 .constant('appSettings', {
@@ -150,7 +151,7 @@ var app = angular
 
 .config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
 
-    $urlRouterProvider.otherwise('/core/login');
+    $urlRouterProvider.otherwise('/core/splash');
 
     $stateProvider
 
@@ -811,6 +812,12 @@ var app = angular
             url: '/core',
             template: '<div ui-view></div>'
         })
+        //splash
+        .state('core.splash', {
+            url: '/splash',
+            controller: 'splashCtrl',
+            templateUrl: 'views/tmpl/splash/splash.html'
+        })
         //login
         .state('core.login', {
             url: '/login',
@@ -820,15 +827,15 @@ var app = angular
         //signup
         .state('core.signup', {
             url: '/signup',
-            controller: 'SignupCtrl',
+            controller: 'DirverSignupCtrl',
             templateUrl: 'views/tmpl/signup/signup.html'
         })
         //forgot password
-        .state('core.forgotpass', {
-            url: '/forgotpass',
-            controller: 'ForgotPasswordCtrl',
-            templateUrl: 'views/tmpl/signup/signup.html'
-        })
+//         .state('core.forgotpass', {
+//             url: '/forgotpass',
+//             controller: 'ForgotPasswordCtrl',
+//             templateUrl: 'views/tmpl/signup/signup.html'
+//         })
         //page 404
         .state('core.page404', {
             url: '/page404',
