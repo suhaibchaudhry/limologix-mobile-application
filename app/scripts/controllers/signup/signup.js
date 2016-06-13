@@ -27,6 +27,7 @@ app
             $scope.phoneNumbr = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
             $scope.options = ['var1', 'var2', 'var3'];
             $scope.contact = {};
+            
             $scope.isContact = true;
             $scope.isPersonal = false;
             $scope.isVehicle = false;
