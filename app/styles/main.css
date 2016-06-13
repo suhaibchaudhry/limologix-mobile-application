@@ -18,7 +18,7 @@
 .page-signup {
   position: absolute;
   width: 100%;
-  padding: 60px 10px;
+  padding: 0px;
   background-color: #262262;
   background-image: -webkit-radial-gradient(center, ellipse cover, #262262 0%, #0b002f 100%); }
 
@@ -12495,7 +12495,6 @@ hr.line-full {
   top: 30px; }
 
 .signup {
-  top: 151px;
   position: relative; }
 
 .splash_header {

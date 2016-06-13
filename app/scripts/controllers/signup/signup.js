@@ -27,7 +27,7 @@ app
             $scope.phoneNumbr = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
             $scope.options = ['var1', 'var2', 'var3'];
             $scope.contact = {};
-            
+
             $scope.isContact = true;
             $scope.isPersonal = false;
             $scope.isVehicle = false;
@@ -35,7 +35,8 @@ app
 
             var data = localStorage.getItem('driverdata');
             $scope.contactinfo = JSON.parse(data);
-            $scope.contact = {
+            if($scope.contactinfo){
+                $scope.contact = {
                 fullName: $scope.contactinfo.fullName,
                 lastName: $scope.contactinfo.lastName,
                 email: $scope.contactinfo.email,
@@ -46,6 +47,10 @@ app
                 state: $scope.contactinfo.state,
                 zipcode: $scope.contactinfo.zipcode
             }
+
+                    
+            }
+            
             console.log('sdd', data);
             //File uploads for Licence plate and ARA photos.
             $scope.DriverLicenceUpload = function() {

@@ -1,10 +1,9 @@
 <div class="page page-signup page-login">
-    <div class="app-header">
+    <div class="col-xs-12 splash_header">
         <img src="images/driver/bird-new-driver-logo.png" style="width:100%">
     </div>
     <br/>
     <br/>
-    
     <div class="container text-center signup">
         <form name='step1' class="form-validation mt-20 form-tp" novalidate ng-show="isContact">
             <h2 class="text-light text-white">Contact Information</h2>
@@ -112,6 +111,7 @@
                     <div class="col-md-12">
                         <div>
                             <img id="dlImg" src="images/driver/avatar.png" alt="" />
+                            <input type="file" accept="image/*" capture="camera">
                             <input type='file' id="dlPic" style="display:none" />
                             <label class="color_white">Upload photo of Driver Licence</label>
                             <div class="col-md-3">
@@ -125,63 +125,63 @@
                     </div>
                 </div>
             </div>
-            <br/>
-            <hr>
-            <div class="row">
-                <div class="col-md-12">
-                    <label class="color_white">Limo Badge Information</label>
-                    <input type="text" name="dl_exp_Date" id="dl_exp_Date" class="form-control input-lg" placeholder="Exp Date" ng-model="driver.dl_exp_Date" required>
-                    <input type="text" name="limo_badge_number" id="limo_badge_number" class="form-control input-lg" placeholder="Limo Badge Number" ng-model="driver.limo_badge_number" required>
-                </div>
-            </div>
-            </br>
-            <hr>
-            <div class="row">
-                <div class="form-group col-md-12 mb-0">
+                <br/>
+                <hr>
+                <div class="row">
                     <div class="col-md-12">
-                        <label class="color_white">ARA Information</label>
+                        <label class="color_white">Limo Badge Information</label>
+                        <input type="text" name="dl_exp_Date" id="dl_exp_Date" class="form-control input-lg" placeholder="Exp Date" ng-model="driver.dl_exp_Date" required>
+                        <input type="text" name="limo_badge_number" id="limo_badge_number" class="form-control input-lg" placeholder="Limo Badge Number" ng-model="driver.limo_badge_number" required>
                     </div>
-                    </br>
-                    <div class="col-md-12">
-                        <div>
-                            <img id="araImg" src="images/driver/avatar.png" alt="" />
-                            <input type='file' id="araPic" style="display:none" />
-                            <label class="color_white">Upload photo of ARA Card</label>
-                            <div class="col-md-3">
-                                <input type="text" name="ara_exp_lDate" id="ara_exp_Date" class="form-control input-lg" placeholder="Exp Date" ng-model="driver.ara_exp_Date" required>
-                            </div>
+                </div>
+                </br>
+                <hr>
+                <div class="row">
+                    <div class="form-group col-md-12 mb-0">
+                        <div class="col-md-12">
+                            <label class="color_white">ARA Information</label>
                         </div>
                         </br>
                         <div class="col-md-12">
-                            <button type="file" class=" text-light text-white btn btn-success form-group col-md-12 input-lg" ng-click="ARAUpload()" ng-disabled='form.$invalid' required>Browse &nbsp;</button>
+                            <div>
+                                <img id="araImg" src="images/driver/avatar.png" alt="" />
+                                <input type='file' id="araPic" style="display:none" />
+                                <label class="color_white">Upload photo of ARA Card</label>
+                                <div class="col-md-3">
+                                    <input type="text" name="ara_exp_lDate" id="ara_exp_Date" class="form-control input-lg" placeholder="Exp Date" ng-model="driver.ara_exp_Date" required>
+                                </div>
+                            </div>
+                            </br>
+                            <div class="col-md-12">
+                                <button type="file" class=" text-light text-white btn btn-success form-group col-md-12 input-lg" ng-click="ARAUpload()" ng-disabled='form.$invalid' required>Browse &nbsp;</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            </br>
-            <hr>
-            <div class="row">
-                <div class="form-group col-md-12 mb-0">
-                    <div class="col-md-12">
-                        <label class="color_white">Insurance card</label>
-                        <input type="text" name="dl_exp_Date" id="dl_exp_Date" class="form-control input-lg" placeholder="Exp Date" ng-model="driver.dl_exp_Date" required>
+                </br>
+                <hr>
+                <div class="row">
+                    <div class="form-group col-md-12 mb-0">
+                        <div class="col-md-12">
+                            <label class="color_white">Insurance card</label>
+                            <input type="text" name="dl_exp_Date" id="dl_exp_Date" class="form-control input-lg" placeholder="Exp Date" ng-model="driver.dl_exp_Date" required>
+                        </div>
+                        </br>
+                        <div class="col-md-12">
+                            <input type="text" name="dl_exp_Date" id="dl_exp_Date" class="form-control input-lg" placeholder="Company Name" ng-model="driver.dl_exp_Date" required>
+                            <input type="text" name="dl_exp_Date" id="dl_exp_Date" class="form-control input-lg" placeholder="Policy Number" ng-model="driver.dl_exp_Date" required>
+                        </div>
+                        </br>
                     </div>
-                    </br>
-                    <div class="col-md-12">
-                        <input type="text" name="dl_exp_Date" id="dl_exp_Date" class="form-control input-lg" placeholder="Company Name" ng-model="driver.dl_exp_Date" required>
-                        <input type="text" name="dl_exp_Date" id="dl_exp_Date" class="form-control input-lg" placeholder="Policy Number" ng-model="driver.dl_exp_Date" required>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6 previous">
+                        <button type="button" class=" text-light text-white btn btn-success form-group col-md-12 input-lg" ng-click="save_personalInfo()">Save &nbsp;<span class="glyphicon glyphicon-chevron-down"></span></button>
                     </div>
-                    </br>
+                    <div class="col-xs-6 next">
+                        <button type="button" class="text-white btn btn-success form-group col-md-12 input-lg" ng-click="Personal_Next()">Next &nbsp;<i class="fa fa-arrow-circle-right"></i></button>
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-6 previous">
-                    <button type="button" class=" text-light text-white btn btn-success form-group col-md-12 input-lg" ng-click="save_personalInfo()">Save &nbsp;<span class="glyphicon glyphicon-chevron-down"></span></button>
-                </div>
-                <div class="col-xs-6 next">
-                    <button type="button" class="text-white btn btn-success form-group col-md-12 input-lg" ng-click="Personal_Next()">Next &nbsp;<i class="fa fa-arrow-circle-right"></i></button>
-                </div>
-            </div>
         </form>
         <form name='step3' class="form-validation mt-20 form-tp" novalidate ng-show="isVehicle">
             <h2 class="text-light text-white">vehicle Information</h2>
@@ -261,7 +261,6 @@
                         <label class="color_white">Visible</label>
                         <switch id="enabled" name="enabled" ng-model="enabled" class="green visible_status"></switch>
                         <br>{{ enabled }}
-                      
                     </div>
                 </div>
             </div>
@@ -271,6 +270,6 @@
                 <button type="button" class=" text-light text-white btn btn-success form-group col-md-12 input-lg" ng-click="submitDriverForm()" ng-disabled='form.$invalid'>Submit &nbsp;<i class="fa fa-arrow-circle-right"></i></button>
             </div>
         </form>
+        </div>
+        <br/>
     </div>
-    <br/>
-</div>
