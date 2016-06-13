@@ -27,31 +27,56 @@ app
             $scope.phoneNumbr = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
             $scope.options = ['var1', 'var2', 'var3'];
             $scope.contact = {};
-
+            $scope.personal = {};
+            $scope.vehicle = {};
             $scope.isContact = true;
             $scope.isPersonal = false;
             $scope.isVehicle = false;
             $scope.isAccount = false;
 
-            var data = localStorage.getItem('driverdata');
-            $scope.contactinfo = JSON.parse(data);
-            if($scope.contactinfo){
-                $scope.contact = {
-                fullName: $scope.contactinfo.fullName,
-                lastName: $scope.contactinfo.lastName,
-                email: $scope.contactinfo.email,
-                password: $scope.contactinfo.password,
-                phoneNumbr: $scope.contactinfo.primary_phone_number,
-                primary_address: $scope.contactinfo.primary_address,
-                city: $scope.contactinfo.city,
-                state: $scope.contactinfo.state,
-                zipcode: $scope.contactinfo.zipcode
-            }
 
-                    
+            var data = localStorage.getItem('driverdata');
+            //             console.log("onload",data);
+            $scope.contactinfo = JSON.parse(data)[0];
+            if ($scope.contactinfo) {
+                $scope.contact = {
+                    fullName: $scope.contactinfo.fullName,
+                    lastName: $scope.contactinfo.lastName,
+                    email: $scope.contactinfo.email,
+                    password: $scope.contactinfo.password,
+                    primary_phone_number: $scope.contactinfo.primary_phone_number,
+                    primary_address: $scope.contactinfo.primary_address,
+                    city: $scope.contactinfo.city,
+                    state: $scope.contactinfo.state,
+                    zipcode: $scope.contactinfo.zipcode
+                }
             }
-            
-            console.log('sdd', data);
+            $scope.personalinfo = JSON.parse(data)[1];
+            if ($scope.personalinfo) {
+                $scope.personal = {
+                    dl_number: $scope.personalinfo.dl_number,
+                    dlPic: $scope.personalinfo.dlPic,
+                    limo_badge_number: $scope.personalinfo.limo_badge_number,
+                    ara_exp_Date: $scope.personalinfo.ara_exp_Date,
+                    dl_exp_Date: $scope.personalinfo.dl_exp_Date,
+                    companyName: $scope.personalinfo.companyName,
+                    policyNumber: $scope.personalinfo.policyNumber
+                }
+            }
+            $scope.vehicleinfo = JSON.parse(data)[2];
+            if ($scope.vehicleinfo) {
+                $scope.vehicle = {
+                    make: $scope.vehicleinfo.make,
+                    model: $scope.vehicleinfo.model,
+                    selectType: $scope.vehicleinfo.selectType,
+                    Color: $scope.vehicleinfo.Color,
+                    HLL_Number: $scope.vehicleinfo.HLL_Number,
+                    licencePlateNum: $scope.vehicleinfo.licencePlateNum,
+                    addFeature: $scope.vehicleinfo.addFeature,
+                    addFeature2: $scope.vehicleinfo.addFeature2
+                }
+            };
+
             //File uploads for Licence plate and ARA photos.
             $scope.DriverLicenceUpload = function() {
                 $("input[id='dlPic']").click();
@@ -90,27 +115,48 @@ app
                     lastName: $scope.contact.lastName,
                     email: $scope.contact.email,
                     password: $scope.contact.password,
-                    phoneNumbr: $scope.contact.primary_phone_number,
+                    confirmPassword: $scope.contact.confirmPassword,
+                    primary_phone_number: $scope.contact.primary_phone_number,
                     primary_address: $scope.contact.primary_address,
                     city: $scope.contact.city,
                     state: $scope.contact.state,
                     zipcode: $scope.contact.zipcode
                 }
-                localStorage.setItem("driverdata", JSON.stringify($scope.contactinfo));
+                $scope.personalInfo = {
+                    dl_number: $scope.personal.dl_number,
+                    dlPic: $scope.personal.dlPic,
+                    limo_badge_number: $scope.personal.limo_badge_number,
+                    ara_exp_Date: $scope.personal.ara_exp_Date,
+                    dl_exp_Date: $scope.personal.dl_exp_Date,
+                    companyName: $scope.personal.companyName,
+                    policyNumber: $scope.personal.policyNumber
+                }
+                $scope.vehicleInfo = {
+                    make: $scope.vehicle.make,
+                    model: $scope.vehicle.model,
+                    selectType: $scope.vehicle.selectType,
+                    Color: $scope.vehicle.Color,
+                    HLL_Number: $scope.vehicle.HLL_Number,
+                    licencePlateNum: $scope.vehicle.licencePlateNum,
+                    addFeature: $scope.vehicle.addFeature,
+                    addFeature2: $scope.vehicle.addFeature2
+                }
+
+                localStorage.setItem("driverdata", JSON.stringify([$scope.contactinfo, $scope.personalInfo, $scope.vehicleInfo]));
                 var data = localStorage.getItem('driverdata');
-                $scope.contactinfo = JSON.parse(data);
+                $scope.contactinfo = JSON.parse(data)[0];
                 $scope.contact = {
-                        fullName: $scope.contactinfo.fullName,
-                        lastName: $scope.contactinfo.lastName,
-                        email: $scope.contactinfo.email,
-                        password: $scope.contactinfo.password,
-                        phoneNumbr: $scope.contactinfo.primary_phone_number,
-                        primary_address: $scope.contactinfo.primary_address,
-                        city: $scope.contactinfo.city,
-                        state: $scope.contactinfo.state,
-                        zipcode: $scope.contactinfo.zipcode
-                    }
-                    //console.log(data);
+                    fullName: $scope.contactinfo.fullName,
+                    lastName: $scope.contactinfo.lastName,
+                    email: $scope.contactinfo.email,
+                    password: $scope.contactinfo.password,
+                    confirmPassword: $scope.contactinfo.confirmPassword,
+                    primary_phone_number: $scope.contactinfo.primary_phone_number,
+                    primary_address: $scope.contactinfo.primary_address,
+                    city: $scope.contactinfo.city,
+                    state: $scope.contactinfo.state,
+                    zipcode: $scope.contactinfo.zipcode
+                }
             }
             $scope.Contact_Next = function() {
                 $scope.isContact = false;
@@ -122,80 +168,25 @@ app
                 $scope.isPersonal = false;
                 $scope.isVehicle = true;
             }
-            $scope.submitDriverForm = function() {
+            $scope.Personal_previous = function() {
+                $scope.isContact = true;
+                $scope.isPersonal = false;
+            }
+            $scope.Vehicle_Next = function() {
                 $scope.isAccount = true;
                 $scope.isContact = false;
                 $scope.isPersonal = false;
                 $scope.isVehicle = false;
             }
-
-            $scope.register = function() {
-
-                //                 var driver = {
-                //                     "driver": {
-                //                         "first_name": "John",
-                //                         "last_name": "Joseph",
-                //                         "password": "123456",
-                //                         "mobile_number": "1234567890",
-                //                         "email": "john@gmail.com",
-                //                         "address": {
-                //                             "street": "#12,fdf",
-                //                             "city": "fdfd",
-                //                             "zipcode": "560102",
-                //                             "state_code": "KA",
-                //                             "country_code": "IN"
-                //                         },
-                //                         "license_number": "22323",
-                //                         "license_expiry_date": "03/02/2018",
-                //                         "license_image": {
-                //                             "name": "img.1.png",
-                //                             "image": "base64path"
-                //                         },
-                //                         "badge_number": "24234",
-                //                         "badge_expiry_date": "03/02/2018",
-                //                         "ara_number": "324",
-                //                         "ara_expiry_date": "03/02/2018",
-                //                         "ara_image": {
-                //                             "name": "img2.png",
-                //                             "image": "base64path"
-                //                         },
-                //                         "insurance_company": "ddfg",
-                //                         "insurance_policy_number": "34242",
-                //                         "insurance_expiry_date": "09/09/2019"
-                //                     },
-                //                     "vehicle": {
-                //                         "make": "dsd",
-                //                         "model": "dsddssdd",
-                //                         "hll_number": "2313",
-                //                         "color": "black",
-                //                         "license_plate_number": "324234",
-                //                         "vehicle_type_id": "3",
-                //                         "features": ["feature1", "feature2"]
-                //                     }
+            $scope.Vehicle_Previous = function(){
+                $scope.isPersonal = true;
+                $scope.isVehicle = false;
+            }
+            $scope.Account_Previous = function(){
+                $scope.isVehicle = true;
+                $scope.isAccount = false;
             }
 
-            //                 var driver = {
-            //                     username: $scope.driver.username,
-            //                     first_name: $scope.driver.fullName,
-            //                     last_name: $scope.driver.lastName,
-            //                     home_phone_number: $scope.driver.homePhone,
-            //                     mobile_number: $scope.driver.primary_phone_number,
-            //                     fax_number: $scope.driver.faxNumber,
-            //                     email: $scope.driver.email,
-            //                     password: $scope.driver.password
-            //                 }
-
-            //                 var url = appSettings.serverPath + appSettings.serviceApis.registration;
-            //                 services.funcPostRequest(url, { "driver": driver }).then(function(response) {
-            //                     $http.defaults.headers.common['Auth-Token'] = response.data['Auth-Token'];
-            //                     $window.sessionStorage['Auth-Token'] = response.data['Auth-Token'];
-            //                     $state.go('app.dashboard');
-            //                     notify({ classes: 'alert-success', message: response.message });
-            //                 }, function(error) {
-            //                     if (error.message)
-            //                         notify({ classes: 'alert-danger', message: error.message });
-            //                     $state.go('core.signup');
-            //                 })
         }
-        // }
+
     ]);
