@@ -68,14 +68,16 @@ var app = angular
     ])
 
 .constant('appSettings', {
-        server_address: 'http://172.16.90.106:9000', //'http://limologix.softwaystaging.com',
+        server_address: 'http://172.16.90.117:9000', //'http://limologix.softwaystaging.com',
         version: 'v1',
-        serverPath: 'http://172.16.90.106:9000/api/v1/', //"http://limologix.softwaystaging.com/api/v1/",
+        serverPath: 'http://172.16.90.117:9000/api/v1/', //"http://limologix.softwaystaging.com/api/v1/",
         serviceApis: {
             signin: 'drivers/sign_in',
             registration: 'drivers/registration',
             my_profile: 'drivers/profile/show',
             profileupdate: 'drivers/profile/update',
+            company_getCountries: 'master_data/countries',
+            company_getStates: 'master_data/states',
             logout: 'drivers/logout'
         }
     })
@@ -97,7 +99,7 @@ var app = angular
             }
         }
     }])
-    .run(['$rootScope', '$state', '$http', '$stateParams', '$window', 'AppConstants', function($rootScope, $state, $http, $stateParams, $window, constant) {
+    .run(['$rootScope','$state', '$http', '$stateParams', '$window', 'AppConstants', function($rootScope, $state, $http, $stateParams, $window, constant) {
         //If driver logged in and 
         var driver = $window.sessionStorage['driver'] ? JSON.parse($window.sessionStorage['driver']) : {};
         if (driver['Auth-Token']) {
@@ -105,6 +107,7 @@ var app = angular
         } else {
             constant.driver = {};
         }
+        
         //sets token on evry refresh
         if (constant.driver['Auth-Token']) {
             $http.defaults.headers.common['Auth-Token'] = $window.sessionStorage['Auth-Token'];
@@ -145,7 +148,7 @@ var app = angular
     $translateProvider.useLocalStorage();
     $translateProvider.preferredLanguage('en');
     $translateProvider.useSanitizeValueStrategy(null);
-     //capture the response and process it before completing the call
+    //capture the response and process it before completing the call
     $httpProvider.interceptors.push('authHttpResponseInterceptor');
 }])
 
@@ -163,8 +166,11 @@ var app = angular
         //dashboard
         .state('app.dashboard', {
             url: '/dashboard',
+           // controller: 'SidebarsmlayoutCtrl',
+            //templateUrl: 'views/tmpl/layouts/sidebar-sm.html',
+            containerClass: 'sidebar-sm-forced sidebar-sm',
             controller: 'DashboardCtrl',
-            templateUrl: 'views/tmpl/dashboard.html',
+           templateUrl: 'views/tmpl/dashboard.html',
             resolve: {
                 plugins: ['$ocLazyLoad', function($ocLazyLoad) {
                     return $ocLazyLoad.load([
@@ -831,11 +837,11 @@ var app = angular
             templateUrl: 'views/tmpl/signup/signup.html'
         })
         //forgot password
-//         .state('core.forgotpass', {
-//             url: '/forgotpass',
-//             controller: 'ForgotPasswordCtrl',
-//             templateUrl: 'views/tmpl/signup/signup.html'
-//         })
+        //         .state('core.forgotpass', {
+        //             url: '/forgotpass',
+        //             controller: 'ForgotPasswordCtrl',
+        //             templateUrl: 'views/tmpl/signup/signup.html'
+        //         })
         //page 404
         .state('core.page404', {
             url: '/page404',

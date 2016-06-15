@@ -4,6 +4,9 @@
       .constant('AppConstants', {
           driver: {}
       })
-      .constant('CountryConstants', {
+      .constant('countriesConstant', {
           countries: []
+      })
+      .constant('StatesConstants',{
+      	states:[]
       })
