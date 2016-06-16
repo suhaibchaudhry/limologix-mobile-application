@@ -26,8 +26,8 @@ app
             $scope.personal = {};
             $scope.vehicle = {};
             $scope.isContact = false;
-            $scope.isPersonal = true;
-            $scope.isVehicle = false;
+            $scope.isPersonal = false;
+            $scope.isVehicle = true;
             $scope.selected = {};
 
             getVehicleTypes();
@@ -36,7 +36,6 @@ app
             $scope.vehicle.make = $scope.vehicleTypesArr[0];
             $scope.colorsArr = ['Red','Black','White','Other'];
             $scope.vehicle.Color = $scope.colorsArr[0];
-
 
             getCountries();
             //Get countries from API
@@ -190,19 +189,7 @@ app
                     $scope.vehicleTypesArr.push(ss[i].name);
                 }
                 console.log($scope.vehicleTypesArr);
-                //response.data;
-                //             //countriesConstant.countries = $scope.countries;
-                //             //$scope.selected.selectedCountry = $scope.countries[0];
-                //            // if(countriesConstant.user['Auth-Token']){
-                //                // getCompanyInfo().then(function(address) {
-                //                //  $scope.GetSelectedCountry(address);
-                //                 });         
-                //           //  }
-
-                //         }, function(error) {
-                //             notify({ classes: 'alert-danger', message: error.message });
-                //         });
-                // });
+              
             }
             //File uploads for Licence plate and ARA photos.
             $scope.DriverLicenceUpload = function() {
@@ -269,6 +256,8 @@ app
                     companyName: $scope.personal.companyName,
                     policyNumber: $scope.personal.policyNumber
                 }
+                $scope.featuresArr = [];
+                $scope.featuresArr.push($scope.vehicle.addFeature1,$scope.vehicle.addFeature2);
                 $scope.vehicleInfo = {
                     make: $scope.vehicle.make,
                     model: $scope.vehicle.model,
@@ -276,8 +265,7 @@ app
                     Color: $scope.vehicle.Color,
                     HLL_Number: $scope.vehicle.HLL_Number,
                     licencePlateNum: $scope.vehicle.licencePlateNum,
-                    addFeature: $scope.vehicle.addFeature,
-                    addFeature2: $scope.vehicle.addFeature2
+                    Features: $scope.featuresArr
                 }
 
                 localStorage.setItem("driverdata", JSON.stringify([$scope.contactinfo, $scope.personalInfo, $scope.vehicleInfo]));
@@ -309,6 +297,18 @@ app
                     insurance_expiry_date: $scope.personalinfo.insurance_expiry_date,
                     companyName: $scope.personalinfo.companyName,
                     policyNumber: $scope.personalinfo.policyNumber
+                }
+                $scope.vehicleinfo = JSON.parse(data)[2];
+                //Update vehicle info from localStorage
+                 $scope.vehicle = {
+                    make: $scope.vehicleinfo.make,
+                    model: $scope.vehicleinfo.model,
+                    selectType: $scope.vehicleinfo.selectType,
+                    Color: $scope.vehicleinfo.Color,
+                    HLL_Number: $scope.vehicleinfo.HLL_Number,
+                    licencePlateNum: $scope.vehicleinfo.licencePlateNum,
+                    addFeature1: $scope.featuresArr[0],
+                    addFeature2: $scope.featuresArr[1]
                 }
             }
             $scope.Contact_Next = function() {

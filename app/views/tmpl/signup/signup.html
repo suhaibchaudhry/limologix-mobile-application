@@ -114,7 +114,7 @@
                     <div class="col-md-12">
                         <div>
                             <img id="dlImg" ng-src="images/driver/avatar.png" alt="" ng-model="personal.dlImage" />
-                            <input type='file' id="dlPicFileUpload" style="display:none" />
+                            <input type='file' valid-file name="dl_filefield" ng-model="dl_filefield" id="dlPicFileUpload" style="display:none" ng-required="true"/>
                             <label class="color_white">Upload photo of Driver Licence</label>
                             <div class="tile-body col-md-3" ng-controller="DatepickerTripCtrl">
                                 <p class="input-group">
@@ -127,7 +127,7 @@
                         </div>
                         </br>
                         <div class="col-md-12">
-                            <button type="file" class=" text-light text-white btn btn-success form-group col-md-12 input-lg" ng-click="DriverLicenceUpload()" required>Browse &nbsp;</button>
+                            <button type="file" validFile class=" text-light text-white btn btn-success form-group col-md-12 input-lg" ng-click="DriverLicenceUpload()" required>Browse &nbsp;</button>
                         </div>
                     </div>
                 </div>
@@ -159,7 +159,7 @@
                     <div class="col-md-12">
                         <div>
                             <img id="araImg" ng-src="images/driver/avatar.png" alt="" ng-model="personal.araImage" />
-                            <input type='file' id="araPicFileUpload" style="display:none " />
+                            <input type='file' valid-file name="ara_filefield" ng-model="ara_filefield" id="araPicFileUpload" style="display:none" ng-required="true"/>
                             <label class="color_white ">Upload photo of ARA Card</label>
                             <div class="tile-body col-md-3" ng-controller="DatepickerTripCtrl">
                                 <p class="input-group">
@@ -172,7 +172,7 @@
                         </div>
                         </br>
                         <div class="col-md-12">
-                            <button type="file" class="text-light text-white btn btn-success form-group col-md-12 input-lg" ng-click="ARAUpload()" required>Browse &nbsp;</button>
+                            <button type="file" validFile class="text-light text-white btn btn-success form-group col-md-12 input-lg" ng-click="ARAUpload()" required>Browse &nbsp;</button>
                         </div>
                     </div>
                 </div>
@@ -289,7 +289,7 @@
                         <button type="button" class=" text-light text-white btn btn-success form-group col-md-12 input-lg" ng-click="save_contactInfo()">Save &nbsp;<span class="glyphicon glyphicon-chevron-down"></span></button>
                     </div>
                     <div class="col-xs-4 previous">
-                        <button type="button" class=" text-light text-white btn btn-success form-group col-md-12 input-lg" ng-click="DriverSignup()" ng-disabled='!step3.$invalid'>Submit &nbsp;<i class="fa fa-arrow-circle-right"></i><a ui-sref="app.dashboard"><i class="fa fa-home"></i>hiiii</a></button>
+                        <button type="button" class=" text-light text-white btn btn-success form-group col-md-12 input-lg" ng-click="save_contactInfo()" ng-disabled='step3.$invalid'>Submit &nbsp;<i class="fa fa-arrow-circle-right"></i><a ui-sref="app.dashboard"><i class="fa fa-home"></i>hiiii</a></button>
                     </div>
                 </div>
             </div>
