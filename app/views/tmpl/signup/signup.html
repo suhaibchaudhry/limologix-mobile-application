@@ -237,7 +237,7 @@
                 <div class="form-group col-md-12 mb-0">
                     <div class="col-md-6">
                         <label class="color_white">Select Type</label>
-                        <select placeholder="Model" name="selectType" id="selectType" class="form-control input-lg" ng-model="vehicle.selectType" ng-options="selectType as selectType for selectType in vehicleTypesArr" required>
+                        <select placeholder="Model" name="selectType" id="selectType" class="form-control input-lg" ng-model="vehicle.selectType" id="selectType.id" ng-options="selectType as selectType for selectType in vehicleTypesArr" required>
                         </select>
                     </div>
                     <div class="col-md-6">
@@ -268,17 +268,29 @@
             <h2 class="text-light text-white">vehicle Features</h2>
             <br/>
             <br/>
-            <div class="row">
+           <div class="row">
                 <div class="form-group col-md-12 mb-0 ">
                     <div class="col-md-12">
-                        <input type="text" name="addFeature" id="addFeature" class="form-control input-lg" placeholder="Add A Feature" ng-model="vehicle.addFeature" required>
+                        <input type="text" name="addFeature1" id="addFeature1" class=
+                        "form-control input-lg" placeholder="Add A Feature" ng-model="vehicle.addFeature1">
                     </div>
                     <div class="col-md-12">
-                        <input type="text" name="addFeature2" id="addFeature2" class="form-control input-lg" placeholder="Add A Feature" ng-model="vehicle.addFeature2" required>
+                        <input type="text" name="addFeature2" id="addFeature2" class="form-control input-lg" placeholder="Add A Feature" ng-model="vehicle.addFeature2">
+                    </div>
+                    <div class="col-md-12">
+                        <input type="text" name="addFeature3" id="addFeature3" class="form-control input-lg" placeholder="Add A Feature" ng-model="vehicle.addFeature3">
+                    </div>
+                    <div class="col-md-12">
+                        <input type="text" name="addFeature4" id="addFeature4" class="form-control input-lg" placeholder="Add A Feature" ng-model="vehicle.addFeature4">
+                    </div>
+                    <div class="col-md-12">
+                        <input type="text" name="addFeature5" id="addFeature5" class="form-control input-lg" placeholder="Add A Feature" ng-model="vehicle.addFeature5">
+                    </div>
+                    <div class="col-md-12">
+                        <input type="text" name="addFeature6" id="addFeature6" class="form-control input-lg" placeholder="Add A Feature" ng-model="vehicle.addFeature6">
                     </div>
                     </br>
                 </div>
-            </div>
             </br>
             <div class="row">
                 <div class="col-md-12">
@@ -289,7 +301,7 @@
                         <button type="button" class=" text-light text-white btn btn-success form-group col-md-12 input-lg" ng-click="save_contactInfo()">Save &nbsp;<span class="glyphicon glyphicon-chevron-down"></span></button>
                     </div>
                     <div class="col-xs-4 previous">
-                        <button type="button" class=" text-light text-white btn btn-success form-group col-md-12 input-lg" ng-click="save_contactInfo()" ng-disabled='step3.$invalid'>Submit &nbsp;<i class="fa fa-arrow-circle-right"></i><a ui-sref="app.dashboard"><i class="fa fa-home"></i>hiiii</a></button>
+                        <button type="button" class=" text-light text-white btn btn-success form-group col-md-12 input-lg" ng-click="DriverSignup()" ng-disabled='step3.$invalid'>Submit &nbsp;<i class="fa fa-arrow-circle-right"></i></button>
                     </div>
                 </div>
             </div>

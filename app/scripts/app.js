@@ -78,6 +78,7 @@ var app = angular
             profileupdate: 'drivers/profile/update',
             company_getCountries: 'master_data/countries',
             company_getStates: 'master_data/states',
+            vehicle_types :'master_data/vehicles/types',
             logout: 'drivers/logout'
         }
     })
