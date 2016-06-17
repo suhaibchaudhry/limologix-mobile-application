@@ -113,7 +113,7 @@
                     </br>
                     <div class="col-md-12">
                         <div>
-                            <img id="dlImg" ng-src="images/driver/avatar.png" alt="" ng-model="personal.dlImage" />
+                            <img id="dlImg" ng-src="{{personal.dlImage}}" alt="" ng-model="personal.dlImage" />
                             <input type='file' valid-file name="dl_filefield" ng-model="dl_filefield" id="dlPicFileUpload" style="display:none" ng-required="true"/>
                             <label class="color_white">Upload photo of Driver Licence</label>
                             <div class="tile-body col-md-3" ng-controller="DatepickerTripCtrl">
@@ -158,7 +158,7 @@
                     </br>
                     <div class="col-md-12">
                         <div>
-                            <img id="araImg" ng-src="images/driver/avatar.png" alt="" ng-model="personal.araImage" />
+                            <img id="araImg" ng-src="{{personal.araImage}}" alt="" ng-model="personal.araImage" />
                             <input type='file' valid-file name="ara_filefield" ng-model="ara_filefield" id="araPicFileUpload" style="display:none" ng-required="true"/>
                             <label class="color_white ">Upload photo of ARA Card</label>
                             <div class="tile-body col-md-3" ng-controller="DatepickerTripCtrl">
@@ -237,7 +237,7 @@
                 <div class="form-group col-md-12 mb-0">
                     <div class="col-md-6">
                         <label class="color_white">Select Type</label>
-                        <select placeholder="Model" name="selectType" id="selectType" class="form-control input-lg" ng-model="vehicle.selectType" id="selectType.id" ng-options="selectType as selectType for selectType in vehicleTypesArr" required>
+                        <select placeholder="Model" name="selectType" id="selectType" class="form-control input-lg" ng-model="vehicle.selectType" id="selectType.id" ng-options="{id:types.id} as types.name for types in vehicleTypes" ng-change="getSelectedId(vehicle.selectType)"required>
                         </select>
                     </div>
                     <div class="col-md-6">
