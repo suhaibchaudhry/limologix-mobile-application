@@ -72,7 +72,7 @@ var app = angular
         version: 'v1',
         serverPath: 'http://172.16.90.117:9000/api/v1/', //"http://limologix.softwaystaging.com/api/v1/",
         serviceApis: {
-            signin: 'drivers/registration',
+            signin: 'drivers/sign_in',
             registration: 'drivers/registration',
             my_profile: 'drivers/profile/show',
             profileupdate: 'drivers/profile/update',

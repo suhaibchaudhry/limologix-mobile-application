@@ -363,6 +363,7 @@ app
                 services.funcPostRequest(url, $scope.driverDetails).then(function(response) {
                     console.log($scope.driverDetails);
                     console.log(response);
+                    localStorage.setItem("drivername",response.data.full_name)
                     notify({ classes: 'alert-success', message: response.message });
                     $state.go('app.dashboard');
                 }, function(error) {
