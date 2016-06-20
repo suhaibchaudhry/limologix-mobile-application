@@ -68,22 +68,15 @@ app
                 $element.find('div').animate({ width: progressBarWidth }, 500).html(percent + "% ");
             }
             var count = 1;
-            setInterval(function(){
-                 count++;
-                progress(parseInt(count+"0"), $('#progressBar'));
-                if(count == 10){
-                    $state.go('core.home'); 
-                    return;  
+            setInterval(function() {
+                count++;
+                progress(parseInt(count + "0"), $('#progressBar'));
+                if (count == 10) {
+                    $state.go('core.home');
+                    return;
                 }
-            },1000);
+            }, 1000);
 
-
-            //timeout,1000);
-            function timeout(){
-
-               
-            }
-            
 
         }
     ])
