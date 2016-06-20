@@ -12528,4 +12528,29 @@ hr.line-full {
   transition: 0.3s ease-out all;
   -webkit-transition: 0.3s ease-out all; }
 
+.setting_icon {
+  position: absolute;
+  right: 35px;
+  font-size: 60px; }
+
+.appClick {
+  position: relative;
+  top: 60px; }
+
+.AppText {
+  position: relative;
+  top: 150px; }
+
+.fs_30 {
+  font-size: 30px;
+  position: relative;
+  top: 68px; }
+
+#map-canvas {
+  height: 100%; }
+
+#map-canvas {
+  height: 100%;
+  width: 100%; }
+
 /*# sourceMappingURL=main.css.map */

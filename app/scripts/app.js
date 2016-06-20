@@ -155,7 +155,7 @@ var app = angular
 
 .config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
 
-    $urlRouterProvider.otherwise('/core/splash');
+    $urlRouterProvider.otherwise('/core/home');
 
     $stateProvider
 
@@ -837,6 +837,33 @@ var app = angular
             controller: 'DirverSignupCtrl',
             templateUrl: 'views/tmpl/signup/signup.html'
         })
+
+        .state('core.appSettings', {
+            url: '/app_settings',
+            controller: 'appSettingCtrl',
+            templateUrl: 'views/tmpl/app_settings/app_settings.html'
+        })
+        .state('core.profile', {
+            url: '/profile',
+            template: '<div ui-view></div>'
+        })
+        .state('core.profile.my_account', {
+            url: '/my_account',
+            controller: 'MyAccountCtrl',
+            templateUrl: 'views/tmpl/profile/my_account.html'
+        })
+         .state('core.profile.availability', {
+            url: '/availability',
+            controller: 'availabilityCtrl',
+            templateUrl: 'views/tmpl/profile/availability.html'
+        })
+         .state('core.home', {
+            url: '/home',
+            controller: 'homeCtrl',
+            templateUrl: 'views/tmpl/home/home.html'
+        })
+
+
         //forgot password
         //         .state('core.forgotpass', {
         //             url: '/forgotpass',

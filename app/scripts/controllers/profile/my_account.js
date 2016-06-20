@@ -1,3 +1,6 @@
+///////////////////////////////////
+
+
 'use strict';
 
 /**
@@ -10,255 +13,422 @@
 app
     .controller('MyAccountCtrl', [
         '$scope',
+        '$state',
         '$http',
         'appSettings',
-        '$window',
         'notify',
+        '$window',
         'services',
-        '$filter',
-        function($scope, $http, appSettings, $window, notify, services, $filter) {
-            $scope.page = {
-                title: 'My Account',
-                subtitle: '' //'Place subtitle here...'
-            };
-            $scope.phoneNumbr = /^\+?\d{1}[- ]?\d{3}[- ]?\d{3}[- ]?\d{4}$/;
-            $scope.adminInfo = {
-                first_name: '',
-                last_name: '',
-                email: '',
-                mobile_number: ''
-            }
+        'countriesConstant',
+        'StatesConstants',
+        function($scope, $state, $http, appSettings, notify, $window, services, countriesConstant, StatesConstants) {
+            var self = this;
+            $scope.phoneNumbr = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+            $scope.vehicleTypesArr = [];
+            $scope.contact = {};
+            $scope.personal = {};
+            $scope.vehicle = {};
+            $scope.isContact = false;
+            $scope.isPersonal = false;
+            $scope.isVehicle = true;
+            $scope.selected = {};
 
-            getProfileInfo();
+            getVehicleTypes();
+            $scope.vehicle.selectType = $scope.vehicleTypesArr[0];
+            $scope.vehicle.model = $scope.vehicleTypesArr[0];
+            $scope.vehicle.make = $scope.vehicleTypesArr[0];
+            $scope.colorsArr = ['Red', 'Black', 'White', 'Other'];
+            $scope.vehicle.Color = $scope.colorsArr[0];
 
-            function getProfileInfo() {
-                var url = appSettings.serverPath + appSettings.serviceApis.my_profile;
-                services.funcGetRequest(url).then(function(response) {
-                    var user = response.data.user;
-                    $scope.adminInfo = {
-                        first_name: user.first_name,
-                        last_name: user.last_name,
-                        email: user.email,
-                        mobile_number: user.mobile_number
-                    }
-                    //notify({ classes: 'alert-success', message: response.message });
-                }, function(error, status) {
-                    if (response)
-                        notify({ classes: 'alert-danger', message: response.message });
-                })
+            $scope.$watch('countries', function() {
+                localStorage.setItem('countries', JSON.stringify($scope.countries))
+            })
+            $scope.$watch('states', function() {
+                localStorage.setItem('states', JSON.stringify($scope.states))
+            })
 
-            };
-            // function to update user profile
-            $scope.funcUpdateProfile = function(isValid) {
-                var user = {
-                    first_name: $scope.adminInfo.first_name,
-                    last_name: $scope.adminInfo.last_name,
-                    email: $scope.adminInfo.email,
-                    mobile_number: $scope.adminInfo.mobile_number
-                };
-                var url = appSettings.serverPath + appSettings.serviceApis.profileupdate;
-                services.funcPostRequest(url, { "user": user }).then(function(response) {
-                    notify({ classes: 'alert-success', message: response.message });
-                }, function(error, status) {
-                    if (response)
-                        notify({ classes: 'alert-danger', message: response.message });
-                })
-
-            };
-
-            $scope.funcMakeTrip = function(isValid) {
-                if (isValid) {
-                    $scope.trip.pickup_date = $filter('date')($scope.trip.pickupdate, 'dd/MM/yyyy');
-                    $scope.trip.pickuptime = $filter('date')($scope.trip.pickuptime, 'hh:mm a');
-                    var trip = {
-                        start_destination: {
-                            place: $scope.pickup.name,
-                            latitude: $scope.pickup.components.location.lat,
-                            longitude: $scope.pickup.components.location.long
-                        },
-                        end_destination: {
-                            place: $scope.dropoff.name,
-                            latitude: $scope.dropoff.components.location.lat,
-                            longitude: $scope.dropoff.components.location.long
-                        },
-                        pick_up_at: $scope.trip.pickup_date + "," + $scope.trip.pickuptime,
-                        passengers_count: $scope.trip.passenger_count,
-                        customer_id: $scope.customerId
-                    };
-                    var customerDetails = {
-                        "trip": trip
-                    }
-                    var url = appSettings.serverPath + appSettings.serviceApis.createTrip;
-                    services.funcPostRequest(url, customerDetails).then(function(response) {
-                        console.log(response);
-                        $scope.tripId = response.data.trip.id;
-                        notify({ classes: 'alert-success', message: response.message });
-                        $scope.funcGetTripSummary($scope.tripId);
-                    }, function(error, status) {
-                        if (response)
-                            notify({ classes: 'alert-danger', message: response.message });
-                    })
-                } else {
-
+            getCountries();
+            //Get countries from API
+            function getCountries() {
+                var data = localStorage.getItem('driverdata');
+                if (data) {
+                    var countries = JSON.parse(localStorage.getItem('countries'));
+                    var states = JSON.parse(localStorage.getItem('states'));
                 }
-            }
 
-            $scope.funcGetTripSummary = function(tripId) {
-                var url = appSettings.serverPath + appSettings.serviceApis.tripSummary;
-                services.funcPostRequest(url, { "trip_id": tripId }).then(function(response) {
-                    $scope.tripsummary = {
-                        pickupdatetime: response.data.trip.pick_up_at,
-                        pickupAt: response.data.trip.start_destination.place,
-                        dropoffAt: response.data.trip.end_destination.place
+                if (data && countries && states) {
+                    $scope.contactinfo = JSON.parse(data)[0];
+                    $scope.contact = {
+                        fullName: $scope.contactinfo.fullName,
+                        lastName: $scope.contactinfo.lastName,
+                        email: $scope.contactinfo.email,
+                        password: $scope.contactinfo.password,
+                        confirmPassword: $scope.contactinfo.confirmPassword,
+                        primary_phone_number: $scope.contactinfo.primary_phone_number,
+                        primary_address: $scope.contactinfo.primary_address,
+                        city: $scope.contactinfo.city,
+                        zipcode: $scope.contactinfo.zipcode
                     }
-                    $scope.funcGetRoute();
-                    $scope.funcSelectVehicleType();
-                    // notify({ classes: 'alert-success', message: response.message });
-                }, function(error, status) {
-                    if (response)
-                        notify({ classes: 'alert-danger', message: response.message });
-                })
+                    $scope.countries = countries;
+                    $scope.states = states;
+                    $scope.selected.selectedCountry = $scope.contactinfo.country_code;
+                    $scope.selected.selectedState = $scope.contactinfo.state_code;
+                    try {
+                        $scope.$digest();
+                    } catch (e) {
 
-            };
-            $scope.funcSelectVehicleType = function() {
-                var url = appSettings.serverPath + appSettings.serviceApis.selectVehicleType;
-                services.funcGetRequest(url).then(function(response) {
-                    $scope.vehicleType = response.data.vehicle_types;
-
-                    // notify({ classes: 'alert-success', message: response.message });
-                }, function(error, status) {
-                    if (response)
-                        notify({ classes: 'alert-danger', message: response.message });
-                })
-            };
-            $scope.funcGetRoute = function() {
-                var source, destination;
-                var directionsDisplay;
-                var directionsService = new google.maps.DirectionsService();
-                directionsDisplay = new google.maps.DirectionsRenderer({
-                    suppressMarkers: true,
-                    polylineOptions: {
-                        strokeColor: "#9ACD32",
-                        strokeWeight: 5
                     }
-                });
-                var icons = {
-                    start: new google.maps.MarkerImage(
-                        'images/source_marker.png',
-                        new google.maps.Size(44, 32), //width,height
-                        new google.maps.Point(0, 0), // The origin point (x,y)
-                        new google.maps.Point(22, 32)),
-                    end: new google.maps.MarkerImage(
-                        'images/destination_marker.png',
-                        new google.maps.Size(44, 32),
-                        new google.maps.Point(0, 0),
-                        new google.maps.Point(22, 32))
-                };
-                // var mapOptions = {
-                //                         zoom: 7,
-                //                         center: mumbai
-                //                     };
-                var map = new google.maps.Map(document.getElementById('dvMap'));
-                directionsDisplay.setMap(map);
-                //directionsDisplay.setPanel(document.getElementById('dvPanel'));
 
-                //*********DIRECTIONS AND ROUTE**********************//
-                source = $scope.tripsummary.pickupAt; //'Marathahalli, Bengaluru, Karnataka 560037, India'; 
-                destination = $scope.tripsummary.dropoffAt; //'Hebbal, Bengaluru, Karnataka 560024, India';
+                } else if (countriesConstant.countries.length) {
+                    $scope.countries = countriesConstant.countries;
+                    $scope.selected.selectedCountry = $scope.countries[0];
+                    $scope.GetSelectedCountry(address);
+                } else {
+                    var url = appSettings.serverPath + appSettings.serviceApis.company_getCountries;
+                    services.funcGetRequest(url).then(function(response) {
+                        $scope.countries = response.data;
+                        countriesConstant.countries = $scope.countries;
+                        $scope.selected.selectedCountry = $scope.countries[0];
+                        var address = {
+                            "country": {
+                                "code": "US",
+                                "name": "United States"
+                            },
+                            "state": {
+                                "code": "AK",
+                                "name": "Alaska"
+                            }
+                        }
+                        $scope.GetSelectedCountry(address);
 
-                var request = {
-                    origin: source,
-                    destination: destination,
-                    travelMode: google.maps.TravelMode.DRIVING
-                };
-                directionsService.route(request, function(response, status) {
-                    if (status == google.maps.DirectionsStatus.OK) {
-                        directionsDisplay.setDirections(response);
-                        var leg = response.routes[0].legs[0];
-                        makeMarker(leg.start_location, icons.start, source, map);
-                        makeMarker(leg.end_location, icons.end, destination, map);
-                    } else {
-                        notify({ classes: 'alert-error', message: 'unable to retrive route' });
-                    }
-                });
-
-                function makeMarker(position, icon, title, map) {
-                    new google.maps.Marker({
-                        position: position,
-                        map: map,
-                        icon: icon,
-                        title: title
+                    }, function(error) {
+                        notify({ classes: 'alert-danger', message: error.message ? error.message : '' });
                     });
                 }
             }
+            //Get selected state from the view
+            $scope.GetSelectedCountry = function(address) {
+                var url = appSettings.serverPath + appSettings.serviceApis.company_getStates;
+                services.funcPostRequest(url, { 'country_code': $scope.selected.selectedCountry.code }).then(function(response) {
+                    $scope.states = response.data;
+                    if (address && address.state) {
+                        jQuery.grep($scope.states, function(e, i) {
+                            if (e.code == address.state.code)
+                                $scope.selected.selectedState = e;
+                        })
+                    } else
+                        $scope.selected.selectedState = $scope.states[0];
+                }, function(error) {
+                    notify({ classes: 'alert-danger', message: error });
+                });
+            };
+
+
+            //Update form models form local storage on Page refresh
+            //Contact Information
+            var data = localStorage.getItem('driverdata');
+            //Personal Information
+            if (data)
+                $scope.personalinfo = JSON.parse(data)[1];
+            if ($scope.personalinfo) {
+                $scope.personal = {
+                    dl_number: $scope.personalinfo.dl_number,
+                    dlImage: $scope.personalinfo.dlPic,
+                    //dlImage_name :$scope.personalinfo.dlImage_name,
+                    dl_exp_Date: new Date($scope.personalinfo.dl_exp_Date),
+                    limo_badge_exp_Date: new Date($scope.personalinfo.limo_badge_exp_Date),
+                    limo_badge_number: $scope.personalinfo.limo_badge_number,
+                    araImage: $scope.personalinfo.araPic,
+                    //araImage_name :$scope.personalinfo.araImage_name,
+                    ara_exp_Date: new Date($scope.personalinfo.ara_exp_Date),
+                    insurance_exp_Date: new Date($scope.personalinfo.insurance_exp_Date),
+                    companyName: $scope.personalinfo.companyName,
+                    policyNumber: $scope.personalinfo.policyNumber
+                }
+            }
+            //Vehicle Information
+            //             if (data)
+            //                 $scope.vehicleinfo = JSON.parse(data)[2];
+            //             if ($scope.vehicleinfo) {
+            //                 $scope.vehicle = {
+            //                     make: $scope.vehicleinfo.make,
+            //                     model: $scope.vehicleinfo.model,
+            //                     selectType: $scope.vehicleinfo.selectType,
+            //                     Color: $scope.vehicleinfo.Color,
+            //                     HLL_Number: $scope.vehicleinfo.HLL_Number,
+            //                     licencePlateNum: $scope.vehicleinfo.licencePlateNum,
+            //                     addFeature: $scope.vehicleinfo.addFeature,
+            //                     addFeature2: $scope.vehicleinfo.addFeature2
+            //                 }
+            //             };
+
+            function getStates() {
+                if (StatesConstants.states.length) {
+                    $scope.states = StatesConstants.states;
+                    $scope.selected.selectedState = $scope.states[0];
+                } else {
+                    var url = appSettings.serverPath + appSettings.serviceApis.driver_getStates;
+                    services.funcPostRequest(url, { 'country_code': 'US' }).then(function(response) {
+                        console.log(response);
+                        $scope.states = response.data;
+                        StatesConstants.states = $scope.states;
+                        var data = JSON.parse(localStorage.getItem('driverdata'))[0].state;
+                        if (data) {
+                            $scope.selected.selectedState = data;
+                        } else
+                            $scope.selected.selectedState = $scope.states[0];
+
+                    });
+                }
+            }
+
+            function getVehicleTypes() {
+                var url = appSettings.serverPath + appSettings.serviceApis.vehicle_types;
+                services.funcGetRequest(url).then(function(response) {
+                    $scope.vehicleTypes = response.data.vehicle_types;
+                    for (var i = 0; i < $scope.vehicleTypes.length; i++) {
+                        $scope.vehicleTypesArr.push($scope.vehicleTypes[i].name);
+                    }
+                    $scope.getSelectedId = function(data){
+                        $scope.mess=data;
+                        console.log($scope.mess.id);
+                    }
+                }, function(error) {
+                    notify({ classes: 'alert-danger', message: error });
+                });
+            }
+
+            //File uploads for Licence plate and ARA photos.
+            $scope.DriverLicenceUpload = function() {
+                $("input[id='dlPicFileUpload']").click();
+            }
+            $scope.ARAUpload = function() {
+                $("input[id='araPicFileUpload']").click();
+            }
+
+            function readURL(input, str) {
+
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function(e) {
+                        if (str === "dl") {
+                            $('#dlImg').attr('src', e.target.result);
+                            $scope.personal.dlImage = e.target.result;
+                            $scope.personal.dlImage_name = input.files[0].name;
+                        } else {
+                            $('#araImg').attr('src', e.target.result);
+                            $scope.personal.araImage = e.target.result;
+                            $scope.personal.araImage_name = input.files[0].name;
+                        }
+                        console.log('dsds', e.target, input.files[0])
+                    }
+
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+
+            $("#dlPicFileUpload").change(function() {
+                readURL(this, "dl");
+            });
+            $("#araPicFileUpload").change(function() {
+                readURL(this, "ara");
+            });
+
+            $scope.save_contactInfo = function() {
+                $scope.contactinfo = {
+                    fullName: $scope.contact.fullName,
+                    lastName: $scope.contact.lastName,
+                    email: $scope.contact.email,
+                    password: $scope.contact.password,
+                    confirmPassword: $scope.contact.confirmPassword,
+                    primary_phone_number: $scope.contact.primary_phone_number,
+                    primary_address: $scope.contact.primary_address,
+                    city: $scope.contact.city,
+                    state_code: $scope.selected.selectedState,
+                    country_code: $scope.selected.selectedCountry,
+                    zipcode: $scope.contact.zipcode
+                }
+                $scope.personalInfo = {
+                    dl_number: $scope.personal.dl_number,
+                    dlPic: $scope.personal.dlImage,
+                    dlImage_name: $scope.personal.dlImage_name,
+                    dl_exp_Date: new Date($scope.personal.dl_exp_Date),
+                    limo_badge_exp_Date: new Date($scope.personal.limo_badge_exp_Date),
+                    limo_badge_number: $scope.personal.limo_badge_number,
+                    araPic: $scope.personal.araImage,
+                    araImage_name: $scope.personal.araImage_name,
+                    ara_exp_Date: new Date($scope.personal.ara_exp_Date),
+                    insurance_exp_Date: new Date($scope.personal.insurance_exp_Date),
+                    companyName: $scope.personal.companyName,
+                    policyNumber: $scope.personal.policyNumber
+                }
+                $scope.featuresArr = [];
+                $scope.featuresArr.push($scope.vehicle.addFeature1);
+                $scope.featuresArr.push($scope.vehicle.addFeature2);
+                $scope.featuresArr.push($scope.vehicle.addFeature3);
+                $scope.featuresArr.push($scope.vehicle.addFeature4);
+                $scope.featuresArr.push($scope.vehicle.addFeature5);
+                $scope.featuresArr.push($scope.vehicle.addFeature6);
+
+                //var data = [42, 21, undefined, 50, 40, undefined, 9];
+
+                $scope.featuresArr = $scope.featuresArr.filter(function(element) {
+                    return !!element;
+                });
+                console.log($scope.featuresArr);
+                $scope.vehicleInfo = {
+                    make: $scope.vehicle.make,
+                    model: $scope.vehicle.model,
+                    selectType: $scope.vehicle.selectType,
+                    
+                    Color: $scope.vehicle.Color,
+                    HLL_Number: $scope.vehicle.HLL_Number,
+                    licencePlateNum: $scope.vehicle.licencePlateNum,
+                    Features: $scope.featuresArr
+                }
+                
+//                 $scope.vehicle = {
+//                     make: $scope.vehicleinfo.make,
+//                     model: $scope.vehicleinfo.model,
+//                     selectType: $scope.vehicleinfo.selectType,
+//                     Color: $scope.vehicleinfo.Color,
+//                     HLL_Number: $scope.vehicleinfo.HLL_Number,
+//                     licencePlateNum: $scope.vehicleinfo.licencePlateNum,
+//                     addFeature1: $scope.featuresArr[0],
+//                     addFeature2: $scope.featuresArr[1],
+//                     addFeature3: $scope.featuresArr[2],
+//                     addFeature4: $scope.featuresArr[3],
+//                     addFeature5: $scope.featuresArr[4],
+//                     addFeature6: $scope.featuresArr[5],
+//                 }
+                
+                localStorage.setItem("driverdata", JSON.stringify([$scope.contactinfo, $scope.personalInfo, $scope.vehicleInfo]));
+            
+               
+            }    
+            $scope.Contact_Next = function() {
+                $scope.isContact = false;
+                $scope.isPersonal = true;
+                $scope.isVehicle = false;
+            }
+            $scope.Personal_Next = function() {
+                $scope.isContact = false;
+                $scope.isPersonal = false;
+                $scope.isVehicle = true;
+            }
+            $scope.Personal_previous = function() {
+                $scope.isContact = true;
+                $scope.isPersonal = false;
+            }
+            $scope.DriverSignup = function() {
+                $state.go('core.appSettings');
+                // var data = localStorage.getItem('driverdata');
+                // $scope.contactinfo = JSON.parse(data)[0];
+                // $scope.personalinfo = JSON.parse(data)[1];
+                // $scope.driverDetails = {
+                //     "driver": {
+                //         first_name: $scope.contactinfo.fullName,
+                //         last_name: $scope.contactinfo.lastName,
+                //         password: $scope.contactinfo.password,
+                //         mobile_number: $scope.contactinfo.primary_phone_number,
+                //         email: $scope.contactinfo.email,
+                //         address: {
+                //             street: $scope.contactinfo.primary_address,
+                //             city: $scope.contactinfo.city,
+                //             zipcode: $scope.contactinfo.zipcode,
+                //             state_code: $scope.contactinfo.state_code,
+                //             country_code: $scope.contactinfo.country_code
+                //         },
+                //         license_number: $scope.personalinfo.dl_number,
+                //         license_exp_Date: $scope.personalinfo.dl_exp_Date,
+                //         license_image: {
+                //             name: $scope.personalinfo.dlImage_name,
+                //             image: $scope.personalinfo.dlPic
+                //         },
+                //         badge_number: $scope.personalinfo.limo_badge_number,
+                //         badge_exp_Date: $scope.personalinfo.limo_badge_exp_Date,
+                //         //ara_number: $scope.personalinfo.ar,
+                //         ara_exp_Date: $scope.personalinfo.ara_exp_Date,
+                //         ara_image: {
+                //             name: $scope.personalinfo.araImage_name,
+                //             image: $scope.personalinfo.araPic
+                //         },
+                //         insurance_company: $scope.personalinfo.companyName,
+                //         insurance_policy_number: $scope.personalinfo.policyNumber,
+                //         insurance_exp_Date: $scope.personalinfo.insurance_exp_Date
+                //     },
+                //     "vehicle": {
+                //         make: $scope.vehicleinfo.make,
+                //         model: $scope.vehicleinfo.model,
+                //         hll_number: $scope.vehicleinfo.selectType,
+                //         color: $scope.vehicleinfo.Color,
+                //         license_plate_number: $scope.vehicleinfo.licencePlateNum,
+                //         vehicle_type_id: 3,
+                //         features: [$scope.vehicleinfo.addFeature1, $scope.vehicleinfo.addFeature2]
+                //     }
+                // };
+                // var url = appSettings.serverPath + appSettings.serviceApis.vehicle_types;
+                // services.funcGetRequest(url).then(function(response) {
+                //     $scope.vehicleTypes = response.data.vehicle_types;
+                //     for (var i = 0; i < $scope.vehicleTypes.length; i++) {
+                //         $scope.vehicleTypesArr.push($scope.vehicleTypes[i].name);
+                //     }
+                //     console.log($scope.vehicleTypesArr);
+                // }, function(error) {
+                //     notify({ classes: 'alert-danger', message: error });
+                // });
+
+            }
+            $scope.Vehicle_Previous = function() {
+                $scope.isPersonal = true;
+                $scope.isVehicle = false;
+            }
+
         }
+
     ])
-    .controller('DatepickerCtrl', function($scope) {
 
-        $scope.today = function() {
-            $scope.trip.pickupdate = new Date();
-        };
+.controller('DatepickerTripCtrl', ['$scope', 'countriesConstant', function($scope, constants) {
+    $scope.today = function() {
+        //update exp dates
+        if ($scope.personal) {
+            $scope.personal.dl_exp_Date = $scope.personal.dl_exp_Date ? new Date($scope.personal.dl_exp_Date) : new Date();
+            $scope.personal.limo_badge_exp_Date = $scope.personal.limo_badge_exp_Date ? new Date($scope.personal.limo_badge_exp_Date) : new Date();
+            $scope.personal.ara_exp_Date = $scope.personal.ara_exp_Date ? new Date($scope.personal.ara_exp_Date) : new Date();
+            $scope.personal.insurance_exp_Date = $scope.personal.insurance_exp_Date ? new Date($scope.personal.insurance_exp_Date) : new Date();
+        }
+    };
 
-        $scope.today();
+    $scope.today();
 
-        $scope.clear = function() {
-            $scope.trip.pickupdate = null;
-        };
+    $scope.clear = function() {
+        $scope.tripinfo.pickup_date = null;
+    };
 
-        // Disable weekend selection
-        $scope.disabled = function(date, mode) {
-            return (mode === 'day' && (date.getDay() === 0 || date.getDay() === 6));
-        };
+    // Disable weekend selection
+    $scope.disabled = function(date, mode) {
+        return (mode === 'day' && (date.getDay() === 0 || date.getDay() === 6));
+    };
 
-        $scope.toggleMin = function() {
-            $scope.minDate = $scope.minDate ? null : new Date();
-        };
-        $scope.toggleMin();
+    $scope.toggleMin = function() {
+        $scope.minDate = $scope.minDate ? null : new Date();
+    };
+    $scope.toggleMin();
 
-        $scope.open = function($event) {
-            $event.preventDefault();
-            $event.stopPropagation();
+    $scope.open = function($event) {
+        $event.preventDefault();
+        $event.stopPropagation();
 
-            $scope.opened = true;
-        };
+        $scope.opened = true;
+    };
 
-        $scope.dateOptions = {
-            formatYear: 'yy',
-            startingDay: 1,
-            'class': 'datepicker'
-        };
+    $scope.dateOptions = {
+        formatYear: 'yy',
+        startingDay: 1,
+        'class': 'datepicker'
+    };
 
-        $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
-        $scope.format = $scope.formats[0];
-    })
-    .controller('TimepickerCtrl', function($scope) {
-        $scope.trip.pickuptime = new Date();
-
-        $scope.hstep = 1;
-        $scope.mstep = 15;
-
-        $scope.options = {
-            hstep: [1, 2, 3],
-            mstep: [1, 5, 10, 15, 25, 30]
-        };
-
-        $scope.ismeridian = true;
-        $scope.toggleMode = function() {
-            $scope.ismeridian = !$scope.ismeridian;
-        };
-
-        $scope.update = function() {
-            var d = new Date();
-            d.setHours(14);
-            d.setMinutes(0);
-            $scope.trip.pickuptime = d;
-        };
-
-        $scope.changed = function() {
-            console.log('Time changed to: ' + $scope.trip.pickuptime);
-        };
-
-        $scope.clear = function() {
-            $scope.trip.pickuptime = null;
-        };
-    })
+    $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+    $scope.format = $scope.formats[0];
+}])
