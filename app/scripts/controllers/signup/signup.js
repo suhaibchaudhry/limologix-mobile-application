@@ -25,8 +25,8 @@ app
             $scope.contact = {};
             $scope.personal = {};
             $scope.vehicle = {};
-            $scope.isContact = true;
-            $scope.isPersonal = false;
+            $scope.isContact = false;
+            $scope.isPersonal = true;
             $scope.isVehicle = false;
             $scope.selected = {};
 

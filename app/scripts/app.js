@@ -113,7 +113,7 @@ var app = angular
         if (constant.driver['Auth-Token']) {
             $http.defaults.headers.common['Auth-Token'] = $window.sessionStorage['Auth-Token'];
         } else {
-            $state.go('core.login')
+            $state.go('core.signup')
         }
 
         $rootScope.$state = $state;
@@ -861,6 +861,11 @@ var app = angular
             url: '/home',
             controller: 'homeCtrl',
             templateUrl: 'views/tmpl/home/home.html'
+        })
+        .state('core.request_screen', {
+            url: '/request_screen',
+            controller: 'requestScreenCtrl',
+            templateUrl: 'views/tmpl/request_screen/request_screen.html'
         })
 
 

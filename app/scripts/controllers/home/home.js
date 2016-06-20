@@ -10,70 +10,31 @@
 app
     .controller('homeCtrl', ['$scope', '$state', '$http', 'appSettings', 'notify', '$window', 'services', 'AppConstants', '$timeout',
         function($scope, $state, $http, appSettings, notify, $window, services, constants, $timeout) {
-            $('a[data-confirm]').click(function(ev) {
-                var href = $(this).attr('href');
-                if (!$('#dataConfirmModal').length) {
-                    $('body').append('<div id="dataConfirmModal" class="modal" role="dialog" aria-labelledby="dataConfirmLabel" aria-hidden="true"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button><h3 id="dataConfirmLabel">Please Confirm</h3></div><div class="modal-body"></div><div class="modal-footer"><button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button><a class="btn btn-primary" id="dataConfirmOK">OK</a></div></div>');
-                }
-                $('#dataConfirmModal').find('.modal-body').text($(this).attr('data-confirm'));
-                $('#dataConfirmOK').attr('href', href);
-                $('#dataConfirmModal').modal({ show: true });
-                return false;
-            });
-            //                     var source, destination;
-            //                     var directionsDisplay;
-            //                     var directionsService = new google.maps.DirectionsService();
-            //                     directionsDisplay = new google.maps.DirectionsRenderer({
-            //                         suppressMarkers: true,
-            //                         polylineOptions: {
-            //                             strokeColor: "#9ACD32",
-            //                             strokeWeight: 5
-            //                         }
-            //                     });
-            //                     var icons = {
-            //                         start: new google.maps.MarkerImage(
-            //                             'images/source_marker.png',
-            //                             new google.maps.Size(44, 32), //width,height
-            //                             new google.maps.Point(0, 0), // The origin point (x,y)
-            //                             new google.maps.Point(22, 32)),
-            //                         end: new google.maps.MarkerImage(
-            //                             'images/destination_marker.png',
-            //                             new google.maps.Size(44, 32),
-            //                             new google.maps.Point(0, 0),
-            //                             new google.maps.Point(22, 32))
-            //                     };
+           // onSuccess Callback
+// This method accepts a Position object, which contains the
+// current GPS coordinates
+    if (navigator.geolocation) {
+            var onSuccess = function(position) {
+                console.log('Latitude: '          + position.coords.latitude          + '\n' +
+                      'Longitude: '         + position.coords.longitude         + '\n' +
+                      'Altitude: '          + position.coords.altitude          + '\n' +
+                      'Accuracy: '          + position.coords.accuracy          + '\n' +
+                      'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '\n' +
+                      'Heading: '           + position.coords.heading           + '\n' +
+                      'Speed: '             + position.coords.speed             + '\n' +
+                      'Timestamp: '         + position.timestamp                + '\n');
+            };
 
-            //                     var map = new google.maps.Map(document.getElementById('dvMap'));
-            //                     directionsDisplay.setMap(map);
+            // onError Callback receives a PositionError object
+            //
+            function onError(error) {
+                console.log('code: '    + error.code    + '\n' +
+                      'message: ' + error.message + '\n');
+            }
 
-            //                     //*********DIRECTIONS AND ROUTE**********************//
-            //                     source ='Marathahalli, Bengaluru, Karnataka 560037, India'; 
-            //                     destination = 'Hebbal, Bengaluru, Karnataka 560024, India';
+         navigator.geolocation.getCurrentPosition(onSuccess, onError);
 
-            //                     var request = {
-            //                         origin: source,
-            //                         destination: destination,
-            //                         travelMode: google.maps.TravelMode.DRIVING
-            //                     };
-            //                     directionsService.route(request, function(response, status) {
-            //                         if (status == google.maps.DirectionsStatus.OK) {
-            //                             directionsDisplay.setDirections(response);
-            //                             var leg = response.routes[0].legs[0];
-            //                             makeMarker(leg.start_location, icons.start, source, map);
-            //                             makeMarker(leg.end_location, icons.end, destination, map);
-            //                         } else {
-            //                             notify({ classes: 'alert-error', message: 'unable to retrive route' });
-            //                         }
-            //                     });
-
-            //                     function makeMarker(position, icon, title, map) {
-            //                         new google.maps.Marker({
-            //                             position: position,
-            //                             map: map,
-            //                             icon: icon,
-            //                             title: title
-            //                         });
-            //                     }
+    }
 
 
             if (navigator.geolocation) {
@@ -88,6 +49,7 @@ app
                     var marker = new google.maps.Marker({
                         position: LatLng,
                         map: map,
+                        icon:'images/driver/gps-icon.png',
                         title: "<div style = 'height:60px;width:200px'><b>Your location:</b><br />Latitude: " + p.coords.latitude + "<br />Longitude: " + p.coords.longitude
                     });
                     google.maps.event.addListener(marker, "click", function(e) {
