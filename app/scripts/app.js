@@ -100,14 +100,12 @@ var app = angular
             }
         }
     }])
-    .run(['$rootScope', '$state', '$http', '$stateParams', '$window', 'AppConstants', function($rootScope, $state, $http, $stateParams, $window, constant) {
+    .run(['$rootScope', '$state', '$http', '$stateParams', '$window', 'AppConstants','FCMPlugin',function($rootScope, $state, $http, $stateParams, $window, constant,FCMPlugin) {
 
-        // FCMPlugin.subscribeToTopic('topicExample', successCallback, errorCallback);
+        //FCMPlugin = cordova.require('cordova/plugin/FCMPlugin')
+        FCMPlugin.subscribeToTopic('topicExample', successCallback, errorCallback);
 
        // faye();
-
-
-
 
         //If driver logged in and 
         var driver = $window.sessionStorage['driver'] ? JSON.parse($window.sessionStorage['driver']) : {};

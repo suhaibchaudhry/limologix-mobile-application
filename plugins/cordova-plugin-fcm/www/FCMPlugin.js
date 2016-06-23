@@ -27,6 +27,8 @@ FCMPlugin.prototype.onNotificationReceived = function(payload){
 // FIRE READY //
 exec(function(result){ console.log("FCMPlugin Ready OK") }, function(result){ console.log("FCMPlugin Ready ERROR") }, "FCMPlugin",'ready',[]);
 
+//module.export = FCMPlugin;
+
 
 
 
