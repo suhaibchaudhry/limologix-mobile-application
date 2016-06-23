@@ -7,7 +7,20 @@
         "files": {
             "AndroidManifest.xml": {
                 "parents": {
-                    "/manifest/application": [],
+                    "/manifest/application": [
+                        {
+                            "xml": "<activity android:exported=\"true\" android:launchMode=\"singleTop\" android:name=\"com.gae.scaffolder.plugin.FCMPluginActivity\"><intent-filter><action android:name=\"FCM_PLUGIN_ACTIVITY\" /><category android:name=\"android.intent.category.DEFAULT\" /></intent-filter></activity>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<service android:name=\"com.gae.scaffolder.plugin.MyFirebaseMessagingService\"><intent-filter><action android:name=\"com.google.firebase.MESSAGING_EVENT\" /></intent-filter></service>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<service android:name=\"com.gae.scaffolder.plugin.MyFirebaseInstanceIDService\"><intent-filter><action android:name=\"com.google.firebase.INSTANCE_ID_EVENT\" /></intent-filter></service>",
+                            "count": 1
+                        }
+                    ],
                     "/*": [
                         {
                             "xml": "<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\" />",
@@ -24,11 +37,15 @@
                 "parents": {
                     "/*": [
                         {
+                            "xml": "<feature name=\"Whitelist\"><param name=\"android-package\" value=\"org.apache.cordova.whitelist.WhitelistPlugin\" /><param name=\"onload\" value=\"true\" /></feature>",
+                            "count": 1
+                        },
+                        {
                             "xml": "<feature name=\"Geolocation\"><param name=\"android-package\" value=\"org.apache.cordova.geolocation.Geolocation\" /></feature>",
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"Whitelist\"><param name=\"android-package\" value=\"org.apache.cordova.whitelist.WhitelistPlugin\" /><param name=\"onload\" value=\"true\" /></feature>",
+                            "xml": "<feature name=\"FCMPlugin\"><param name=\"android-package\" value=\"com.gae.scaffolder.plugin.FCMPlugin\" /><param name=\"onload\" value=\"true\" /></feature>",
                             "count": 1
                         }
                     ]
@@ -37,13 +54,16 @@
         }
     },
     "installed_plugins": {
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "com.example.LimoCordova"
+        },
         "cordova-plugin-compat": {
             "PACKAGE_NAME": "com.example.LimoCordova"
         },
         "cordova-plugin-geolocation": {
             "PACKAGE_NAME": "com.example.LimoCordova"
         },
-        "cordova-plugin-whitelist": {
+        "cordova-plugin-fcm": {
             "PACKAGE_NAME": "com.example.LimoCordova"
         }
     },
@@ -60,11 +80,19 @@
             "file": "plugins/cordova-plugin-geolocation/www/PositionError.js",
             "id": "cordova-plugin-geolocation.PositionError",
             "runs": true
+        },
+        {
+            "file": "plugins/cordova-plugin-fcm/www/FCMPlugin.js",
+            "id": "cordova-plugin-fcm.FCMPlugin",
+            "clobbers": [
+                "FCMPlugin"
+            ]
         }
     ],
     "plugin_metadata": {
+        "cordova-plugin-whitelist": "1.2.2",
         "cordova-plugin-compat": "1.0.0",
         "cordova-plugin-geolocation": "2.2.0",
-        "cordova-plugin-whitelist": "1.2.2"
+        "cordova-plugin-fcm": "1.0.7"
     }
 }

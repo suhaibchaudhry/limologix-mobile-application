@@ -36,7 +36,7 @@ app
                     'message: ' + error.message + '\n');
             }
 
-            navigator.geolocation.getCurrentPosition(onSuccess, onError);
+            navigator.geolocation.getCurrentPosition(onSuccess, onError,{ maximumAge: 3000, timeout: 5000, enableHighAccuracy: true });
 
             //}
 
@@ -65,9 +65,5 @@ app
             } else {
                 alert('Geo Location feature is not supported in this browser.');
             }
-
-
-
-
         }
     ])
