@@ -11,6 +11,12 @@ app
     .controller('requestScreenCtrl', ['$scope', '$state', '$http', 'appSettings', 'notify', '$window',
         'services', 'AppConstants',
         function($scope, $state, $http, appSettings, notify, $window, services, constants) {
+
+            var progressBarWidth = jQuery(window).innerWidth();
+            //var mapHeight = windowHeight - ($(".navbar-header").height() + $(".footer-text").height());
+            $('#progressBar').width(progressBarWidth+'px');
+
+            
             if (navigator.geolocation) {
                 // navigator.geolocation.getCurrentPosition(geolocationSuccess, [geolocationError], [geolocationOptions]);
                 // onSuccess Callback
@@ -68,14 +74,14 @@ app
                 $element.find('div').animate({ width: progressBarWidth }, 500).html(percent + "% ");
             }
             var count = 1;
-            setInterval(function() {
-                count++;
-                progress(parseInt(count + "0"), $('#progressBar'));
-                if (count == 10) {
-                    $state.go('core.home');
-                    return;
-                }
-            }, 1000);
+            // setInterval(function() {
+            //     count++;
+            //     progress(parseInt(count + "0"), $('#progressBar'));
+            //     if (count == 10) {
+            //         $state.go('core.home');
+            //         return;
+            //     }
+            // }, 1000);
 
 
         }

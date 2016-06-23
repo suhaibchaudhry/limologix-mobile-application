@@ -78,7 +78,7 @@ var app = angular
             profileupdate: 'drivers/profile/update',
             company_getCountries: 'master_data/countries',
             company_getStates: 'master_data/states',
-            vehicle_types :'master_data/vehicles/types',
+            vehicle_types: 'master_data/vehicles/types',
             logout: 'drivers/logout'
         }
     })
@@ -100,7 +100,15 @@ var app = angular
             }
         }
     }])
-    .run(['$rootScope','$state', '$http', '$stateParams', '$window', 'AppConstants', function($rootScope, $state, $http, $stateParams, $window, constant) {
+    .run(['$rootScope', '$state', '$http', '$stateParams', '$window', 'AppConstants', function($rootScope, $state, $http, $stateParams, $window, constant) {
+
+        // FCMPlugin.subscribeToTopic('topicExample', successCallback, errorCallback);
+
+       // faye();
+
+
+
+
         //If driver logged in and 
         var driver = $window.sessionStorage['driver'] ? JSON.parse($window.sessionStorage['driver']) : {};
         if (driver['Auth-Token']) {
@@ -108,7 +116,7 @@ var app = angular
         } else {
             constant.driver = {};
         }
-        
+
         //sets token on evry refresh
         if (constant.driver['Auth-Token']) {
             $http.defaults.headers.common['Auth-Token'] = $window.sessionStorage['Auth-Token'];
@@ -155,7 +163,7 @@ var app = angular
 
 .config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
 
-    $urlRouterProvider.otherwise('/core/home');
+    $urlRouterProvider.otherwise('/core/request_screen');
 
     $stateProvider
 
@@ -167,11 +175,11 @@ var app = angular
         //dashboard
         .state('app.dashboard', {
             url: '/dashboard',
-           // controller: 'SidebarsmlayoutCtrl',
+            // controller: 'SidebarsmlayoutCtrl',
             //templateUrl: 'views/tmpl/layouts/sidebar-sm.html',
             containerClass: 'sidebar-sm-forced sidebar-sm',
             controller: 'DashboardCtrl',
-           templateUrl: 'views/tmpl/dashboard.html',
+            templateUrl: 'views/tmpl/dashboard.html',
             resolve: {
                 plugins: ['$ocLazyLoad', function($ocLazyLoad) {
                     return $ocLazyLoad.load([
@@ -838,7 +846,7 @@ var app = angular
             templateUrl: 'views/tmpl/signup/signup.html'
         })
 
-        .state('core.appSettings', {
+    .state('core.appSettings', {
             url: '/app_settings',
             controller: 'appSettingCtrl',
             templateUrl: 'views/tmpl/app_settings/app_settings.html'
@@ -852,12 +860,12 @@ var app = angular
             controller: 'MyAccountCtrl',
             templateUrl: 'views/tmpl/profile/my_account.html'
         })
-         .state('core.profile.availability', {
+        .state('core.profile.availability', {
             url: '/availability',
             controller: 'availabilityCtrl',
             templateUrl: 'views/tmpl/profile/availability.html'
         })
-         .state('core.home', {
+        .state('core.home', {
             url: '/home',
             controller: 'homeCtrl',
             templateUrl: 'views/tmpl/home/home.html'
@@ -869,14 +877,14 @@ var app = angular
         })
 
 
-        //forgot password
-        //         .state('core.forgotpass', {
-        //             url: '/forgotpass',
-        //             controller: 'ForgotPasswordCtrl',
-        //             templateUrl: 'views/tmpl/signup/signup.html'
-        //         })
-        //page 404
-        .state('core.page404', {
+    //forgot password
+    //         .state('core.forgotpass', {
+    //             url: '/forgotpass',
+    //             controller: 'ForgotPasswordCtrl',
+    //             templateUrl: 'views/tmpl/signup/signup.html'
+    //         })
+    //page 404
+    .state('core.page404', {
             url: '/page404',
             templateUrl: 'views/tmpl/pages/page404.html'
         })
@@ -964,3 +972,32 @@ var app = angular
             templateUrl: 'views/tmpl/help.html'
         });
 }]);
+
+
+// function faye(){
+//          var Logger = {
+//                     incoming: function(message, callback) {
+//                         console.log('incoming', message);
+//                         callback(message);
+//                     },
+//                     outgoing: function(message, callback) {
+//                         message.ext = message.ext || {};
+//                         message.ext.auth_token = "345e67c6da16ff9d5e4bf3a224f56167";
+//                         message.ext.user_type = "driver";
+//                         console.log('outgoing', message);
+//                         callback(message);
+//                     }
+//         };
+
+
+
+//         var client = new Faye.Client('http://172.16.90.117:9292/faye');
+//         client.addExtension(Logger);
+//         var publication = client.publish('/publish/784272c40c04371ca495c75a315f83fb', { latitude: '-71.05888010000001', longitude: '-71.05888010000001' });
+//         publication.callback(function() {
+//             alert('Connection established successfully.');
+//         });
+//         publication.errback(function(error) {
+//             alert('There was a problem: ' + error.message);
+//         });
+// }

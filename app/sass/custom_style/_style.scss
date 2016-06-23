@@ -162,10 +162,17 @@
     border-radius:2px;
     margin-top:135px;
 }
-.dvMap{
-    top: 45px;
+
+.dvMap1{
+    position:relative;
+    top: 30px;
     border-radius: 50%;
 }
+
+#dvMap{
+    pointer-events:none;
+}
+
 #progressBar {
     width: 400px;
     height: 22px;
@@ -178,4 +185,54 @@
     text-align: right;
     line-height: 30px; 
     background-color: #ff4a43;
+}
+
+li{
+    list-style-type: none;
+}
+.navbar-header{
+    background: #ffffff;
+}
+.navbar-toggle{
+    margin-right: 0px;
+    padding: 9px 10px;
+}
+.navbar-toggle .icon-bar{
+    width: 40px;
+    height: 3px;
+    border-radius: 0px;
+    background: rgb(38,34,98); 
+    background: -moz-radial-gradient(center, ellipse cover, rgb(38,34,98) 0%, rgb(11,0,47) 100%); 
+    background: -webkit-radial-gradient(center, ellipse cover, rgb(38,34,98) 0%,rgb(11,0,47) 100%); 
+    background: radial-gradient(ellipse at center, rgb(38,34,98) 0%,rgb(11,0,47) 100%);
+}
+.navbar-brand{
+    margin-top: 4px;
+    margin-bottom: 4px;
+    padding: 9px 0px 0px;
+    width: 80%;
+}
+.navbar-brand img {
+    height: 100%;
+    float: none;
+    margin: auto;
+}
+.dropdown-menu{
+    top: 60px;
+    right: 0;
+    left: auto;
+}
+.footer-text{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: rgb(38,34,98); 
+    background: -moz-radial-gradient(center, ellipse cover, rgb(38,34,98) 0%, rgb(11,0,47) 100%);
+    background: -webkit-radial-gradient(center, ellipse cover, rgb(38,34,98) 0%,rgb(11,0,47) 100%); 
+    background: radial-gradient(ellipse at center, rgb(38,34,98) 0%,rgb(11,0,47) 100%);
+}
+.footer-text p{
+    color:#ffffff;
+    padding: 15px 10px;
 }

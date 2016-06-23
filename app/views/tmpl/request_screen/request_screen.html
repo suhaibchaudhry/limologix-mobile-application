@@ -1,10 +1,18 @@
 <div class="page page-signup">
-    <div class="col-xs-12 splash_header">
-        <li class="dropdown nav-profile" list-style:none uib-dropdown>
-            <a href class="dropdown-toggle" uib-dropdown-toggle>
-                <i class="fa fa-bars setting_icon"></i>
-            </a>
-            <ul class="dropdown-menu" role="menu">
+    <div class="container">
+        <div class="navbar-header">
+        <a href="#" class="navbar-brand"><img src="images/driver/bird-logo.png"></a>
+        <div uib-dropdown>
+            <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#bs-navbar" aria-controls="bs-navbar" aria-expanded="false" uib-dropdown-toggle>
+                <a href class="dropdown-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                </a>
+            </button>
+            <ul class="dropdown-menu" role="menu" uib-dropdown>
                 <li>
                     <a href="#profile" ui-sref="core.profile.my_account">
                         <fa name="user"></fa>Profile
@@ -22,13 +30,14 @@
                     </a>
                 </li>
             </ul>
-        </li>
-        <img src="images/driver/bird-new-driver-logo.png" style="width:100%">
+            </div>
+            
+        </div>
     </div>
     <div>
         <p class="requestScreenText text-white">You have got a ride request</p>
     </div>
-    <div id="dvMap" class = 'dvMap' style="width: 100%;height:400px;"></div>
+    <div id="dvMap" class = 'dvMap1' style="width: 100%;height:300px;"></div>
     <p class='requestScreenText1 text-white'> 5722 Hillcroft St,Houston, TX 77036</p>
     <!-- <div class="row">
         <div class="form-group col-md-6 mb-0">
