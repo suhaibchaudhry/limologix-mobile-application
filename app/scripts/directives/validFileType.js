@@ -1,3 +1,5 @@
+'use strict';
+
 app.directive('validFile',function(){
   return {
     require:'ngModel',

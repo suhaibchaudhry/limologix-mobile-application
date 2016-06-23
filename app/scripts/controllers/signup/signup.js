@@ -25,8 +25,8 @@ app
             $scope.contact = {};
             $scope.personal = {};
             $scope.vehicle = {};
-            $scope.isContact = false;
-            $scope.isPersonal = true;
+            $scope.isContact = true;
+            $scope.isPersonal = false;
             $scope.isVehicle = false;
             $scope.selected = {};
 
@@ -46,16 +46,27 @@ app
             })
 
             getCountries();
+
+            function funcGetIndex(arr, selected) {
+                var arrIndex = jQuery.map(arr, function(e, i) {
+                    if (e.code == selected.code) return i;
+                })
+                return arrIndex.length ? arrIndex[0] : 0;
+            }
+
             //Get countries from API
             function getCountries() {
-                var data = localStorage.getItem('driverdata');
-                if (data) {
-                    var countries = JSON.parse(localStorage.getItem('countries'));
-                    var states = JSON.parse(localStorage.getItem('states'));
+                var data = localStorage.getItem('driverdata') || [];
+                data = JSON.parse(data)
+                if (data.length) {
+                    var locCountries = localStorage.getItem('countries') === 'undefined' ? '[]' : localStorage.getItem('countries')
+                    var countries = JSON.parse(locCountries);
+                    var locStates = localStorage.getItem('states') === 'undefined' ? '[]' : localStorage.getItem('states')
+                    var states = JSON.parse(locStates);
                 }
 
-                if (data && countries && states) {
-                    $scope.contactinfo = JSON.parse(data)[0];
+                if (data.length && countries.length && states.length) {
+                    $scope.contactinfo = data[0];
                     $scope.contact = {
                         fullName: $scope.contactinfo.fullName,
                         lastName: $scope.contactinfo.lastName,
@@ -69,8 +80,8 @@ app
                     }
                     $scope.countries = countries;
                     $scope.states = states;
-                    $scope.selected.selectedCountry = $scope.contactinfo.country_code;
-                    $scope.selected.selectedState = $scope.contactinfo.state_code;
+                    $scope.selected.selectedCountry = $scope.countries[funcGetIndex($scope.countries, $scope.contactinfo.country_code)];
+                    $scope.selected.selectedState = $scope.states[funcGetIndex($scope.states, $scope.contactinfo.state_code)];
                     try {
                         $scope.$digest();
                     } catch (e) {

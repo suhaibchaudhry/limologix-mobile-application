@@ -1,3 +1,5 @@
+'use strict';
+
 app.directive('numbersOnly', function () {
     return {
         require: 'ngModel',
