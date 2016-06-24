@@ -10,7 +10,7 @@
 app
     .controller('homeCtrl', ['$scope', '$state', '$http', 'appSettings', 'notify', '$window', 'services', 'AppConstants', '$timeout',
         function($scope, $state, $http, appSettings, notify, $window, services, constants, $timeout) {
-            $scope.loggedUser = constant.driver.username;
+            $scope.loggedUser = constants.driver.username;
             var windowHeight = jQuery(window).innerHeight();
             var mapHeight = windowHeight - ($(".navbar-header").height() + $(".footer-text").height());
             $('#dvMap').height(mapHeight + 'px');
