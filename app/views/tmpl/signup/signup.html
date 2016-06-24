@@ -79,7 +79,7 @@
             <div class="row">
                 <div class="form-group col-md-12 mb-0">
                     <div class="col-md-6">
-                        <select placeholder="Country" name="country" id="country" class="form-control input-lg" ng-model="selected.selectedCountry" ng-options="country as country.name for country in countries" ng-change="GetSelectedCountry()" required></select>
+                        <select placeholder="Country" name="country" id="country" class="form-control input-lg" ng-model="selected.selectedCountry" ng-options="country as country.name for country in countries" ng-change="getStates()" required></select>
                     </div>
                     <div class="col-md-6">
                         <select placeholder="State" name="state" id="state" class="form-control input-lg" ng-model="selected.selectedState" ng-options="state as state.name for state in states" required></select>
@@ -145,11 +145,10 @@
                     <label class="color_white">Limo Badge Information</label>
                 </div>
                 <div class="row">
-                     <div class="form-group col-md-8 mb-0">
-                       <input type="text" name="limo_badge_number" id="limo_badge_number" class="form-control input-lg" placeholder="Limo Badge Number" ng-model="personal.limo_badge_number" required>
+                    <div class="form-group col-md-8 mb-0">
+                        <input type="text" name="limo_badge_number" id="limo_badge_number" class="form-control input-lg" placeholder="Limo Badge Number" ng-model="personal.limo_badge_number" required>
                     </div>
-
-                    <div class="tile-body col-md-3" ng-controller="DatepickerTripCtrl">
+                    <div class="tile-body col-md-4" ng-controller="DatepickerTripCtrl">
                         <p class="input-group">
                             <input type="text" class="form-control" name="limo_badge_exp_Date" id="limo_badge_exp_Date" uib-datepicker-popup="{{format}}" placeholder="Exp Date" ng-model="personal.limo_badge_exp_Date" is-open="opened" min-date="minDate" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
                             <span class="input-group-btn">
@@ -158,22 +157,22 @@
                         </p>
                     </div>
                 </div>
+            </div>
             </br>
             <hr>
             <div class="row">
                 <div class="form-group col-md-12 mb-0">
-                     <label class="color_white">ARA Information</label>
+                    <label class="color_white">ARA Information</label>
                 </div>
             </div>
-                    </br>
-
-             <div class="row">
-                 <div class="form-group col-md-4 mb-0">
-                     <img id="araImg" ng-src="{{personal.araImage}}" alt="" ng-model="personal.araImage" />
+            </br>
+            <div class="row">
+                <div class="form-group col-md-4 mb-0">
+                    <img id="araImg" ng-src="{{personal.araImage}}" alt="" ng-model="personal.araImage" />
                 </div>
                 <div class="form-group col-md-4 mb-0">
                     <input type='file' valid-file name="ara_filefield" ng-model="ara_filefield" id="araPicFileUpload" style="display:none" ng-required="true" />
-                     <label class="color_white ">Upload photo of ARA Card</label>
+                    <label class="color_white ">Upload photo of ARA Card</label>
                 </div>
                 <div class="tile-body col-md-4" ng-controller="DatepickerTripCtrl">
                     <p class="input-group">
@@ -185,39 +184,35 @@
                 </div>
             </div>
             <div class="row">
-                 <div class="form-group col-md-12 mb-0">
-                            <button type="file" validFile class="text-light text-white btn btn-success form-group col-md-12 input-lg" ng-click="ARAUpload()" required>Browse &nbsp;</button>
-                        </div>
-                
+                <div class="form-group col-md-12 mb-0">
+                    <button type="file" validFile class="text-light text-white btn btn-success form-group col-md-12 input-lg" ng-click="ARAUpload()" required>Browse &nbsp;</button>
+                </div>
             </div>
-
-           </br>
+            </br>
             <hr>
             <div class="row">
-                 <div class="form-group col-md-6 mb-0">
-                     <label class="color_white">Insurance card</label>
-                 </div>
-                 <div class="tile-body col-md-6" ng-controller="DatepickerTripCtrl">
-                            <p class="input-group">
-                                <input type="text" class="form-control" name="insurance_exp_Date" id="insurance_exp_Date" uib-datepicker-popup="{{format}}" placeholder="Exp Date" ng-model="personal.insurance_exp_Date" is-open="opened" min-date="minDate" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
-                                <span class="input-group-btn">
+                <div class="form-group col-md-6 mb-0">
+                    <label class="color_white">Insurance card</label>
+                </div>
+                <div class="tile-body col-md-6" ng-controller="DatepickerTripCtrl">
+                    <p class="input-group">
+                        <input type="text" class="form-control" name="insurance_exp_Date" id="insurance_exp_Date" uib-datepicker-popup="{{format}}" placeholder="Exp Date" ng-model="personal.insurance_exp_Date" is-open="opened" min-date="minDate" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                        <span class="input-group-btn">
                                 <button type="button" class="btn btn-default" ng-click="open($event)"><i class="fa fa-calendar"></i></button>
                             </span>
-                            </p>
-                        </div>
-
+                    </p>
+                </div>
             </div>
             <div class="row">
-                 <div class="form-group col-md-6 mb-0">
-                     <input type="text" name="companyName" id="companyName" class="form-control input-lg " placeholder="Company Name" ng-model="personal.companyName " required>
-                 </div>
-                 <div class="form-group col-md-6 mb-0">
+                <div class="form-group col-md-6 mb-0">
+                    <input type="text" name="companyName" id="companyName" class="form-control input-lg " placeholder="Company Name" ng-model="personal.companyName " required>
+                </div>
+                <div class="form-group col-md-6 mb-0">
                     <input type="text" name="policyNumber" id="policyNumber " class="form-control input-lg " placeholder="Policy Number " ng-model="personal.policyNumber " required>
-                 </div>
-
+                </div>
             </div>
-        </br></br>
-                
+            </br>
+            </br>
             <div class="row">
                 <div class="col-xs-4 previous">
                     <button type="button" class="text-white btn btn-success form-group col-md-12 input-lg" ng-click="Personal_previous() "><i class="fa fa-arrow-circle-left"></i> &nbsp;Previous</button>
@@ -237,16 +232,17 @@
             <div class="row">
                 <div class="form-group col-md-12 mb-0">
                     <div class="col-md-6">
-                        <label class="color_white">Make</label>
-                        <select placeholder="make" name="make" id="make" class="form-control input-lg" ng-model="vehicle.make" ng-options="make as make for make in vehicleTypesArr" required>
-                        </select>
+                    <label class="color_white">Select Type</label>
+                        <select placeholder="Vehicle Type" name="vehicletype" id="vehicletype" class="form-control input-lg" ng-model="selected.selectedVehicleType" ng-options="vehicle as vehicle.name for vehicle in vehicleTypes" ng-change="getMakes()" required></select>
                     </div>
-                    <label class="color_white">Model</label>
                     <div class="col-md-6">
-                        <select placeholder="Model" name="model" id="model" class="form-control input-lg" ng-model="vehicle.model" ng-options="model as model for model in vehicleTypesArr" required>
-                        </select>
+                     <label class="color_white">Make</label>
+                        <select placeholder="Make" name="make" id="make" class="form-control input-lg" ng-model="selected.selectedMake" ng-options="make as make.name for make in makes" ng-change="getModels()" required></select>
                     </div>
-                    </br>
+                     <div class="col-md-6">
+                     <label class="color_white">Model</label>
+                        <select placeholder="Model" name="model" id="model" class="form-control input-lg" ng-model="selected.selectedModel" ng-options="model as model.name for model in models" required></select>
+                    </div>                    
                 </div>
             </div>
             <br/>
@@ -254,8 +250,8 @@
             <div class="row">
                 <div class="form-group col-md-12 mb-0">
                     <div class="col-md-6">
-                        <label class="color_white">Select Type</label>
-                        <select placeholder="Model" name="selectType" id="selectType" class="form-control input-lg" ng-model="vehicle.selectType" id="selectType.id" ng-options="{id:types.id} as types.name for types in vehicleTypes" ng-change="getSelectedId(vehicle.selectType)" required>
+                        <label class="color_white">Model</label>
+                        <select placeholder="Model" name="model" id="model" class="form-control input-lg" ng-model="vehicle.model" ng-options="{id:types.id} as types.name for types in vehicle_models" ng-change="getSelectedModelId(vehicle.model)" required>
                         </select>
                     </div>
                     <div class="col-md-6">
@@ -308,21 +304,22 @@
                     </div>
                     </br>
                 </div>
-                </br>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="col-xs-4 previous">
-                            <button type="button" class="text-white btn btn-success form-group col-md-12 input-lg" ng-click="Vehicle_Previous()"> <i class="fa fa-arrow-circle-left"></i> &nbsp;Previous</button>
-                        </div>
-                        <div class="col-xs-4 previous">
-                            <button type="button" class=" text-light text-white btn btn-success form-group col-md-12 input-lg" ng-click="save_contactInfo()">Save &nbsp;<span class="glyphicon glyphicon-chevron-down"></span></button>
-                        </div>
-                        <div class="col-xs-4 previous">
-                            <button type="button" class=" text-light text-white btn btn-success form-group col-md-12 input-lg" ng-click="DriverSignup()" ng-disabled='step3.$invalid'>Submit &nbsp;<i class="fa fa-arrow-circle-right"></i></button>
-                        </div>
+            </div>
+            </br>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-xs-4 previous">
+                        <button type="button" class="text-white btn btn-success form-group col-md-12 input-lg" ng-click="Vehicle_Previous()"> <i class="fa fa-arrow-circle-left"></i> &nbsp;Previous</button>
+                    </div>
+                    <div class="col-xs-4 previous">
+                        <button type="button" class=" text-light text-white btn btn-success form-group col-md-12 input-lg" ng-click="save_contactInfo()">Save &nbsp;<span class="glyphicon glyphicon-chevron-down"></span></button>
+                    </div>
+                    <div class="col-xs-4 previous">
+                        <button type="button" class=" text-light text-white btn btn-success form-group col-md-12 input-lg" ng-click="DriverSignup()" ng-disabled='step3.$invalid'>Submit &nbsp;<i class="fa fa-arrow-circle-right"></i></button>
                     </div>
                 </div>
+            </div>
         </form>
-        </div>
-        <br/>
     </div>
+    <br/>
+</div>

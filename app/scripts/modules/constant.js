@@ -10,3 +10,12 @@
       .constant('StatesConstants',{
       	states:[]
       })
+      .constant('VehicleConstants',{
+        vehicleTypes:[]
+      })
+      .constant('MakeConstants',{
+        makes:[]
+      })
+      .constant('ModelConstants',{
+        models:[]
+      })

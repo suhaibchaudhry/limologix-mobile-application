@@ -79,6 +79,9 @@ var app = angular
             company_getCountries: 'master_data/countries',
             company_getStates: 'master_data/states',
             vehicle_types: 'master_data/vehicles/types',
+            vehicle_getVehicleTypes :'master_data/vehicles/types',
+            vehicle_getMakes :'master_data/vehicles/makes',
+            vehicle_getModels :'master_data/vehicles/models',
             logout: 'drivers/logout'
         }
     })
@@ -100,10 +103,10 @@ var app = angular
             }
         }
     }])
-    .run(['$rootScope', '$state', '$http', '$stateParams', '$window', 'AppConstants','FCMPlugin',function($rootScope, $state, $http, $stateParams, $window, constant,FCMPlugin) {
+    .run(['$rootScope', '$state', '$http', '$stateParams', '$window', 'AppConstants',function($rootScope, $state, $http, $stateParams, $window, constant) {
 
         //FCMPlugin = cordova.require('cordova/plugin/FCMPlugin')
-        FCMPlugin.subscribeToTopic('topicExample', successCallback, errorCallback);
+        //FCMPlugin.subscribeToTopic('topicExample', successCallback, errorCallback);
 
        // faye();
 
