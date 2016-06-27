@@ -8,8 +8,10 @@
  * Controller of the limoLogixApp
  */
 app
-    .controller('homeCtrl', ['$scope', '$state', '$http', 'appSettings', 'notify', '$window', 'services', 'AppConstants', '$timeout',
-        function($scope, $state, $http, appSettings, notify, $window, services, constants, $timeout) {
+    .controller('homeCtrl', ['$scope', '$state', '$http', 'appSettings', 'notify', '$window', 'services', 'AppConstants', '$timeout','Faye',
+        function($scope, $state, $http, appSettings, notify, $window, services, constants, $timeout,Faye) {
+            // /Faye.publish('/publish/784272c40c04371ca495c75a315f83fb', { latitude: '-71.05888010000001', longitude: '-71.05888010000001' });
+            //Faye.publish("/publish/784272c40c04371ca495c75a315f83fb",{ latitude: '-71.05888010000001', longitude: '-71.05888010000001' })
             $scope.loggedUser = constants.driver.username;
             var windowHeight = jQuery(window).innerHeight();
             var mapHeight = windowHeight - ($(".navbar-header").height() + $(".footer-text").height());

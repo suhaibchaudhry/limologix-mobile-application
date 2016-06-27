@@ -12553,9 +12553,6 @@ hr.line-full {
   height: 100%;
   width: 100%; }
 
-#dvMap {
-  pointer-events: none; }
-
 .requestScreenText {
   font-size: 30px;
   position: relative;
@@ -12583,9 +12580,6 @@ hr.line-full {
   position: relative;
   top: 30px;
   border-radius: 50%; }
-
-#dvMap {
-  pointer-events: none; }
 
 #progressBar {
   width: 400px;
@@ -12648,5 +12642,9 @@ li {
 .footer-text p {
   color: #ffffff;
   padding: 15px 10px; }
+
+.dvMap2 {
+  position: relative;
+  top: 30px; }
 
 /*# sourceMappingURL=main.css.map */

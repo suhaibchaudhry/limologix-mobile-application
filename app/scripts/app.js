@@ -76,6 +76,8 @@ var app = angular
             registration: 'drivers/registration',
             my_profile: 'drivers/profile/show',
             profileupdate: 'drivers/profile/update',
+            profileupdate: 'drivers/profile/update',
+            tripAccept: 'drivers/trips/accept',
             company_getCountries: 'master_data/countries',
             company_getStates: 'master_data/states',
             vehicle_types: 'master_data/vehicles/types',
@@ -106,9 +108,9 @@ var app = angular
     .run(['$rootScope', '$state', '$http', '$stateParams', '$window', 'AppConstants',function($rootScope, $state, $http, $stateParams, $window, constant) {
 
         //FCMPlugin = cordova.require('cordova/plugin/FCMPlugin')
-        //FCMPlugin.subscribeToTopic('topicExample', successCallback, errorCallback);
+        FCMPlugin.subscribeToTopic('topicExample', successCallback, errorCallback);
 
-       // faye();
+        //faye();
 
         //If driver logged in and 
         var driver = $window.sessionStorage['driver'] ? JSON.parse($window.sessionStorage['driver']) : {};
@@ -122,7 +124,7 @@ var app = angular
         if (constant.driver['Auth-Token']) {
             $http.defaults.headers.common['Auth-Token'] = $window.sessionStorage['Auth-Token'];
         } else {
-            $state.go('core.signup')
+            $state.go('core.home')
         }
 
         $rootScope.$state = $state;
@@ -876,7 +878,17 @@ var app = angular
             controller: 'requestScreenCtrl',
             templateUrl: 'views/tmpl/request_screen/request_screen.html'
         })
-
+        .state('core.passenger_boarded', {
+            url: '/passenger_boarded',
+            controller: 'passengerBoardedCtrl',
+            templateUrl: 'views/tmpl/home/passenger_boarded.html'
+        })
+        .state('core.passenger_arrived', {
+            url: '/passenger_arrived',
+            controller: 'passengerArrivedCtrl',
+            templateUrl: 'views/tmpl/home/passenger_arrived.html'
+        })
+       
 
     //forgot password
     //         .state('core.forgotpass', {
@@ -972,7 +984,25 @@ var app = angular
             controller: 'HelpCtrl',
             templateUrl: 'views/tmpl/help.html'
         });
-}]);
+}])
+
+
+
+// Simple Faye service
+.factory('Faye', function() {
+    var FayeServerURL = 'http://172.16.90.117:9292/faye';
+  var client = new Faye.Client(FayeServerURL);
+
+  return {
+    publish: function(channel, message) {
+      client.publish(channel, message);
+    },
+
+    subscribe: function(channel, callback) {
+      client.subscribe(channel, callback);
+    }
+  }
+});
 
 
 // function faye(){
@@ -989,9 +1019,6 @@ var app = angular
 //                         callback(message);
 //                     }
 //         };
-
-
-
 //         var client = new Faye.Client('http://172.16.90.117:9292/faye');
 //         client.addExtension(Logger);
 //         var publication = client.publish('/publish/784272c40c04371ca495c75a315f83fb', { latitude: '-71.05888010000001', longitude: '-71.05888010000001' });

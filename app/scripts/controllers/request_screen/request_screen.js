@@ -9,12 +9,58 @@
  */
 app
     .controller('requestScreenCtrl', ['$scope', '$state', '$http', 'appSettings', 'notify', '$window',
-        'services', 'AppConstants',
-        function($scope, $state, $http, appSettings, notify, $window, services, constants) {
+        'services', 'AppConstants', 'dispatchRideProvider',
+        function($scope, $state, $http, appSettings, notify, $window, services, constants,dispatchRideProvider) {
+            // get Customer route directions
+            $scope.tripsummary = {};
+            getCustomerRoute();
+            dispatchRideProvider.getRoutes($scope.tripsummary.pickupAt, $scope.tripsummary.dropoffAt,notify);
+            function getCustomerRoute() {
+                $scope.tripsummary.pickupAt = 'Marathahalli, Bengaluru, Karnataka 560037, India';
+                $scope.tripsummary.dropoffAt = 'Hebbal, Bengaluru, Karnataka 560024, India';
+                // var url = appSettings.serverPath + appSettings.serviceApis.signin;
+                // services.funcPostRequest(url, $scope.driverDetails).then(function(response) {
+                //     console.log($scope.driverDetails);
+                //     console.log(response);
+                //     localStorage.setItem("drivername", response.data.full_name)
+                //     notify({ classes: 'alert-success', message: response.message });
+                //     $state.go('app.dashboard');
+                // }, function(error) {
+                //     notify({ classes: 'alert-danger', message: error });
+                // });
+            }
 
 
+             function trip_accept(){
+                // var url = appSettings.serverPath + appSettings.serviceApis.tripAccept;
+                // services.funcPostRequest(url, $scope.driverDetails).then(function(response) {
+                //     console.log($scope.driverDetails);
+                //     console.log(response);
+                //     localStorage.setItem("drivername", response.data.full_name)
+                //     notify({ classes: 'alert-success', message: response.message });
+                //     $state.go('app.dashboard');
+                // }, function(error) {
+                //     notify({ classes: 'alert-danger', message: error });
+                // });
+            }
+            function trip_deny(){
+                // var url = appSettings.serverPath + appSettings.serviceApis.tripAccept;
+                // services.funcPostRequest(url, $scope.driverDetails).then(function(response) {
+                //     console.log($scope.driverDetails);
+                //     console.log(response);
+                //     localStorage.setItem("drivername", response.data.full_name)
+                //     notify({ classes: 'alert-success', message: response.message });
+                //     $state.go('app.dashboard');
+                // }, function(error) {
+                //     notify({ classes: 'alert-danger', message: error });
+                // });
+            }
+            
+            
+            
+            // google map integartion
             document.addEventListener("deviceready", onDeviceReady, false);
-
+            
             function onDeviceReady() {
                 //navigator.geolocation.watchPosition(onSuccess, onError);
                 alert('onDeviceReady');
@@ -35,7 +81,7 @@ app
                         zoom: 13,
                         mapTypeId: google.maps.MapTypeId.ROADMAP
                     };
-                    var map = new google.maps.Map(document.getElementById("dvMap12"), mapOptions);
+                    var map = new google.maps.Map(document.getElementById("dvMap"), mapOptions);
                     alert('mapp', map);
                     var marker = new google.maps.Marker({
                         position: LatLng,
@@ -113,43 +159,19 @@ app
 //             }
 
 
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(function(p) {
-                    var LatLng = new google.maps.LatLng(p.coords.latitude, p.coords.longitude);
-                    var mapOptions = {
-                        center: LatLng,
-                        zoom: 13,
-                        mapTypeId: google.maps.MapTypeId.ROADMAP
-                    };
-                    var map = new google.maps.Map(document.getElementById("dvMap12"), mapOptions);
-                    var marker = new google.maps.Marker({
-                        position: LatLng,
-                        map: map,
-                        title: "<div style = 'height:60px;width:200px'><b>Your location:</b><br />Latitude: " + p.coords.latitude + "<br />Longitude: " + p.coords.longitude
-                    });
-                    google.maps.event.addListener(marker, "click", function(e) {
-                        var infoWindow = new google.maps.InfoWindow();
-                        infoWindow.setContent(marker.title);
-                        infoWindow.open(map, marker);
-                    });
-                });
-            } else {
-                alert('Geo Location feature is not supported in this browser.');
-            }
-
             function progress(percent, $element) {
                 var progressBarWidth = percent * $element.width() / 100;
                 $element.find('div').animate({ width: progressBarWidth }, 500).html(percent + "% ");
             }
             var count = 1;
-            // setInterval(function() {
-            //     count++;
-            //     progress(parseInt(count + "0"), $('#progressBar'));
-            //     if (count == 10) {
-            //         $state.go('core.home');
-            //         return;
-            //     }
-            // }, 1000);
+//             setInterval(function() {
+//                 count++;
+//                 progress(parseInt(count + "0"), $('#progressBar'));
+//                 if (count == 10) {
+//                     $state.go('core.home');
+//                     return;
+//                 }
+//             }, 1000);
 
 
         }

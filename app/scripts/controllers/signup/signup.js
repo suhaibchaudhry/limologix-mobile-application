@@ -28,8 +28,8 @@ app
             $scope.personal = {};
             $scope.vehicle = {};
             $scope.isContact = false;
-            $scope.isPersonal = false;
-            $scope.isVehicle = true;
+            $scope.isPersonal = true;
+            $scope.isVehicle = false;
             $scope.selected = {};
             $scope.colorsArr = ['Red', 'Black', 'White', 'Other'];
             $scope.vehicle.Color = $scope.colorsArr[0];

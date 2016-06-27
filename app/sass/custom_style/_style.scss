@@ -134,9 +134,7 @@
       height: 100%;
       width: 100%;
 }
-#dvMap{
-    pointer-events:none;
-}
+
 .requestScreenText {
     font-size: 30px;
     position: relative;
@@ -170,7 +168,7 @@
 }
 
 #dvMap{
-    pointer-events:none;
+   // pointer-events:none;
 }
 
 #progressBar {
@@ -235,4 +233,8 @@ li{
 .footer-text p{
     color:#ffffff;
     padding: 15px 10px;
+}
+.dvMap2{
+    position:relative;
+    top:30px;
 }
