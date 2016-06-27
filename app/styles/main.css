@@ -12447,6 +12447,9 @@ hr.line-full {
   100% {
     transform: translateZ(0) rotateY(0deg);
     opacity: 1; } }
+@font-face {
+  font-family: Nexa Bold;
+  src: url(".. /.. /fonts/Nexa Bold.otf"); }
 .splash_Container {
   position: absolute;
   width: 100%;
@@ -12501,6 +12504,10 @@ hr.line-full {
   background-color: white;
   text-align: center;
   height: 100%; }
+
+.login_header {
+  background-color: white;
+  text-align: center; }
 
 .visible_status {
   background: url("../images/driver/toggle-inactive.png");
@@ -12560,7 +12567,7 @@ hr.line-full {
   text-align: center;
   vertical-align: middle; }
 
-.requestScreenText1 {
+.requestScreen_pickup_point {
   font-size: 30px;
   position: relative;
   text-align: center;
@@ -12576,10 +12583,14 @@ hr.line-full {
   border-radius: 2px;
   margin-top: 135px; }
 
-.dvMap1 {
+.b2 {
+  width: 130px; }
+
+.dvMap_circle {
   position: relative;
   top: 30px;
-  border-radius: 50%; }
+  border-radius: 50%;
+  pointer-events: none; }
 
 #progressBar {
   width: 400px;
@@ -12629,22 +12640,46 @@ li {
   right: 0;
   left: auto; }
 
-.footer-text {
+footer-text {
   position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
   background: #262262;
-  background: -moz-radial-gradient(center, ellipse cover, #262262 0%, #0b002f 100%);
-  background: -webkit-radial-gradient(center, ellipse cover, #262262 0%, #0b002f 100%);
-  background: radial-gradient(ellipse at center, #262262 0%, #0b002f 100%); }
+  background: -moz-radial-gradient(circle, #262262 0%, #0b002f 100%);
+  background: -webkit-radial-gradient(circle, #262262 0%, #0b002f 100%);
+  background: radial-gradient(circle, #262262 0%, #0b002f 100%); }
 
 .footer-text p {
   color: #ffffff;
-  padding: 15px 10px; }
+  padding: 20px 40px 10px;
+  font-family: Nexa Bold;
+  font-weight: normal;
+  font-size: 40px; }
 
 .dvMap2 {
   position: relative;
   top: 30px; }
+
+.timer-container {
+  width: 100%;
+  height: 50px;
+  background-color: #A52A2A; }
+
+#progress-bar {
+  width: 0;
+  background: #800000;
+  height: 50px;
+  text-align: center; }
+
+.pickUpText {
+  position: absolute;
+  top: 37%;
+  right: 4%;
+  width: 60%;
+  height: auto;
+  font-weight: bold;
+  font-size: 15px;
+  word-wrap: break-word; }
 
 /*# sourceMappingURL=main.css.map */

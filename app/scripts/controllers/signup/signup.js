@@ -27,8 +27,8 @@ app
             $scope.contact = {};
             $scope.personal = {};
             $scope.vehicle = {};
-            $scope.isContact = false;
-            $scope.isPersonal = true;
+            $scope.isContact = true;
+            $scope.isPersonal = false;
             $scope.isVehicle = false;
             $scope.selected = {};
             $scope.colorsArr = ['Red', 'Black', 'White', 'Other'];
@@ -481,7 +481,7 @@ app
         }
     ])
 
-.controller('DatepickerTripCtrl', ['$scope', 'countriesConstant', function($scope, constants) {
+.controller('DatepickerTripCtrl', ['$scope', function($scope) {
     $scope.today = function() {
         //update exp dates
         if ($scope.personal) {

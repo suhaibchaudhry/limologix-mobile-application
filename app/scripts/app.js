@@ -108,7 +108,7 @@ var app = angular
     .run(['$rootScope', '$state', '$http', '$stateParams', '$window', 'AppConstants',function($rootScope, $state, $http, $stateParams, $window, constant) {
 
         //FCMPlugin = cordova.require('cordova/plugin/FCMPlugin')
-        FCMPlugin.subscribeToTopic('topicExample', successCallback, errorCallback);
+       // FCMPlugin.subscribeToTopic('topicExample', successCallback, errorCallback);
 
         //faye();
 

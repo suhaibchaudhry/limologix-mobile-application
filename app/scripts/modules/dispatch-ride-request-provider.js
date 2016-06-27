@@ -43,13 +43,12 @@ function funcservices() {
                         var marker = new google.maps.Marker({
                             position: LatLng,
                             map: map,
-                            title: "<img border='0' align='Left' height='269' height='100%' src='images/driver/popup.png'><b>"+pickup+"</b></img>"
                         });
                         directionsDisplay.setMap(map);
                         //google.maps.event.addListener(marker, "click", function(e) {
-                            var infoWindow = new google.maps.InfoWindow();
-                            infoWindow.setContent(marker.title);
-                            infoWindow.open(map, marker);
+//                             var infoWindow = new google.maps.InfoWindow();
+//                             infoWindow.setContent(marker.title);
+//                             infoWindow.open(map, marker);
                         //});
                         source = pickup;
                         destination = dropoff;
