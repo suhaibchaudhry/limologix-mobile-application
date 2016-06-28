@@ -14,7 +14,7 @@ app
             // get Customer route directions
             $scope.tripsummary = {};
             getCustomerRoute();
-            dispatchRideProvider.getRoutes($scope.tripsummary.pickupAt, $scope.tripsummary.dropoffAt, notify);
+            dispatchRideProvider.getRoutes($scope.tripsummary.pickupAt, $scope.tripsummary.dropoffAt, notify,false);
 
             function getCustomerRoute() {
                 $scope.tripsummary.pickupAt = 'Marathahalli, Bengaluru, Karnataka 560037, India';
@@ -77,13 +77,13 @@ app
             var progressBar = $('#progress-bar'),width = 0;
             progressBar.width(width);
             var interval = setInterval(function() {
-                width += 10;
+                width += 15;
                 progressBar.css('width', width + '%');
-                if (width >= 100) {
+                if (width >= 105) {
                     clearInterval(interval);
                     $state.go('core.home')
                 }
-                $('#js-Visit-count').html(width / 10);
+                $('#js-Visit-count').html(width / 15);
             }, 1000)
         }
     ])

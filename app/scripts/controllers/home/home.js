@@ -8,8 +8,8 @@
  * Controller of the limoLogixApp
  */
 app
-    .controller('homeCtrl', ['$scope', '$state', '$http', 'appSettings', 'notify', '$window', 'services', 'AppConstants', '$timeout', 'Faye',
-            function($scope, $state, $http, appSettings, notify, $window, services, constants, $timeout, Faye) {
+    .controller('homeCtrl', ['$scope', '$state', '$http', 'appSettings', 'notify', '$window', 'services', 'AppConstants', '$timeout',
+            function($scope, $state, $http, appSettings, notify, $window, services, constants, $timeout) {
                 // /Faye.publish('/publish/784272c40c04371ca495c75a315f83fb', { latitude: '-71.05888010000001', longitude: '-71.05888010000001' });
                 //Faye.publish("/publish/784272c40c04371ca495c75a315f83fb",{ latitude: '-71.05888010000001', longitude: '-71.05888010000001' })
                 $scope.loggedUser = constants.driver.username;

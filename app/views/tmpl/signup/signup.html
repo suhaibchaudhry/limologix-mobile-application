@@ -249,17 +249,10 @@
             <hr>
             <div class="row">
                 <div class="form-group col-md-12 mb-0">
-                    <div class="col-md-6">
-                        <label class="color_white">Model</label>
-                        <select placeholder="Model" name="model" id="model" class="form-control input-lg" ng-model="vehicle.model" ng-options="{id:types.id} as types.name for types in vehicle_models" ng-change="getSelectedModelId(vehicle.model)" required>
-                        </select>
-                    </div>
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <select placeholder="color" name="Color" id="Color" class="form-control input-lg" ng-model="vehicle.Color" ng-options="colors as colors for colors in colorsArr" required>
                         </select>
-                        </br>
                     </div>
-                    </br>
                 </div>
             </div>
             </br>

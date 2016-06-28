@@ -28,9 +28,9 @@ app
             $scope.contact = {};
             $scope.personal = {};
             $scope.vehicle = {};
-            $scope.isContact = false;
+            $scope.isContact = true;
             $scope.isPersonal = false;
-            $scope.isVehicle = true;
+            $scope.isVehicle = false;
             $scope.selected = {};
 
             getVehicleTypes();

@@ -21,20 +21,20 @@ app
         'VehicleConstants',
         'ModelConstants',
         'MakeConstants',
-        function($scope, $state, $http, appSettings, notify, $window, services, countriesConstant, StatesConstants,VehicleConstants,ModelConstants,MakeConstants) {
+        function($scope, $state, $http, appSettings, notify, $window, services, countriesConstant, StatesConstants, VehicleConstants, ModelConstants, MakeConstants) {
             var self = this;
             $scope.phoneNumbr = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
             $scope.contact = {};
             $scope.personal = {};
             $scope.vehicle = {};
-            $scope.isContact = true;
+            $scope.isContact = false;
             $scope.isPersonal = false;
-            $scope.isVehicle = false;
+            $scope.isVehicle = true;
             $scope.selected = {};
             $scope.colorsArr = ['Red', 'Black', 'White', 'Other'];
             $scope.vehicle.Color = $scope.colorsArr[0];
-            
-            //Update countries and states
+
+            //Watch dropdown feilds - To Update countries and states,vehicleTypes,makes and models after save.
             $scope.$watch('countries', function() {
                 localStorage.setItem('countries', JSON.stringify($scope.countries))
             })
@@ -53,20 +53,12 @@ app
 
             getCountries();
 
-            function funcGetIndex(arr, selected) {
-                var arrIndex = jQuery.map(arr, function(e, i) {
-                    if (e.code == selected.code) return i;
-                })
-                return arrIndex.length ? arrIndex[0] : 0;
-            }
-
             //Get countries from API
             function getCountries() {
-                //get countries from localStorage
-                if(localStorage.getItem('driverdata'))
-                {
+                // get countries from localStorage
+                if (localStorage.getItem('driverdata')) {
                     var data = localStorage.getItem('driverdata') || [];
-                    data = JSON.parse(data)
+                    data = JSON.parse(data);
                     if (data.length) {
                         var locCountries = localStorage.getItem('countries') === 'undefined' ? '[]' : localStorage.getItem('countries')
                         var countries = JSON.parse(locCountries);
@@ -88,37 +80,46 @@ app
                         }
                         $scope.countries = countries;
                         $scope.states = states;
-                        $scope.selected.selectedCountry = $scope.countries[funcGetIndex($scope.countries, $scope.contactinfo.country_code)];
-                        $scope.selected.selectedState = $scope.states[funcGetIndex($scope.states, $scope.contactinfo.state_code)];
+                        if ($scope.contactinfo.country_code) {
+                            $scope.selected.selectedCountry = $scope.countries[funcGetIndex($scope.countries, $scope.contactinfo.country_code)];
+                        }
+                        if ($scope.contactinfo.state_code)
+                            $scope.selected.selectedState = $scope.states[funcGetIndex($scope.states, $scope.contactinfo.state_code)];
                         try {
                             $scope.$digest();
                         } catch (e) {
 
                         }
-                     }
-                } 
+                    }
+                }
                 //Get countries from the server api when app loads for the first time.
                 else {
-                    var url = appSettings.serverPath + appSettings.serviceApis.company_getCountries;
-                    services.funcGetRequest(url).then(function(response) {
-                        $scope.countries = response.data;
-                        countriesConstant.countries = $scope.countries;
-                        $scope.selected.selectedCountry = $scope.countries[0];
-                        var address = {
-                            "country": {
-                                "code": "US",
-                                "name": "United States"
-                            },
-                            "state": {
-                                "code": "AK",
-                                "name": "Alaska"
+                    var data = localStorage.getItem('driverdata');
+                    if(data)
+                        data = JSON.parse(data);
+                    if (data == "" || !data[0].country_code) {
+                        var url = appSettings.serverPath + appSettings.serviceApis.company_getCountries;
+                        services.funcGetRequest(url).then(function(response) {
+                            $scope.countries = response.data;
+                            countriesConstant.countries = $scope.countries;
+                            $scope.selected.selectedCountry = $scope.countries[0];
+                            var address = {
+                                "country": {
+                                    "code": "US",
+                                    "name": "United States"
+                                },
+                                "state": {
+                                    "code": "AK",
+                                    "name": "Alaska"
+                                }
                             }
-                        }
-                        $scope.getStates(address);
+                            $scope.getStates(address);
 
-                    }, function(error) {
-                        notify({ classes: 'alert-danger', message: error.message ? error.message : '' });
-                    });
+                        }, function(error) {
+                            notify({ classes: 'alert-danger', message: error.message ? error.message : '' });
+                        });
+                    }
+
                 }
             }
             //Get selected state from the view
@@ -137,13 +138,20 @@ app
                     notify({ classes: 'alert-danger', message: error });
                 });
             };
-            
+            //Get the index of selected country to update the model
+            function funcGetIndex(arr, selected) {
+                var arrIndex = jQuery.map(arr, function(e, i) {
+                    if (e.code == selected.code) return i;
+                })
+                return arrIndex.length ? arrIndex[0] : 0;
+            }
+
             getVehicleType();
             //Get vehicles type from API
             function getVehicleType() {
+                var el = localStorage.getItem('driverdata');
                 //get vehicle info from localStorage on refresh after user has saved his data
-                if(localStorage.getItem('driverdata') && localStorage.getItem('vehicleTypes') != 'undefined')
-                {
+                if (el && JSON.parse(el)[2].selectType) {
                     var data = localStorage.getItem('driverdata') || [];
                     data = JSON.parse(data)
                     if (data.length) {
@@ -171,44 +179,56 @@ app
                         $scope.vehicleTypes = vehicleTypes;
                         $scope.makes = makes;
                         $scope.models = models;
-                        $scope.selected.selectedVehicleType = $scope.vehicleTypes[funcGetIndex($scope.vehicleTypes, $scope.vehicleinfo.id)];
-                        $scope.selected.selectedMake = $scope.makes[funcGetIndex($scope.makes, $scope.vehicleinfo.id)];
-                        $scope.selected.selectedModel = $scope.models[funcGetIndex($scope.models, $scope.vehicleinfo.id)];
+                        if ($scope.vehicleinfo.selectType.id)
+                            $scope.selected.selectedVehicleType = $scope.vehicleTypes[funcGetIndexVehicleType($scope.vehicleTypes, $scope.vehicleinfo.selectType.id)];
+                        if ($scope.vehicleinfo.make.id)
+                            $scope.selected.selectedMake = $scope.makes[funcGetIndexVehicleType($scope.makes, $scope.vehicleinfo.make.id)];
+                        if ($scope.vehicleinfo.model.id)
+                            $scope.selected.selectedModel = $scope.models[funcGetIndexVehicleType($scope.models, $scope.vehicleinfo.model.id)];
                         try {
                             $scope.$digest();
                         } catch (e) {
 
                         }
-                     }
-
-                } 
-                else{               
-                   //Get countries from the server api when app loads for the first time.
-                    var url = appSettings.serverPath + appSettings.serviceApis.vehicle_getVehicleTypes;
-                    services.funcGetRequest(url).then(function(response) {
-                        $scope.vehicleTypes = response.data.vehicle_types;
-                        VehicleConstants.vehicleTypes = $scope.vehicleTypes;
-                        $scope.selected.selectedVehicleType = $scope.vehicleTypes[0];
-                        var info = {
-                            "vehicle": {
-                                "id": "1",
-                                "name": "SUV"
-                            },
-                            "make": {
-                                "id": "1",
-                                "name": "Lincoln"
-                            },
-                            "model":{
-                                "id":"1",
-                                "name":"MKT"
+                    }
+                } else {
+                    if (localStorage.getItem('driverdata') == "" || !JSON.parse(el)[2].selectType) {
+                        //Get countries from the server api when app loads for the first time.
+                        var url = appSettings.serverPath + appSettings.serviceApis.vehicle_getVehicleTypes;
+                        services.funcGetRequest(url).then(function(response) {
+                            $scope.vehicleTypes = response.data.vehicle_types;
+                            VehicleConstants.vehicleTypes = $scope.vehicleTypes;
+                            $scope.selected.selectedVehicleType = $scope.vehicleTypes[0];
+                            var info = {
+                                "vehicle": {
+                                    "id": "1",
+                                    "name": "SUV"
+                                },
+                                "make": {
+                                    "id": "1",
+                                    "name": "Lincoln"
+                                },
+                                "model": {
+                                    "id": "1",
+                                    "name": "MKT"
+                                }
                             }
-                        }
-                        $scope.getMakes(info);
+                            $scope.getMakes(info);
 
-                    }, function(error) {
-                        notify({ classes: 'alert-danger', message: error.message ? error.message : '' });
-                    });
+                        }, function(error) {
+                            notify({ classes: 'alert-danger', message: error.message ? error.message : '' });
+                        });
+
+                    }
+
                 }
+            }
+
+            function funcGetIndexVehicleType(arr, selected) {
+                var arrIndex = jQuery.map(arr, function(e, i) {
+                    if (e.id == selected) return i;
+                })
+                return arrIndex.length ? arrIndex[0] : 0;
             }
             //Get selected make based on vehicle type selection
             $scope.getMakes = function(info) {
@@ -217,37 +237,35 @@ app
                     $scope.makes = response.data.vehicle_makes;
                     if (info && info.make) {
                         jQuery.grep($scope.makes, function(e, i) {
-                            if (e.id == info.make.id)
-                            {
+                            if (e.id == info.make.id) {
                                 $scope.selected.selectedMake = e;
-                            }else{
+                            } else {
                                 $scope.getModels(info);
                             }
                         })
-                    } else{
-                         $scope.selected.selectedMake = $scope.makes[0];
+                    } else {
+                        $scope.selected.selectedMake = $scope.makes[0];
                     }
-
                     $scope.getModels(info);
-                       
+
                 }, function(error) {
                     notify({ classes: 'alert-danger', message: error });
                 });
-               
+
             };
 
             //Get selected model based on vehicle type and make selection
             $scope.getModels = function(info) {
-                var url = appSettings.serverPath  + appSettings.serviceApis.vehicle_getModels;
+                var url = appSettings.serverPath + appSettings.serviceApis.vehicle_getModels;
                 services.funcPostRequest(url, { 'vehicle_type_id': $scope.selected.selectedVehicleType.id, 'vehicle_make_id': $scope.selected.selectedMake.id }).then(function(response) {
                     $scope.models = response.data.vehicle_models;
                     if (info && info.model) {
                         jQuery.grep($scope.models, function(e, i) {
-                            if (e.id == info.model.id){
+                            if (e.id == info.model.id) {
                                 $scope.selected.selectedModel = e;
-                            }else{
-                                 $scope.selected.selectedModel = $scope.models[0];
-                            } 
+                            } else {
+                                $scope.selected.selectedModel = $scope.models[0];
+                            }
                         })
                     } else
                         $scope.selected.selectedModel = $scope.models[0];
@@ -255,10 +273,6 @@ app
                     notify({ classes: 'alert-danger', message: error });
                 });
             };
-
-
-
-
 
             //Update form models form local storage on Page refresh
 
@@ -282,27 +296,7 @@ app
                     policyNumber: $scope.personalinfo.policyNumber
                 }
             }
-
-            //Vehicle Information
-            if (data)
-                $scope.vehicleinfo = JSON.parse(data)[2];
-            if ($scope.vehicleinfo) {
-                $scope.vehicle = {
-                    make: $scope.vehicleinfo.make,
-                    model: $scope.vehicleinfo.model,
-                    selectType: $scope.vehicleinfo.selectType,
-                    Color: $scope.vehicleinfo.Color,
-                    HLL_Number: $scope.vehicleinfo.HLL_Number,
-                    licencePlateNum: $scope.vehicleinfo.licencePlateNum,
-                    addFeature1: $scope.vehicleinfo.Features[0] ? $scope.vehicleinfo.Features[0] : '',
-                    addFeature2: $scope.vehicleinfo.Features[1] ? $scope.vehicleinfo.Features[1] : '',
-                    addFeature3: $scope.vehicleinfo.Features[2] ? $scope.vehicleinfo.Features[2] : '',
-                    addFeature4: $scope.vehicleinfo.Features[3] ? $scope.vehicleinfo.Features[3] : '',
-                    addFeature5: $scope.vehicleinfo.Features[4] ? $scope.vehicleinfo.Features[4] : '',
-                    addFeature6: $scope.vehicleinfo.Features[5] ? $scope.vehicleinfo.Features[5] : ''
-                }
-            };
-
+            
             //File uploads for Licence plate and ARA photos.
             $scope.DriverLicenceUpload = function() {
                 $("input[id='dlPicFileUpload']").click();
@@ -407,7 +401,12 @@ app
                         Features: $scope.featuresArr
                     }
                     localStorage.setItem("driverdata", JSON.stringify([$scope.contactinfo, $scope.personalInfo, $scope.vehicleInfo]));
-                }
+            }
+
+            $scope.Vehicle_Previous = function() {
+                $scope.isPersonal = true;
+                $scope.isVehicle = false;
+            }
                 //Submit the form
             $scope.DriverSignup = function() {
                 var data = localStorage.getItem('driverdata');
@@ -454,8 +453,8 @@ app
                         insurance_expiry_date: $scope.personalinfo.insurance_exp_Date
                     },
                     "vehicle": {
-                        vehicle_make_id: $scope.vehicle.makeId,//$scope.vehicleinfo.make,
-                        vehicle_model_id: $scope.vehicle.modelId,//$scope.vehicleinfo.model,
+                        vehicle_make_id: $scope.vehicle.makeId, //$scope.vehicleinfo.make,
+                        vehicle_model_id: $scope.vehicle.modelId, //$scope.vehicleinfo.model,
                         hll_number: $scope.vehicleinfo.HLL_Number,
                         color: $scope.vehicleinfo.Color,
                         license_plate_number: $scope.vehicleinfo.licencePlateNum,
@@ -473,10 +472,6 @@ app
                 }, function(error) {
                     notify({ classes: 'alert-danger', message: error });
                 });
-            }
-            $scope.Vehicle_Previous = function() {
-                $scope.isPersonal = true;
-                $scope.isVehicle = false;
             }
         }
     ])

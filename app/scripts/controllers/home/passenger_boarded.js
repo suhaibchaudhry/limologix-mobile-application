@@ -13,7 +13,7 @@ app
         function($scope, $state, $http, appSettings, notify, $window, services, constants, dispatchRideProvider) {
             $scope.tripsummary = {};
             getCustomerRoute();
-            dispatchRideProvider.getRoutes($scope.tripsummary.pickupAt, $scope.tripsummary.dropoffAt,notify);
+            dispatchRideProvider.getRoutes($scope.tripsummary.pickupAt, $scope.tripsummary.dropoffAt,notify,true,'pickuppoint');
             function getCustomerRoute() {
                 $scope.tripsummary.pickupAt = 'Marathahalli, Bengaluru, Karnataka 560037, India';
                 $scope.tripsummary.dropoffAt = 'Hebbal, Bengaluru, Karnataka 560024, India';

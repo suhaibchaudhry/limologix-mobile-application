@@ -7,7 +7,7 @@ function funcservices() {
     return {
         $get: function($http, $q) {
             return {
-                getRoutes: function(pickup, dropoff, notify) {
+                getRoutes: function(pickup, dropoff, notify,isInfoWindowVisible,check_infoWindow) {
                     var source, destination;
                     var directionsDisplay;
                     var directionsService = new google.maps.DirectionsService();
@@ -45,11 +45,7 @@ function funcservices() {
                             map: map,
                         });
                         directionsDisplay.setMap(map);
-                        //google.maps.event.addListener(marker, "click", function(e) {
-//                             var infoWindow = new google.maps.InfoWindow();
-//                             infoWindow.setContent(marker.title);
-//                             infoWindow.open(map, marker);
-                        //});
+
                         source = pickup;
                         destination = dropoff;
 
@@ -62,26 +58,60 @@ function funcservices() {
                             if (status == google.maps.DirectionsStatus.OK) {
                                 directionsDisplay.setDirections(response);
                                 var leg = response.routes[0].legs[0];
-                                makeMarker(leg.start_location, icons.start, source, map);
-                                makeMarker(leg.end_location, icons.end, destination, map);
+                                if(!isInfoWindowVisible){
+                                    makeMarker(leg.start_location, icons.start, source, map);
+                                    makeMarker(leg.end_location, icons.end, destination, map);
+                                }else{
+                                    makeMarker_source(leg.start_location, icons.start, source, map,check_infoWindow);
+                                    makeMarker_destination(leg.end_location, icons.end, destination, map,check_infoWindow);
+                                }
+                                
                             } else {
                                 // notify({ classes: 'alert-error', message: 'unable to retrive route' });
                             }
                         });
                     });
 
-
-                    // var mapOptions = {
-                    //                         zoom: 7,
-                    //                         center: mumbai
-                    //                     };
-                    // var map = new google.maps.Map(document.getElementById('dvMap'));
-                    // directionsDisplay.setMap(map);
-                    //directionsDisplay.setPanel(document.getElementById('dvPanel'));
-
                     //*********DIRECTIONS AND ROUTE**********************//
 
 
+                    function makeMarker_source(position, icon, title, map,check_infoWindow) {
+                        
+                        var marker_pickup = new google.maps.Marker({
+                            position: position,
+                            map: map,
+                            icon: icon,
+                            title: (check_infoWindow == "pickuppoint") ? "<div><img border='0' align='Left' width='100%' src='images/driver/popup.png'></img><p class = 'pickUpText'>" + pickup + "</p></div>" : title
+                        });
+                        if(check_infoWindow == "pickuppoint"){
+                            var infoWindow = new google.maps.InfoWindow();
+                             infoWindow.setContent(marker_pickup.title);
+                             infoWindow.open(map, marker_pickup);
+                             google.maps.event.addListener(marker_pickup, "click", function(e) {
+                                  infoWindow.setContent(marker_pickup.title);
+                                  infoWindow.open(map, marker_pickup);
+                             });
+                        }
+                        
+                    }
+                    function makeMarker_destination(position, icon, title, map,check_infoWindow) {
+                        var marker_dropoff = new google.maps.Marker({
+                            position: position,
+                            map: map,
+                            icon: icon,
+                            title: (check_infoWindow == "dropoffpoint") ? "<div><img border='0' align='Left' width='100%' src='images/driver/popup.png'></img><p class = 'pickUpText'>" + dropoff + "</p></div>" : title
+                        });
+                         if(check_infoWindow == "dropoffpoint"){
+                             var infoWindow = new google.maps.InfoWindow();
+                             infoWindow.setContent(marker_dropoff.title);
+                             infoWindow.open(map, marker_dropoff);
+                             google.maps.event.addListener(marker_dropoff, "click", function(e) {
+                                  infoWindow.setContent(marker_dropoff.title);
+                                  infoWindow.open(map, marker_dropoff);
+                             });
+                         }
+                        
+                    }
                     function makeMarker(position, icon, title, map) {
                         new google.maps.Marker({
                             position: position,

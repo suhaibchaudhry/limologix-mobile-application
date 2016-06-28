@@ -76,7 +76,6 @@ var app = angular
             registration: 'drivers/registration',
             my_profile: 'drivers/profile/show',
             profileupdate: 'drivers/profile/update',
-            profileupdate: 'drivers/profile/update',
             tripAccept: 'drivers/trips/accept',
             company_getCountries: 'master_data/countries',
             company_getStates: 'master_data/states',
@@ -84,7 +83,7 @@ var app = angular
             vehicle_getVehicleTypes :'master_data/vehicles/types',
             vehicle_getMakes :'master_data/vehicles/makes',
             vehicle_getModels :'master_data/vehicles/models',
-            logout: 'drivers/logout'
+            logout: 'drivers/logout',
         }
     })
     //session expired
@@ -989,20 +988,20 @@ var app = angular
 
 
 // Simple Faye service
-.factory('Faye', function() {
-    var FayeServerURL = 'http://172.16.90.117:9292/faye';
-  var client = new Faye.Client(FayeServerURL);
+// .factory('Faye', function() {
+//     var FayeServerURL = 'http://172.16.90.117:9292/faye';
+//   var client = new Faye.Client(FayeServerURL);
 
-  return {
-    publish: function(channel, message) {
-      client.publish(channel, message);
-    },
+//   return {
+//     publish: function(channel, message) {
+//       client.publish(channel, message);
+//     },
 
-    subscribe: function(channel, callback) {
-      client.subscribe(channel, callback);
-    }
-  }
-});
+//     subscribe: function(channel, callback) {
+//       client.subscribe(channel, callback);
+//     }
+//   }
+// });
 
 
 // function faye(){
