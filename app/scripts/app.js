@@ -195,38 +195,7 @@ var app = angular
                 }]
             }
         })
-         //logout
-        .state('core.logout', {
-            url: '/login',
-            controller: 'LogoutCtrl',
-            templateUrl: 'views/tmpl/login/login.html'
-
-        })
-        //mail
-        .state('app.mail', {
-            abstract: true,
-            url: '/mail',
-            controller: 'MailCtrl',
-            templateUrl: 'views/tmpl/mail/mail.html'
-        })
-        //mail/inbox
-        .state('app.mail.inbox', {
-            url: '/inbox',
-            controller: 'MailInboxCtrl',
-            templateUrl: 'views/tmpl/mail/inbox.html'
-        })
-        //mail/compose
-        .state('app.mail.compose', {
-            url: '/compose',
-            controller: 'MailComposeCtrl',
-            templateUrl: 'views/tmpl/mail/compose.html'
-        })
-        //mail/single
-        .state('app.mail.single', {
-            url: '/single',
-            controller: 'MailSingleCtrl',
-            templateUrl: 'views/tmpl/mail/single.html'
-        })
+         
         //ui
         .state('app.ui', {
             url: '/ui',
@@ -897,6 +866,13 @@ var app = angular
             url: '/passenger_arrived',
             controller: 'passengerArrivedCtrl',
             templateUrl: 'views/tmpl/home/passenger_arrived.html'
+        })
+        //logout
+        .state('core.logout', {
+            url: '/login',
+            controller: 'LogoutCtrl',
+            templateUrl: 'views/tmpl/login/login.html'
+
         })
        
 

@@ -110,6 +110,12 @@ app
                         companyName:response.insurance_company,
                         policyNumber:response.insurance_policy_number
                     }
+                    toDataUrl($scope.personal.dlImage,false, function(base64_dlImg) {
+                      $scope.personal.dlImage = base64_dlImg;
+                    });
+                    toDataUrl($scope.personal.araImage,false, function(base64_araImg) {
+                      $scope.personal.araImage = base64_araImg;
+                    });
                     $scope.vehicle = {
                         Color :response.vehicle.color,
                         HLL_Number :response.vehicle.hll_number,
@@ -132,6 +138,25 @@ app
                     responseToken.reject(error);
                 });
                 return responseToken.promise;
+            }
+
+            //Convert image to base64 and send a request - For preview image.
+            function toDataUrl(url,bool, callback) {
+                if(bool){
+                   callback(url);
+                    return;    
+                }
+                var xhr = new XMLHttpRequest();
+                xhr.responseType = 'blob';
+                xhr.onload = function() {
+                    var reader = new FileReader();
+                    reader.onloadend = function() {
+                        callback(reader.result);
+                    }
+                    reader.readAsDataURL(xhr.response);
+                };
+                xhr.open('GET', url);
+                xhr.send();
             }
 
             function getDriverVehicleInfo() {
@@ -302,8 +327,7 @@ app
                         ara_image:{
                              image: $scope.personal.araImage,
                              name: $scope.personal.araImageName,
-                        }, 
-                        ara_number:$scope.personal,                      
+                        },                      
                         ara_expiry_date: new Date($scope.personal.ara_exp_Date),
                         insurance_expiry_date: new Date($scope.personal.insurance_exp_Date),
                         insurance_company: $scope.personal.companyName,
@@ -341,7 +365,7 @@ app
                         Features: $scope.featuresArr
                     }
                 var url = appSettings.serverPath + appSettings.serviceApis.update_vehicle_info;
-                services.funcPostRequest(url, {"driver":$scope.vehicleDetails}).then(function(response) {
+                services.funcPostRequest(url, {"vehicle":$scope.vehicleDetails}).then(function(response) {
                     console.log(response);
                     notify({ classes: 'alert-success', message: response.message });
                 }, function(error) {

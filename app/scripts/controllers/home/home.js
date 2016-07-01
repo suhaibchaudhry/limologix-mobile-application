@@ -12,7 +12,7 @@ app
             function($scope, $state, $http, appSettings, notify, $window, services, constants, $timeout,Faye) {
                 // /Faye.publish('/publish/784272c40c04371ca495c75a315f83fb', { latitude: '-71.05888010000001', longitude: '-71.05888010000001' });
                 Faye.publish("/publish/6224796166ea2e3b5041cfa887915c3b",{ latitude: '-81.05888010000001', longitude: '-81.05888010000001' })
-                $scope.driver_name =  constants.driver.name;
+                $scope.driver_name = constants.driver.full_name;
                 var windowHeight = jQuery(window).innerHeight();
                 var mapHeight = windowHeight - ($(".navbar-header").height() + $(".footer-text").height());
                 $('#dvMap').height(mapHeight + 'px');
