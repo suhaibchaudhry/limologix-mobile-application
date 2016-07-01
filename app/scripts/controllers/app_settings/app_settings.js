@@ -8,13 +8,12 @@
  * Controller of the limoLogixApp
  */
 app
-  .controller('appSettingCtrl',[
-    '$scope',
-    '$state',
-    '$http',
-    function ($scope,$state,$http) {
-      $scope.go_online = function() {
-        console.log('asda');
-        $state.go('core.home');
-      };
-    }]);
+    .controller('appSettingCtrl', ['$scope', '$state', '$http',
+        function($scope, $state, $http) {
+            
+            $scope.go_online = function() {
+                $state.go('core.home');
+            }
+            
+        }
+    ]);

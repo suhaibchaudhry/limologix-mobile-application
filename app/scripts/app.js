@@ -76,6 +76,7 @@ var app = angular
             registration: 'drivers/registration',
             my_profile: 'drivers/profile/show',
             profileupdate: 'drivers/profile/update',
+            getDriverInfo: 'drivers/profile/show',
             tripAccept: 'drivers/trips/accept',
             company_getCountries: 'master_data/countries',
             company_getStates: 'master_data/states',
@@ -83,6 +84,9 @@ var app = angular
             vehicle_getVehicleTypes :'master_data/vehicles/types',
             vehicle_getMakes :'master_data/vehicles/makes',
             vehicle_getModels :'master_data/vehicles/models',
+            update_contact_info :'drivers/profile/update_contact_information',
+            update_personal_info:'drivers/profile/update_personal_information',
+            update_vehicle_info:'drivers/profile/update_vehicle',
             logout: 'drivers/logout',
         }
     })
@@ -123,7 +127,7 @@ var app = angular
         if (constant.driver['Auth-Token']) {
             $http.defaults.headers.common['Auth-Token'] = $window.sessionStorage['Auth-Token'];
         } else {
-            $state.go('core.home')
+            $state.go('core.login')
         }
 
         $rootScope.$state = $state;
@@ -165,7 +169,7 @@ var app = angular
 
 .config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
 
-    $urlRouterProvider.otherwise('/core/request_screen');
+    $urlRouterProvider.otherwise('/core/home');
 
     $stateProvider
 
@@ -190,6 +194,13 @@ var app = angular
                     ]);
                 }]
             }
+        })
+         //logout
+        .state('core.logout', {
+            url: '/login',
+            controller: 'LogoutCtrl',
+            templateUrl: 'views/tmpl/login/login.html'
+
         })
         //mail
         .state('app.mail', {
@@ -848,7 +859,7 @@ var app = angular
             templateUrl: 'views/tmpl/signup/signup.html'
         })
 
-    .state('core.appSettings', {
+        .state('core.appSettings', {
             url: '/app_settings',
             controller: 'appSettingCtrl',
             templateUrl: 'views/tmpl/app_settings/app_settings.html'
@@ -988,20 +999,34 @@ var app = angular
 
 
 // Simple Faye service
-// .factory('Faye', function() {
-//     var FayeServerURL = 'http://172.16.90.117:9292/faye';
-//   var client = new Faye.Client(FayeServerURL);
+.factory('Faye', function() {
+    var Logger = {
+                incoming: function(message, callback) {
+                    console.log('incoming', message);
+                    callback(message);
+                },
+                outgoing: function(message, callback) {
+                    message.ext = message.ext || {};
+                    message.ext.auth_token = "5732d914d919b0ea1f36647e037d7c3c";
+                    message.ext.user_type = "driver";
+                    console.log('outgoing', message);
+                    callback(message);
+                }
+    };
+        
+    var FayeServerURL = 'http://172.16.90.117:9292/faye';
+    var client = new Faye.Client(FayeServerURL);
+    client.addExtension(Logger);
+      return {
+        publish: function(channel, message) {
+          client.publish(channel, message);
+        },
 
-//   return {
-//     publish: function(channel, message) {
-//       client.publish(channel, message);
-//     },
-
-//     subscribe: function(channel, callback) {
-//       client.subscribe(channel, callback);
-//     }
-//   }
-// });
+        subscribe: function(channel, callback) {
+          client.subscribe(channel, callback);
+        }
+      }
+});
 
 
 // function faye(){

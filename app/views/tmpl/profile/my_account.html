@@ -1,6 +1,38 @@
 <div class="page page-signup page-login">
-    <div class="col-xs-12 splash_header">
-        <img src="images/driver/bird-new-driver-logo.png" style="width:100%">
+       <div class="container">
+        <div class="navbar-header">
+        <a href="#" class="navbar-brand"><img src="images/driver/bird-logo.png"></a>
+        <div uib-dropdown>
+            <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#bs-navbar" aria-controls="bs-navbar" aria-expanded="false" uib-dropdown-toggle>
+                <a href class="dropdown-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                </a>
+            </button>
+            <ul class="dropdown-menu" role="menu" uib-dropdown>
+                <li>
+                    <a href="#profile" ui-sref="core.profile.my_account">
+                        <fa name="user"></fa>Profile
+                    </a>
+                </li>
+                <li>
+                    <a href="#" ui-sref="core.profile.availability">
+                        <fa name="cog"></fa>Availability
+                    </a>
+                </li>
+                <li class="divider"></li>
+                <li>
+                    <a href="#logout" ui-sref="drivers.logout">
+                        <fa name="sign-out"></fa>Logout
+                    </a>
+                </li>
+            </ul>
+            </div>
+            
+        </div>
     </div>
     <br/>
     <br/>
@@ -35,7 +67,7 @@
                 </div>
             </div>
             <br/>
-            <div class="row">
+<!--             <div class="row">
                 <div class="form-group col-md-12 mb-0">
                     <div class="col-md-12">
                         <input type="password" name="password" id="password" class="form-control input-lg" placeholder="Password" ng-model="contact.password" required>
@@ -52,7 +84,7 @@
                         </p>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <br/>
             <div class="row">
                 <div class="form-group col-md-12 mb-0">
@@ -79,7 +111,7 @@
             <div class="row">
                 <div class="form-group col-md-12 mb-0">
                     <div class="col-md-6">
-                        <select placeholder="Country" name="country" id="country" class="form-control input-lg" ng-model="selected.selectedCountry" ng-options="country as country.name for country in countries" ng-change="GetSelectedCountry()" required></select>
+                        <select placeholder="Country" name="country" id="country" class="form-control input-lg" ng-model="selected.selectedCountry" ng-options="country as country.name for country in countries" ng-change="getStates()" required></select>
                     </div>
                     <div class="col-md-6">
                         <select placeholder="State" name="state" id="state" class="form-control input-lg" ng-model="selected.selectedState" ng-options="state as state.name for state in states" required></select>
@@ -92,7 +124,7 @@
             </br>
             <div class="row">
                 <div class="col-xs-6 previous">
-                    <button type="button" class="text-white btn btn-success form-group col-md-12 input-lg" ng-click="save_contactInfo()">Update &nbsp;</button>
+                    <button type="button" class="text-white btn btn-success form-group col-md-12 input-lg" ng-click="update_contactInfo()">Update</button>
                 </div>
                 <div class="col-xs-6 next">
                     <button type="button" class="text-white btn btn-success form-group col-md-12 input-lg" ng-click="Contact_Next()">Next &nbsp;<i class="fa fa-arrow-circle-right"></i></button>
@@ -100,44 +132,55 @@
             </div>
         </form>
         <form name='step2' class="form-validation mt-20" novalidate ng-show="isPersonal">
-            <h2 class="text-light text-white">Personal Information</h2>
+            <h2 class="text-light text-white">Update Personal Information</h2>
             <br/>
             <br/>
             <div class="row">
                 <div class="form-group col-md-12 mb-0">
-                    <div class="col-md-12">
-                        <label class="color_white">Driver Licence Information</label>
-                        <input type="text" name="dl_number" id="dl_number" class="form-control input-lg" placeholder="Driver Licence #" ng-model="personal.dl_number" required>
-                    </div>
-                    </br>
-                    </br>
-                    <div class="col-md-12">
-                        <div>
-                            <img id="dlImg" ng-src="images/driver/avatar.png" alt="" ng-model="personal.dlImage" />
-                            <input type='file' valid-file name="dl_filefield" ng-model="dl_filefield" id="dlPicFileUpload" style="display:none" ng-required="true"/>
-                            <label class="color_white">Upload photo of Driver Licence</label>
-                            <div class="tile-body col-md-3" ng-controller="DatepickerTripCtrl">
-                                <p class="input-group">
-                                    <input type="text" class="form-control" name="dl_exp_Date" id="dl_exp_Date" uib-datepicker-popup="{{format}}" placeholder="Exp Date" ng-model="personal.dl_exp_Date" is-open="opened" min-date="minDate" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
-                                    <span class="input-group-btn">
+                    <label class="color_white">Driver Licence Information</label>
+                </div>
+            </div>
+            <div class='row'>
+                <div class="form-group col-md-12 mb-0">
+                    <input type="text" name="dl_number" id="dl_number" class="form-control input-lg" placeholder="Driver Licence #" ng-model="personal.dl_number" required>
+                </div>
+            </div>
+            </br>
+            </br>
+            <div class='row'>
+                <div class="form-group col-md-4 mb-0">
+                    <img id="dlImg" ng-src="{{personal.dlImage}}" alt="" ng-model="personal.dlImage" />
+                </div>
+                <div class="form-group col-md-4 mb-0">
+                    <label class="color_white">Upload photo of Driver Licence</label>
+                    <input type='file' valid-file name="dl_filefield" ng-model="dl_filefield" id="dlPicFileUpload" style="display:none" ng-required="true" />
+                </div>
+                <div class="form-group col-md-4 mb-0" ng-controller="DatepickerTripCtrl">
+                    <p class="input-group">
+                        <input type="text" class="form-control" name="dl_exp_Date" id="dl_exp_Date" uib-datepicker-popup="{{format}}" placeholder="Exp Date" ng-model="personal.dl_exp_Date" is-open="opened" min-date="minDate" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                        <span class="input-group-btn">
                                         <button type="button" class="btn btn-default" ng-click="open($event)"><i class="fa fa-calendar"></i></button>
                                     </span>
-                                </p>
-                            </div>
-                        </div>
-                        </br>
-                        <div class="col-md-12">
-                            <button type="file" validFile class=" text-light text-white btn btn-success form-group col-md-12 input-lg" ng-click="DriverLicenceUpload()" required>Browse &nbsp;</button>
-                        </div>
-                    </div>
+                    </p>
+                </div>
+            </div>
+            </br>
+            <div class="row">
+                <div class="form-group col-md-12 mb-0">
+                    <button type="file" validFile class=" text-light text-white btn btn-success form-group col-md-12 input-lg" ng-click="DriverLicenceUpload()" required>Browse &nbsp;</button>
                 </div>
             </div>
             <br/>
             <hr>
             <div class="row">
-                <div class="col-md-12">
+                <div class="form-group col-md-6 mb-0">
                     <label class="color_white">Limo Badge Information</label>
-                    <div class="tile-body col-md-3" ng-controller="DatepickerTripCtrl">
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-8 mb-0">
+                        <input type="text" name="limo_badge_number" id="limo_badge_number" class="form-control input-lg" placeholder="Limo Badge Number" ng-model="personal.limo_badge_number" required>
+                    </div>
+                    <div class="tile-body col-md-4" ng-controller="DatepickerTripCtrl">
                         <p class="input-group">
                             <input type="text" class="form-control" name="limo_badge_exp_Date" id="limo_badge_exp_Date" uib-datepicker-popup="{{format}}" placeholder="Exp Date" ng-model="personal.limo_badge_exp_Date" is-open="opened" min-date="minDate" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
                             <span class="input-group-btn">
@@ -145,67 +188,69 @@
                             </span>
                         </p>
                     </div>
-                    <input type="text" name="limo_badge_number" id="limo_badge_number" class="form-control input-lg" placeholder="Limo Badge Number" ng-model="personal.limo_badge_number" required>
                 </div>
             </div>
             </br>
             <hr>
             <div class="row">
                 <div class="form-group col-md-12 mb-0">
-                    <div class="col-md-12">
-                        <label class="color_white">ARA Information</label>
-                    </div>
-                    </br>
-                    <div class="col-md-12">
-                        <div>
-                            <img id="araImg" ng-src="images/driver/avatar.png" alt="" ng-model="personal.araImage" />
-                            <input type='file' valid-file name="ara_filefield" ng-model="ara_filefield" id="araPicFileUpload" style="display:none" ng-required="true"/>
-                            <label class="color_white ">Upload photo of ARA Card</label>
-                            <div class="tile-body col-md-3" ng-controller="DatepickerTripCtrl">
-                                <p class="input-group">
-                                    <input type="text" class="form-control" name="ara_exp_Date" id="ara_exp_Date" uib-datepicker-popup="{{format}}" placeholder="Exp Date" ng-model="personal.ara_exp_Date" is-open="opened" min-date="minDate" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
-                                    <span class="input-group-btn">
-                                        <button type="button" class="btn btn-default" ng-click="open($event)"><i class="fa fa-calendar"></i></button>
-                                    </span>
-                                </p>
-                            </div>
-                        </div>
-                        </br>
-                        <div class="col-md-12">
-                            <button type="file" validFile class="text-light text-white btn btn-success form-group col-md-12 input-lg" ng-click="ARAUpload()" required>Browse &nbsp;</button>
-                        </div>
-                    </div>
+                    <label class="color_white">ARA Information</label>
+                </div>
+            </div>
+            </br>
+            <div class="row">
+                <div class="form-group col-md-4 mb-0">
+                    <img id="araImg" ng-src="{{personal.araImage}}" alt="" ng-model="personal.araImage" />
+                </div>
+                <div class="form-group col-md-4 mb-0">
+                    <input type='file' valid-file name="ara_filefield" ng-model="ara_filefield" id="araPicFileUpload" style="display:none" ng-required="true" />
+                    <label class="color_white ">Upload photo of ARA Card</label>
+                </div>
+                <div class="tile-body col-md-4" ng-controller="DatepickerTripCtrl">
+                    <p class="input-group">
+                        <input type="text" class="form-control" name="ara_exp_Date" id="ara_exp_Date" uib-datepicker-popup="{{format}}" placeholder="Exp Date" ng-model="personal.ara_exp_Date" is-open="opened" min-date="minDate" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="open($event)"><i class="fa fa-calendar"></i></button>
+                        </span>
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-12 mb-0">
+                    <button type="file" validFile class="text-light text-white btn btn-success form-group col-md-12 input-lg" ng-click="ARAUpload()" required>Browse &nbsp;</button>
                 </div>
             </div>
             </br>
             <hr>
             <div class="row">
-                <div class="form-group col-md-12 mb-0">
-                    <div class="col-md-12">
-                        <label class="color_white">Insurance card</label>
-                        <div class="tile-body col-md-3" ng-controller="DatepickerTripCtrl">
-                            <p class="input-group">
-                                <input type="text" class="form-control" name="insurance_exp_Date" id="insurance_exp_Date" uib-datepicker-popup="{{format}}" placeholder="Exp Date" ng-model="personal.insurance_exp_Date" is-open="opened" min-date="minDate" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
-                                <span class="input-group-btn">
+                <div class="form-group col-md-6 mb-0">
+                    <label class="color_white">Insurance card</label>
+                </div>
+                <div class="tile-body col-md-6" ng-controller="DatepickerTripCtrl">
+                    <p class="input-group">
+                        <input type="text" class="form-control" name="insurance_exp_Date" id="insurance_exp_Date" uib-datepicker-popup="{{format}}" placeholder="Exp Date" ng-model="personal.insurance_exp_Date" is-open="opened" min-date="minDate" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                        <span class="input-group-btn">
                                 <button type="button" class="btn btn-default" ng-click="open($event)"><i class="fa fa-calendar"></i></button>
                             </span>
-                            </p>
-                        </div>
-                    </div>
-                    </br>
-                    <div class="col-md-12">
-                        <input type="text" name="companyName" id="companyName" class="form-control input-lg " placeholder="Company Name" ng-model="personal.companyName " required>
-                        <input type="text" name="policyNumber" id="policyNumber " class="form-control input-lg " placeholder="Policy Number " ng-model="personal.policyNumber " required>
-                    </div>
-                    </br>
+                    </p>
                 </div>
             </div>
-            <div class="row ">
+            <div class="row">
+                <div class="form-group col-md-6 mb-0">
+                    <input type="text" name="companyName" id="companyName" class="form-control input-lg " placeholder="Company Name" ng-model="personal.companyName " required>
+                </div>
+                <div class="form-group col-md-6 mb-0">
+                    <input type="text" name="policyNumber" id="policyNumber " class="form-control input-lg " placeholder="Policy Number " ng-model="personal.policyNumber " required>
+                </div>
+            </div>
+            </br>
+            </br>
+            <div class="row">
                 <div class="col-xs-4 previous">
                     <button type="button" class="text-white btn btn-success form-group col-md-12 input-lg" ng-click="Personal_previous() "><i class="fa fa-arrow-circle-left"></i> &nbsp;Previous</button>
                 </div>
                 <div class="col-xs-4 previous">
-                    <button type="button" class="text-light text-white btn btn-success form-group col-md-12 input-lg" ng-click="save_contactInfo()">Update</button>
+                    <button type="button" class="text-light text-white btn btn-success form-group col-md-12 input-lg" ng-click="update_personalInfo()">Update</button>
                 </div>
                 <div class="col-xs-4 next">
                     <button type="button" class="text-white btn btn-success form-group col-md-12 input-lg" ng-click="Personal_Next()">Next &nbsp;<i class="fa fa-arrow-circle-right"></i></button>
@@ -213,39 +258,33 @@
             </div>
         </form>
         <form name='step3' class="form-validation mt-20" novalidate ng-show="isVehicle">
-            <h2 class="text-light text-white">vehicle Information</h2>
+            <h2 class="text-light text-white">Update vehicle Information</h2>
             <br/>
             <br/>
             <div class="row">
                 <div class="form-group col-md-12 mb-0">
                     <div class="col-md-6">
-                        <label class="color_white">Make</label>
-                        <select placeholder="make" name="make" id="make" class="form-control input-lg" ng-model="vehicle.make" ng-options="make as make for make in vehicleTypesArr" required>
-                        </select>
+                    <label class="color_white">Select Type</label>
+                        <select placeholder="Vehicle Type" name="vehicletype" id="vehicletype" class="form-control input-lg" ng-model="selected.selectedVehicleType" ng-options="vehicle as vehicle.name for vehicle in vehicleTypes" ng-change="getMakes()" required></select>
                     </div>
-                    <label class="color_white">Model</label>
                     <div class="col-md-6">
-                        <select placeholder="Model" name="model" id="model" class="form-control input-lg" ng-model="vehicle.model" ng-options="model as model for model in vehicleTypesArr" required>
-                        </select>
+                     <label class="color_white">Make</label>
+                        <select placeholder="Make" name="make" id="make" class="form-control input-lg" ng-model="selected.selectedMake" ng-options="make as make.name for make in makes" ng-change="getModels()" required></select>
                     </div>
-                    </br>
+                     <div class="col-md-6">
+                     <label class="color_white">Model</label>
+                        <select placeholder="Model" name="model" id="model" class="form-control input-lg" ng-model="selected.selectedModel" ng-options="model as model.name for model in models" required></select>
+                    </div>                    
                 </div>
             </div>
             <br/>
             <hr>
             <div class="row">
                 <div class="form-group col-md-12 mb-0">
-                    <div class="col-md-6">
-                        <label class="color_white">Select Type</label>
-                        <select placeholder="Model" name="selectType" id="selectType" class="form-control input-lg" ng-model="vehicle.selectType" id="selectType.id" ng-options="{id:types.id} as types.name for types in vehicleTypes"ng-change="getSelectedId(vehicle.selectType)"required>
-                        </select>
-                    </div>
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <select placeholder="color" name="Color" id="Color" class="form-control input-lg" ng-model="vehicle.Color" ng-options="colors as colors for colors in colorsArr" required>
                         </select>
-                        </br>
                     </div>
-                    </br>
                 </div>
             </div>
             </br>
@@ -268,11 +307,10 @@
             <h2 class="text-light text-white">vehicle Features</h2>
             <br/>
             <br/>
-           <div class="row">
+            <div class="row">
                 <div class="form-group col-md-12 mb-0 ">
                     <div class="col-md-12">
-                        <input type="text" name="addFeature1" id="addFeature1" class=
-                        "form-control input-lg" placeholder="Add A Feature" ng-model="vehicle.addFeature1">
+                        <input type="text" name="addFeature1" id="addFeature1" class="form-control input-lg" placeholder="Add A Feature" ng-model="vehicle.addFeature1">
                     </div>
                     <div class="col-md-12">
                         <input type="text" name="addFeature2" id="addFeature2" class="form-control input-lg" placeholder="Add A Feature" ng-model="vehicle.addFeature2">
@@ -291,6 +329,7 @@
                     </div>
                     </br>
                 </div>
+            </div>
             </br>
             <div class="row">
                 <div class="col-md-12">
@@ -298,7 +337,7 @@
                         <button type="button" class="text-white btn btn-success form-group col-md-12 input-lg" ng-click="Vehicle_Previous()"> <i class="fa fa-arrow-circle-left"></i> &nbsp;Previous</button>
                     </div>
                     <div class="col-xs-6 previous">
-                        <button type="button" class=" text-light text-white btn btn-success form-group col-md-12 input-lg" ng-click="save_contactInfo()">Update</button>
+                        <button type="button" class=" text-light text-white btn btn-success form-group col-md-12 input-lg" ng-click="update_vehicleInfo()">Update</button>
                     </div>
                 </div>
             </div>

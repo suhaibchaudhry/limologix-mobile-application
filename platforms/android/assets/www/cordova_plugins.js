@@ -11,13 +11,6 @@ module.exports = [
         "file": "plugins/cordova-plugin-geolocation/www/PositionError.js",
         "id": "cordova-plugin-geolocation.PositionError",
         "runs": true
-    },
-    {
-        "file": "plugins/cordova-plugin-fcm/www/FCMPlugin.js",
-        "id": "cordova-plugin-fcm.FCMPlugin",
-        "clobbers": [
-            "FCMPlugin"
-        ]
     }
 ];
 module.exports.metadata = 
@@ -25,8 +18,7 @@ module.exports.metadata =
 {
     "cordova-plugin-compat": "1.0.0",
     "cordova-plugin-geolocation": "2.2.0",
-    "cordova-plugin-whitelist": "1.2.2",
-    "cordova-plugin-fcm": "1.0.7"
+    "cordova-plugin-whitelist": "1.2.2"
 };
 // BOTTOM OF METADATA
 });

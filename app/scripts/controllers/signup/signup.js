@@ -16,20 +16,21 @@ app
         'notify',
         '$window',
         'services',
+        'AppConstants',
         'countriesConstant',
         'StatesConstants',
         'VehicleConstants',
         'ModelConstants',
         'MakeConstants',
-        function($scope, $state, $http, appSettings, notify, $window, services, countriesConstant, StatesConstants, VehicleConstants, ModelConstants, MakeConstants) {
+        function($scope, $state, $http, appSettings, notify, $window, services, AppConstants, countriesConstant, StatesConstants, VehicleConstants, ModelConstants, MakeConstants) {
             var self = this;
             $scope.phoneNumbr = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
             $scope.contact = {};
             $scope.personal = {};
             $scope.vehicle = {};
-            $scope.isContact = false;
+            $scope.isContact = true;
             $scope.isPersonal = false;
-            $scope.isVehicle = true;
+            $scope.isVehicle = false;
             $scope.selected = {};
             $scope.colorsArr = ['Red', 'Black', 'White', 'Other'];
             $scope.vehicle.Color = $scope.colorsArr[0];
@@ -327,7 +328,7 @@ app
                             $scope.personal.araImage_name = input.files[0].name;
                             localStorage.setItem("araImageName", $scope.personal.araImage_name)
                         }
-                        console.log('dsds', e.target, input.files[0])
+                        //console.log('dsds', e.target, input.files[0])
                     }
                     reader.readAsDataURL(input.files[0]);
                 }
@@ -453,24 +454,29 @@ app
                         insurance_expiry_date: $scope.personalinfo.insurance_exp_Date
                     },
                     "vehicle": {
-                        vehicle_make_id: $scope.vehicle.makeId, //$scope.vehicleinfo.make,
-                        vehicle_model_id: $scope.vehicle.modelId, //$scope.vehicleinfo.model,
+                        vehicle_make_id: $scope.vehicleinfo.make.id, //$scope.vehicleinfo.make,
+                        vehicle_model_id: $scope.vehicleinfo.model.id, //$scope.vehicleinfo.model,
                         hll_number: $scope.vehicleinfo.HLL_Number,
                         color: $scope.vehicleinfo.Color,
                         license_plate_number: $scope.vehicleinfo.licencePlateNum,
-                        vehicle_type_id: $scope.vehicle.vehicleId,
+                        vehicle_type_id: $scope.vehicleinfo.selectType.id,
                         features: $scope.vehicleinfo.Features
                     }
                 };
-                var url = appSettings.serverPath + appSettings.serviceApis.signin;
+                var url = appSettings.serverPath + appSettings.serviceApis.registration;
                 services.funcPostRequest(url, $scope.driverDetails).then(function(response) {
                     console.log($scope.driverDetails);
                     console.log(response);
-                    localStorage.setItem("drivername", response.data.full_name)
+                    $http.defaults.headers.common['Auth-Token'] = response.data['Auth-Token'];
+                    $window.sessionStorage['Auth-Token'] = response.data['Auth-Token'];
+                    AppConstants.driver = response.data;
+                    AppConstants.driver.name = response.data.full_name;
+                    $window.sessionStorage['driver'] = JSON.stringify(AppConstants.driver);
                     notify({ classes: 'alert-success', message: response.message });
-                    $state.go('app.dashboard');
+                    $state.go('core.appSettings');
                 }, function(error) {
                     notify({ classes: 'alert-danger', message: error });
+                    $state.go('core.signup');
                 });
             }
         }

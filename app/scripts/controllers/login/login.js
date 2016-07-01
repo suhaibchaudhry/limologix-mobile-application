@@ -27,7 +27,7 @@ app
             constants.driver = response.data;
             constants.driver.name = response.data.full_name;
             $window.sessionStorage['driver'] = JSON.stringify(constants.driver);
-            $state.go('app.dashboard');         
+            $state.go('core.appSettings');         
             notify({ classes: 'alert-success',message:response.message});
        }, function(error){
            if(error && error.message)
