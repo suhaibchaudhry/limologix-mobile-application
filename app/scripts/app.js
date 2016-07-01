@@ -87,6 +87,7 @@ var app = angular
             update_contact_info :'drivers/profile/update_contact_information',
             update_personal_info:'drivers/profile/update_personal_information',
             update_vehicle_info:'drivers/profile/update_vehicle',
+            getVisibleStatus:'drivers/profile/update_visible_status',
             logout: 'drivers/logout',
         }
     })
