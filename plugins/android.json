@@ -12,6 +12,9 @@
         },
         "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "com.example.LimoCordova"
+        },
+        "cordova-plugin-fcm": {
+            "PACKAGE_NAME": "com.example.LimoCordova"
         }
     },
     "dependent_plugins": {

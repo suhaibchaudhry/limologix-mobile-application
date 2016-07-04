@@ -170,7 +170,7 @@ var app = angular
 
 .config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
 
-    $urlRouterProvider.otherwise('/core/home');
+    $urlRouterProvider.otherwise('/core/login');
 
     $stateProvider
 
