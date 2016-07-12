@@ -1,5 +1,5 @@
 <!doctype html>
-<html ng-app="limoLogixApp" ng-controller="MainCtrl" class="no-js {{containerClass}}">
+<html id="deviceready" ng-controller="MainCtrl" class="no-js {{containerClass}}">
 
 <head>
     <meta charset="utf-8">
@@ -31,7 +31,7 @@
     <link rel="stylesheet" href="bower_components/leaflet-draw/dist/leaflet.draw.css" />
     <link rel="stylesheet" href="bower_components/material-design-iconic-font/dist/css/material-design-iconic-font.css" />
     <link rel="stylesheet" href="bower_components/morrisjs/morris.css" />
-    <link rel="stylesheet" href="bower_components/ng-table/dist/ng-table.min.css" />
+    <link rel="stylesheet" href="bower_components/ng-table/dist/ng-table.css" />
     <link rel="stylesheet" href="bower_components/ng-tags-input/ng-tags-input.min.css" />
     <link rel="stylesheet" href="bower_components/ngImgCrop/compile/minified/ng-img-crop.css" />
     <link rel="stylesheet" href="bower_components/owl-carousel/owl-carousel/owl.carousel.css" />
@@ -52,7 +52,7 @@
     <!-- endbuild -->
 </head>
 
-<body id="limoLogixApp" class="{{main.settings.navbarHeaderColor}} {{main.settings.activeColor}} {{containerClass}} header-fixed aside-fixed rightbar-hidden appWrapper" ng-class="{'header-fixed': main.settings.headerFixed, 'header-static': !main.settings.headerFixed, 'aside-fixed': main.settings.asideFixed, 'aside-static': !main.settings.asideFixed, 'rightbar-show': main.settings.rightbarShow, 'rightbar-hidden': !main.settings.rightbarShow}">
+<body class="{{main.settings.navbarHeaderColor}} {{main.settings.activeColor}} {{containerClass}} header-fixed aside-fixed rightbar-hidden appWrapper" ng-class="{'header-fixed': main.settings.headerFixed, 'header-static': !main.settings.headerFixed, 'aside-fixed': main.settings.asideFixed, 'aside-static': !main.settings.asideFixed, 'rightbar-show': main.settings.rightbarShow, 'rightbar-hidden': !main.settings.rightbarShow}">
     <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
@@ -73,12 +73,14 @@
         a.async = 1;
         a.src = g;
         m.parentNode.insertBefore(a, m)
-    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+    })(window, document, 'script', 'http://www.google-analytics.com/analytics.js', 'ga');
 
     ga('create', 'UA-XXXXX-X');
-    ga('send', 'pageview');
+    ga('send', 'pageview');     
     </script>
-    <script src='//maps.googleapis.com/maps/api/js?libraries=weather,geometry,visualization,places,drawing&sensor=false&language=en&v=3.17&key=AIzaSyBkswLq8Qc3USCJc4R_I5mJeANH2MG-cOU'></script>
+    <script src='http://maps.googleapis.com/maps/api/js?libraries=weather,geometry,visualization,places,drawing&language=en&v=3.23&key=AIzaSyDSvFic3Culq7fjKAcjjAMqDhsLU_Fj7g8'></script>
+
+    
     <!-- build:js(.) scripts/oldieshim.js -->
     <!--[if lt IE 9]>
     <script src="bower_components/es5-shim/es5-shim.js"></script>
@@ -159,6 +161,7 @@
     <script src="bower_components/jquery.easy-pie-chart/dist/angular.easypiechart.min.js"></script>
     <script src="bower_components/jquery.inputmask/dist/jquery.inputmask.bundle.js"></script>
     <script src="bower_components/jquery.slimscroll/jquery.slimscroll.js"></script>
+    <script src="bower_components/jquery.slimscroll/jquery.slimscroll.min.js"></script>
     <script src="bower_components/jquery.sparkline/index.js"></script>
     <script src="bower_components/json3/lib/json3.js"></script>
     <script src="bower_components/leaflet-draw/dist/leaflet.draw.js"></script>
@@ -187,7 +190,7 @@
     <script src="bower_components/morrisjs/morris.js"></script>
     <script src="bower_components/momentjs/moment.js"></script>
     <script src="bower_components/ng-bs-daterangepicker/src/ng-bs-daterangepicker.js"></script>
-    <script src="bower_components/ng-table/dist/ng-table.min.js"></script>
+    <script src="bower_components/ng-table/dist/ng-table.js"></script>
     <script src="bower_components/ng-tags-input/ng-tags-input.min.js"></script>
     <script src="bower_components/ngImgCrop/compile/minified/ng-img-crop.js"></script>
     <script src="bower_components/oclazyload/dist/ocLazyLoad.js"></script>
@@ -199,12 +202,42 @@
     <script src="bower_components/magnific-popup/dist/jquery.magnific-popup.js"></script>
     <script src="bower_components/angular-notify/dist/angular-notify.js"></script>
     <script src="bower_components/angular-ui-switch/angular-ui-switch.js"></script>
+    <script src="bower_components/ngCordova/dist/ng-cordova.js"></script>
+    <script src="bower_components/angular-faye/build/angular-faye.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:js({.tmp,app}) scripts/app.js -->
     <script src="http://172.16.90.117:9292/faye/client.js"></script>
+    <script type="text/javascript">
+        var Logger = {
+                incoming: function(message, callback) {
+                    console.log('incoming', message);
+                    callback(message);
+                },   
+                outgoing: function(message, callback) {
+                    message.ext = message.ext || {};
+                    message.ext.auth_token = '09aee5024ca0d0b41a7d99b968e33444';
+                    message.ext.user_type = "driver";
+                    console.log('outgoing', message);
+                    callback(message);
+                }
+    };
+   var client = new Faye.Client('http://172.16.90.117:9292/faye');  
+    client.addExtension(Logger);
+        var publication = client.publish('/publish/channel_04d430957fc1afb83a4cdaf1c8710c4c', { latitude: '-71.05888010000001', longitude: '-71.05888010000001'  });
+    publication.callback(function() {
+        alert('Connection established successfully.');
+    });
+    publication.errback(function(error) {
+        alert('There was a problem: ' + error.message);
+    });
+
+    </script>
+    <script src="scripts/index.js"></script>
     <script src="scripts/app.js"></script>
-    <script src="scripts/controllers/main.js"></script>
+    
+    <script src="scripts/controllers/main.js"></script>    
+    
     <script src="scripts/directives/navcollapse.js"></script>
     <script src="scripts/directives/slimscroll.js"></script>
     <script src="scripts/controllers/navbar-chart.js"></script>
@@ -223,8 +256,11 @@
     <script src="scripts/controllers/hzmenu.js"></script>
     <script src="scripts/controllers/rtl.js"></script>
     <script src="scripts/controllers/ui-typography.js"></script>
+
     <script src="scripts/directives/numberValidation.js"></script>
     <script src="scripts/directives/validFileType.js"></script>
+    <script src="scripts/directives/back_button_handle.js"></script> 
+
     <script src="scripts/directives/tilecontrolclose.js"></script>
     <script src="scripts/directives/tilecontroltoggle.js"></script>
     <script src="scripts/directives/tilecontrolrefresh.js"></script>
@@ -340,13 +376,13 @@
     <script src="scripts/controllers/material/toolbar.js"></script>
     <script src="scripts/controllers/material/tooltip.js"></script>
     <script src="scripts/controllers/material/whiteframe.js"></script>
-    <script src="scripts/services/cordova.js"></script>
+   <!--  // <script src="scripts/services/cordova.js"></script> -->
     <!-- endbuild -->
     <!-- providers -->
     <script src="scripts/modules/service-provider.js"></script>
     <script src="scripts/modules/constant.js"></script>
     <script src="scripts/modules/dispatch-ride-request-provider.js"></script>
-    
+
     <!-- End Providers -->
 </body>
 

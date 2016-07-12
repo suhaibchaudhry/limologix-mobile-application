@@ -2,15 +2,15 @@
 
 /**
  * @ngdoc function
- * @name limoLogixApp.controller:splashCtrl
+ * @name LimoCordova.controller:splashCtrl
  * @description
  * # splashCtrl
- * Controller of the limoLogixApp
+ * Controller of the LimoCordova
  */
 app
     .controller('splashCtrl', ['$scope', '$state', '$http', '$window', 'services', '$location',
         function($scope, $state, $http, $window, services, $location) {
-
+           alert('splash')
             // $scope.$on('$viewContentLoaded', function() {
             //     //Here your view content is fully loaded !!
             //     splash();
@@ -40,10 +40,16 @@ app
             }
 
             $scope.moveto_admin_panel = function() {
-                $window.location.href = "http://limologix.softwaystaging.com";
+                alert('click')
+                $window.open("http://limologix.softwaystaging.com","_blank");
             };
             $scope.moveto_app = function() {
-                $location.path("core/signup");
+                alert('click 2')
+                //$state.go('core.signup');
+               // $scope.$apply(function(){
+                    $location.path("core/login");
+               // });
+                //$location.path("core/signup");
             };
         }
     ]);

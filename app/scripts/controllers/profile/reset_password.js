@@ -2,10 +2,10 @@
 
 /**
  * @ngdoc function
- * @name minovateApp.controller:ResetPasswordCtrl
+ * @name LimoCordova.controller:ResetPasswordCtrl
  * @description
  * # ResetPasswordCtrl
- * Controller of the minovateApp
+ * Controller of the LimoCordova
  */
 app
     .controller('ResetPasswordCtrl', ['notify', '$scope', '$http', 'appSettings', 'services', '$state','countriesConstant',

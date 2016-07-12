@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc service
- * @name minovateApp.cordova
+ * @name LimoCordova.cordova
  * @description
  * # cordova
- * Factory in the limoLogixApp.
+ * Factory in the LimoCordova.
  */
-angular.module('limoLogixApp')
+angular.module('LimoCordova')
     .factory('cordova', function($q,$window) {
         var d = $q.defer(),  
         resolved = false;

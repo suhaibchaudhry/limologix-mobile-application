@@ -5,10 +5,10 @@
 
 /**
  * @ngdoc function
- * @name limoLogixApp.controller:MyAccountCtrl
+ * @name LimoCordova.controller:MyAccountCtrl
  * @description
  * # MyAccountCtrl
- * Controller of the limoLogixApp
+ * Controller of the LimoCordova
  */
 app
     .controller('MyAccountCtrl', [

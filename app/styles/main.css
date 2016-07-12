@@ -6974,7 +6974,7 @@ blockquote p {
       top: 70%;
       left: 50%;
       color: transparent;
-      content: 'ΓÇó';
+      content: '•';
       text-shadow: 0 0 transparent;
       font-size: 1.2em;
       -webkit-transition: text-shadow 0.3s, color 0.3s;
@@ -12448,8 +12448,7 @@ hr.line-full {
     transform: translateZ(0) rotateY(0deg);
     opacity: 1; } }
 @font-face {
-  font-family: Nexa Bold;
-  src: url(".. /.. /fonts/Nexa Bold.otf"); }
+  font-family: Nexa Bold; }
 .splash_Container {
   position: absolute;
   width: 100%;
@@ -12550,8 +12549,9 @@ hr.line-full {
 
 .fs_30 {
   font-size: 30px;
-  position: absolute;
-  top: 70%; }
+  height: auto;
+  width: auto;
+  margin-top: 80%; }
 
 #map-canvas {
   height: 100%; }
@@ -12628,7 +12628,8 @@ li {
   margin-top: 4px;
   margin-bottom: 4px;
   padding: 9px 0px 0px;
-  width: 80%; }
+  width: 80%;
+  pointer-events: none; }
 
 .navbar-brand img {
   height: 100%;
@@ -12681,5 +12682,11 @@ footer-text {
   font-weight: bold;
   font-size: 15px;
   word-wrap: break-word; }
+
+.nav_back_btn {
+  position: absolute;
+  font-size: 50px;
+  margin-left: 14px;
+  margin-top: 4px; }
 
 /*# sourceMappingURL=main.css.map */

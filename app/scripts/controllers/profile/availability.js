@@ -2,10 +2,10 @@
 
 /**
  * @ngdoc function
- * @name limoLogixApp.controller:availabilityCtrl
+ * @name LimoCordova.controller:availabilityCtrl
  * @description
  * # availabilityCtrl
- * Controller of the limoLogixApp
+ * Controller of the LimoCordova
  */
 app
   .controller('availabilityCtrl',

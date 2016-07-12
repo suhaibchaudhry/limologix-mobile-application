@@ -2,10 +2,10 @@
 
 /**
  * @ngdoc function
- * @name limoLogixApp.controller:DirverSignupCtrl
+ * @name LimoCordova.controller:DirverSignupCtrl
  * @description
  * # DirverSignupCtrl
- * Controller of the limoLogixApp
+ * Controller of the LimoCordova
  */
 app
     .controller('DirverSignupCtrl', [

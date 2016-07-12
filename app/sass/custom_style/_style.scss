@@ -1,6 +1,6 @@
 @font-face {
     font-family: Nexa Bold;
-    src: url('.. /.. /fonts/Nexa Bold.otf');
+    //src: url('.. /.. /fonts/Nexa Bold.otf');
 }
 
 .splash_Container {
@@ -133,8 +133,9 @@
 
 .fs_30 {
     font-size: 30px;
-    position: absolute;
-    top: 70%;
+    height:auto;
+    width:auto;
+    margin-top:80%;
 }
 
 #map-canvas {
@@ -224,6 +225,7 @@ li{
     margin-bottom: 4px;
     padding: 9px 0px 0px;
     width: 80%;
+    pointer-events:none;
 }
 .navbar-brand img {
     height: 100%;
@@ -278,4 +280,9 @@ footer-text{
     font-size: 15px;
     word-wrap: break-word;
 }
-
+.nav_back_btn{
+    position: absolute;
+    font-size: 50px;
+    margin-left: 14px;
+    margin-top: 4px;
+}

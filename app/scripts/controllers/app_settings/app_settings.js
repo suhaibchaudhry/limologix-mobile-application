@@ -2,10 +2,10 @@
 
 /**
  * @ngdoc function
- * @name limoLogixApp.controller:appSettingCtrl
+ * @name LimoCordova.controller:appSettingCtrl
  * @description
  * # appSettingCtrl
- * Controller of the limoLogixApp
+ * Controller of the LimoCordova
  */
 app
     .controller('appSettingCtrl', ['$scope', '$state', '$http',

@@ -2,10 +2,10 @@
 
 /**
  * @ngdoc function
- * @name limoLogixApp.controller:passengerBoardedCtrl
+ * @name LimoCordova.controller:passengerBoardedCtrl
  * @description
  * # passengerBoardedCtrl
- * Controller of the limoLogixApp
+ * Controller of the LimoCordova
  */
 app
     .controller('passengerBoardedCtrl', ['$scope', '$state', '$http', 'appSettings', 'notify', '$window',

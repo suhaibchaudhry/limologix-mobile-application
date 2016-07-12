@@ -2,10 +2,10 @@
 
 /**
  * @ngdoc function
- * @name limoLogixApp.controller:DashboardCtrl
+ * @name LimoCordova.controller:DashboardCtrl
  * @description
  * # DashboardCtrl
- * Controller of the limoLogixApp
+ * Controller of the LimoCordova
  */
 app
     .controller('DashboardCtrl', ['$scope',
