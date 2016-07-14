@@ -12,7 +12,7 @@
 /*jshint -W079 */
 
 //document.addEventListener('deviceready', function onDeviceReady(){
-        alert('app start quiyy')
+        alert('app started')
         var app = angular
         .module('LimoCordova', [
             'ngCordova',
@@ -82,6 +82,7 @@
                 profileupdate: 'drivers/profile/update',
                 getDriverInfo: 'drivers/profile/show',
                 tripAccept: 'drivers/trips/accept',
+                tripDeny: 'drivers/trips/deny',
                 company_getCountries: 'master_data/countries',
                 company_getStates: 'master_data/states',
                 vehicle_types: 'master_data/vehicles/types',
@@ -91,6 +92,10 @@
                 update_contact_info :'drivers/profile/update_contact_information',
                 update_personal_info:'drivers/profile/update_personal_information',
                 update_vehicle_info:'drivers/profile/update_vehicle',
+                getVisibleStatus:'drivers/profile/update_visible_status',
+                reset_auth_details:'drivers/profile/reset_authentication_details',
+                forgotPassword:'drivers/forgot_password',
+                restpasswrdfromemail:'drivers/reset_password',
                 getChannelName :'drivers/profile/channel',
                 logout: 'drivers/logout',
             }
@@ -948,7 +953,24 @@
                 controller: 'passengerArrivedCtrl',
                 templateUrl: 'views/tmpl/home/passenger_arrived.html'
             })
-           .state('core.logout', {
+            .state('core.profile.reset_password', {
+                url:'/resetPassword',
+                controller: 'resetPasswordCtrl',
+                templateUrl: 'views/tmpl/profile/reset_password.html'
+            })
+            //forgot password
+            .state('core.forgot_password', {
+                url: '/forgot_password',
+                controller: 'forgotPwdCtrl',
+                templateUrl: 'views/tmpl/profile/forgot_password.html'
+            })
+            //reset password from email
+            .state('core.reset_pwd_email', {
+                url: '/reset_password',
+                controller: 'resetPassEmailCtrl',
+                templateUrl: 'views/tmpl/profile/reset_pwd_email.html'
+            })
+            .state('core.logout', {
                 url: '/login',
                 controller: 'LogoutCtrl',
                 templateUrl: 'views/tmpl/login/login.html'

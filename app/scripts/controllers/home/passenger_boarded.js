@@ -9,14 +9,14 @@
  */
 app
     .controller('passengerBoardedCtrl', ['$scope', '$state', '$http', 'appSettings', 'notify', '$window',
-        'services', 'AppConstants', 'dispatchRideProvider',
-        function($scope, $state, $http, appSettings, notify, $window, services, constants, dispatchRideProvider) {
+        'services', 'AppConstants', 'dispatchRideProvider','driverLocationConstants',
+        function($scope, $state, $http, appSettings, notify, $window, services, constants, dispatchRideProvider,driverLocationConstants) {
             $scope.tripsummary = {};
             getCustomerRoute();
             dispatchRideProvider.getRoutes($scope.tripsummary.pickupAt, $scope.tripsummary.dropoffAt,notify,true,'pickuppoint');
             function getCustomerRoute() {
-                $scope.tripsummary.pickupAt = 'Marathahalli, Bengaluru, Karnataka 560037, India';
-                $scope.tripsummary.dropoffAt = 'Hebbal, Bengaluru, Karnataka 560024, India';
+               $scope.tripsummary.pickupAt = driverLocationConstants.location.start_destination;//'Marathahalli, Bengaluru, Karnataka 560037, India';
+               $scope.tripsummary.dropoffAt = driverLocationConstants.location.end_destination;//'Hebbal, Bengaluru, Karnataka 560024, India';
                 // var url = appSettings.serverPath + appSettings.serviceApis.signin;
                 // services.funcPostRequest(url, $scope.driverDetails).then(function(response) {
                 //     console.log($scope.driverDetails);

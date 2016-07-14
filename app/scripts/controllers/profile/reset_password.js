@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc function
- * @name LimoCordova.controller:ResetPasswordCtrl
+ * @name minovateApp.controller:resetPasswordCtrl
  * @description
- * # ResetPasswordCtrl
- * Controller of the LimoCordova
+ * # resetPasswordCtrl
+ * Controller of the minovateApp
  */
 app
-    .controller('ResetPasswordCtrl', ['notify', '$scope', '$http', 'appSettings', 'services', '$state','countriesConstant',
+    .controller('resetPasswordCtrl', ['notify', '$scope', '$http', 'appSettings', 'services', '$state','AppConstants',
         function(notify, $scope, $http, appSettings, services, $state,constant) {
             $scope.page = {
                 title: 'Reset Password',
@@ -22,21 +22,20 @@ app
 
             }
             $scope.resetPwd = {};
-            $scope.resetPwd.userName = constant.user.name;
-            $scope.funcresetPassword = function(isValid) {
+            $scope.resetPwd.userName = constant.driver.name;
+            $scope.funcResetPassword = function(isValid) {
                 if ($scope.resetPwd.password !== $scope.resetPwd.cnfpassword) {
                     $scope.resetPwd.password = $scope.resetPwd.cnfpassword = '';
                     notify({ classes: 'alert-danger', message: 'Password and confirm password does not match' });
                     return;
                 };
-                var user = {
-                    username: $scope.resetPwd.userName,
+                var driver = {
                     password: $scope.resetPwd.password
                 };
-                var url = appSettings.serverPath + appSettings.serviceApis.resetPassword;
-                services.funcPostRequest(url, { "user": user }).then(function(response) {
+                var url = appSettings.serverPath + appSettings.serviceApis.reset_auth_details;
+                services.funcPostRequest(url, { "driver": driver }).then(function(response) {
                     notify({ classes: 'alert-success', message: response.message });
-                    $state.go('app.profile.my_account');
+                    $state.go('core.login');
                 }, function(error, status) {
                     if (error)
                         notify({ classes: 'alert-danger', message: error.message });

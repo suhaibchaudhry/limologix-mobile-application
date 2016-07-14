@@ -1,6 +1,7 @@
 <div class="page page-signup">
     <div class="container">
         <div class="navbar-header">
+            <i class="fa fa-angle-left nav_back_btn" aria-hidden="true" back></i>
         <a href="#" class="navbar-brand"><img src="images/driver/bird-logo.png"></a>
         <div uib-dropdown>
             <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#bs-navbar" aria-controls="bs-navbar" aria-expanded="false" uib-dropdown-toggle>
@@ -23,6 +24,11 @@
                         <fa name="cog"></fa>Availability
                     </a>
                 </li>
+                <li>
+                    <a href="#" ui-sref="core.profile.reset_password">
+                        <fa name="fa-unlock"></fa>Reset Password
+                    </a>
+                </li>
                 <li class="divider"></li>
                 <li>
                     <a href="#logout" ui-sref="core.logout">
@@ -41,10 +47,10 @@
     <p class='requestScreen_pickup_point text-white'>{{tripsummary.pickupAt}}</p>
     <div class="row" style="margin-left: 30px;">
         <div class="col-xs-6">
-            <button type="button" class="b1 text-white btn btn-green btn-rounded btn-lg col-md-12 input-lg" ng-click="Personal_previous() ">ACCEPTED</button>
+            <button type="button" class="b1 text-white btn btn-green btn-rounded btn-lg col-md-12 input-lg" ng-click="trip_accept()">ACCEPTED</button>
         </div>
         <div class="col-xs-6">
-            <button type="button" class="b2 text-white btn btn-red btn-rounded btn-lg col-md-12 input-lg" ng-click="Personal_Next()" ng-disabled='step2.$invalid'>DENY</button>
+            <button type="button" class="b2 text-white btn btn-red btn-rounded btn-lg col-md-12 input-lg" ng-click="trip_deny()" ng-disabled='step2.$invalid'>DENY</button>
         </div>
     </div>
     <div class="timer-container">

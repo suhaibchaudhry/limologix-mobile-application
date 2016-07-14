@@ -207,32 +207,32 @@
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:js({.tmp,app}) scripts/app.js -->
-    <script src="http://172.16.90.117:9292/faye/client.js"></script>
-    <script type="text/javascript">
-        var Logger = {
-                incoming: function(message, callback) {
-                    console.log('incoming', message);
-                    callback(message);
-                },   
-                outgoing: function(message, callback) {
-                    message.ext = message.ext || {};
-                    message.ext.auth_token = '09aee5024ca0d0b41a7d99b968e33444';
-                    message.ext.user_type = "driver";
-                    console.log('outgoing', message);
-                    callback(message);
-                }
-    };
-   var client = new Faye.Client('http://172.16.90.117:9292/faye');  
-    client.addExtension(Logger);
-        var publication = client.publish('/publish/channel_04d430957fc1afb83a4cdaf1c8710c4c', { latitude: '-71.05888010000001', longitude: '-71.05888010000001'  });
-    publication.callback(function() {
-        alert('Connection established successfully.');
-    });
-    publication.errback(function(error) {
-        alert('There was a problem: ' + error.message);
-    });
+    <script src="scripts/client.js"></script>
+   <!-- <script type="text/javascript">
+   //      var Logger = {
+   //              incoming: function(message, callback) {
+   //                  console.log('incoming', message);
+   //                  callback(message);
+   //              },   
+   //              outgoing: function(message, callback) {
+   //                  message.ext = message.ext || {};
+   //                  message.ext.auth_token = '09aee5024ca0d0b41a7d99b968e33444';
+   //                  message.ext.user_type = "driver";
+   //                  console.log('outgoing', message);
+   //                  callback(message);
+   //              }
+   //  };
+   // var client = new Faye.Client('http://172.16.90.117:9292/faye');  
+   //  client.addExtension(Logger);
+   //      var publication = client.publish('/publish/channel_04d430957fc1afb83a4cdaf1c8710c4c', { latitude: '-71.05888010000001', longitude: '-71.05888010000001'  });
+   //  publication.callback(function() {
+   //      alert('Connection established successfully.');
+   //  });
+   //  publication.errback(function(error) {
+   //      alert('There was a problem: ' + error.message);
+   //  });
 
-    </script>
+   //  </script>
     <script src="scripts/index.js"></script>
     <script src="scripts/app.js"></script>
     
@@ -312,16 +312,23 @@
     <script src="scripts/controllers/mail.js"></script>
     <!--<script src="scripts/controllers/pages-login.js"></script>
     <script src="scripts/controllers/pages-signup.js"></script>-->
+
     <script src="scripts/controllers/login/login.js"></script>
     <script src="scripts/controllers/splash/splash.js"></script>
     <script src="scripts/controllers/signup/signup.js"></script>
     <script src="scripts/controllers/app_settings/app_settings.js"></script>
+
     <script src="scripts/controllers/profile/availability.js"></script>
+    <script src="scripts/controllers/profile/my_account.js"></script>
+    <script src="scripts/controllers/profile/forgot_password.js"></script>
+    <script src="scripts/controllers/profile/reset_password_email.js"></script>
+    <script src="scripts/controllers/profile/reset_password.js"></script>
+    
     <script src="scripts/controllers/home/home.js"></script>
     <script src="scripts/controllers/request_screen/request_screen.js"></script>
     <script src="scripts/controllers/home/passenger_boarded.js"></script>
     <script src="scripts/controllers/home/passenger_arrived.js"></script>
-    <script src="scripts/controllers/profile/my_account.js"></script>
+    
     <script src="scripts/controllers/logout/logout.js"></script>
      
     <script src="scripts/controllers/pages-forgot-password.js"></script>

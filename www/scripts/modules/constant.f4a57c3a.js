@@ -19,3 +19,6 @@
       .constant('ModelConstants',{
         models:[]
       })
+      .constant('driverLocationConstants',{
+        location:{}
+      })

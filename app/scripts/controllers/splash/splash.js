@@ -10,7 +10,6 @@
 app
     .controller('splashCtrl', ['$scope', '$state', '$http', '$window', 'services', '$location',
         function($scope, $state, $http, $window, services, $location) {
-           alert('splash')
             // $scope.$on('$viewContentLoaded', function() {
             //     //Here your view content is fully loaded !!
             //     splash();
@@ -40,16 +39,15 @@ app
             }
 
             $scope.moveto_admin_panel = function() {
-                alert('click')
-                $window.open("http://limologix.softwaystaging.com","_blank");
+                //$window.open("http://limologix.softwaystaging.com","_blank");
+                window.location.href  = 'http://limologix.softwaystaging.com';
+                // $location.path("http://limologix.softwaystaging.com");
             };
-            $scope.moveto_app = function() {
-                alert('click 2')
+            $scope.moveto_app = function() {  
                 //$state.go('core.signup');
                // $scope.$apply(function(){
                     $location.path("core/login");
                // });
-                //$location.path("core/signup");
             };
         }
     ]);
