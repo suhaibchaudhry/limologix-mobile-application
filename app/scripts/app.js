@@ -12,7 +12,7 @@
 /*jshint -W079 */
 
 //document.addEventListener('deviceready', function onDeviceReady(){
-        alert('app started')
+        //alert('app started')
         var app = angular
         .module('LimoCordova', [
             'ngCordova',
@@ -72,9 +72,11 @@
         ])
 
         .constant('appSettings', {  
-            server_address: 'http://172.16.90.117:9000', //'http://limologix.softwaystaging.com',
+            server_address: 'http://limologix.softwaystaging.com',//'http://172.16.90.117:9000', //'http://limologix.softwaystaging.com',
             version: 'v1',
-            serverPath: 'http://172.16.90.117:9000/api/v1/', //"http://limologix.softwaystaging.com/api/v1/",
+            server_images_path :"http://limologix.api.softwaystaging.com/",
+            serverPath: "http://limologix.api.softwaystaging.com/api/v1/",//'http://172.16.90.117:9000/api/v1/',
+            FayeServerURL :'http://159.203.81.112:9292/faye',
             serviceApis: {
                 signin: 'drivers/sign_in',
                 registration: 'drivers/registration',
@@ -97,6 +99,9 @@
                 forgotPassword:'drivers/forgot_password',
                 restpasswrdfromemail:'drivers/reset_password',
                 getChannelName :'drivers/profile/channel',
+                getTopicName : 'drivers/profile/topic',
+                passengerBoarded : 'drivers/trips/start',
+                passengerArrived : 'drivers/trips/stop', 
                 logout: 'drivers/logout',
             }
         })
@@ -185,9 +190,6 @@
         } else {
             $state.go('core.splash')
         }
-        // $timeout(function() {
-        //     $state.go('core.splash')
-        // }, 5000);
         
 
         $rootScope.$state = $state;

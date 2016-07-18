@@ -8,9 +8,9 @@
  * Controller of the LimoCordova
  */
 app
-    .controller('MainCtrl', function($scope, $http, $translate,cordova) {
+    .controller('MainCtrl', function($scope, $http, $translate) {
 
-        cordova.ready.then(function() {
+        //cordova.ready.then(function() {
             $scope.main = {
                 title: 'Limo Logix',
                 settings: {
@@ -39,6 +39,6 @@ app
                 $scope.currentLanguage = langKey;
             };
             $scope.currentLanguage = $translate.proposedLanguage() || $translate.use();
-         });
+         //});
         
         });

@@ -11,8 +11,8 @@ app
     .controller('homeCtrl', ['$scope', '$state', '$http', 'appSettings', 'notify', '$window', 'services', 'AppConstants', '$timeout','$location','FayeTest','driverLocationConstants',
             function($scope, $state, $http, appSettings, notify, $window, services, constants, $timeout,$location,FayeTest,driverLocationConstants) {
                              
-                
-                $scope.driver_name = constants.driver.full_name ? constants.driver.full_name : 'shyam';
+          
+                $scope.driver_name = constants.driver.full_name;
                 var windowHeight = jQuery(window).innerHeight();
                 var mapHeight = windowHeight - ($(".navbar-header").height() + $(".footer-text").height());
                 $('#dvMap').height(mapHeight + 'px');
@@ -20,69 +20,92 @@ app
 
                 FCMPlugin.getToken(
                   function(token){
-                    //alert(token);
+                   // alert(token);
                   },
                   function(err){
                     //alert('error retrieving token: ' + err);
                   }
-            )
-            FCMPlugin.onNotification(   
-                function(data){
-                    alert('dsd')
-                     if(data.wasTapped){
-                     //Notification was received on device tray and tapped by the user.
-                        //alert(data);
-                         alert(JSON.stringify(data));
+                )
+                FCMPlugin.onNotification(   
+                    function(data){
+                         if(data.wasTapped){
+                         //Notification was received on device tray and tapped by the user.
+                            alert('You have got a trip request')
+                            alert(JSON.stringify(data));
+                            var data = JSON.stringify(data);
+                            var title = data.aps.alert.title;
+                            var body = data.aps.alert.body;
 
-                        var title = data.aps.alert.title;
-                        var body = data.aps.alert.body;
-                        var notification_alert = '<div class="alert alert-info"><strong>'+title+'</strong>'+" : "+body+'</div>';
-                        jQuery('#dvMap').append(notification_alert);
-                       // $state.go('core.request_screen')
+                            // var notification_alert = '<div class="alert alert-info"><strong>'+title+'</strong>'+body+'</div>'
+                            // jQuery('.notification').css({'display':'block'}).html(notification_alert);
 
-                        setTimeout(function(){
-                            $state.go('core.request_screen')
-                        },5000);
 
-                     }else{
-                     //Notification was received in foreground. Maybe the user needs to be notified.
-                        alert(JSON.stringify(data));
-                        var title = data.aps.alert.title;
-                        var body = data.aps.alert.body;
+                           var location = JSON.stringify(JSON.parse(data.trip));
+                           var end_destination = JSON.parse(location).end_destination.place; 
+                           var start_destination = JSON.parse(location).start_destination.place; 
+                           var id = JSON.parse(location).id; 
+                           driverLocationConstants.location = {
+                              end_destination : end_destination,
+                              start_destination : start_destination,
+                              id : id
+                           }
 
-                        var notification_alert = '<div class="alert alert-info"><strong>'+title+'</strong>'+body+'</div>'
-                        jQuery('#dvMap').append(notification_alert);
+                            //setTimeout(function(){
+                                $state.go('core.request_screen')
+                            //},3000)
 
-                       // $state.go('core.request_screen')
+                         }else{
+                         //Notification was received in foreground. Maybe the user needs to be notified.
+                            alert('You have got a trip request')     
+                            alert(JSON.stringify(data));
+                             var data = JSON.stringify(data);
+                             alert(data)
+                            var title = data.aps.alert.title;
+                            var body = data.aps.alert.body;
 
-                       var location = JSON.stringify(JSON.parse(data.trip));
-                       var end_destination = JSON.parse(location).end_destination.place; 
-                       var start_destination = JSON.parse(location).start_destination.place; 
-                       var id = JSON.parse(location).id; 
-                       driverLocationConstants.location = {
-                          end_destination : end_destination,
-                          start_destination : start_destination,
-                          id : id
-                       }
+                            // var notification_alert = '<div class="alert alert-info"><strong>'+title+'</strong>'+body+'</div>'
+                            // jQuery('.notification').css({'display':'block'}).html(notification_alert);
 
-                        setTimeout(function(){
-                            $state.go('core.request_screen')
-                        },5000);
-                       
-                     }
+
+                           var location = JSON.stringify(JSON.parse(data.trip));
+                           var end_destination = JSON.parse(location).end_destination.place; 
+                           var start_destination = JSON.parse(location).start_destination.place; 
+                           var id = JSON.parse(location).id; 
+                           driverLocationConstants.location = {
+                              end_destination : end_destination,
+                              start_destination : start_destination,
+                              id : id
+                           }
+
+                            //setTimeout(function(){
+                                $state.go('core.request_screen')
+                            //},3000);
+                           
+                         }
                  },
                  function(msg){
-                   //alert('onNotification callback successfully registered  ohhhhh: ' + msg);
+                   //alert('onNotification callback successfully registered: ' + msg);
                  },
                  function(err){
                    //alert('Error registering onNotification callback: ' + err);
-                 }
-            );
-            FCMPlugin.subscribeToTopic('topicExample');
-   
-                
+                 }  
+                );
 
-                              
+                var url = appSettings.serverPath + appSettings.serviceApis.getTopicName;
+                services.funcGetRequest(url).then(function(response,status) {
+                 $scope.topicName = response.data.topic;
+                 //alert($scope.topicName)
+                 FCMPlugin.subscribeToTopic($scope.topicName);
+                 alert($scope.topicName)
+                 
+                },function(error){
+                      notify({ classes: 'alert-danger', message: response.message });
+                });
+
+               
+                //FCMPlugin.subscribeToTopic('topicExample');
+   
+                                             
                 // onSuccess Callback
                 // This method accepts a Position object, which contains the
                 // current GPS coordinates
@@ -91,19 +114,10 @@ app
                     var url = appSettings.serverPath + appSettings.serviceApis.getChannelName;
                     services.funcGetRequest(url).then(function(response,status) {
                      $scope.channelName = response.data.channel;
-                     //Faye.publish('/publish/'+ $scope.channelName, { latitude: position.coords.latitude, longitude: position.coords.longitude });
-                     faye($scope,$window,position);
+                     faye($scope,$window,position,appSettings);
                     },function(error){
-                          notify({ classes: 'alert-danger', message: response.message });
+                         notify({ classes: 'alert-danger', message: response.message });
                     });
-                    // alert('Latitude: ' + position.coords.latitude + '\n' +
-                        //     'Longitude: ' + position.coords.longitude + '\n' +
-                        //     'Altitude: ' + position.coords.altitude + '\n' +
-                        //     'Accuracy: ' + position.coords.accuracy + '\n' +
-                        //     'Altitude Accuracy: ' + position.coords.altitudeAccuracy + '\n' +
-                        //     'Heading: ' + position.coords.heading + '\n' +
-                        //     'Speed: ' + position.coords.speed + '\n' +
-                        //     'Timestamp: ' + position.timestamp + '\n');
                 };
 
                 // onError Callback receives a PositionError object
@@ -140,10 +154,9 @@ app
 
                navigator.geolocation.watchPosition(onSuccess,onError,{timeout: 30000})
                
-            }
+            }   
 ])
 .factory('FayeTest',function($window) {
-        //return $faye("http://172.16.90.117:9292/faye");
         var Logger = {
                     incoming: function(message, callback) {
                         console.log('incoming', message);
@@ -158,7 +171,7 @@ app
                     }
         };
             
-       var FayeServerURL = 'http://172.16.90.117:9292/faye';
+       var FayeServerURL = 'http://159.203.81.112:9292/faye';//'http://172.16.90.117:9292/faye';
         var client = new Faye.Client(FayeServerURL);
         client.addExtension(Logger);
           return {
@@ -173,7 +186,7 @@ app
     })
 
 
-function faye($scope,$window,position){
+function faye($scope,$window,position,appSettings){
      var Logger = {
                 incoming: function(message, callback) {
                     console.log('incoming', message);
@@ -187,7 +200,7 @@ function faye($scope,$window,position){
                     callback(message);
                 }
     };
-   var client = new Faye.Client('http://172.16.90.117:9292/faye');  
+   var client = new Faye.Client('http://159.203.81.112:9292/faye');  
     client.addExtension(Logger);
     var publication = client.publish('/publish/'+ $scope.channelName, { latitude: position.coords.latitude, longitude: position.coords.longitude });
     publication.callback(function() {

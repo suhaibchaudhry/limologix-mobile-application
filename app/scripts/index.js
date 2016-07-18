@@ -72,7 +72,7 @@ var app = {
             //     alert(payload);
             // }
             angular.element(document).ready(function() {
-             alert('device ready')
+                //alert('device ready')
                 var domElem = document.getElementById('deviceready');
                 angular.bootstrap(domElem,['LimoCordova']); 
 

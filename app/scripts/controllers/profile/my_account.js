@@ -98,12 +98,12 @@ app
                     }
                     $scope.personal = {
                         dl_number:response.license_number,
-                        dlImage : appSettings.server_address + response.license_image.image,
+                        dlImage : appSettings.server_images_path + response.license_image.image,
                         dlImageName: response.license_image.name,
                         dl_exp_Date:new Date(response.license_expiry_date),
                         limo_badge_number:response.badge_number,
                         limo_badge_exp_Date:new Date(response.badge_expiry_date),
-                        araImage: appSettings.server_address + response.ara_image.image,
+                        araImage: appSettings.server_images_path + response.ara_image.image,
                         araImageName:response.ara_image.name,
                         ara_exp_Date:new Date(response.ara_expiry_date),
                         insurance_exp_Date:new Date(response.insurance_expiry_date),

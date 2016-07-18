@@ -12662,6 +12662,10 @@ footer-text {
   position: relative;
   top: 30px; }
 
+.dvMap_arrived {
+  position: relative;
+  top: 30px; }
+
 .timer-container {
   width: 100%;
   height: 50px;
@@ -12691,5 +12695,25 @@ footer-text {
 
 a.company {
   text-decoration: none; }
+
+.notification {
+  position: absolute;
+  top: 40%;
+  left: 2%;
+  display: none; }
+
+.active, .inactive {
+  font-size: 40px;
+  cursor: pointer; }
+
+.active, .inactive {
+  font-size: 40px;
+  cursor: pointer; }
+
+i.active {
+  color: #5cb85c; }
+
+i.inactive {
+  color: #d9534f; }
 
 /*# sourceMappingURL=main.css.map */

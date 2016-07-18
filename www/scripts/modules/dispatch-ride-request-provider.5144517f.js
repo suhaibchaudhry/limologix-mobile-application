@@ -43,6 +43,8 @@ function funcservices() {
                         var marker = new google.maps.Marker({
                             position: LatLng,
                             map: map,
+                            icon: 'images/driver/gps-icon.3919872e.png',
+                            title: "<div style = 'height:60px;width:200px'><b>Your location:</b><br />Latitude: " + p.coords.latitude + "<br />Longitude: " + p.coords.longitude
                         });
                         directionsDisplay.setMap(map);
 
@@ -81,7 +83,7 @@ function funcservices() {
                             position: position,
                             map: map,
                             icon: icon,
-                            title: (check_infoWindow == "pickuppoint") ? "<div><img border='0' align='Left' width='100%' src='images/driver/popup.png'></img><p class = 'pickUpText'>" + pickup + "</p></div>" : title
+                            title: (check_infoWindow == "pickuppoint") ? "<div><img border='0' align='Left' width='100%' src='images/driver/popup.2b0bebde.png'></img><p class = 'pickUpText'>" + pickup + "</p></div>" : title
                         });
                         if(check_infoWindow == "pickuppoint"){
                             var infoWindow = new google.maps.InfoWindow();
