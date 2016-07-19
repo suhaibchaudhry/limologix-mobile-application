@@ -78,7 +78,8 @@
     "angular-notify": "^2.5.0",
     "angular-ui-switch": "0.1.1",
     "ngCordova": "*",
-    "angular-faye": "^0.2.2"
+    "angular-faye": "^0.2.2",
+    "sweetalert":"*"
   },
   "devDependencies": {
     "angular-mocks": "1.5.0",

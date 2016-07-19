@@ -16,6 +16,11 @@
             </button>
             <ul class="dropdown-menu" role="menu" uib-dropdown>
                 <li>
+                    <a href="#home" ui-sref="core.home">
+                        <fa name="home"></fa>Home
+                    </a>
+                </li>
+                <li>
                     <a href="#profile" ui-sref="core.profile.my_account">
                         <fa name="user"></fa>Profile
                     </a>
@@ -53,7 +58,14 @@
                         <i class="fa fa-toggle-on active" ng-if="status == true" ng-click="funcGetVisibleStatus();"></i>
                         <i class="fa fa-toggle-on fa-rotate-180 inactive" ng-if="status == false" ng-click="funcGetVisibleStatus();"></i>
                     </div>
-                    <pre>{{ status }}</pre>
+                    <!-- <pre>{{ status }}</pre> -->
+                    <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-xs-12 previous">
+                            <button type="button" class=" text-light text-white btn btn-success form-group col-md-12 input-lg" ng-click="save_status()">Save &nbsp;<span class="glyphicon glyphicon-chevron-down"></span></button>
+                        </div>
+                    </div>
+                </div>
                 </div>
                    <!--  <div class="row">
                         <div class="form-group col-md-12 mb-0">

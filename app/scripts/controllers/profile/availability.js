@@ -2,53 +2,46 @@
 
 /**
  * @ngdoc function
- * @name LimoCordova.controller:availabilityCtrl
+ * @name limoLogixApp.controller:availabilityCtrl
  * @description
  * # availabilityCtrl
- * Controller of the LimoCordova
+ * Controller of the limoLogixApp
  */
 app
-  .controller('availabilityCtrl',
-    ['$scope','$state','$http','appSettings','notify','$window','services','AppConstants',
-    function ($scope, $state,$http,appSettings,notify, $window,services, constants) {
+    .controller('availabilityCtrl', ['$scope', '$rootScope', '$state', '$http', 'appSettings', 'notify', '$window', 'services', 'AppConstants',
+        function($scope, $rootScope, $state, $http, appSettings, notify, $window, services, constants) {
 
-        $scope.init = function(){
+           
+            if ($rootScope.status !== undefined) {
+                $scope.status = $rootScope.status;
+            } else {
                 $scope.status = true;
             }
-            $scope.funcGetVisibleStatus = function(){
+            console.log('onload', $scope.status);
 
-                $scope.status = !$scope.status;
+            //funcGetVisibleStatus();
+            $scope.init = function() {
+                $scope.status = $scope.status;
+            }
+            $scope.save_status = function() {
+                $rootScope.status = $scope.status;
                 var postData = {
                     "driver": {
-                        "visible": $scope.status
+                        "visible": $rootScope.status
                     }
                 };
-                console.log("postData", postData);
                 var url = appSettings.serverPath + appSettings.serviceApis.getVisibleStatus;
                 services.funcPostRequest(url, postData).then(function(response) {
-                    console.log("response", response);
-                       notify({ classes: 'alert-success',message:response.message});
+                    //console.log("response", response);
                 }, function(error) {
                     if (error && error.message)
                         notify({ classes: 'alert-danger', message: error.message });
                     //$state.go('core.login');
                 });
             }
+            $scope.funcGetVisibleStatus = function() {
 
-
-    // funcGetVisibleStatus();
-    // $scope.visible_status = false;    
-    // function funcGetVisibleStatus(){
-         
-    //  var url = appSettings.serverPath + appSettings.serviceApis.getVisibleStatus;
-    //     var postData = {
-    //         "driver":{
-    //             "visible" : $scope.visible_status
-    //         }
-    //     };
-    //     services.funcPostRequest(url, postData).then(function(response) {
-    //         $scope.status1 = response.data;
-    //         console.log("sstatusssss",$scope.status1);
-    //     });
-    //     }
-  }]);
+                $scope.status = !$scope.status;
+            }
+        }
+    ]);

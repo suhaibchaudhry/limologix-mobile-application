@@ -10,7 +10,7 @@
 app    
     .controller('homeCtrl', ['$scope', '$state', '$http', 'appSettings', 'notify', '$window', 'services', 'AppConstants', '$timeout','$location','FayeTest','driverLocationConstants',
             function($scope, $state, $http, appSettings, notify, $window, services, constants, $timeout,$location,FayeTest,driverLocationConstants) {
-                             
+        
           
                 $scope.driver_name = constants.driver.full_name;
                 var windowHeight = jQuery(window).innerHeight();
@@ -30,11 +30,13 @@ app
                     function(data){
                          if(data.wasTapped){
                          //Notification was received on device tray and tapped by the user.
-                            alert('You have got a trip request')
-                            alert(JSON.stringify(data));
-                            var data = JSON.stringify(data);
-                            var title = data.aps.alert.title;
-                            var body = data.aps.alert.body;
+                            //alert('You have got a trip request')
+                            //alert(JSON.stringify(data));
+                            //var data = JSON.stringify(data);
+                            var title = data.notification.title;
+                            var body = data.notification.body;
+
+
 
                             // var notification_alert = '<div class="alert alert-info"><strong>'+title+'</strong>'+body+'</div>'
                             // jQuery('.notification').css({'display':'block'}).html(notification_alert);
@@ -50,18 +52,29 @@ app
                               id : id
                            }
 
-                            //setTimeout(function(){
-                                $state.go('core.request_screen')
-                            //},3000)
+
+                            swal({
+                                title: title,
+                                text: body,
+                                type: "success"
+                            },
+                            function(){
+                                 $state.go('core.request_screen')
+                            })
+
+                            // setTimeout(function(){
+                            //     $state.go('core.request_screen')
+                            // },3000)
 
                          }else{
                          //Notification was received in foreground. Maybe the user needs to be notified.
-                            alert('You have got a trip request')     
-                            alert(JSON.stringify(data));
-                             var data = JSON.stringify(data);
-                             alert(data)
-                            var title = data.aps.alert.title;
-                            var body = data.aps.alert.body;
+                            //alert('You have got a trip request')     
+                           // alert(JSON.stringify(data));
+                             //var data = JSON.stringify(data);
+                             //alert(data)
+                             //alert(data.notification)
+                            var title = data.notification.title;
+                            var body = data.notification.body;
 
                             // var notification_alert = '<div class="alert alert-info"><strong>'+title+'</strong>'+body+'</div>'
                             // jQuery('.notification').css({'display':'block'}).html(notification_alert);
@@ -77,9 +90,18 @@ app
                               id : id
                            }
 
-                            //setTimeout(function(){
-                                $state.go('core.request_screen')
-                            //},3000);
+                           Sweetalert({
+                                title:"Limo Logix",
+                                test: "yFSFSF",
+                                type: "success"
+                            },
+                            function(){
+                                 $state.go('core.request_screen')
+                            })
+
+                            // setTimeout(function(){
+                            //     $state.go('core.request_screen')
+                            // },3000);
                            
                          }
                  },

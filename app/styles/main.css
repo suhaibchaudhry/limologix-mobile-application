@@ -12589,8 +12589,7 @@ hr.line-full {
 .dvMap_circle {
   position: relative;
   top: 30px;
-  border-radius: 50%;
-  pointer-events: none; }
+  border-radius: 50%; }
 
 #progressBar {
   width: 400px;
