@@ -12,7 +12,6 @@ app
         '$scope',
         '$state',
         '$http',
-        '$filter',
         'appSettings',
         'notify',
         '$window',
@@ -23,7 +22,8 @@ app
         'VehicleConstants',
         'ModelConstants',
         'MakeConstants',
-        function($scope, $state, $http, $filter, appSettings, notify, $window, services, AppConstants, countriesConstant, StatesConstants, VehicleConstants, ModelConstants, MakeConstants) {
+        '$filter',
+        function($scope, $state, $http, appSettings, notify, $window, services, AppConstants, countriesConstant, StatesConstants, VehicleConstants, ModelConstants, MakeConstants, $filter) {
             var self = this;
             $scope.phoneNumbr = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
             $scope.contact = {};
@@ -38,7 +38,7 @@ app
             $scope.colorsArr = ['Red', 'Black', 'White', 'Other'];
             $scope.vehicle.Color = $scope.colorsArr[0];
             $scope.localStorageArr = [];
-            //  $scope.enableNext = false;
+            
 
             // $scope.isEnableContactNext = false;
             // $scope.isEnablePersonalNext = false;
@@ -62,71 +62,6 @@ app
                 localStorage.setItem('models', JSON.stringify($scope.models))
             })
 
-
-            $scope.allSelected = false;
-  
-              // $scope.checkboxes = [{
-              //   label: 'Option 1',
-              //   checked: true
-              // }, {
-              //   label: 'Option 2'
-              // }, {
-              //   label: 'Option 3',
-              //   checked: true
-              // }, {
-              //   label: 'Option 4'
-              // }];
-
-               $scope.checkboxes = [{
-                checked: false,
-                label: 'This application is for independent limo drivers to become a member of limologix nnetwork.The independenr limo driver will be known as a driver mwmber("DM")'
-            }, {
-                checked: false,
-                label: "Limo Logix reservs the right to terminate any DM eho misuses the limo logix network and service"
-            }, {
-                checked: false,
-                label: 'DM has the right to use benifits of the limo logix network and website anywhere in the US that Limo Logix provides their service'
-            }, {
-                checked: false,
-                label: 'DM will provide Limo Logix with all up-to-date driver information ,car information or background checks.Limo Logix will periodically check-in to ensure they have the most up-to-date information.'
-            }, {
-                checked: false,
-                label: 'Limo Logix is the only authority to manage the Limo Logix website.'
-            }, {
-                checked: false,
-                label: 'DM will immiditely become a user of the Limo Logix website once the independent driver Application is completed '
-            }, {
-                checked: false,
-                label: 'Limo logix will not collect any charges for the DM from limo companies and all charge for trip will be between the limo companies and DM. Limo Logix is not responsible for any froud or dispute between the limo company and the DM.'
-            }, {
-                checked: false,
-                label: 'When a DM needs assistance with a dispute with the limo company, they should contact Local Limo association,the city or national limo association on their own.'
-            }, {
-                checked: false,
-                label: 'DMs are all equal and have the right to get all benifits of the limo logix network and website equally.'
-            }];
-
-              $scope.cbChecked = function(){
-                $scope.allSelected = true;
-                angular.forEach($scope.checkboxes, function(v, k) {
-                  if(!v.checked){
-                    $scope.allSelected = false;
-                  }
-                });
-              }
-              
-              $scope.toggleAll = function() {
-                var bool = true;
-                if ($scope.allSelected) {
-                  bool = false;
-                }
-                angular.forEach($scope.checkboxes, function(v, k) {
-                  v.checked = !bool;
-                  $scope.allSelected = !bool;
-                });
-              }
-
-
             getCountries();
 
             //Get countries from API
@@ -147,7 +82,7 @@ app
                             fullName: $scope.contactinfo.fullName,
                             lastName: $scope.contactinfo.lastName,
                             email: $scope.contactinfo.email,
-                            company_name: $scope.contactinfo.company,
+                            company_name:$scope.contactinfo.company,
                             password: $scope.contactinfo.password,
                             confirmPassword: $scope.contactinfo.confirmPassword,
                             primary_phone_number: $scope.contactinfo.primary_phone_number,
@@ -175,26 +110,6 @@ app
                         if (data) {
                             if (data == "" || !data[0].country_code) {
                                 funcUpdateCountries();
-                                /*var url = appSettings.serverPath + appSettings.serviceApis.company_getCountries;
-                                services.funcGetRequest(url).then(function(response) {
-                                    $scope.countries = response.data;
-                                    countriesConstant.countries = $scope.countries;
-                                    $scope.selected.selectedCountry = $scope.countries[0];
-                                    var address = {
-                                        "country": {
-                                            "code": "US",
-                                            "name": "United States"
-                                        },
-                                        "state": {
-                                            "code": "AK",
-                                            "name": "Alaska"
-                                        }
-                                    }
-                                    $scope.getStates(address);
-
-                                }, function(error) {
-                                    notify({ classes: 'alert-danger', message: error.message ? error.message : '' });
-                                });*/
                             }
                         }
                     }
@@ -207,60 +122,15 @@ app
                     if (data) {
                         if (data == "" || !data[0].country_code) {
                             funcUpdateCountries();
-                            /*var url = appSettings.serverPath + appSettings.serviceApis.company_getCountries;
-                            services.funcGetRequest(url).then(function(response) {
-                                $scope.countries = response.data;
-                                countriesConstant.countries = $scope.countries;
-                                $scope.selected.selectedCountry = $scope.countries[0];
-                                var address = {
-                                    "country": {
-                                        "code": "US",
-                                        "name": "United States"
-                                    },
-                                    "state": {
-                                        "code": "AK",
-                                        "name": "Alaska"
-                                    }
-                                }
-                                $scope.getStates(address);
-
-                            }, function(error) {
-                                notify({ classes: 'alert-danger', message: error.message ? error.message : '' });
-                            });*/
                         }
                     } else {
                         funcUpdateCountries();
-                        /*var url = appSettings.serverPath + appSettings.serviceApis.company_getCountries;
-                        services.funcGetRequest(url).then(function(response) {
-                            $scope.countries = response.data;
-                            countriesConstant.countries = $scope.countries;
-                            $scope.selected.selectedCountry = $scope.countries[0];
-                            var address = {
-                                "country": {
-                                    "code": "US",
-                                    "name": "United States"
-                                },
-                                "state": {
-                                    "code": "AK",
-                                    "name": "Alaska"
-                                }
-                            }
-                            $scope.getStates(address);
-
-                        }, function(error) {
-                            notify({ classes: 'alert-danger', message: error.message ? error.message : '' });
-                        });*/
                     }
 
                 }
             }
 
             function funcUpdateCountries() {
-                /*var data = localStorage.getItem('driverdata');
-                if (data)
-                    data = JSON.parse(data);
-                if (data) {
-                    if (data == "" || !data[0].country_code) {*/
                 var url = appSettings.serverPath + appSettings.serviceApis.company_getCountries;
                 services.funcGetRequest(url).then(function(response) {
                     $scope.countries = response.data;
@@ -281,8 +151,6 @@ app
                 }, function(error) {
                     notify({ classes: 'alert-danger', message: error.message ? error.message : '' });
                 });
-                /* }
-                }*/
             }
             //Get selected state from the view
             $scope.getStates = function(address) {
@@ -313,7 +181,7 @@ app
             function getVehicleType() {
                 var el = localStorage.getItem('driverdata');
                 //get vehicle info from localStorage on refresh after user has saved his data
-                if (el && JSON.parse(el)[2]) {
+                   if (el && JSON.parse(el)[2]){
                     if (el && JSON.parse(el)[2].selectType) {
                         var data = localStorage.getItem('driverdata') || [];
                         data = JSON.parse(data)
@@ -355,71 +223,20 @@ app
                                 }
                             }
                         }
-
-
                     }
-                } else {
-                    var data = localStorage.getItem('driverdata');
+                   }else {
+                        var data = localStorage.getItem('driverdata');
 
-                    if (data) {
-                        if (localStorage.getItem('driverdata') == "" || !JSON.parse(el)[2].selectType) {
-                            //Get countries from the server api when app loads for the first time.
-                            funcUpdateTypeMakeModels();
-                            /*var url = appSettings.serverPath + appSettings.serviceApis.vehicle_getVehicleTypes;
-                            services.funcGetRequest(url).then(function(response) {
-                                $scope.vehicleTypes = response.data.vehicle_types;
-                                VehicleConstants.vehicleTypes = $scope.vehicleTypes;
-                                $scope.selected.selectedVehicleType = $scope.vehicleTypes[0];
-                                var info = {
-                                    "vehicle": {
-                                        "id": "1",
-                                        "name": "SUV"
-                                    },
-                                    "make": {
-                                        "id": "1",
-                                        "name": "Lincoln"
-                                    },
-                                    "model": {
-                                        "id": "1",
-                                        "name": "MKT"
-                                    }
-                                }
-                                $scope.getMakes(info);
-
-                            }, function(error) {
-                                notify({ classes: 'alert-danger', message: error.message ? error.message : '' });
-                            });*/
-
-                        }
-                    } else {
-                        funcUpdateTypeMakeModels();
-                        /*var url = appSettings.serverPath + appSettings.serviceApis.vehicle_getVehicleTypes;
-                        services.funcGetRequest(url).then(function(response) {
-                            $scope.vehicleTypes = response.data.vehicle_types;
-                            VehicleConstants.vehicleTypes = $scope.vehicleTypes;
-                            $scope.selected.selectedVehicleType = $scope.vehicleTypes[0];
-                            var info = {
-                                "vehicle": {
-                                    "id": "1",
-                                    "name": "SUV"
-                                },
-                                "make": {
-                                    "id": "1",
-                                    "name": "Lincoln"
-                                },
-                                "model": {
-                                    "id": "1",
-                                    "name": "MKT"
-                                }
+                        if (data) {
+                            if (localStorage.getItem('driverdata') == "" || !JSON.parse(el)[2].selectType) {
+                                //Get countries from the server api when app loads for the first time.
+                                funcUpdateTypeMakeModels();
                             }
-                            $scope.getMakes(info);
+                        } else {
+                            funcUpdateTypeMakeModels();
+                        }
 
-                        }, function(error) {
-                            notify({ classes: 'alert-danger', message: error.message ? error.message : '' });
-                        });*/
                     }
-
-                }
 
             }
 
@@ -523,20 +340,6 @@ app
                 }
             }
 
-
-            var data = localStorage.getItem('driverdata');
-            //card Information
-            if (data)
-                $scope.cardInfo = JSON.parse(data)[3];
-            if ($scope.cardInfo) {
-                $scope.card = {
-                    cardNumber: $scope.cardInfo.card_number,
-                    card_exp_Date: $filter('date')(new Date($scope.cardInfo.card_expiry_date), 'MMyy'),
-                    cvvNumber: $scope.cardInfo.card_code
-
-                }
-            }
-
             //File uploads for Licence plate and ARA photos.
             $scope.DriverLicenceUpload = function() {
                 $("input[id='dlPicFileUpload']").click();
@@ -572,67 +375,38 @@ app
                     reader.readAsDataURL(input.files[0]);
                 }
             }
-
             $scope.Personal_previous = function() {
                 $scope.isContact = true;
                 $scope.isPersonal = false;
             }
 
-
+            
             $scope.save_contactInfo = function() {
 
                 $scope.contactinfo = {
-                        fullName: $scope.contact.fullName,
-                        lastName: $scope.contact.lastName,
-                        email: $scope.contact.email,
-                        company: $scope.contact.company_name,
-                        password: $scope.contact.password,
-                        confirmPassword: $scope.contact.confirmPassword,
-                        primary_phone_number: $scope.contact.primary_phone_number,
-                        primary_address: $scope.contact.primary_address,
-                        city: $scope.contact.city,
-                        state_code: $scope.selected.selectedState,
-                        country_code: $scope.selected.selectedCountry,
-                        zipcode: $scope.contact.zipcode
-                    }
-                    // $scope.isEnableContactNext = true;
+                    fullName: $scope.contact.fullName,
+                    lastName: $scope.contact.lastName,
+                    email: $scope.contact.email,
+                    company:$scope.contact.company_name,
+                    password: $scope.contact.password,
+                    confirmPassword: $scope.contact.confirmPassword,
+                    primary_phone_number: $scope.contact.primary_phone_number,
+                    primary_address: $scope.contact.primary_address,
+                    city: $scope.contact.city,
+                    state_code: $scope.selected.selectedState,
+                    country_code: $scope.selected.selectedCountry,
+                    zipcode: $scope.contact.zipcode
+                }
+                // $scope.isEnableContactNext = true;
                 $scope.localStorageArr[0] = $scope.contactinfo;
-                localStorage.setItem("driverdata", JSON.stringify($scope.localStorageArr));
+                localStorage.setItem("driverdata", JSON.stringify([$scope.localStorageArr]));
                 $scope.isContact = false;
                 $scope.isPersonal = true;
                 $scope.isVehicle = false;
-                $scope.isCardDetails = false;
-                /*$scope.featuresArr = [];
-                $scope.featuresArr.push($scope.vehicle.addFeature1);
-                $scope.featuresArr.push($scope.vehicle.addFeature2);
-                $scope.featuresArr.push($scope.vehicle.addFeature3);
-                $scope.featuresArr.push($scope.vehicle.addFeature4);
-                $scope.featuresArr.push($scope.vehicle.addFeature5);
-                $scope.featuresArr.push($scope.vehicle.addFeature6);
-
-                $scope.featuresArr = $scope.featuresArr.filter(function(element) {
-                    return !!element;
-                });
-
-                $scope.vehicleInfo = {
-                    make: $scope.selected.selectedMake,
-                    model: $scope.selected.selectedModel,
-                    selectType: $scope.selected.selectedVehicleType,
-                    vehicleId: $scope.vehicle.vehicleId,
-                    // selectTypeId:$scope.
-                    Color: $scope.vehicle.Color,
-                    HLL_Number: $scope.vehicle.HLL_Number,
-                    licencePlateNum: $scope.vehicle.licencePlateNum,
-                    Features: $scope.featuresArr
-                }*/
-
-                //$scope.localStorageArr[0] = $scope.contactinfo;
-                // [$scope.contactinfo, $scope.personalInfo, $scope.vehicleInfo]
-                //localStorage.setItem("driverdata", JSON.stringify([$scope.contactinfo, $scope.personalInfo, $scope.vehicleInfo]));
             }
-            $scope.save_personalInfo = function() {
+            $scope.save_personalInfo = function(){
                 // $scope.isEnablePersonalNext = true;
-                $scope.personalInfo = {
+                 $scope.personalInfo = {
                     dl_number: $scope.personal.dl_number,
                     dlPic: '', //$scope.personal.dlImage,
                     dlImage_name: $scope.personal.dlImage_name,
@@ -651,10 +425,9 @@ app
                 $scope.isContact = false;
                 $scope.isPersonal = false;
                 $scope.isVehicle = true;
-                $scope.isCardDetails = false;
             }
-            $scope.save_vehiclelInfo = function() {
-                // $scope.isEnablePersonalNext = true;
+            
+             $scope.save_vehicleInfo = function() {
                 $scope.featuresArr = [];
                 $scope.featuresArr.push($scope.vehicle.addFeature1);
                 $scope.featuresArr.push($scope.vehicle.addFeature2);
@@ -671,7 +444,7 @@ app
                     make: $scope.selected.selectedMake,
                     model: $scope.selected.selectedModel,
                     selectType: $scope.selected.selectedVehicleType,
-                    // vehicleId: $scope.vehicle.vehicleId,
+                   // vehicleId: $scope.vehicle.vehicleId,
                     // selectTypeId:$scope.
                     Color: $scope.vehicle.Color,
                     HLL_Number: $scope.vehicle.HLL_Number,
@@ -686,28 +459,31 @@ app
                 $scope.isVehicle = false;
                 $scope.isCardDetails = true;
             }
+
             $scope.save_cardInfo = function() {
 
-                $scope.cardInfo = {
-                    card_number: $scope.card.cardNumber,
-                    //card_holder_name: $scope.card.accHolderName,
-                    //card_expiry_date: new Date($scope.card.card_exp_Date),
-                    card_expiry_date: $filter('date')(new Date($scope.card.card_exp_Date), 'MMyy'),
-                    card_code: $scope.card.cvvNumber
+                    $scope.cardInfo = {
+                        card_number: $scope.card.cardNumber,
+                        //card_holder_name: $scope.card.accHolderName,
+                        //card_expiry_date: new Date($scope.card.card_exp_Date),
+                        card_expiry_date: $filter('date')(new Date($scope.card.card_exp_Date), 'MMyy'),
+                        card_code: $scope.card.cvvNumber
+                    }
+                    $scope.localStorageArr[3] = $scope.cardInfo;
+                    localStorage.setItem("driverdata", JSON.stringify($scope.localStorageArr));
+                    $scope.isContact = false;
+                    $scope.isPersonal = false;
+                    $scope.isCardDetails = false;
+                    $scope.isVehicle = false;
+                    $scope.isTermsAndConditions = true;
+                    
                 }
-                $scope.isContact = false;
-                $scope.isPersonal = false;
-                $scope.isCardDetails = false;
-                $scope.isVehicle = false;
-                $scope.isTermsAndConditions = true;
-                $scope.localStorageArr[3] = $scope.cardInfo;
-                localStorage.setItem("driverdata", JSON.stringify($scope.localStorageArr));
-            }
 
             $scope.Vehicle_Previous = function() {
-                $scope.isPersonal = true;
-                $scope.isVehicle = false;
+                    $scope.isPersonal = true;
+                    $scope.isVehicle = false;
             }
+
             $scope.card_previous = function() {
                 $scope.isVehicle = true;
                 $scope.isCardDetails = false;
@@ -718,16 +494,18 @@ app
                     $scope.isCardDetails = true;
                     $scope.isPersonal = false;
                     $scope.isTermsAndConditions = false;
-                }
+            }
+
                 //Submit the form
-            $scope.DriverSignup = function() {
+            $scope.DriverSignup = function() { 
+                
+                
                 var data = localStorage.getItem('driverdata');
                 if (data) {
                     $scope.contactinfo = JSON.parse(data)[0];
                     $scope.personalinfo = JSON.parse(data)[1];
                     $scope.vehicleinfo = JSON.parse(data)[2];
                     $scope.cardinfo = JSON.parse(data)[3];
-
                 }
                 if ($scope.personalinfo) {
                     //Get uploaded image names from localStorage
@@ -755,7 +533,7 @@ app
                         password: $scope.contactinfo.password,
                         mobile_number: $scope.contactinfo.primary_phone_number,
                         email: $scope.contactinfo.email,
-                        company: $scope.contactinfo.company,
+                        company:$scope.contactinfo.company,
                         address: {
                             street: $scope.contactinfo.primary_address,
                             city: $scope.contactinfo.city,
@@ -764,7 +542,7 @@ app
                             country_code: $scope.contactinfo.country_code.code
                         },
                         card_number: $scope.cardinfo.card_number,
-                        card_expiry_date: $scope.cardinfo.card_expiry_date,           
+                        card_expiry_date: $scope.cardinfo.card_expiry_date,
                         card_code: $scope.cardinfo.card_code,
                         license_number: $scope.personalinfo.dl_number,
                         license_expiry_date: $scope.personalinfo.dl_exp_Date,
@@ -793,17 +571,14 @@ app
                         vehicle_type_id: $scope.vehicleinfo.selectType.id,
                         features: $scope.vehicleinfo.Features
                     }
-
                 };
                 var url = appSettings.serverPath + appSettings.serviceApis.registration;
                 services.funcPostRequest(url, $scope.driverDetails).then(function(response) {
-                    console.log($scope.driverDetails);
-                    console.log(response);
                     $http.defaults.headers.common['Auth-Token'] = response.data['Auth-Token'];
                     $window.sessionStorage['Auth-Token'] = response.data['Auth-Token'];
                     AppConstants.driver = response.data;
                     AppConstants.driver.name = response.data.full_name;
-                    AppConstants.driver.company = response.data.company;
+                    AppConstants.driver.company = response.data.company;   
                     $window.sessionStorage['driver'] = JSON.stringify(AppConstants.driver);
                     notify({ classes: 'alert-success', message: response.message });
                     localStorage.clear();
@@ -814,35 +589,37 @@ app
                 });
             }
 
-
-            // $scope.ListOfItems = [{
-            //     isSelected: false,
-            //     desc: 'This application is for independent limo drivers to become a member of limologix nnetwork.The independenr limo driver will be known as a driver mwmber("DM")'
-            // }, {
-            //     isSelected: false,
-            //     desc: "Limo Logix reservs the right to terminate any DM eho misuses the limo logix network and service"
-            // }, {
-            //     isSelected: false,
-            //     desc: 'DM has the right to use benifits of the limo logix network and website anywhere in the US that Limo Logix provides their service'
-            // }, {
-            //     isSelected: false,
-            //     desc: 'DM will provide Limo Logix with all up-to-date driver information ,car information or background checks.Limo Logix will periodically check-in to ensure they have the most up-to-date information.'
-            // }, {
-            //     isSelected: false,
-            //     desc: 'Limo Logix is the only authority to manage the Limo Logix website.'
-            // }, {
-            //     isSelected: false,
-            //     desc: 'DM will immiditely become a user of the Limo Logix website once the independent driver Application is completed '
-            // }, {
-            //     isSelected: false,
-            //     desc: 'limo logix will not collect any charges for the DM from limo companies and all charge for trip will be between the limo companies and DM. Limo Logix is not responsible for any froud or dispute between the limo company and the DM.'
-            // }, {
-            //     isSelected: false,
-            //     desc: 'When a DM needs assistance with a dispute with the limo company, they should contact Local Limo association,the city or national limo association on their own.'
-            // }, {
-            //     isSelected: false,
-            //     desc: 'DMs are all equal and have the right to get all benifits of the limo logix network and website equally.'
-            // }];
+            $scope.ListOfItems = [
+                {
+                    isSelected: false,
+                    desc: 'This application is for independent limo drivers to become a member of limologix nnetwork.The independenr limo driver will be known as a driver mwmber("DM")'
+                 } 
+                //{
+                //     isSelected: false,
+                //     desc: "Limo Logix reservs the right to terminate any DM eho misuses the limo logix network and service"
+                // }, {
+                //     isSelected: false,
+                //     desc: 'DM has the right to use benifits of the limo logix network and website anywhere in the US that Limo Logix provides their service'
+                // }, {
+                //     isSelected: false,
+                //     desc: 'DM will provide Limo Logix with all up-to-date driver information ,car information or background checks.Limo Logix will periodically check-in to ensure they have the most up-to-date information.'
+                // }, {
+                //     isSelected: false,
+                //     desc: 'Limo Logix is the only authority to manage the Limo Logix website.'
+                // }, {
+                //     isSelected: false,
+                //     desc: 'DM will immiditely become a user of the Limo Logix website once the independent driver Application is completed '
+                // }, {
+                //     isSelected: false,
+                //     desc: 'limo logix will not collect any charges for the DM from limo companies and all charge for trip will be between the limo companies and DM. Limo Logix is not responsible for any froud or dispute between the limo company and the DM.'
+                // }, {
+                //     isSelected: false,
+                //     desc: 'When a DM needs assistance with a dispute with the limo company, they should contact Local Limo association,the city or national limo association on their own.'
+                // }, {
+                //     isSelected: false,
+                //     desc: 'DMs are all equal and have the right to get all benifits of the limo logix network and website equally.'
+                // }
+            ];
 
             $scope.AllSelectedItems = false;
             $scope.NoSelectedItems = false;
@@ -851,112 +628,108 @@ app
     ])
 
 .controller('DatepickerTripCtrl', ['$scope', function($scope) {
-        $scope.today = function() {
-            //update exp dates
-            if ($scope.personal) {
-                $scope.personal.dl_exp_Date = $scope.personal.dl_exp_Date ? new Date($scope.personal.dl_exp_Date) : new Date();
-                $scope.personal.limo_badge_exp_Date = $scope.personal.limo_badge_exp_Date ? new Date($scope.personal.limo_badge_exp_Date) : new Date();
-                $scope.personal.ara_exp_Date = $scope.personal.ara_exp_Date ? new Date($scope.personal.ara_exp_Date) : new Date();
-                $scope.personal.insurance_exp_Date = $scope.personal.insurance_exp_Date ? new Date($scope.personal.insurance_exp_Date) : new Date();
-            }
-            // if ($scope.card) {
-            //     $scope.card.card_exp_Date = $scope.card.card_exp_Date ? new Date($scope.card.card_exp_Date) : new Date();
-            // }
-        };
+    $scope.today = function() {
+        //update exp dates
+        if ($scope.personal) {
+            $scope.personal.dl_exp_Date = $scope.personal.dl_exp_Date ? new Date($scope.personal.dl_exp_Date) : new Date();
+            $scope.personal.limo_badge_exp_Date = $scope.personal.limo_badge_exp_Date ? new Date($scope.personal.limo_badge_exp_Date) : new Date();
+            $scope.personal.ara_exp_Date = $scope.personal.ara_exp_Date ? new Date($scope.personal.ara_exp_Date) : new Date();
+            $scope.personal.insurance_exp_Date = $scope.personal.insurance_exp_Date ? new Date($scope.personal.insurance_exp_Date) : new Date();
+        }
+    };
 
-        $scope.today();
+    $scope.today();
 
-        $scope.clear = function() {
-            $scope.tripinfo.pickup_date = null;
-        };
+    $scope.clear = function() {
+        $scope.tripinfo.pickup_date = null;
+    };
 
-        // Disable weekend selection
-        $scope.disabled = function(date, mode) {
-            return (mode === 'day' && (date.getDay() === 0 || date.getDay() === 6));
-        };
+    // Disable weekend selection
+    $scope.disabled = function(date, mode) {
+        return (mode === 'day' && (date.getDay() === 0 || date.getDay() === 6));
+    };
 
-        $scope.toggleMin = function() {
-            $scope.minDate = $scope.minDate ? null : new Date();
-        };
-        $scope.toggleMin();
+    $scope.toggleMin = function() {
+        $scope.minDate = $scope.minDate ? null : new Date();
+    };
+    $scope.toggleMin();
 
-        $scope.open = function($event) {
-            $event.preventDefault();
-            $event.stopPropagation();
+    $scope.open = function($event) {
+        $event.preventDefault();
+        $event.stopPropagation();
 
-            $scope.opened = true;
-        };
+        $scope.opened = true;
+    };
 
-        $scope.dateOptions = {
-            formatYear: 'yy',
-            startingDay: 1,
-            'class': 'datepicker'
-        };
+    $scope.dateOptions = {
+        formatYear: 'yy',
+        startingDay: 1,
+        'class': 'datepicker'
+    };
 
-        $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
-        $scope.format = $scope.formats[0];
-    }])
-    // .directive('selectAllCheckbox', function() {
-    //     return {
-    //         replace: true,
-    //         restrict: 'E',
-    //         scope: {
-    //             checkboxes: '=',
-    //             allselected: '=allSelected',
-    //             allclear: '=allClear'
-    //         },
-    //         template: '<input type="checkbox" ng-model="master" ng-change="masterChange()">',
-    //         controller: function($scope, $element, $rootScope) {
-    //             //$scope.enableNext = false;
-    //             $scope.masterChange = function() {
+    $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+    $scope.format = $scope.formats[0];
+}])
 
-    //                 if ($scope.master) {
-    //                     angular.forEach($scope.checkboxes, function(cb, index) {
-    //                         cb.isSelected = true;
-    //                         $rootScope.enableNext = true;
-    //                         //alert($rootScope.enableNext);
-    //                         //alert("hey");
-    //                     });
-    //                 } else {
-    //                     angular.forEach($scope.checkboxes, function(cb, index) {
-    //                         cb.isSelected = false;
-    //                     });
-    //                 }
-    //             };
+// .directive('selectAllCheckbox', function() {
+//     return {
+//         replace: true,
+//         restrict: 'E',
+//         scope: {
+//             checkboxes: '=',
+//             allselected: '=allSelected',
+//             allclear: '=allClear'
+//         },
+//         template: '<input type="checkbox" ng-model="master" ng-change="masterChange()">',
+//         controller: function($scope, $element ,$rootScope) {
+//             //$scope.enableNext = false;
+//             $scope.masterChange = function() {
 
-    //             $scope.$watch('checkboxes', function() {
-    //                 var allSet = true,
-    //                     allClear = true;
-    //                 angular.forEach($scope.checkboxes, function(cb, index) {
-    //                     if (cb.isSelected) {
-    //                         allClear = false;
-    //                         $rootScope.enableNext = $scope.master;
-    //                     } else {
-    //                         allSet = false;
-    //                     }
-    //                 });
+//                 if ($scope.master) {
+//                     angular.forEach($scope.checkboxes, function(cb, index) {
+//                         cb.isSelected = true;
+//                         $rootScope.enableNext = true;
+//                         //alert($rootScope.enableNext);
+//                         //alert("hey");
+//                     });
+//                 } else {
+//                     angular.forEach($scope.checkboxes, function(cb, index) {
+//                         cb.isSelected = false;
+//                     });
+//                 }
+//             };
+//             $scope.$watch('checkboxes', function() {
+//                 var allSet = true,allClear = true;
+//                 angular.forEach($scope.checkboxes, function(cb, index) {
+//                     if (cb.isSelected) {
+//                         allClear = false;
+//                         $rootScope.enableNext =  $scope.master;
+//                     } else {
+//                         allSet = false;
+//                     }
+//                 });
 
-    //                 if ($scope.allselected !== undefined) {
-    //                     $scope.allselected = allSet;
-    //                 }
-    //                 if ($scope.allclear !== undefined) {
-    //                     $scope.allclear = allClear;
-    //                 }
+//                 if ($scope.allselected !== undefined) {
+//                     $scope.allselected = allSet;
+//                 }
+//                 if ($scope.allclear !== undefined) {
+//                     $scope.allclear = allClear;
+//                 }
 
-    //                 $element.prop('indeterminate', false);
-    //                 if (allSet) {
-    //                     $scope.master = true;
-    //                     $rootScope.enableNext = $scope.master;
-    //                 } else if (allClear) {
-    //                     $scope.master = false;
-    //                     $rootScope.enableNext = $scope.master;
-    //                 } else {
-    //                     $scope.master = false;
-    //                     $rootScope.enableNext = $scope.master;
-    //                     $element.prop('indeterminate', true);
-    //                 }
+//                 $element.prop('indeterminate', false);
+//                 if (allSet) {
+//                     $scope.master = true;
+//                      $rootScope.enableNext = $scope.master;
+//                 } else if (allClear) {
+//                     $scope.master = false;
+//                     $rootScope.enableNext = $scope.master;
+//                 } else {
+//                     $scope.master = false;
+//                     $rootScope.enableNext =  $scope.master;
+//                     $element.prop('indeterminate', true);
+//                 }
 
-    //             }, true);
-    //         }
-    //     };
-    // });
+//             }, true);
+//         }
+//     }
+// })

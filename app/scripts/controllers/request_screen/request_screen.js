@@ -9,12 +9,12 @@
  */
 app
     .controller('requestScreenCtrl', ['$scope', '$state', '$http', 'appSettings', 'notify', '$window',
-        'services', 'AppConstants', 'dispatchRideProvider','driverLocationConstants','FayeTest','$location',
-        function($scope, $state, $http, appSettings, notify, $window, services, constants, dispatchRideProvider,driverLocationConstants,FayeTest,$location) {
+        'services', 'AppConstants', 'dispatchRideProvider','driverLocationConstants','Faye','$location',
+        function($scope, $state, $http, appSettings, notify, $window, services, constants, dispatchRideProvider,driverLocationConstants,Faye,$location) {
             // get Customer route directions
             $scope.tripsummary = {};
             getCustomerRoute();
-            dispatchRideProvider.getRoutes($scope.tripsummary.pickupAt, $scope.tripsummary.dropoffAt, notify,false);
+            dispatchRideProvider.getRoutes($scope.tripsummary.pickupAt, $scope.tripsummary.dropoffAt, notify, false, '', 'dvMap_requestscreen');
 
             function getCustomerRoute() {
                 $scope.tripsummary = {
@@ -28,19 +28,19 @@ app
             }
 
             var progressBarWidth = jQuery(window).innerWidth();
-            //var mapHeight = windowHeight - ($(".navbar-header").height() + $(".footer-text").height());
             $('#progressBar').width(progressBarWidth + 'px');
 
             var progressBar = $('#progress-bar'),width = 0;
             progressBar.width(width);
             $scope.interval = setInterval(function() {
-                width += 15;
+                width += 7.25;//15;
                 progressBar.css('width', width + '%');
-                if (width >= 105) {
+                //if (width >= 105) {
+                if (width >= 101.25) {
                     clearInterval($scope.interval);
                     $state.go('core.home')
                 }
-                $('#js-Visit-count').html(width / 15);
+                $('#js-Visit-count').html(width / 7.25);//15);
             }, 1000)
 
 
@@ -57,7 +57,7 @@ app
 
                 },function(error){
                       notify({ classes: 'alert-danger', message: error.message });
-                      $state.go('core.passenger_boarded');
+                      $state.go('core.home');
                 });
             }
 
@@ -72,7 +72,7 @@ app
                     $state.go('core.home');
                 },function(error){
                       notify({ classes: 'alert-danger', message: error.message });
-                       $state.go('core.home');
+                      $state.go('core.home');
                 });
             }
                 // onSuccess Callback
@@ -83,7 +83,7 @@ app
                     var url = appSettings.serverPath + appSettings.serviceApis.getChannelName;
                     services.funcGetRequest(url).then(function(response,status) {
                      $scope.channelName = response.data.channel;
-                     faye($scope,$window,position,appSettings);
+                     faye(Faye,$scope,$window,position);
                     },function(error){
                          notify({ classes: 'alert-danger', message: response.message });
                     });
@@ -95,60 +95,59 @@ app
                     // 'message: ' + error.message + '\n');
                 }
               
-                navigator.geolocation.watchPosition(onSuccess,onError,{timeout: 30000})
+                navigator.geolocation.getCurrentPosition(onSuccess, onError, { maximumAge: 3000, timeout: 5000, enableHighAccuracy: true });
+
+                function faye(Faye,$scope,$window,position) {
+                    var Logger = {
+                        incoming: function(message, callback) {
+                            console.log('incoming', message);
+                            callback(message);
+                        },
+                        outgoing: function(message, callback) {
+                            message.ext = message.ext || {};
+                            message.ext.auth_token = $window.sessionStorage['Auth-Token'];
+                            message.ext.user_type = "driver";
+                            console.log('outgoing', message);
+                            callback(message);
+                        }
+                    };
+                    var client = Faye.getClient();
+                    client.addExtension(Logger);
+                    var publication = client.publish('/publish/'+ $scope.channelName, { latitude: position.coords.latitude, longitude: position.coords.longitude });
+
+                    publication.callback(function() {
+                        //alert('Connection established successfully.');
+                    });
+                    publication.errback(function(error) {
+                        // alert('There was a problem: ' + error.message);
+                    });
+                }
         }
     ])
-.factory('FayeTest',function($window) {
-        var Logger = {
-                    incoming: function(message, callback) {
-                        console.log('incoming', message);
-                        callback(message);
-                    },
-                    outgoing: function(message, callback) {
-                        message.ext = message.ext || {};
-                        message.ext.auth_token = $window.sessionStorage['Auth-Token'];
-                        message.ext.user_type = "driver";
-                        console.log('outgoing', message);
-                        callback(message);
-                    }
-        };
-            
-       var FayeServerURL = 'http://159.203.81.112:9292/faye';//'http://172.16.90.117:9292/faye';
-        var client = new Faye.Client(FayeServerURL);
-        client.addExtension(Logger);
-          return {
-            publish: function(channel, message) {
-              client.publish(channel, message);
-            },
-
-            subscribe: function(channel, callback) {
-              client.subscribe(channel, callback);
-            }
-          }
-    })
 
 
-function faye($scope,$window,position,appSettings){
-     var Logger = {
-                incoming: function(message, callback) {
-                    console.log('incoming', message);
-                    callback(message);
-                },   
-                outgoing: function(message, callback) {
-                    message.ext = message.ext || {};
-                    message.ext.auth_token = $window.sessionStorage['Auth-Token'];
-                    message.ext.user_type = "driver";
-                    console.log('outgoing', message);
-                    callback(message);
-                }
-    };
-   var client = new Faye.Client('http://159.203.81.112:9292/faye');  
-    client.addExtension(Logger);
-    var publication = client.publish('/publish/'+ $scope.channelName, { latitude: position.coords.latitude, longitude: position.coords.longitude });
-    publication.callback(function() {
-        //alert('Connection established successfully.');
-    });
-    publication.errback(function(error) {
-        //alert('There was a problem: ' + error.message);
-    });
-}
+
+// function faye($scope,$window,position,appSettings){
+//      var Logger = {
+//                 incoming: function(message, callback) {
+//                     console.log('incoming', message);
+//                     callback(message);
+//                 },   
+//                 outgoing: function(message, callback) {
+//                     message.ext = message.ext || {};
+//                     message.ext.auth_token = $window.sessionStorage['Auth-Token'];
+//                     message.ext.user_type = "driver";
+//                     console.log('outgoing', message);
+//                     callback(message);
+//                 }
+//     };
+//    var client = new Faye.Client('http://159.203.81.112:9292/faye');  
+//     client.addExtension(Logger);
+//     var publication = client.publish('/publish/'+ $scope.channelName, { latitude: position.coords.latitude, longitude: position.coords.longitude });
+//     publication.callback(function() {
+//         //alert('Connection established successfully.');
+//     });
+//     publication.errback(function(error) {
+//         //alert('There was a problem: ' + error.message);
+//     });
+// }

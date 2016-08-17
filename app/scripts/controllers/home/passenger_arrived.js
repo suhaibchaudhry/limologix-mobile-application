@@ -9,23 +9,27 @@
  */
 app
     .controller('passengerArrivedCtrl', ['$scope', '$state', '$http', 'appSettings', 'notify', '$window',
-        'services', 'AppConstants', 'dispatchRideProvider','FayeTest','$location','driverLocationConstants',
-        function($scope, $state, $http, appSettings, notify, $window, services, constants, dispatchRideProvider,FayeTest,$location,driverLocationConstants) {
-            var map_height = jQuery(window).innerHeight() - (jQuery('.b1').innerHeight() + jQuery('.navbar-header').innerHeight())
-            alert(map_height)
-            jQuery('.dvMap2').height(map_height);
+        'services', 'AppConstants', 'dispatchRideProvider','Faye','$location','driverLocationConstants',
+        function($scope, $state, $http, appSettings, notify, $window, services, constants, dispatchRideProvider,Faye,$location,driverLocationConstants) {
+            
             $scope.tripsummary = {};
             getCustomerRoute();
+            dispatchRideProvider.getRoutes($scope.tripsummary.pickupAt, $scope.tripsummary.dropoffAt,notify,true,'dropoffpoint','dvMap_arrived');
+
+            var map_height = jQuery(window).innerHeight() - (jQuery('.b2').innerHeight() + jQuery('.navbar-header').innerHeight())
+            //alert('arrived height',map_height);
+            jQuery('#dvMap_arrived').height(map_height);
             function getCustomerRoute() {
-                // $scope.tripsummary.pickupAt = 'Marathahalli, Bengaluru, Karnataka 560037, India';
-                // $scope.tripsummary.dropoffAt = 'Hebbal, Bengaluru, Karnataka 560024, India';
+               // $scope.tripsummary.pickupAt = 'Marathahalli, Bengaluru, Karnataka 560037, India';
+               // $scope.tripsummary.dropoffAt = 'Hebbal, Bengaluru, Karnataka 560024, India';
+               // $scope.tripsummary.trip_id = 3;
                 $scope.tripsummary = {
                     pickupAt : driverLocationConstants.location.start_destination,
                     dropoffAt : driverLocationConstants.location.end_destination,
                     trip_id: driverLocationConstants.location.id
                 };
             }
-            dispatchRideProvider.getRoutes($scope.tripsummary.pickupAt, $scope.tripsummary.dropoffAt,notify,true,'dropoffpoint');
+             
             
 
             $scope.passenger_arrived = function(){
@@ -63,62 +67,87 @@ app
                     // 'message: ' + error.message + '\n');
                 }
               
-                navigator.geolocation.watchPosition(onSuccess,onError,{timeout: 30000})
+                navigator.geolocation.watchPosition(onSuccess,onError,{timeout: 30000});
+                 function faye(Faye,$scope,$window,position) {
+                    var Logger = {
+                        incoming: function(message, callback) {
+                            console.log('incoming', message);
+                            callback(message);
+                        },
+                        outgoing: function(message, callback) {
+                            message.ext = message.ext || {};
+                            message.ext.auth_token = $window.sessionStorage['Auth-Token'];
+                            message.ext.user_type = "driver";
+                            console.log('outgoing', message);
+                            callback(message);
+                        }
+                    };
+                    var client = Faye.getClient();
+                    client.addExtension(Logger);
+                    var publication = client.publish('/publish/'+ $scope.channelName, { latitude: position.coords.latitude, longitude: position.coords.longitude });
+
+                    publication.callback(function() {
+                        //alert('Connection established successfully.');
+                    });
+                    publication.errback(function(error) {
+                        // alert('There was a problem: ' + error.message);
+                    });
+                }
             
 
         }
     ])
-  factory('FayeTest',function($window) {
-        var Logger = {
-                    incoming: function(message, callback) {
-                        console.log('incoming', message);
-                        callback(message);
-                    },
-                    outgoing: function(message, callback) {
-                        message.ext = message.ext || {};
-                        message.ext.auth_token = $window.sessionStorage['Auth-Token'];
-                        message.ext.user_type = "driver";
-                        console.log('outgoing', message);
-                        callback(message);
-                    }
-        };
+  // factory('FayeTest',function($window) {
+  //       var Logger = {
+  //                   incoming: function(message, callback) {
+  //                       console.log('incoming', message);
+  //                       callback(message);
+  //                   },
+  //                   outgoing: function(message, callback) {
+  //                       message.ext = message.ext || {};
+  //                       message.ext.auth_token = $window.sessionStorage['Auth-Token'];
+  //                       message.ext.user_type = "driver";
+  //                       console.log('outgoing', message);
+  //                       callback(message);
+  //                   }
+  //       };
             
-       var FayeServerURL = 'http://159.203.81.112:9292/faye';//'http://172.16.90.117:9292/faye';
-        var client = new Faye.Client(FayeServerURL);
-        client.addExtension(Logger);
-          return {
-            publish: function(channel, message) {
-              client.publish(channel, message);
-            },
+  //      var FayeServerURL = 'http://159.203.81.112:9292/faye';//'http://172.16.90.117:9292/faye';
+  //       var client = new Faye.Client(FayeServerURL);
+  //       client.addExtension(Logger);
+  //         return {
+  //           publish: function(channel, message) {
+  //             client.publish(channel, message);
+  //           },
 
-            subscribe: function(channel, callback) {
-              client.subscribe(channel, callback);
-            }
-          }
-    })
+  //           subscribe: function(channel, callback) {
+  //             client.subscribe(channel, callback);
+  //           }
+  //         }
+  //   })
 
 
-function faye($scope,$window,position,appSettings){
-     var Logger = {
-                incoming: function(message, callback) {
-                    console.log('incoming', message);
-                    callback(message);
-                },   
-                outgoing: function(message, callback) {
-                    message.ext = message.ext || {};
-                    message.ext.auth_token = $window.sessionStorage['Auth-Token'];
-                    message.ext.user_type = "driver";
-                    console.log('outgoing', message);
-                    callback(message);
-                }
-    };
-   var client = new Faye.Client('http://159.203.81.112:9292/faye');  
-    client.addExtension(Logger);
-    var publication = client.publish('/publish/'+ $scope.channelName, { latitude: position.coords.latitude, longitude: position.coords.longitude });
-    publication.callback(function() {
-        //alert('Connection established successfully.');
-    });
-    publication.errback(function(error) {
-        //alert('There was a problem: ' + error.message);
-    });
-}
+// function faye($scope,$window,position,appSettings){
+//      var Logger = {
+//                 incoming: function(message, callback) {
+//                     console.log('incoming', message);
+//                     callback(message);
+//                 },   
+//                 outgoing: function(message, callback) {
+//                     message.ext = message.ext || {};
+//                     message.ext.auth_token = $window.sessionStorage['Auth-Token'];
+//                     message.ext.user_type = "driver";
+//                     console.log('outgoing', message);
+//                     callback(message);
+//                 }
+//     };
+//    var client = new Faye.Client('http://159.203.81.112:9292/faye');  
+//     client.addExtension(Logger);
+//     var publication = client.publish('/publish/'+ $scope.channelName, { latitude: position.coords.latitude, longitude: position.coords.longitude });
+//     publication.callback(function() {
+//         //alert('Connection established successfully.');
+//     });
+//     publication.errback(function(error) {
+//         //alert('There was a problem: ' + error.message);
+//     });
+// }

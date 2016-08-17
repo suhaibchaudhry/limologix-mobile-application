@@ -72,14 +72,15 @@
         ])
 
         .constant('appSettings', {  
-            server_address: 'http://172.16.90.117:9000',//'http://limologix.softwaystaging.com',//'http://172.16.90.117:9000',
+            server_address: 'http://limologix.softwaystaging.com', //http://172.16.90.111:9000',
             version: 'v1',
-            server_images_path : 'http://172.16.90.117:9000',//"http://limologix.api.softwaystaging.com/",
-            serverPath: 'http://172.16.90.117:9000/api/v1/',//"http://limologix.api.softwaystaging.com/api/v1/",//'http://172.16.90.117:9000/api/v1/',
-            FayeServerURL :'http://159.203.81.112:9292/faye',
+            server_images_path : "http://limologix.api.softwaystaging.com/", //'http://172.16.90.111:9000',
+            serverPath: "http://limologix.api.softwaystaging.com/api/v1/",//'http://172.16.90.111:9000/api/v1/'
+            FayeServerURL : 'http://limologix.softwaystaging.com:9292/faye',//'http://172.16.90.111:9292/faye',
             serviceApis: {
                 signin: 'drivers/sign_in',
                 registration: 'drivers/registration',
+                displayAdvertisements: 'master_data/advertisements',
                 my_profile: 'drivers/profile/show',
                 profileupdate: 'drivers/profile/update',
                 getDriverInfo: 'drivers/profile/show',
@@ -105,6 +106,37 @@
                 logout: 'drivers/logout',
             }
         })
+.factory('Faye', ['$window','appSettings',function($window,appSettings) {
+        var Logger = {
+            incoming: function(message, callback) {
+                //console.log('incoming', message);
+                callback(message);
+            },
+            outgoing: function(message, callback) {
+                message.ext = message.ext || {};
+                message.ext.auth_token = $window.sessionStorage['Auth-Token'] ? $window.sessionStorage['Auth-Token'] : '';
+                message.ext.user_type = "driver";
+                //console.log('outgoing', message);
+                callback(message);
+            }
+        };
+
+        var FayeServerURL = appSettings.FayeServerURL;
+        var client = new Faye.Client(FayeServerURL);
+        client.addExtension(Logger);
+        return {
+            getClient: function(){
+              return client;
+            },
+            publish: function(channel, message) {
+                client.publish(channel, message);
+            },
+
+            subscribe: function(channel, callback) {
+                client.subscribe(channel, callback);
+            }
+        }
+    }])
     //session expired
     .factory('authHttpResponseInterceptor', ['$q', '$location', function($q, $location) {
         return {

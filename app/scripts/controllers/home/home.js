@@ -8,16 +8,91 @@
  * Controller of the LimoCordova
  */
 app    
-    .controller('homeCtrl', ['$scope', '$state', '$http', 'appSettings', 'notify', '$window', 'services', 'AppConstants', '$timeout','$location','FayeTest','driverLocationConstants',
-            function($scope, $state, $http, appSettings, notify, $window, services, constants, $timeout,$location,FayeTest,driverLocationConstants) {
-        
-          
+    .controller('homeCtrl', ['$scope', '$state', '$http', 'appSettings', 'notify', '$window', 'services', 'AppConstants', '$timeout','$location','Faye','driverLocationConstants',
+            function($scope, $state, $http, appSettings, notify, $window, services, constants, $timeout,$location,Faye,driverLocationConstants) {
+                
                 $scope.driver_name = constants.driver.full_name;
+                $scope.company_name = constants.driver.company;
+                $scope.showAds = false;
                 var windowHeight = jQuery(window).innerHeight();
                 var mapHeight = windowHeight - ($(".navbar-header").height() + $(".footer-text").height());
                 $('#dvMap').height(mapHeight + 'px');
-                
 
+
+                var galleryBottomPos =$('#dvMap').position().top + $(".footer-text").height();
+             $("#slide_cont").css({'bottom':(galleryBottomPos+20)+'px'})
+             var galleryImgLeftPos = ($(window).innerWidth() - $('#slideshow_image').innerWidth())/2;
+               $("#slideshow_image").css({'left':galleryImgLeftPos+'px'})
+                displayAds();
+
+                function displayAds() {
+                  var imgsArr1 = [];
+                    var url = appSettings.serverPath + appSettings.serviceApis.displayAdvertisements;
+                    services.funcPostRequest(url, { "page": 0, "per_page": 0 }).then(function(response) {
+                      console.log(response);
+                      if(response.data){
+                        $scope.showAds = true;
+                        $scope.adsJSON = response.data.advertisements;
+                        for (var i = 0; i < Object.keys($scope.adsJSON).length; i++) {
+                            var imgs = $scope.adsJSON[i].poster.image;
+                            imgsArr1.push(imgs);
+                            $scope.imgsArr[i] = imgsArr1[i];
+                            console.log('array', $scope.imgsArr);
+                        }
+                      }else{
+                        $scope.showAds = false;
+                      }
+                      
+                      //notify({ classes: 'alert-success', message: response.message });
+                  }, function(error) {
+                      notify({ classes: 'alert-danger', message: error });
+                  });
+              }
+
+
+                $scope.imgsArr = [];
+                $("#prev_image").click(function() {
+                    prev();
+                });
+                $("#next_image").click(function() {
+                    next();
+                });
+
+                $scope.imagePath = appSettings.server_images_path;
+                var images = $scope.imgsArr;
+
+                function prev() {
+                    $('#slideshow_image').fadeOut(300, function() {
+                        var prev_val = document.getElementById("img_no").value;
+                        var prev_val = Number(prev_val) - 1;
+                        if (prev_val <= -1) {
+                            prev_val = images.length - 1;
+                        }
+                        $('#slideshow_image').attr('src', $scope.imagePath + images[prev_val]);
+                        document.getElementById("img_no").value = prev_val;
+                    });
+                    $('#slideshow_image').fadeIn(1000);
+                }
+
+                function next() {
+                    $('#slideshow_image').fadeOut(300, function() {
+                        var next_val = document.getElementById("img_no").value;
+                        var next_val = Number(next_val) + 1;
+                        if (next_val >= images.length) {
+                            next_val = 0;
+                        }
+                        $('#slideshow_image').attr('src', $scope.imagePath + images[next_val]);
+                        document.getElementById("img_no").value = next_val;
+                    });
+                    $('#slideshow_image').fadeIn(1000);
+                }
+
+                  
+
+                $scope.funcCloseAds = function() {
+                  $("#slide_cont").hide();
+                }
+           
                 FCMPlugin.getToken(
                   function(token){
                    // alert(token);
@@ -30,79 +105,113 @@ app
                     function(data){
                          if(data.wasTapped){
                          //Notification was received on device tray and tapped by the user.
-                            //alert('You have got a trip request')
-                            //alert(JSON.stringify(data));
-                            //var data = JSON.stringify(data);
-                            var title = data.notification.title;
-                            var body = data.notification.body;
+                            if(data.aps){
+                                 var title = data.aps.alert.title;
+                                 var body = data.aps.alert.body;
+                             }else{
+                                 var title = data.notification.title;
+                                 var body = data.notification.body;
+                             }
+
+                           // var location = JSON.stringify(JSON.parse(data.trip));
+                           // var end_destination = JSON.parse(location).end_destination.place; 
+                           // var start_destination = JSON.parse(location).start_destination.place; 
+                           // var id = JSON.parse(location).id; 
 
 
+                           //var location = JSON.stringify(JSON.parse(data.trip));
+                           var end_destination = JSON.parse(data.end_destination).place;
+                           var start_destination = JSON.parse(data.start_destination).place
+                           var id = data.id; 
+                           var notified_time = data.notified_at;
+                           var timeoutmsg = false;
 
-                            // var notification_alert = '<div class="alert alert-info"><strong>'+title+'</strong>'+body+'</div>'
-                            // jQuery('.notification').css({'display':'block'}).html(notification_alert);
+                           function startTimer(duration) {
+                                var timer = duration, minutes, seconds;
+                                setInterval(function () {
+                                    minutes = parseInt(timer / 60, 10)
+                                    seconds = parseInt(timer % 60, 10);
+
+                                    minutes = minutes < 10 ? "0" + minutes : minutes;
+                                    seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                                    //display.text(minutes + ":" + seconds);
+
+                                    // if (--timer < 0) {
+                                    //     timer = duration;
+                                    //     timoutmsg = true;
+                                    //     alert('timeout');    
+                                    //     if(timoutmsg){
+                                    //         swal({
+                                    //             title: title,
+                                    //             text: 'Trip TimeOut! You will not be to take this ride.',
+                                    //             type: "warning"
+                                    //         },
+                                    //         function(){
+                                    //              $state.go('core.home')
+                                    //         })
+                                    //     }
+                                   // }else{
+                                        swal({
+                                            title: title,
+                                            text: body,
+                                            type: "success"
+                                        },
+                                        function(){
+                                             $state.go('core.request_screen')
+                                        })
+                                    //}
+                                }, 1000);
+                            }
+
+                            jQuery(function ($) {
+                                var fiveMinutes = 60 * 1;
+                                    //display = $('#time');
+                                startTimer(fiveMinutes);
+                            });
 
 
-                           var location = JSON.stringify(JSON.parse(data.trip));
-                           var end_destination = JSON.parse(location).end_destination.place; 
-                           var start_destination = JSON.parse(location).start_destination.place; 
-                           var id = JSON.parse(location).id; 
                            driverLocationConstants.location = {
                               end_destination : end_destination,
                               start_destination : start_destination,
                               id : id
                            }
 
+                            
 
-                            swal({
+                         }else{
+                         //Notification was received in foreground. Maybe the user needs to be notified.
+                             if(data.aps){
+                                 var title = data.aps.alert.title;
+                                 var body = data.aps.alert.body;
+                             }else{
+                                 var title = data.notification.title;
+                                 var body = data.notification.body;
+                             }
+                           
+                           // var location = JSON.stringify(JSON.parse(data.trip));
+                           // var end_destination = JSON.parse(location).end_destination.place; 
+                           // var start_destination = JSON.parse(location).start_destination.place; 
+                           // var id = JSON.parse(location).id; 
+
+                           var end_destination = JSON.parse(data.end_destination).place;
+                           var start_destination = JSON.parse(data.start_destination).place
+                           var id = data.id; 
+
+                           driverLocationConstants.location = {
+                              end_destination : end_destination,
+                              start_destination : start_destination,
+                              id : id
+                           }
+
+                           swal({
                                 title: title,
                                 text: body,
                                 type: "success"
                             },
                             function(){
                                  $state.go('core.request_screen')
-                            })
-
-                            // setTimeout(function(){
-                            //     $state.go('core.request_screen')
-                            // },3000)
-
-                         }else{
-                         //Notification was received in foreground. Maybe the user needs to be notified.
-                            //alert('You have got a trip request')     
-                           // alert(JSON.stringify(data));
-                             //var data = JSON.stringify(data);
-                             //alert(data)
-                             //alert(data.notification)
-                            var title = data.notification.title;
-                            var body = data.notification.body;
-
-                            // var notification_alert = '<div class="alert alert-info"><strong>'+title+'</strong>'+body+'</div>'
-                            // jQuery('.notification').css({'display':'block'}).html(notification_alert);
-
-
-                           var location = JSON.stringify(JSON.parse(data.trip));
-                           var end_destination = JSON.parse(location).end_destination.place; 
-                           var start_destination = JSON.parse(location).start_destination.place; 
-                           var id = JSON.parse(location).id; 
-                           driverLocationConstants.location = {
-                              end_destination : end_destination,
-                              start_destination : start_destination,
-                              id : id
-                           }
-
-                           Sweetalert({
-                                title:"Limo Logix",
-                                test: "yFSFSF",
-                                type: "success"
-                            },
-                            function(){
-                                 $state.go('core.request_screen')
-                            })
-
-                            // setTimeout(function(){
-                            //     $state.go('core.request_screen')
-                            // },3000);
-                           
+                            })                           
                          }
                  },
                  function(msg){
@@ -118,25 +227,23 @@ app
                  $scope.topicName = response.data.topic;
                  //alert($scope.topicName)
                  FCMPlugin.subscribeToTopic($scope.topicName);
-                 alert($scope.topicName)
+                 //alert($scope.topicName)
                  
                 },function(error){
                       notify({ classes: 'alert-danger', message: response.message });
                 });
-
-               
+              
                 //FCMPlugin.subscribeToTopic('topicExample');
    
                                              
                 // onSuccess Callback
                 // This method accepts a Position object, which contains the
                 // current GPS coordinates
-                //if (navigator.geolocation) {
                 var onSuccess = function(position) {
                     var url = appSettings.serverPath + appSettings.serviceApis.getChannelName;
                     services.funcGetRequest(url).then(function(response,status) {
                      $scope.channelName = response.data.channel;
-                     faye($scope,$window,position,appSettings);
+                     faye(Faye,$scope,$window,position);
                     },function(error){
                          notify({ classes: 'alert-danger', message: response.message });
                     });
@@ -149,6 +256,7 @@ app
                 }
               
                 navigator.geolocation.getCurrentPosition(onSuccess, onError, { maximumAge: 3000, timeout: 5000, enableHighAccuracy: true });
+                
                 if (navigator.geolocation) {
                         navigator.geolocation.getCurrentPosition(function(p) {
                             var LatLng = new google.maps.LatLng(p.coords.latitude, p.coords.longitude);
@@ -175,60 +283,87 @@ app
                 }
 
                navigator.geolocation.watchPosition(onSuccess,onError,{timeout: 30000})
+               function faye(Faye,$scope,$window,position) {
+                    var Logger = {
+                        incoming: function(message, callback) {
+                            console.log('incoming', message);
+                            callback(message);
+                        },
+                        outgoing: function(message, callback) {
+                            message.ext = message.ext || {};
+                            message.ext.auth_token = $window.sessionStorage['Auth-Token'];
+                            message.ext.user_type = "driver";
+                            console.log('outgoing', message);
+                            callback(message);
+                        }
+                    };
+                    var client = Faye.getClient();
+                    client.addExtension(Logger);
+                    var publication = client.publish('/publish/'+ $scope.channelName, { latitude: position.coords.latitude, longitude: position.coords.longitude });
+
+                    publication.callback(function() {
+                        //alert('Connection established successfully.');
+                    });
+                    publication.errback(function(error) {
+                        // alert('There was a problem: ' + error.message);
+                    });
+                }
                
             }   
 ])
-.factory('FayeTest',function($window) {
-        var Logger = {
-                    incoming: function(message, callback) {
-                        console.log('incoming', message);
-                        callback(message);
-                    },
-                    outgoing: function(message, callback) {
-                        message.ext = message.ext || {};
-                        message.ext.auth_token = $window.sessionStorage['Auth-Token'];
-                        message.ext.user_type = "driver";
-                        console.log('outgoing', message);
-                        callback(message);
-                    }
-        };
+// .factory('FayeTest',function($window) {
+//         var Logger = {
+//                     incoming: function(message, callback) {
+//                         console.log('incoming', message);
+//                         callback(message);
+//                     },
+//                     outgoing: function(message, callback) {
+//                         message.ext = message.ext || {};
+//                         message.ext.auth_token = $window.sessionStorage['Auth-Token'];
+//                         message.ext.user_type = "driver";
+//                         console.log('outgoing', message);
+//                         callback(message);
+//                     }
+//         };
             
-       var FayeServerURL = 'http://159.203.81.112:9292/faye';//'http://172.16.90.117:9292/faye';
-        var client = new Faye.Client(FayeServerURL);
-        client.addExtension(Logger);
-          return {
-            publish: function(channel, message) {
-              client.publish(channel, message);
-            },
+//        var FayeServerURL = 'http://172.16.90.111:9292/faye';//'http://159.203.81.112:9292/faye';//'http://172.16.90.117:9292/faye';
+//         var client = new Faye.Client(FayeServerURL);
+//         client.addExtension(Logger);
+//           return {
+//             publish: function(channel, message) {
+//               client.publish(channel, message);
+//             },
 
-            subscribe: function(channel, callback) {
-              client.subscribe(channel, callback);
-            }
-          }
-    })
+//             subscribe: function(channel, callback) {
+//               client.subscribe(channel, callback);
+//             }
+//           }
+//     })
 
 
-function faye($scope,$window,position,appSettings){
-     var Logger = {
-                incoming: function(message, callback) {
-                    console.log('incoming', message);
-                    callback(message);
-                },   
-                outgoing: function(message, callback) {
-                    message.ext = message.ext || {};
-                    message.ext.auth_token = $window.sessionStorage['Auth-Token'];
-                    message.ext.user_type = "driver";
-                    console.log('outgoing', message);
-                    callback(message);
-                }
-    };
-   var client = new Faye.Client('http://159.203.81.112:9292/faye');  
-    client.addExtension(Logger);
-    var publication = client.publish('/publish/'+ $scope.channelName, { latitude: position.coords.latitude, longitude: position.coords.longitude });
-    publication.callback(function() {
-        //alert('Connection established successfully.');
-    });
-    publication.errback(function(error) {
-        //alert('There was a problem: ' + error.message);
-    });
-}
+
+// function faye($scope,$window,position,appSettings){
+//      var Logger = {
+//                 incoming: function(message, callback) {
+//                     console.log('incoming', message);
+//                     callback(message);
+//                 },   
+//                 outgoing: function(message, callback) {
+//                     message.ext = message.ext || {};
+//                     message.ext.auth_token = $window.sessionStorage['Auth-Token'];
+//                     message.ext.user_type = "driver";
+//                     console.log('outgoing', message);
+//                     callback(message);
+//                 }
+//     };
+//      var client = new Faye.Client('http://172.16.90.111:9292/faye');   
+//      //var client = new Faye.Client('http:159.203.81.112:9292/faye');  
+//     client.addExtension(Logger);
+//     var publication = client.publish('/publish/'+ $scope.channelName, { latitude: position.coords.latitude, longitude: position.coords.longitude });
+//     publication.callback(function() {
+//         //alert('Connection established successfully.');
+//     });
+//     publication.errback(function(error) {
+//         //alert('There was a problem: ' + error.message);
+//     });
+// }

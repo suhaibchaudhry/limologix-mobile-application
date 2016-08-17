@@ -7,7 +7,7 @@ function funcservices() {
     return {
         $get: function($http, $q) {
             return {
-                getRoutes: function(pickup, dropoff, notify,isInfoWindowVisible,check_infoWindow) {
+                getRoutes: function(pickup, dropoff, notify,isInfoWindowVisible,check_infoWindow,map_ele_id) {
                     var source, destination;
                     var directionsDisplay;
                     var directionsService = new google.maps.DirectionsService();
@@ -39,7 +39,7 @@ function funcservices() {
                         };
                         //var map = new google.maps.Map(document.getElementById('dvMap'));
 
-                        var map = new google.maps.Map(document.getElementById("dvMap"), mapOptions);
+                        var map = new google.maps.Map(document.getElementById(map_ele_id), mapOptions);
                         var marker = new google.maps.Marker({
                             position: LatLng,
                             map: map,

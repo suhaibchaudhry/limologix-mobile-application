@@ -91,6 +91,7 @@ app
                         fullName: response.first_name,
                         lastName: response.last_name,
                         email: response.email,
+                        company: response.company,
                         primary_phone_number: response.mobile_number,
                         primary_address:response.address.street,
                         city :response.address.city,
@@ -296,6 +297,7 @@ app
                         first_name: $scope.contact.fullName,
                         last_name: $scope.contact.lastName,
                         email: $scope.contact.email,
+                        company: $scope.contact.company,
                         mobile_number: $scope.contact.primary_phone_number,
                         address:{
                             street: $scope.contact.primary_address,
@@ -398,6 +400,7 @@ app
                         password: $scope.contactinfo.password,
                         mobile_number: $scope.contactinfo.primary_phone_number,
                         email: $scope.contactinfo.email,
+                        company: $scope.contactinfo.company,
                         address: {
                             street: $scope.contactinfo.primary_address,
                             city: $scope.contactinfo.city,

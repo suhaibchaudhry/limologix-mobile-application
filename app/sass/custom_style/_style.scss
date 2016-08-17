@@ -248,10 +248,10 @@ footer-text{
 }
 .footer-text p{
     color:#ffffff;
-    padding: 20px 40px 10px;
+    padding: 0px 40px 0px;
     font-family: Nexa Bold;
     font-weight: normal;
-    font-size: 40px;
+    font-size: 35px;
 }
 .dvMap2{
     position:relative;
@@ -286,17 +286,11 @@ footer-text{
 .nav_back_btn{
     position: absolute;
     font-size: 50px;
-    margin-left: 14px;
-    margin-top: 4px;
+    left: 14px;
+    top: 4px;
 }
 a.company{
     text-decoration:none;
-}
-.notification{
-    position:absolute;
-    top:40%;
-    left:2%;
-    display:none;
 }
 .active, .inactive {
     font-size:40px;
@@ -312,3 +306,90 @@ i.active {
 i.inactive {
     color: #d9534f
 }
+.home {
+    margin-top: 4px;
+    margin-bottom: 4px;
+    padding: 9px 0px 0px 10px;
+    width: 90%;
+    pointer-events: none;
+}
+.homeToggle {
+    margin-right: 0px;
+    top: 10%;
+    padding: 9px 10px;
+    position: absolute;
+    right: 14px;
+}
+.saveAndNext{
+    position:absolute;
+    right:-100px;
+}
+
+
+p.comp_name {
+        color: #ffffff;
+        margin-left: 38px;
+        margin-top: -19px;
+        font-family: Nexa Bold;
+        font-weight: normal;
+        font-size: 20px;
+    }
+.dispatchBtn{
+    position: absolute;left:3px;top: 15px;text-decoration: none !important;
+     background: rgb(38,34,98); 
+    background: -moz-radial-gradient(circle, rgb(38,34,98) 0%, rgb(11,0,47) 100%); 
+    background: -webkit-radial-gradient(circle, rgb(38,34,98) 0%,rgb(11,0,47) 100%); 
+    background: radial-gradient(circle, rgb(38,34,98) 0%,rgb(11,0,47) 100%);
+}
+
+    .imageCenter {
+        position: absolute;
+        width:100%;
+    }
+    #prev_image,#next_image{
+        width:40px;
+        height:40px;
+    }
+    #slide_cont {
+        background-color: #262262;
+        width: 100%;
+        height: 350px;
+        position:absolute;
+    }
+    
+    #slideshow_image {
+    position:absolute;
+        width: 350px;
+        height: 350px;
+    }
+    
+    .adsLeftArrow {
+        position: absolute;
+        top: 45%;
+        left: 0px;
+        font-size: -webkit-xxx-large;
+    }
+    
+    .adsRightArrow {
+        position: absolute;
+        top: 45%;
+        right: 0px;
+        font-size: -webkit-xxx-large;  
+    }
+    
+    .close {
+        position: absolute;
+        top: -7%;
+        right: 0px;
+        font-size: -webkit-xxx-large;
+    }
+    fa icon-close{
+       color:#262262;
+    }
+    .company_name{
+       position:relative;
+       left:13%;
+       top:-15px;
+       font-size:18px;
+    }
+

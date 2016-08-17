@@ -26,6 +26,7 @@ app
             $window.sessionStorage['Auth-Token'] = response.data['Auth-Token'];
             constants.driver = response.data;
             constants.driver.name = response.data.full_name;
+            constants.driver.company_name = response.data.company;
             $window.sessionStorage['driver'] = JSON.stringify(constants.driver);
             //$state.go('core.appSettings');   
             $state.go('core.home');          

@@ -26,7 +26,7 @@ app
             setTimeout(function() {
                 rendersplashscreen();
                 // Do something after 1 second 
-            }, 1000);
+            }, 500);
 
             function rendersplashscreen() {
                 var totalheight = jQuery(window).outerHeight();
