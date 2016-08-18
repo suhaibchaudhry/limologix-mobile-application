@@ -20,7 +20,7 @@ app
 
 
                 var galleryBottomPos =$('#dvMap').position().top + $(".footer-text").height();
-             $("#slide_cont").css({'bottom':(galleryBottomPos+20)+'px'})
+             $("#slide_cont").css({'bottom':(galleryBottomPos-20)+'px'})
              var galleryImgLeftPos = ($(window).innerWidth() - $('#slideshow_image').innerWidth())/2;
                $("#slideshow_image").css({'left':galleryImgLeftPos+'px'})
                 displayAds();

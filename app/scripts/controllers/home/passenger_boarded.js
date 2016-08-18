@@ -17,7 +17,7 @@ app
             dispatchRideProvider.getRoutes($scope.tripsummary.pickupAt, $scope.tripsummary.dropoffAt,notify,true,'pickuppoint','dvMap_boarded');
             
             var map_height = jQuery(window).innerHeight() - (jQuery('.b1').innerHeight() + jQuery('.navbar-header').innerHeight())
-            alert(map_height)
+           // alert(map_height)
             jQuery('#dvMap_boarded').height(map_height);
             
             function getCustomerRoute() {

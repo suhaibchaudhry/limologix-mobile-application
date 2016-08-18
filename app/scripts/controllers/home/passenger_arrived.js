@@ -28,8 +28,7 @@ app
                     dropoffAt : driverLocationConstants.location.end_destination,
                     trip_id: driverLocationConstants.location.id
                 };
-            }
-             
+            }            
             
 
             $scope.passenger_arrived = function(){
