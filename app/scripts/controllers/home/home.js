@@ -10,7 +10,7 @@
 app    
     .controller('homeCtrl', ['$scope', '$state', '$http', 'appSettings', 'notify', '$window', 'services', 'AppConstants', '$timeout','$location','Faye','driverLocationConstants',
             function($scope, $state, $http, appSettings, notify, $window, services, constants, $timeout,$location,Faye,driverLocationConstants) {
-                
+                   
                 $scope.driver_name = constants.driver.full_name;
                 $scope.company_name = constants.driver.company;
                 $scope.showAds = false;
@@ -23,15 +23,37 @@ app
              $("#slide_cont").css({'bottom':(galleryBottomPos-20)+'px'})
              var galleryImgLeftPos = ($(window).innerWidth() - $('#slideshow_image').innerWidth())/2;
                $("#slideshow_image").css({'left':galleryImgLeftPos+'px'})
-                displayAds();
 
+               $('body').removeClass('menu-slider');$('body').removeClass('in');
+
+               // Toggle classes in body for syncing sliding animation with other elements
+                $('#bs-example-navbar-collapse-2')
+                    .on('show.bs.collapse', function(e){
+                        $('body').addClass('menu-slider');
+                    })
+                    .on('shown.bs.collapse', function(e){
+                        $('body').addClass('in');
+                    })
+                    .on('hide.bs.collapse', function(e){
+                        $('body').removeClass('menu-slider');
+                    })
+                    .on('hidden.bs.collapse', function(e){
+                        $('body').removeClass('in');
+                    });
+
+                 // setInterval(function(){
+                 //    displayAds();
+                 // },1800000)
+              
+                displayAds();
                 function displayAds() {
                   var imgsArr1 = [];
                     var url = appSettings.serverPath + appSettings.serviceApis.displayAdvertisements;
                     services.funcPostRequest(url, { "page": 0, "per_page": 0 }).then(function(response) {
-                      console.log(response);
+                      
                       if(response.data){
-                        $scope.showAds = true;
+                        //$scope.showAds = true;
+                        $("#slide_cont").show();
                         $scope.adsJSON = response.data.advertisements;
                         for (var i = 0; i < Object.keys($scope.adsJSON).length; i++) {
                             var imgs = $scope.adsJSON[i].poster.image;
@@ -40,7 +62,8 @@ app
                             console.log('array', $scope.imgsArr);
                         }
                       }else{
-                        $scope.showAds = false;
+                        $("#slide_cont").hide();
+                        //$scope.showAds = false;
                       }
                       
                       //notify({ classes: 'alert-success', message: response.message });
@@ -126,7 +149,7 @@ app
                            var notified_time = data.notified_at;
                            var timeoutmsg = false;
 
-                           function startTimer(duration) {
+                           function startTimer(duration) { 
                                 var timer = duration, minutes, seconds;
                                 setInterval(function () {
                                     minutes = parseInt(timer / 60, 10)
@@ -164,11 +187,20 @@ app
                                 }, 1000);
                             }
 
-                            jQuery(function ($) {
-                                var fiveMinutes = 60 * 1;
-                                    //display = $('#time');
-                                startTimer(fiveMinutes);
-                            });
+                             swal({
+                                    title: title,
+                                    text: body,
+                                    type: "success"
+                                  },
+                                  function(){
+                                   $state.go('core.request_screen')
+                                  })
+
+                            // jQuery(function ($) {
+                            //     var fiveMinutes = 60 * 1;
+                            //         //display = $('#time');
+                            //     startTimer(fiveMinutes);
+                            // });
 
 
                            driverLocationConstants.location = {
@@ -239,7 +271,7 @@ app
                 // onSuccess Callback
                 // This method accepts a Position object, which contains the
                 // current GPS coordinates
-                var onSuccess = function(position) {
+                var onSuccess = function(position) { 
                     var url = appSettings.serverPath + appSettings.serviceApis.getChannelName;
                     services.funcGetRequest(url).then(function(response,status) {
                      $scope.channelName = response.data.channel;

@@ -1,5 +1,57 @@
 <div class="page page-signup page-login">
-       <div class="container">
+
+       <div id="wrapper">
+        <nav id="navbar2" class="navbar-default" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                     <i class="fa fa-angle-left nav_back_btn" aria-hidden="true" back></i>
+                    <a href="#" class="navbar-brand home"><img src="images/driver/bird-logo.png"></a>
+                    
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2" style="position:absolute;right:3%;top:1%">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>               
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
+                    <ul class="nav navbar-nav" role="menu" uib-dropdown>
+                         <li>
+                            <a href="#home" ui-sref="core.home">
+                        <fa name="home"></fa>Home
+                         </a>
+                        </li>
+                        <li>
+                            <a href="#profile" ui-sref="core.profile.my_account">
+                                <fa name="user"></fa>&nbsp;&nbsp;Profile
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" ui-sref="core.profile.availability">
+                                <fa name="cog"></fa>&nbsp;&nbsp;Availability
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" ui-sref="core.profile.reset_password">
+                                <fa name="lock"></fa>&nbsp;&nbsp;Reset Password
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="#logout" ui-sref="core.logout">
+                                <fa name="sign-out"></fa>&nbsp;&nbsp;Logout
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- </div> -->
+            </div>
+        </nav>
+       
+
+
+
+       <!-- <div class="container">
         <div class="navbar-header">            
         <i class="fa fa-angle-left nav_back_btn" aria-hidden="true" back></i>
         <a href="#" class="navbar-brand"><img src="images/driver/bird-logo.png"></a>
@@ -45,7 +97,7 @@
             </div>
             
         </div>
-    </div>
+       </div> -->
     <br/>
     <br/>
     <div class="container text-center signup">
@@ -86,24 +138,6 @@
                     </div>
                 </div>
             </div>
-<!--             <div class="row">
-                <div class="form-group col-md-12 mb-0">
-                    <div class="col-md-12">
-                        <input type="password" name="password" id="password" class="form-control input-lg" placeholder="Password" ng-model="contact.password" required>
-                    </div>
-                </div>
-            </div>
-            <br/>
-            <div class="row">
-                <div class="form-group col-md-12 mb-0">
-                    <div class="col-md-12">
-                        <input type="password" name="confirmPassword" id="confirmPassword" class="form-control input-lg" placeholder="Re Enter Password" ng-model="contact.confirmPassword" ui-validate=" '$value==contact.password' " required>
-                        <p class="help-block">
-                            <span style="color:red" ng-show="step1.confirmPassword.$error.validator">Passwords do not match!</span>
-                        </p>
-                    </div>
-                </div>
-            </div> -->
             <br/>
             <div class="row">
                 <div class="form-group col-md-12 mb-0">
@@ -364,3 +398,4 @@
     </div>
     <br/>
 </div>
+

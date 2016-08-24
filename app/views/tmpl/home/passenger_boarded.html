@@ -1,5 +1,5 @@
 <div class="page page-signup">
-    <div class="container">
+    <!-- <div class="container">
         <div class="navbar-header">
             <a href="#" class="navbar-brand"><img src="images/driver/bird-logo.png"></a>
             <div uib-dropdown>
@@ -32,11 +32,23 @@
                 </ul>
             </div>
         </div>
-    </div>
+    </div> -->
+    <div id="wrapper">
+        <nav id="navbar2" class="navbar-default" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a href="#" class="navbar-brand home"><img src="images/driver/bird-logo.png"></a>
+                    
+                </div>
+                
+            </div>
+        </nav>
+
     <div id="dvMap_boarded" class='dvMap2' style="width:100%;"></div>
     <div class="row ">
         <div class="col-xs-12">
-            <button type="button" style="width:100%;margin:0px;height:60px;" class="b1 text-white btn btn-darkgray btn-lg input-lg " ng-click="passenger_boarded()">ARRIVED AND PASSENGER BOARDED </button>
+            <button type="button" ng-disabled="!isBoarded" style="width:100%;margin:0px;height:60px;" class="b1 text-white btn btn-darkgray btn-lg input-lg " ng-click="passenger_boarded()">ARRIVED AND PASSENGER BOARDED </button>
         </div>
     </div>
+</div>
 </div>

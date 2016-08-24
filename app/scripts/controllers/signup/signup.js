@@ -10,6 +10,7 @@
 app
     .controller('DirverSignupCtrl', [
         '$scope',
+        '$locale',
         '$state',
         '$http',
         '$filter',
@@ -23,7 +24,7 @@ app
         'VehicleConstants',
         'ModelConstants',
         'MakeConstants',
-        function($scope, $state, $http, $filter, appSettings, notify, $window, services, AppConstants, countriesConstant, StatesConstants, VehicleConstants, ModelConstants, MakeConstants) {
+        function($scope, $locale, $state, $http, $filter, appSettings, notify, $window, services, AppConstants, countriesConstant, StatesConstants, VehicleConstants, ModelConstants, MakeConstants) {
             var self = this;
             $scope.phoneNumbr = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
             $scope.contact = {};
@@ -38,6 +39,12 @@ app
             $scope.colorsArr = ['Red', 'Black', 'White', 'Other'];
             $scope.vehicle.Color = $scope.colorsArr[0];
             $scope.localStorageArr = [];
+            $scope.currentYear = new Date().getFullYear()
+            $scope.currentMonth = new Date().getMonth() + 1
+            $scope.months = $locale.DATETIME_FORMATS.MONTH
+            $scope.card = {
+                type: undefined
+            }
             //  $scope.enableNext = false;
 
             // $scope.isEnableContactNext = false;
@@ -63,46 +70,34 @@ app
             })
 
 
-            $scope.allSelected = false;
-  
-              // $scope.checkboxes = [{
-              //   label: 'Option 1',
-              //   checked: true
-              // }, {
-              //   label: 'Option 2'
-              // }, {
-              //   label: 'Option 3',
-              //   checked: true
-              // }, {
-              //   label: 'Option 4'
-              // }];
+            $scope.allSelected = true;
 
-               $scope.checkboxes = [{
-                checked: false,
+            $scope.checkboxes = [{
+                checked: true,
                 label: 'This application is for independent limo drivers to become a member of limologix nnetwork.The independenr limo driver will be known as a driver mwmber("DM")'
             }, {
-                checked: false,
+                checked: true,
                 label: "Limo Logix reservs the right to terminate any DM eho misuses the limo logix network and service"
             }, {
-                checked: false,
+                checked: true,
                 label: 'DM has the right to use benifits of the limo logix network and website anywhere in the US that Limo Logix provides their service'
             }, {
-                checked: false,
+                checked: true,
                 label: 'DM will provide Limo Logix with all up-to-date driver information ,car information or background checks.Limo Logix will periodically check-in to ensure they have the most up-to-date information.'
             }, {
-                checked: false,
+                checked: true,
                 label: 'Limo Logix is the only authority to manage the Limo Logix website.'
             }, {
-                checked: false,
+                checked: true,
                 label: 'DM will immiditely become a user of the Limo Logix website once the independent driver Application is completed '
             }, {
-                checked: false,
+                checked: true,
                 label: 'Limo logix will not collect any charges for the DM from limo companies and all charge for trip will be between the limo companies and DM. Limo Logix is not responsible for any froud or dispute between the limo company and the DM.'
             }, {
-                checked: false,
+                checked: true,
                 label: 'When a DM needs assistance with a dispute with the limo company, they should contact Local Limo association,the city or national limo association on their own.'
             }, {
-                checked: false,
+                checked: true,
                 label: 'DMs are all equal and have the right to get all benifits of the limo logix network and website equally.'
             }];
 
@@ -118,7 +113,7 @@ app
               $scope.toggleAll = function() {
                 var bool = true;
                 if ($scope.allSelected) {
-                  bool = false;
+                  bool = true;
                 }
                 angular.forEach($scope.checkboxes, function(v, k) {
                   v.checked = !bool;
@@ -686,13 +681,25 @@ app
                 $scope.isVehicle = false;
                 $scope.isCardDetails = true;
             }
-            $scope.save_cardInfo = function() {
+            $scope.save_cardInfo = function(data) {
+
+                if ($scope.step4.$valid) {
+                    // alert(data)
+                    var cardExpiryData = data;
+                    var month = cardExpiryData.month;
+                    var year = cardExpiryData.year;
+                    if (month.length === 1) {
+                        month = '0' + month;
+                    }
+                    $scope.expiryDate = month + year.toString()[2] + year.toString()[3]; // valid data saving stuff here
+                    //console.log("cardExpiryData=", expiryDate);
+                }
 
                 $scope.cardInfo = {
                     card_number: $scope.card.cardNumber,
                     //card_holder_name: $scope.card.accHolderName,
                     //card_expiry_date: new Date($scope.card.card_exp_Date),
-                    card_expiry_date: $filter('date')(new Date($scope.card.card_exp_Date), 'MMyy'),
+                    card_expiry_date: $scope.expiryDate,//$filter('date')(new Date($scope.card.card_exp_Date), 'MMyy'),
                     card_code: $scope.card.cvvNumber
                 }
                 $scope.isContact = false;
@@ -849,6 +856,30 @@ app
 
         }
     ])
+.directive('cardExpiration', function() {
+        var directive = {
+            require: 'ngModel',
+            link: function(scope, elm, attrs, ctrl) {
+                scope.$watch('[card.month,card.year]', function(value) {
+                    ctrl.$setValidity('invalid', true)
+                    if (scope.card.year == scope.currentYear && scope.card.month <= scope.currentMonth) {
+                        ctrl.$setValidity('invalid', false)
+                    }
+                    return value;
+                }, true)
+            }
+        }
+        return directive;
+    })
+
+.filter('range', function() {
+    var filter =
+        function(arr, lower, upper) {
+            for (var i = lower; i <= upper; i++) arr.push(i)
+            return arr
+        }
+    return filter
+})
 
 .controller('DatepickerTripCtrl', ['$scope', function($scope) {
         $scope.today = function() {
@@ -896,67 +927,4 @@ app
         $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
         $scope.format = $scope.formats[0];
     }])
-    // .directive('selectAllCheckbox', function() {
-    //     return {
-    //         replace: true,
-    //         restrict: 'E',
-    //         scope: {
-    //             checkboxes: '=',
-    //             allselected: '=allSelected',
-    //             allclear: '=allClear'
-    //         },
-    //         template: '<input type="checkbox" ng-model="master" ng-change="masterChange()">',
-    //         controller: function($scope, $element, $rootScope) {
-    //             //$scope.enableNext = false;
-    //             $scope.masterChange = function() {
-
-    //                 if ($scope.master) {
-    //                     angular.forEach($scope.checkboxes, function(cb, index) {
-    //                         cb.isSelected = true;
-    //                         $rootScope.enableNext = true;
-    //                         //alert($rootScope.enableNext);
-    //                         //alert("hey");
-    //                     });
-    //                 } else {
-    //                     angular.forEach($scope.checkboxes, function(cb, index) {
-    //                         cb.isSelected = false;
-    //                     });
-    //                 }
-    //             };
-
-    //             $scope.$watch('checkboxes', function() {
-    //                 var allSet = true,
-    //                     allClear = true;
-    //                 angular.forEach($scope.checkboxes, function(cb, index) {
-    //                     if (cb.isSelected) {
-    //                         allClear = false;
-    //                         $rootScope.enableNext = $scope.master;
-    //                     } else {
-    //                         allSet = false;
-    //                     }
-    //                 });
-
-    //                 if ($scope.allselected !== undefined) {
-    //                     $scope.allselected = allSet;
-    //                 }
-    //                 if ($scope.allclear !== undefined) {
-    //                     $scope.allclear = allClear;
-    //                 }
-
-    //                 $element.prop('indeterminate', false);
-    //                 if (allSet) {
-    //                     $scope.master = true;
-    //                     $rootScope.enableNext = $scope.master;
-    //                 } else if (allClear) {
-    //                     $scope.master = false;
-    //                     $rootScope.enableNext = $scope.master;
-    //                 } else {
-    //                     $scope.master = false;
-    //                     $rootScope.enableNext = $scope.master;
-    //                     $element.prop('indeterminate', true);
-    //                 }
-
-    //             }, true);
-    //         }
-    //     };
-    // });
+    

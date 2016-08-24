@@ -29,7 +29,7 @@ app
             constants.driver.company_name = response.data.company;
             $window.sessionStorage['driver'] = JSON.stringify(constants.driver);
             //$state.go('core.appSettings');   
-            $state.go('core.home');          
+            $state.go('core.appSettings');          
             notify({ classes: 'alert-success',message:response.message});
        }, function(error){
            if(error && error.message)

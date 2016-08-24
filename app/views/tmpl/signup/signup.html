@@ -326,7 +326,57 @@
                 </div>
             </div>
         </form>
-        <form name='step4' class="form-validation mt-20" novalidate ng-show="isCardDetails">
+      <form name='step4' class="form-validation mt-20" novalidate ng-show="isCardDetails">
+            <h2 class="text-light text-white" style="position:absolute;top:20px;left:50px">Card Details</h2>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <div class="row ">
+                <div class="form-group col-md-12 mb-0">
+                    <div class="col-md-6">
+                        <input type="text" placeholder="0000 0000 0000 0000" name="cardNumber" id="cardNumber" ng-model="card.cardNumber" ng-minlength='16' ng-maxlength='16' class="form-control input-lg" numbers-only required>
+                    </div>
+                </div>
+            </div>
+            <br/>
+        <div class="row">
+                <div class=" form-group col-md-6 mb-0">
+                    <select ng-model="card.month" name="month" data-card-expiration required class="input-lg">
+                        <option disabled selected value="">Month</option>
+                        <option ng-repeat="month in months" value="{{$index+1}}"> {{$index+1}} - {{month}}</li>
+                        </option>
+                    </select>
+                </div>
+                <div class=" form-group col-md-6 mb-0">
+                    <select ng-model="card.year" name="year" required class="input-lg">
+                        <option disabled selected value="">Year</option>
+                        <option ng-repeat="year in [] | range:currentYear:currentYear+13">{{year}}</option>
+                    </select>
+                </div>
+            </div>
+            <br/>
+            <div class="row">
+                <div class="form-group col-md-12 mb-0">
+                    <div class="col-md-6">
+                        <input type="text" placeholder="Enter your 3 digit CVV number" name="cvvNumber" id="cvvNumber" ng-model="card.cvvNumber" class="form-control input-lg" ng-minlength='3' ng-maxlength='3' numbers-only required>
+                    </div>
+                </div>
+            </div>
+<br/>
+            <br/>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-xs-4 previous">
+                        <button type="button" class="text-white btn btn-success form-group col-md-12 input-lg" ng-click="card_previous()"> <i class="fa fa-arrow-circle-left"></i> &nbsp;Previous</button>
+                    </div>&nbsp;&nbsp;
+                    <div class="col-xs-4">
+                        <button type="button" class="saveAndNext text-light text-white btn btn-success form-group col-md-12 input-lg" ng-click="save_cardInfo(card)" ng-disabled="step4.$invalid">Save & Next &nbsp;<span class="glyphicon glyphicon-chevron-down"></span></button>
+                    </div>
+                </div>
+            </div>
+        </form> 
+        <!-- <form name='step4' class="form-validation mt-20" novalidate ng-show="isCardDetails">
             <h2 class="text-light text-white" style="position:absolute;top:20px;left:50px">Card Details</h2>
             <br/>
             <br/>
@@ -369,13 +419,13 @@
                     </div>
                 </div>
             </div>
-        </form>
+        </form> -->
         <form name='step5' ng-show="isTermsAndConditions" id='selectionForm'>
             <h2 class="text-light text-white" style="position:absolute;top:20px;">Terms and Conditions</h2><br/><br/><br/>
             <div style="text-align:left;color: #a79292">
                  
                   <div ng-repeat="cb in checkboxes">
-                    <label><input type="checkbox" ng-model="cb.checked" ng-click="cbChecked()"/>
+                    <label><input type="checkbox" ng-model="cb.checked"  ng-disabled="true" ng-click="cbChecked()"/>
                     {{cb.label}}                      
                     </label>
                   </div>
@@ -400,10 +450,10 @@
 
             <div class="row">
                    <div class="col-xs-4 previous">
-                        <button type="button" class="text-white btn btn-success input-lg" ng-click="termsAndConditionsPrevious()"> <i class="fa fa-arrow-circle-left"></i> &nbsp;Previous</button>
+                        <button type="button" class="text-white btn btn-success input-lg" ng-click="termsAndConditionsPrevious()">Deny</button>
                     </div>
                      <div class="col-xs-4">
-                        <button type="button" class="saveAndNext text-white btn btn-success input-lg" ng-disabled="!allSelected" ng-click="DriverSignup()"> <i class="fa fa-arrow-circle-right"></i> &nbsp;Submit</button>
+                        <button type="button" class="saveAndNext text-white btn btn-success input-lg" ng-disabled="!allSelected" ng-click="DriverSignup()">Accept</button>
                     </div>
                     <!-- <div class="col-xs-4">
                         <button type="button" class="saveAndNext text-light text-white btn btn-success input-lg" ng-click="DriverSignup()" ng-disabled="!allSelected">Next &nbsp;<span class="glyphicon glyphicon-chevron-right"></span></button>

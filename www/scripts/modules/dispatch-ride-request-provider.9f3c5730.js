@@ -7,7 +7,7 @@ function funcservices() {
     return {
         $get: function($http, $q) {
             return {
-                getRoutes: function(pickup, dropoff, notify,isInfoWindowVisible,check_infoWindow,map_ele_id) {
+                getRoutes: function(currLoc,pickup, dropoff, notify,isInfoWindowVisible,check_infoWindow,map_ele_id) {
                     var source, destination;
                     var directionsDisplay;
                     var directionsService = new google.maps.DirectionsService();
@@ -83,7 +83,9 @@ function funcservices() {
                             position: position,
                             map: map,
                             icon: icon,
-                            title: (check_infoWindow == "pickuppoint") ? "<div><img border='0' align='Left' width='100%' src='images/driver/popup.2b0bebde.png'></img><p class = 'pickUpText'>" + pickup + "</p></div>" : title
+                            title: (check_infoWindow == "pickuppoint") ? "<div><img border='0' align='Left' width='100%' src='images/driver/popup.2b0bebde.png'></img><a href = 'http://maps.google.com/maps?saddr=" + currLoc + "&amp;daddr=" + pickup + "' class = 'pickUpText'>" + pickup + "</p></div>" : title
+                            //title: (check_infoWindow == "pickuppoint") ? "<div><img border='0' align='Left' width='100%' src='images/driver/popup.2b0bebde.png'></img><a href ='http://maps.google.com/maps?saddr="+pickup+"&amp;daddr="+dropoff+"&amp;ll="+"kalyannagar"+"' class = 'pickUpText'>" + pickup + "</p></div>" : title
+                            //title: (check_infoWindow == "pickuppoint") ? "<div><img border='0' align='Left' width='100%' src='images/driver/popup.2b0bebde.png'></img><p class = 'pickUpText'>" + pickup + "</p></div>" : title
                         });
                         if(check_infoWindow == "pickuppoint"){
                             var infoWindow = new google.maps.InfoWindow();
@@ -101,7 +103,8 @@ function funcservices() {
                             position: position,
                             map: map,
                             icon: icon,
-                            title: (check_infoWindow == "dropoffpoint") ? "<div><img border='0' align='Left' width='100%' src='images/driver/popup.png'></img><p class = 'pickUpText'>" + dropoff + "</p></div>" : title
+                            title: (check_infoWindow == "dropoffpoint") ? "<div><img border='0' align='Left' width='100%' src='images/driver/popup.2b0bebde.png'></img><a href ='http://maps.google.com/maps?saddr=" + currLoc + "&amp;daddr=" + dropoff + "'class = 'pickUpText'>" + dropoff + "</p></div>" : title
+                            //title: (check_infoWindow == "dropoffpoint") ? "<div><img border='0' align='Left' width='100%' src='images/driver/popup.2b0bebde.png'></img><p class = 'pickUpText'>" + dropoff + "</p></div>" : title
                         });
                          if(check_infoWindow == "dropoffpoint"){
                              var infoWindow = new google.maps.InfoWindow();

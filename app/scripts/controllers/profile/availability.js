@@ -17,7 +17,25 @@ app
             } else {
                 $scope.status = true;
             }
-            console.log('onload', $scope.status);
+           
+
+            $('body').removeClass('menu-slider');$('body').removeClass('in');
+
+               // Toggle classes in body for syncing sliding animation with other elements
+                $('#bs-example-navbar-collapse-2')
+                    .on('show.bs.collapse', function(e){
+                        $('body').addClass('menu-slider');
+                    })
+                    .on('shown.bs.collapse', function(e){
+                        $('body').addClass('in');
+                    })
+                    .on('hide.bs.collapse', function(e){
+                        $('body').removeClass('menu-slider');
+                    })
+                    .on('hidden.bs.collapse', function(e){
+                        $('body').removeClass('in');
+                    });
+
 
             //funcGetVisibleStatus();
             $scope.init = function() {

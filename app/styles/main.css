@@ -12551,7 +12551,7 @@ hr.line-full {
   font-size: 30px;
   height: auto;
   width: auto;
-  margin-top: 80%; }
+  margin-top: 50%; }
 
 #map-canvas {
   height: 100%; }
@@ -12690,7 +12690,7 @@ footer-text {
   position: absolute;
   font-size: 50px;
   left: 14px;
-  top: 4px; }
+  top: 10px; }
 
 a.company {
   text-decoration: none; }
@@ -12756,13 +12756,13 @@ p.comp_name {
 #slide_cont {
   background-color: #262262;
   width: 100%;
-  height: 350px;
+  height: 250px;
   position: absolute; }
 
 #slideshow_image {
   position: absolute;
-  width: 350px;
-  height: 350px; }
+  width: 300px;
+  height: 250px; }
 
 .adsLeftArrow {
   position: absolute;
@@ -12790,5 +12790,60 @@ fa icon-close {
   left: 13%;
   top: -15px;
   font-size: 18px; }
+
+#navbar2 .navbar-header {
+  float: none; }
+
+#navbar2 .navbar-toggle {
+  display: block; }
+
+#navbar2 .navbar-nav {
+  float: none !important;
+  margin: 7.5px -15px; }
+
+#navbar2 .navbar-nav .open .dropdown-menu {
+  position: static;
+  float: none;
+  background-color: transparent;
+  border: 0;
+  box-shadow: none; }
+
+#navbar2 .navbar-form {
+  float: none !important;
+  padding: 0; }
+
+#navbar2 .navbar-nav > li {
+  float: none; }
+
+#wrapper {
+  position: relative;
+  right: 0;
+  transition: right 0.35s ease; }
+
+#navbar2 .navbar-collapse {
+  position: fixed;
+  top: 0;
+  right: -50%;
+  display: block;
+  width: 50%;
+  height: 100% !important;
+  margin: 0;
+  background-color: #231b42;
+  transition: right 0.35s ease; }
+
+#navbar2 .navbar-collapse.collapsing {
+  transition: right 0.35s ease; }
+
+#navbar2 .navbar-collapse.in {
+  right: 0; }
+
+body.menu-slider.in {
+  overflow: hidden; }
+
+body.menu-slider #wrapper {
+  transition: right 0.35s ease; }
+
+body.menu-slider.in #wrapper {
+  right: 50%; }
 
 /*# sourceMappingURL=main.css.map */

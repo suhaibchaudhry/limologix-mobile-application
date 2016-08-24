@@ -106,7 +106,7 @@
                 logout: 'drivers/logout',
             }
         })
-.factory('Faye', ['$window','appSettings',function($window,appSettings) {
+    .factory('Faye', ['$window','appSettings',function($window,appSettings) {
         var Logger = {
             incoming: function(message, callback) {
                 //console.log('incoming', message);
