@@ -13,7 +13,9 @@
 app
     .controller('MyAccountCtrl', [
         '$scope',
+        '$rootScope',
         '$state',
+        '$locale',
         '$http',
         'appSettings',
         'notify',
@@ -26,7 +28,8 @@ app
         'ModelConstants',
         'MakeConstants',
         '$q',
-        function($scope, $state, $http, appSettings, notify, $window, services, AppConstants, countriesConstant, StatesConstants, VehicleConstants, ModelConstants, MakeConstants,$q) {
+        'driverLocationConstants',
+        function($scope, $rootScope,$state, $locale, $http, appSettings, notify, $window, services, AppConstants, countriesConstant, StatesConstants, VehicleConstants, ModelConstants, MakeConstants,$q,driverLocationConstants) {
             var self = this;
             $scope.phoneNumbr = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
             $scope.contact = {};
@@ -35,9 +38,20 @@ app
             $scope.isContact = true;
             $scope.isPersonal = false;
             $scope.isVehicle = false;
+            $scope.isCardDetails = false;
             $scope.selected = {};
             $scope.colorsArr = ['Red', 'Black', 'White', 'Other'];
             $scope.vehicle.Color = $scope.colorsArr[0];
+            $rootScope.isAdsShow = false;
+
+            $scope.currentYear = new Date().getFullYear();
+            $scope.currentMonth = new Date().getMonth() + 1;
+            $scope.months = $locale.DATETIME_FORMATS.MONTH;
+            //alert($scope.months)
+            $scope.card = {
+                type: undefined
+            }
+
             getCountries();
 
             $('body').removeClass('menu-slider');$('body').removeClass('in');
@@ -56,6 +70,10 @@ app
                     .on('hidden.bs.collapse', function(e){
                         $('body').removeClass('in');
                     });
+
+
+             
+
 
              //Get countries from API
             function getCountries() {
@@ -101,6 +119,22 @@ app
              //Get driver details.
             function getDriverInfo() {
                 var responseToken = $q.defer();
+                //get card info
+                var url = appSettings.serverPath + appSettings.serviceApis.getCreditCardInfo;
+                    services.funcGetRequest(url).then(function(response) {
+                        $scope.cardDetails = response.data;
+                        $scope.card = {
+                            cardNumber : $scope.cardDetails.card_number,//4242424242424242,
+                            month : '',//response.card.month,
+                            year : '',//response.card.year,
+                            cvvNumber : ''//response.card.cvv_num
+                        }
+                        
+                    }, function(error) {
+                        notify({ classes: 'alert-danger', message: error.message });
+                    });
+
+
                 var url = appSettings.serverPath + appSettings.serviceApis.getDriverInfo;
                 services.funcGetRequest(url).then(function(response,status) {
                     var response = response.data.driver;
@@ -145,6 +179,8 @@ app
                         addFeature5: response.vehicle.features[4] ? response.vehicle.features[4] : '',
                         addFeature6: response.vehicle.features[5] ? response.vehicle.features[5] : ''
                     }
+                    
+
                     jQuery.grep($scope.countries, function(e, i){
                          if(response.address && response.address.country && e.code == response.address.country.code)
                                 $scope.selected.selectedCountry =  e;
@@ -298,15 +334,30 @@ app
                 $scope.isContact = false;
                 $scope.isPersonal = true;
                 $scope.isVehicle = false;
+                $scope.isCardDetails = false;
             }
             $scope.Personal_Next = function() {
                 $scope.isContact = false;
                 $scope.isPersonal = false;
                 $scope.isVehicle = true;
+                $scope.isCardDetails = false;
+            }
+            $scope.Vehicle_Next = function() {
+                $scope.isContact = false;
+                $scope.isPersonal = false;
+                $scope.isVehicle = false;
+                $scope.isCardDetails = true;
             }
             $scope.Personal_previous = function() {
                 $scope.isContact = true;
                 $scope.isPersonal = false;
+                $scope.isCardDetails = false;
+            }
+            $scope.card_previous = function(){
+                $scope.isVehicle = true;
+                $scope.isPersonal = false;
+                $scope.isCardDetails = false;
+                $scope.isContact = false;
             }
 
             $scope.update_contactInfo = function() {
@@ -393,6 +444,35 @@ app
                 });
             }
             
+            $scope.update_cardInfo = function(data){
+                if ($scope.step4.$valid) {
+                    var cardData = data;
+                    
+                    var month = cardData.month;
+                    var year = cardData.year;
+                    if (month.length === 1) {
+                        month = '0' + month;
+                    }
+                    var expiryDate = month + year.toString()[2] + year.toString()[3]; // valid data saving stuff here
+                    
+                }
+                $scope.driver = {
+                    card_number: $scope.card.cardNumber,
+                    card_expiry_date: expiryDate,
+                    card_code: $scope.card.cvvNumber
+                }
+
+
+                var url = appSettings.serverPath + appSettings.serviceApis.update_card_info;
+                services.funcPostRequest(url, { "driver": $scope.driver }).then(function(response) {
+                    
+                    notify({ classes: 'alert-success', message: response.message });
+                }, function(error) {
+                    notify({ classes: 'alert-danger', message: error });
+                    $state.go('core.profile.my_account');
+                });
+            }
+
             $scope.Vehicle_Previous = function() {
                 $scope.isPersonal = true;
                 $scope.isVehicle = false;
@@ -471,7 +551,30 @@ app
             }
         }
     ])
+.directive('cardExpiration', function() {
+        var directive = {
+            require: 'ngModel',
+            link: function(scope, elm, attrs, ctrl) {
+                scope.$watch('[card.month,card.year]', function(value) {
+                    ctrl.$setValidity('invalid', true)
+                    if (scope.card.year == scope.currentYear && scope.card.month <= scope.currentMonth) {
+                        ctrl.$setValidity('invalid', false)
+                    }
+                    return value
+                }, true)
+            }
+        }
+        return directive
+    })
 
+.filter('range', function() {
+    var filter =
+        function(arr, lower, upper) {
+            for (var i = lower; i <= upper; i++) arr.push(i)
+            return arr
+        }
+    return filter
+})
 .controller('DatepickerTripCtrl', ['$scope', function($scope) {
     $scope.today = function() {
         //update exp dates

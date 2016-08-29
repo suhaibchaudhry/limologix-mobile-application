@@ -9,13 +9,16 @@
  */
 app
   .controller('LogoutCtrl',
-    ['$scope','$state','$http','appSettings','notify','$rootScope','$window','services','AppConstants',
-    function ($scope, $state,$http,appSettings,notify,$rootScope,$window,services, constants) {
+    ['$scope', '$rootScope','$state','$http','appSettings','notify','$rootScope','$window','services','AppConstants',
+    function ($scope, $rootScope, $state,$http,appSettings,notify,$rootScope,$window,services, constants) {
   	  var url = appSettings.serverPath + appSettings.serviceApis.logout;
       var token = $window.sessionStorage['Auth-Token'];
       services.funcGetRequest(url).then(function(response,status) {
           $state.go('core.login');   
-          constants.driver = {};      
+          constants.driver = {};
+          //clearInterval($rootScope.getLoc);  // get driver current location  - Distance calculation
+          //clearInterval($rootScope.getDestLoc);   // get destination location - Distance caculation
+          clearInterval($rootScope.FreeAds); // freeAds
           notify({ classes: 'alert-success',message:response.message});
          // delete $window.sessionStorage['Auth-Token'];
       },function(error){

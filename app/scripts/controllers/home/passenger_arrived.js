@@ -8,31 +8,32 @@
  * Controller of the limoLogixApp
  */
 app
-    .controller('passengerArrivedCtrl', ['$scope', '$state', '$http', 'appSettings', 'notify', '$window',
+    .controller('passengerArrivedCtrl', ['$scope', '$rootScope','$state', '$http', 'appSettings', 'notify', '$window',
         'services', 'AppConstants', 'dispatchRideProvider','Faye','$location','driverLocationConstants',
-        function($scope, $state, $http, appSettings, notify, $window, services, constants, dispatchRideProvider,Faye,$location,driverLocationConstants) {
+        function($scope, $rootScope,$state, $http, appSettings, notify, $window, services, constants, dispatchRideProvider,Faye,$location,driverLocationConstants) {
              
             $scope.tripsummary = {};
+            $rootScope.isAdsShow = false;
             $scope.isArrived = false;
             getCustomerRoute();
-            //dispatchRideProvider.getRoutes($scope.tripsummary.pickupAt, $scope.tripsummary.dropoffAt,notify,true,'dropoffpoint','dvMap_arrived');
-
+            //clearInterval($rootScope.getLoc);
+          
             var map_height = jQuery(window).innerHeight() - (jQuery('.b2').innerHeight() + jQuery('.navbar-header').innerHeight())
           
             jQuery('#dvMap_arrived').height(map_height);
             function getCustomerRoute() {
-               // $scope.tripsummary.pickupAt = 'Marathahalli, Bengaluru, Karnataka 560037, India';
-               // $scope.tripsummary.dropoffAt = 'Hebbal, Bengaluru, Karnataka 560024, India';
-               // $scope.tripsummary.trip_id = 3;
+            //    $scope.tripsummary.pickupAt = 'Marathahalli, Bengaluru, Karnataka 560037, India';
+            //    $scope.tripsummary.dropoffAt = 'Hebbal, Bengaluru, Karnataka 560024, India';
+            //    $scope.tripsummary.trip_id = 3;
                 $scope.tripsummary = {
-                    pickupAt : driverLocationConstants.location.start_destination,
-                    pickupAtLat : driverLocationConstants.location.start_destination.latitude,
-                    pickupAtLng: driverLocationConstants.location.start_destination.longitude,
 
+                    pickupAt : driverLocationConstants.location.start_destination,
+                    pickupAtLat : driverLocationConstants.location.start_destination_lat,
+                    pickupAtLng: driverLocationConstants.location.start_destination_lng,
 
                     dropoffAt : driverLocationConstants.location.end_destination,
-                    dropoffAtLat: driverLocationConstants.location.end_destination.latitude,
-                    dropoffAtLng: driverLocationConstants.location.end_destination.longitude,
+                    dropoffAtLat: driverLocationConstants.location.end_destination_lat,
+                    dropoffAtLng: driverLocationConstants.location.end_destination_lng,                  
 
                     trip_id: driverLocationConstants.location.id
                 };
@@ -68,6 +69,25 @@ app
 
             }
 
+            var options = {
+                maximumAge: 3600000,
+                timeout: 3000,
+                enableHighAccuracy: true,
+             }
+
+              // if(constants.driver){
+              //   $rootScope.getDestLoc = setInterval(function(){
+              //       getDestLoc();
+              //   },3000);   
+              // }
+
+             // function getDestLoc(){
+                $scope.googlepositionDest_id = navigator.geolocation.watchPosition(onSuccess,onError,options)
+            //  }
+
+
+
+
                 // onSuccess Callback
                 // This method accepts a Position object, which contains the
                 // current GPS coordinates
@@ -78,8 +98,18 @@ app
                   var p1 = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
                   var p2 = new google.maps.LatLng($scope.tripsummary.dropoffAtLat, $scope.tripsummary.dropoffAtLng);
                   if (google.maps.geometry.spherical.computeDistanceBetween(p1, p2) < 1000) {
-                      alert('You are close to your location/You have arrived!');
+                      swal({
+                              title: 'Arrived!',
+                              text: 'You are close to dropoff location',
+                              type: "success"
+                      },function(){
+                        //clearInterval($rootScope.getDestLoc);
+                        navigator.geolocation.clearWatch($scope.googlepositionDest_id);              
+                          
+                      })
                       $scope.isArrived = true;
+                      $('#arrivedBtn').addClass('buttonArrived'); 
+                      
                   }
 
 
@@ -102,18 +132,12 @@ app
                 }
 
 
-              var options = {
-                maximumAge: 3600000,
-                timeout: 3000,
-                enableHighAccuracy: true,
-             }
-
-              setInterval(function(){
-                navigator.geolocation.watchPosition(onSuccess,onError,options)
-              },3000);       
-            
+              
+                           
 
             $scope.passenger_arrived = function(){
+                //clearInterval($rootScope.getDestLoc);
+                navigator.geolocation.clearWatch($scope.googlepositionDest_id); 
                 //$state.go('core.passenger_arrived');
                 $scope.trip = {
                    id : $scope.tripsummary.trip_id

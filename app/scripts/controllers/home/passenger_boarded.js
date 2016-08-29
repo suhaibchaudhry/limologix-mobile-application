@@ -8,13 +8,15 @@
  * Controller of the LimoCordova
  */
 app
-    .controller('passengerBoardedCtrl', ['$scope', '$state', '$http', 'appSettings', 'notify', '$window',
+    .controller('passengerBoardedCtrl', ['$scope', '$rootScope','$state', '$http', 'appSettings', 'notify', '$window',
         'services', 'AppConstants', 'dispatchRideProvider','driverLocationConstants','Faye','$location',
-        function($scope, $state, $http, appSettings, notify, $window, services, constants, dispatchRideProvider,driverLocationConstants,Faye,$location) {
+        function($scope, $rootScope, $state, $http, appSettings, notify, $window, services, constants, dispatchRideProvider,driverLocationConstants,Faye,$location) {
                         
             $scope.tripsummary = {};
+            $rootScope.isAdsShow = false;
             $scope.isBoarded =false;
             getCustomerRoute();
+
             //dispatchRideProvider.getRoutes($scope.tripsummary.pickupAt, $scope.tripsummary.dropoffAt,notify,true,'pickuppoint','dvMap_boarded');
             
             var map_height = jQuery(window).innerHeight() - (jQuery('.b1').innerHeight() + jQuery('.navbar-header').innerHeight())
@@ -22,20 +24,19 @@ app
             
             function getCustomerRoute() {
                 console.log('helloo',driverLocationConstants.location)
-               // $scope.tripsummary.pickupAt = 'Marathahalli, Bengaluru, Karnataka 560037, India';
+               // $scope.tripsummary.pickupAt = 'Jalavayu Vihara, Kammanahalli, Bengaluru, Karnataka, India',//'Marathahalli, Bengaluru, Karnataka 560037, India';
                // $scope.tripsummary.dropoffAt = 'Hebbal, Bengaluru, Karnataka 560024, India';
                // $scope.tripsummary.trip_id = 3;
 
 
                $scope.tripsummary = {
-
                     pickupAt : driverLocationConstants.location.start_destination,
-                    pickupAtLat : driverLocationConstants.location.start_destination.latitude,
-                    pickupAtLng: driverLocationConstants.location.start_destination.longitude,
+                    pickupAtLat : driverLocationConstants.location.start_destination_lat,
+                    pickupAtLng: driverLocationConstants.location.start_destination_lng,
 
                     dropoffAt : driverLocationConstants.location.end_destination,
-                    dropoffAtLat: driverLocationConstants.location.end_destination.latitude,
-                    dropoffAtLng: driverLocationConstants.location.end_destination.longitude,
+                    dropoffAtLat: driverLocationConstants.location.end_destination_lat,
+                    dropoffAtLng: driverLocationConstants.location.end_destination_lng,
 
                     trip_id: driverLocationConstants.location.id
                 };
@@ -47,11 +48,11 @@ app
               timeout: 3000,
               enableHighAccuracy: true,
            }
-
+            //GET CURRENT LOCATION ON PAGE LOAD
             navigator.geolocation.getCurrentPosition(getCurrentPosition,onError,options)
 
             function getCurrentPosition(position) {
-                console.log('driver at', position);
+               
                 var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
                 var geocoder = new google.maps.Geocoder();
                 if (geocoder) {
@@ -70,6 +71,25 @@ app
 
             }
 
+
+            var options = {
+                maximumAge: 3600000,
+                timeout: 3000,
+                enableHighAccuracy: true,
+             }
+             // watch driver location 
+             //if(constants.driver){
+                //$rootScope.getLoc = setInterval(function(){
+                  // getLocTimer();
+                //},3000);
+            // }
+
+            // function getLocTimer(){
+               $scope.googleposition_id = navigator.geolocation.watchPosition(onSuccess,onError,options)
+            // }    
+
+
+
                 // onSuccess Callback
                 // This method accepts a Position object, which contains the
                 // current GPS coordinates
@@ -77,13 +97,25 @@ app
                 function onSuccess(position) {
                   console.log("position", position);
 
-                  var p1 = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+                  var p1 = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);                  
                   var p2 = new google.maps.LatLng($scope.tripsummary.pickupAtLat, $scope.tripsummary.pickupAtLng);
-                  if (google.maps.geometry.spherical.computeDistanceBetween(p1, p2) < 1000) {
-                      alert('You are close to your location/You have arrived!');
-                      $scope.isBoarded = true;
-                  }
+                  console.log('p1 and p2',p1,p2)
+                  
+                  //alert(google.maps.geometry.spherical.computeDistanceBetween(p1, p2))
+                  if (google.maps.geometry.spherical.computeDistanceBetween(p1, p2) < 1000) { //within 1km
 
+                      swal({
+                              title: 'Boarded!',
+                              text: 'You are close to pickup location',
+                              type: "success"
+                      },function(){
+                        //clearInterval($rootScope.getLoc);
+                        navigator.geolocation.clearWatch($scope.googleposition_id);
+                        $scope.isBoarded = true;
+                        $('#boardedBtn').addClass('buttonBoarded');
+                      }) 
+                      
+                  }
 
                     var url = appSettings.serverPath + appSettings.serviceApis.getChannelName;
                     services.funcGetRequest(url).then(function(response,status) {
@@ -104,19 +136,14 @@ app
                 }
 
 
-              var options = {
-                maximumAge: 3600000,
-                timeout: 3000,
-                enableHighAccuracy: true,
-             }
-
-              setInterval(function(){
-                navigator.geolocation.watchPosition(onSuccess,onError,options)
-              },3000);
+                     
                 
 
             $scope.passenger_boarded = function(){
-                //$state.go('core.passenger_arrived');
+              //clearInterval($rootScope.getLoc);
+               navigator.geolocation.clearWatch($scope.googleposition_id);
+
+
                 $scope.trip = {
                    id : $scope.tripsummary.trip_id
                 }

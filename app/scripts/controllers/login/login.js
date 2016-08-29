@@ -9,8 +9,8 @@
  */
 app
   .controller('LoginCtrl',
-    ['$scope','$state','$http','appSettings','notify','$window','services','AppConstants',
-    function ($scope, $state,$http,appSettings,notify, $window,services, constants) {
+    ['$scope', '$rootScope','$state','$http','appSettings','notify','$window','services','AppConstants',
+    function ($scope, $rootScope,$state,$http,appSettings,notify, $window,services, constants) {
   	$scope.driver = {
       	email :'',
       	password:''
@@ -28,6 +28,7 @@ app
             constants.driver.name = response.data.full_name;
             constants.driver.company_name = response.data.company;
             $window.sessionStorage['driver'] = JSON.stringify(constants.driver);
+            $rootScope.isAdsShow = true;
             //$state.go('core.appSettings');   
             $state.go('core.appSettings');          
             notify({ classes: 'alert-success',message:response.message});

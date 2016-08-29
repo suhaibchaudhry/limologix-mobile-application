@@ -8,11 +8,13 @@
  * Controller of the LimoCordova
  */
 app
-    .controller('requestScreenCtrl', ['$scope', '$state', '$http', 'appSettings', 'notify', '$window',
+    .controller('requestScreenCtrl', ['$scope', '$rootScope','$state', '$http', 'appSettings', 'notify', '$window',
         'services', 'AppConstants', 'dispatchRideProvider','driverLocationConstants','Faye','$location',
-        function($scope, $state, $http, appSettings, notify, $window, services, constants, dispatchRideProvider,driverLocationConstants,Faye,$location) {
+        function($scope, $rootScope, $state, $http, appSettings, notify, $window, services, constants, dispatchRideProvider,driverLocationConstants,Faye,$location) {
             // get Customer route directions
             $scope.tripsummary = {};
+            $rootScope.isAdsShow = false;
+            $scope.isAccepted = false;
             getCustomerRoute();
             dispatchRideProvider.getRoutes($scope.tripsummary.pickupAt, $scope.tripsummary.dropoffAt, notify, false, '', 'dvMap_requestscreen');
 
@@ -26,6 +28,39 @@ app
                 //$scope.tripsummary.dropoffAt = driverLocationConstants.location.end_destination;//'Hebbal, Bengaluru, Karnataka 560024, India';
                 
             }
+
+            function started(duration) {
+                var TotalSeconds = 14;
+                var documentWidth = $(document).width();
+                var start = Date.now();
+                $scope.intervalSetted = null;
+
+                function timer() {
+                    var diff = duration - (((Date.now() - start) / 1000) | 0);
+                    var seconds = (diff % 60) | 0;
+                    seconds = seconds < 10 ? "0" + seconds : seconds;
+                    $('#timer').html(seconds);
+                    var progresBarWidth = (seconds * documentWidth / TotalSeconds);
+
+                    $('#progress').css({
+                        width: progresBarWidth + 'px'
+                    });
+
+                    if (diff <= 0) {
+                        clearInterval($scope.intervalSetted);
+                        $state.go('core.home')
+                    }
+                }
+
+                timer();
+                $scope.intervalSetted = setInterval(timer, 1000);
+            }
+
+            started(14);
+
+
+
+
 
             var progressBarWidth = jQuery(window).innerWidth();
             $('#progressBar').width(progressBarWidth + 'px');
@@ -44,12 +79,14 @@ app
             }, 1000)
 
 
-
             $scope.trip_accept = function() {
                 clearInterval($scope.interval);
+                clearInterval($scope.intervalSetted);
                 $scope.trip = {
                     id : $scope.tripsummary.trip_id
                 }
+
+                $scope.isAccepted = true;
                 var url = appSettings.serverPath + appSettings.serviceApis.tripAccept;
                     services.funcPostRequest(url,{"trip": $scope.trip}).then(function(response,status) {
                     clearInterval($scope.interval);
@@ -125,29 +162,3 @@ app
         }
     ])
 
-
-
-// function faye($scope,$window,position,appSettings){
-//      var Logger = {
-//                 incoming: function(message, callback) {
-//                     console.log('incoming', message);
-//                     callback(message);
-//                 },   
-//                 outgoing: function(message, callback) {
-//                     message.ext = message.ext || {};
-//                     message.ext.auth_token = $window.sessionStorage['Auth-Token'];
-//                     message.ext.user_type = "driver";
-//                     console.log('outgoing', message);
-//                     callback(message);
-//                 }
-//     };
-//    var client = new Faye.Client('http://159.203.81.112:9292/faye');  
-//     client.addExtension(Logger);
-//     var publication = client.publish('/publish/'+ $scope.channelName, { latitude: position.coords.latitude, longitude: position.coords.longitude });
-//     publication.callback(function() {
-//         //alert('Connection established successfully.');
-//     });
-//     publication.errback(function(error) {
-//         //alert('There was a problem: ' + error.message);
-//     });
-// }

@@ -10,7 +10,7 @@
 app
     .controller('availabilityCtrl', ['$scope', '$rootScope', '$state', '$http', 'appSettings', 'notify', '$window', 'services', 'AppConstants',
         function($scope, $rootScope, $state, $http, appSettings, notify, $window, services, constants) {
-
+            $rootScope.isAdsShow = false;
            
             if ($rootScope.status !== undefined) {
                 $scope.status = $rootScope.status;
@@ -50,6 +50,7 @@ app
                 };
                 var url = appSettings.serverPath + appSettings.serviceApis.getVisibleStatus;
                 services.funcPostRequest(url, postData).then(function(response) {
+                    notify({ classes: 'alert-success', message: response.message });
                     //console.log("response", response);
                 }, function(error) {
                     if (error && error.message)
@@ -58,7 +59,6 @@ app
                 });
             }
             $scope.funcGetVisibleStatus = function() {
-
                 $scope.status = !$scope.status;
             }
         }

@@ -12447,6 +12447,9 @@ hr.line-full {
   100% {
     transform: translateZ(0) rotateY(0deg);
     opacity: 1; } }
+html, body {
+  -webkit-font-smoothing: antialiased; }
+
 @font-face {
   font-family: Nexa Bold; }
 .splash_Container {
@@ -12658,12 +12661,10 @@ footer-text {
   font-size: 35px; }
 
 .dvMap2 {
-  position: relative;
-  top: 30px; }
+  position: relative; }
 
 .dvMap_arrived {
-  position: relative;
-  top: 30px; }
+  position: relative; }
 
 .timer-container {
   width: 100%;
@@ -12845,5 +12846,11 @@ body.menu-slider #wrapper {
 
 body.menu-slider.in #wrapper {
   right: 50%; }
+
+.buttonBoarded {
+  background-color: "#3232ff"; }
+
+.buttonArrived {
+  background-color: "#3232ff"; }
 
 /*# sourceMappingURL=main.css.map */

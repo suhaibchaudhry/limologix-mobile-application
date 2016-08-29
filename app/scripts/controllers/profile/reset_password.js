@@ -8,8 +8,8 @@
  * Controller of the minovateApp
  */
 app
-    .controller('resetPasswordCtrl', ['notify', '$scope', '$http', 'appSettings', 'services', '$state','AppConstants',
-        function(notify, $scope, $http, appSettings, services, $state,constant) {
+    .controller('resetPasswordCtrl', ['notify', '$scope', '$rootScope','$http', 'appSettings', 'services', '$state','AppConstants',
+        function(notify, $scope, $rootScope, $http, appSettings, services, $state,constant) {
             $scope.page = {
                 title: 'Reset Password',
                 subtitle: '' //'Place subtitle here...'
@@ -23,6 +23,7 @@ app
             }
             $scope.resetPwd = {};
             $scope.resetPwd.userName = constant.driver.name;
+            $rootScope.isAdsShow = false;
 
              $('body').removeClass('menu-slider');$('body').removeClass('in');
 

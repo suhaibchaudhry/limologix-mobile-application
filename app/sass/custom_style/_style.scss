@@ -1,3 +1,4 @@
+html,body { -webkit-font-smoothing: antialiased; }
 @font-face {
     font-family: Nexa Bold;
     //src: url('.. /.. /fonts/Nexa Bold.otf');
@@ -255,11 +256,11 @@ footer-text{
 }
 .dvMap2{
     position:relative;
-    top:30px;
+   
 }
 .dvMap_arrived{
     position:relative;
-    top:30px;
+    
 }
 .timer-container{
     width:100%;
@@ -461,4 +462,11 @@ body.menu-slider #wrapper {
 
 body.menu-slider.in #wrapper {
     right: 50%;
+}
+
+.buttonBoarded{
+    background-color:"#3232ff"
+}
+.buttonArrived{
+    background-color:"#3232ff"
 }

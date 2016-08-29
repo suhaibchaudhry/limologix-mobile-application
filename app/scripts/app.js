@@ -74,8 +74,8 @@
         .constant('appSettings', {  
             server_address: 'http://limologix.softwaystaging.com', //'http://172.16.90.111:9000', 
             version: 'v1',
-            server_images_path : "http://limologix.api.softwaystaging.com/", //'http://172.16.90.111:9000',
-            serverPath: "http://limologix.api.softwaystaging.com/api/v1/", //'http://172.16.90.111:9000/api/v1/', 
+            server_images_path : "http://limologix.api.softwaystaging.com/", //'http://172.16.90.111:9000', 
+            serverPath: "http://limologix.api.softwaystaging.com/api/v1/", //'http://172.16.90.111:9000/api/v1/',
             FayeServerURL : 'http://limologix.softwaystaging.com:9292/faye', //'http://172.16.90.111:9292/faye',
             serviceApis: {
                 signin: 'drivers/sign_in',
@@ -83,7 +83,9 @@
                 displayAdvertisements: 'master_data/advertisements',
                 my_profile: 'drivers/profile/show',
                 profileupdate: 'drivers/profile/update',
+                driver_recharge:'drivers/profile/recharge_account',
                 getDriverInfo: 'drivers/profile/show',
+                getCreditCardInfo: 'drivers/profile/get_credit_card_info',
                 tripAccept: 'drivers/trips/accept',
                 tripDeny: 'drivers/trips/deny',
                 company_getCountries: 'master_data/countries',
@@ -95,6 +97,7 @@
                 update_contact_info :'drivers/profile/update_contact_information',
                 update_personal_info:'drivers/profile/update_personal_information',
                 update_vehicle_info:'drivers/profile/update_vehicle',
+                update_card_info:'/drivers/profile/update_credit_card',
                 getVisibleStatus:'drivers/profile/update_visible_status',
                 reset_auth_details:'drivers/profile/reset_authentication_details',
                 forgotPassword:'drivers/forgot_password',
@@ -155,59 +158,9 @@
             }
         }
     }])
-    //Simple Faye service
-    // .factory('FayeTest', ['$faye',function($faye) {
-    //     return $faye("http://172.16.90.117:9292/faye");
-    //     // var Logger = {
-    //     //             incoming: function(message, callback) {
-    //     //                 console.log('incoming', message);
-    //     //                 callback(message);
-    //     //             },
-    //     //             outgoing: function(message, callback) {
-    //     //                 message.ext = message.ext || {};
-    //     //                 message.ext.auth_token = $window.sessionStorage['Auth-Token'];
-    //     //                 message.ext.user_type = "driver";
-    //     //                 console.log('outgoing', message);
-    //     //                 callback(message);
-    //     //             }
-    //     // };
-            
-    //    // var FayeServerURL = 'http://172.16.90.117:9292/faye';
-    //     //alert('sds',Faye)
-    //     // var client = new Faye.Client(FayeServerURL);
-    //     // client.addExtension(Logger);
-    //     //   return {
-    //     //     publish: function(channel, message) {
-    //     //       client.publish(channel, message);
-    //     //     },
-
-    //     //     subscribe: function(channel, callback) {
-    //     //       client.subscribe(channel, callback);
-    //     //     }
-    //     //   }
-    // }])
     .run(['$rootScope', '$state', '$http', '$stateParams', '$window', 'AppConstants','$timeout',function($rootScope, $state, $http, $stateParams, $window, constant,$timeout) {
 
-        // document.addEventListener("deviceready", function () {
-        //           //$cordovaPlugin.hi() .then(success, error);
-        //           alert('hiii hello');
-        //             //FCMPlugin = cordova.require('cordova/plugin/FCMPlugin')
-        //             //FCMPlugin.getToken( successCallback(token), errorCallback(err) ); 
-        //             //Keep in mind the function will return null if the token has not been established yet. 
-        //             // FCMPlugin.getToken(
-        //             //   function(token){
-        //             //     alert(token);
-        //             //   },
-        //             //   function(err){
-        //             //     alert('error retrieving token: ' + err);
-        //             //   }
-        //             // )
-        //             // FCMPlugin.subscribeToTopic('topicExample', successCallback, errorCallback);
-        // }, false);
-      
-
-        //faye();
-
+        
         //If driver logged in and 
         var driver = $window.sessionStorage['driver'] ? JSON.parse($window.sessionStorage['driver']) : {};
         if (driver['Auth-Token']) {
@@ -216,7 +169,7 @@
             constant.driver = {};
         }
 
-        //sets token on evry refresh
+        //sets token on every refresh
         if (constant.driver['Auth-Token']) {
             $http.defaults.headers.common['Auth-Token'] = $window.sessionStorage['Auth-Token'];
         } else {

@@ -8,8 +8,8 @@
  * Controller of the LimoCordova
  */
 app    
-    .controller('homeCtrl', ['$scope', '$state', '$http', 'appSettings', 'notify', '$window', 'services', 'AppConstants', '$timeout','$location','Faye','driverLocationConstants',
-            function($scope, $state, $http, appSettings, notify, $window, services, constants, $timeout,$location,Faye,driverLocationConstants) {
+    .controller('homeCtrl', ['$scope', '$rootScope','$state', '$http', 'appSettings', 'notify', '$window', 'services', 'AppConstants', '$timeout','$location','Faye','driverLocationConstants',
+            function($scope, $rootScope, $state, $http, appSettings, notify, $window, services, constants, $timeout,$location,Faye,driverLocationConstants) {
                    
                 $scope.driver_name = constants.driver.full_name;
                 $scope.company_name = constants.driver.company;
@@ -40,27 +40,33 @@ app
                     .on('hidden.bs.collapse', function(e){
                         $('body').removeClass('in');
                     });
-
-                 // setInterval(function(){
-                 //    displayAds();
-                 // },1800000)
+                
+                if($rootScope.isAdsShow){
+                  displayAds();                  
+                }else{                  
+                  $rootScope.FreeAds = setInterval(function(){
+                      displayAds();                      
+                   },1800000) 
+                }                 
               
-                displayAds();
+                
                 function displayAds() {
-                  var imgsArr1 = [];
+                  var imagesArr = [];
                     var url = appSettings.serverPath + appSettings.serviceApis.displayAdvertisements;
                     services.funcPostRequest(url, { "page": 0, "per_page": 0 }).then(function(response) {
                       
                       if(response.data){
                         //$scope.showAds = true;
-                        $("#slide_cont").show();
+                       
                         $scope.adsJSON = response.data.advertisements;
                         for (var i = 0; i < Object.keys($scope.adsJSON).length; i++) {
                             var imgs = $scope.adsJSON[i].poster.image;
-                            imgsArr1.push(imgs);
-                            $scope.imgsArr[i] = imgsArr1[i];
-                            console.log('array', $scope.imgsArr);
+                            imagesArr.push(imgs);
+                            $scope.imgsArr[i] = imagesArr[i];
+                             $("#slide_cont").show();
                         }
+                        $scope.imagePath = appSettings.server_images_path;
+                        $scope.images = $scope.imgsArr;
                       }else{
                         $("#slide_cont").hide();
                         //$scope.showAds = false;
@@ -81,17 +87,16 @@ app
                     next();
                 });
 
-                $scope.imagePath = appSettings.server_images_path;
-                var images = $scope.imgsArr;
+                
 
                 function prev() {
                     $('#slideshow_image').fadeOut(300, function() {
                         var prev_val = document.getElementById("img_no").value;
                         var prev_val = Number(prev_val) - 1;
                         if (prev_val <= -1) {
-                            prev_val = images.length - 1;
+                            prev_val = $scope.images.length - 1;
                         }
-                        $('#slideshow_image').attr('src', $scope.imagePath + images[prev_val]);
+                        $('#slideshow_image').attr('src', $scope.imagePath + $scope.images[prev_val]);
                         document.getElementById("img_no").value = prev_val;
                     });
                     $('#slideshow_image').fadeIn(1000);
@@ -101,10 +106,10 @@ app
                     $('#slideshow_image').fadeOut(300, function() {
                         var next_val = document.getElementById("img_no").value;
                         var next_val = Number(next_val) + 1;
-                        if (next_val >= images.length) {
+                        if (next_val >= $scope.images.length) {
                             next_val = 0;
                         }
-                        $('#slideshow_image').attr('src', $scope.imagePath + images[next_val]);
+                        $('#slideshow_image').attr('src', $scope.imagePath + $scope.images[next_val]);
                         document.getElementById("img_no").value = next_val;
                     });
                     $('#slideshow_image').fadeIn(1000);
@@ -115,6 +120,8 @@ app
                 $scope.funcCloseAds = function() {
                   $("#slide_cont").hide();
                 }
+
+                //Push notifications from FCM 
            
                 FCMPlugin.getToken(
                   function(token){
@@ -124,8 +131,9 @@ app
                     //alert('error retrieving token: ' + err);
                   }
                 )
+                //Receive notification from FCM
                 FCMPlugin.onNotification(   
-                    function(data){
+                    function(data){                      
                          if(data.wasTapped){
                          //Notification was received on device tray and tapped by the user.
                             if(data.aps){
@@ -135,80 +143,110 @@ app
                                  var title = data.notification.title;
                                  var body = data.notification.body;
                              }
+                         
+                          // get ride request alert
+                           if(data.status === "dispatched"){
+                              var end_destination = JSON.parse(data.end_destination).place;
+                               var start_destination = JSON.parse(data.start_destination).place
+                               var id = data.id; 
 
-                           // var location = JSON.stringify(JSON.parse(data.trip));
-                           // var end_destination = JSON.parse(location).end_destination.place; 
-                           // var start_destination = JSON.parse(location).start_destination.place; 
-                           // var id = JSON.parse(location).id; 
+                               driverLocationConstants.location = {
+                                  end_destination : end_destination,
+                                  start_destination : start_destination,
+                                  start_destination_lat: JSON.parse(data.start_destination).latitude,
+                                  start_destination_lng: JSON.parse(data.start_destination).longitude,
+                                  end_destination_lat: JSON.parse(data.end_destination).latitude,
+                                  end_destination_lng: JSON.parse(data.end_destination).longitude,
 
-
-                           //var location = JSON.stringify(JSON.parse(data.trip));
-                           var end_destination = JSON.parse(data.end_destination).place;
-                           var start_destination = JSON.parse(data.start_destination).place
-                           var id = data.id; 
-                           var notified_time = data.notified_at;
-                           var timeoutmsg = false;
-
-                           function startTimer(duration) { 
-                                var timer = duration, minutes, seconds;
-                                setInterval(function () {
-                                    minutes = parseInt(timer / 60, 10)
-                                    seconds = parseInt(timer % 60, 10);
-
-                                    minutes = minutes < 10 ? "0" + minutes : minutes;
-                                    seconds = seconds < 10 ? "0" + seconds : seconds;
-
-                                    //display.text(minutes + ":" + seconds);
-
-                                    // if (--timer < 0) {
-                                    //     timer = duration;
-                                    //     timoutmsg = true;
-                                    //     alert('timeout');    
-                                    //     if(timoutmsg){
-                                    //         swal({
-                                    //             title: title,
-                                    //             text: 'Trip TimeOut! You will not be to take this ride.',
-                                    //             type: "warning"
-                                    //         },
-                                    //         function(){
-                                    //              $state.go('core.home')
-                                    //         })
-                                    //     }
-                                   // }else{
-                                        swal({
-                                            title: title,
-                                            text: body,
-                                            type: "success"
-                                        },
-                                        function(){
-                                             $state.go('core.request_screen')
-                                        })
-                                    //}
-                                }, 1000);
-                            }
-
-                             swal({
-                                    title: title,
-                                    text: body,
-                                    type: "success"
+                                  id : id
+                               }
+                               console.log('home page constants',driverLocationConstants.location);
+                               $state.go('core.request_screen')
+                              
+                           }else if(data.status === "account_approved"){
+                                swal({
+                                  title: title,
+                                  text: body,
+                                  type: "success"
+                                },
+                                function(){
+                                 $state.go('core.home')
+                                })
+                           }else{
+                                // Insuffient balance alert
+                                swal({
+                                      title: title,
+                                      text: body,
+                                      type: "warning",
+                                      confirmButtonColor: "#3232ff",   
+                                      confirmButtonText: "Recharge", 
+                                      showCancelButton: true, 
+                                      closeOnConfirm: false
                                   },
-                                  function(){
-                                   $state.go('core.request_screen')
-                                  })
+                                  //On click of recharge button
+                                      function(){
+                                       var url = appSettings.serverPath + appSettings.serviceApis.driver_recharge;
+                                        services.funcPostRequest(url).then(function(response) {
+                                          $scope.remaining_balance = response.data.toll_credit;
+                                          swal("Remaining Balance", "You've " +"$"+ $scope.remaining_balance+ " in your account","success")
+                                          $state.go('core.home')
+                                        }, function(error) {
+                                            notify({ classes: 'alert-danger', message: error });
+                                        });
+                                      //$state.go('core.home')
+                                    })
+                          }
+                              
 
-                            // jQuery(function ($) {
-                            //     var fiveMinutes = 60 * 1;
-                            //         //display = $('#time');
-                            //     startTimer(fiveMinutes);
-                            // });
+                          //  var closeInSeconds = 14,
+                          //     displayText = "It will close in #1 seconds. Click OK to accept the trip",
+                          //     timer;
+
+                          //     swal({
+                          //       title: title + '-' + body,   
+                          //       text: displayText.replace(/#1/, closeInSeconds),
+                          //       type: "success",  
+                          //       timer: closeInSeconds * 1000,   
+                          //       showConfirmButton: true 
+                          //     },function(){
+                          //         $state.go('core.request_screen');
+                          //     });                       
+                          
+                          //  timer = setInterval(function() {
+                          //     if(closeInSeconds >= 0)
+                          //        closeInSeconds--;
+
+                          //     if (closeInSeconds < 0) {
+                          //         clearInterval(timer);
+                          //     }
+                          //     if(closeInSeconds >= 0){
+                          //       $('.sweet-alert > p').text(displayText.replace(/#1/, closeInSeconds));     
+                          //     }else{
+                          //       $('.sweet-alert').hide();
+                          //     } 
+                          // }, 1000);
 
 
+                          // swal({
+                          //   title: title,
+                          //   text: body,
+                          //   type: "success"
+                          // },
+                          // function(){
+                          //  $state.go('core.request_screen')
+                          // })
+                          
                            driverLocationConstants.location = {
                               end_destination : end_destination,
                               start_destination : start_destination,
+                              start_destination_lat: JSON.parse(data.start_destination).latitude,
+                              start_destination_lng: JSON.parse(data.start_destination).longitude,
+                              end_destination_lat: JSON.parse(data.end_destination).latitude,
+                              end_destination_lng: JSON.parse(data.end_destination).longitude,
+
                               id : id
                            }
-
+                           console.log('home page constants',driverLocationConstants.location);
                             
 
                          }else{
@@ -220,46 +258,78 @@ app
                                  var title = data.notification.title;
                                  var body = data.notification.body;
                              }
-                           
-                           // var location = JSON.stringify(JSON.parse(data.trip));
-                           // var end_destination = JSON.parse(location).end_destination.place; 
-                           // var start_destination = JSON.parse(location).start_destination.place; 
-                           // var id = JSON.parse(location).id; 
+                           // get ride request alert
+                           if(data.status === "dispatched"){
+                              var end_destination = JSON.parse(data.end_destination).place;
+                               var start_destination = JSON.parse(data.start_destination).place
+                               var id = data.id; 
 
-                           var end_destination = JSON.parse(data.end_destination).place;
-                           var start_destination = JSON.parse(data.start_destination).place
-                           var id = data.id; 
+                               driverLocationConstants.location = {
+                                  end_destination : end_destination,
+                                  start_destination : start_destination,
+                                  start_destination_lat: JSON.parse(data.start_destination).latitude,
+                                  start_destination_lng: JSON.parse(data.start_destination).longitude,
+                                  end_destination_lat: JSON.parse(data.end_destination).latitude,
+                                  end_destination_lng: JSON.parse(data.end_destination).longitude,
 
-                           driverLocationConstants.location = {
-                              end_destination : end_destination,
-                              start_destination : start_destination,
-                              id : id
-                           }
-
-                           swal({
-                                title: title,
-                                text: body,
-                                type: "success"
-                            },
-                            function(){
-                                 $state.go('core.request_screen')
-                            })                           
+                                  id : id
+                               }
+                               console.log('home page constants',driverLocationConstants.location);
+                               $state.go('core.request_screen')
+                              
+                           }else if(data.status === "account_approved"){
+                                swal({
+                                  title: title,
+                                  text: body,
+                                  type: "success"
+                                },
+                                function(){
+                                 $state.go('core.home')
+                                })
+                           }else{
+                                // Insuffient balance alert
+                                swal({
+                                      title: title,
+                                      text: body,
+                                      type: "warning",
+                                      confirmButtonColor: "#3232ff",   
+                                      confirmButtonText: "Recharge", 
+                                      showCancelButton: true, 
+                                      closeOnConfirm: false
+                                  },
+                                  //On click of recharge button
+                                      function(){
+                                       var url = appSettings.serverPath + appSettings.serviceApis.driver_recharge;
+                                        services.funcPostRequest(url).then(function(response) {
+                                          $scope.remaining_balance = response.data.toll_credit;
+                                          swal("Remaining Balance", "You've " +"$"+ $scope.remaining_balance+ " in your account","success")
+                                          $state.go('core.home')
+                                        }, function(error) {
+                                            notify({ classes: 'alert-danger', message: error });
+                                        });
+                                      //$state.go('core.home')
+                                    })
+                          }
+                                          
                          }
-                 },
-                 function(msg){
+                },
+                function(msg){
                    //alert('onNotification callback successfully registered: ' + msg);
-                 },
-                 function(err){
+                },
+                function(err){
                    //alert('Error registering onNotification callback: ' + err);
                  }  
                 );
 
                 var url = appSettings.serverPath + appSettings.serviceApis.getTopicName;
                 services.funcGetRequest(url).then(function(response,status) {
-                 $scope.topicName = response.data.topic;
-                 //alert($scope.topicName)
-                 FCMPlugin.subscribeToTopic($scope.topicName);
-                 //alert($scope.topicName)
+                  if(response && response.data){
+                    $scope.topicName = response.data.topic;
+                   //alert($scope.topicName)
+                   FCMPlugin.subscribeToTopic($scope.topicName);
+                   //alert($scope.topicName)
+                  }
+                 
                  
                 },function(error){
                       notify({ classes: 'alert-danger', message: response.message });
@@ -343,59 +413,4 @@ app
                
             }   
 ])
-// .factory('FayeTest',function($window) {
-//         var Logger = {
-//                     incoming: function(message, callback) {
-//                         console.log('incoming', message);
-//                         callback(message);
-//                     },
-//                     outgoing: function(message, callback) {
-//                         message.ext = message.ext || {};
-//                         message.ext.auth_token = $window.sessionStorage['Auth-Token'];
-//                         message.ext.user_type = "driver";
-//                         console.log('outgoing', message);
-//                         callback(message);
-//                     }
-//         };
-            
-//        var FayeServerURL = 'http://172.16.90.111:9292/faye';//'http://159.203.81.112:9292/faye';//'http://172.16.90.117:9292/faye';
-//         var client = new Faye.Client(FayeServerURL);
-//         client.addExtension(Logger);
-//           return {
-//             publish: function(channel, message) {
-//               client.publish(channel, message);
-//             },
 
-//             subscribe: function(channel, callback) {
-//               client.subscribe(channel, callback);
-//             }
-//           }
-//     })
-
-
-
-// function faye($scope,$window,position,appSettings){
-//      var Logger = {
-//                 incoming: function(message, callback) {
-//                     console.log('incoming', message);
-//                     callback(message);
-//                 },   
-//                 outgoing: function(message, callback) {
-//                     message.ext = message.ext || {};
-//                     message.ext.auth_token = $window.sessionStorage['Auth-Token'];
-//                     message.ext.user_type = "driver";
-//                     console.log('outgoing', message);
-//                     callback(message);
-//                 }
-//     };
-//      var client = new Faye.Client('http://172.16.90.111:9292/faye');   
-//      //var client = new Faye.Client('http:159.203.81.112:9292/faye');  
-//     client.addExtension(Logger);
-//     var publication = client.publish('/publish/'+ $scope.channelName, { latitude: position.coords.latitude, longitude: position.coords.longitude });
-//     publication.callback(function() {
-//         //alert('Connection established successfully.');
-//     });
-//     publication.errback(function(error) {
-//         //alert('There was a problem: ' + error.message);
-//     });
-// }
