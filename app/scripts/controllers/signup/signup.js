@@ -74,13 +74,13 @@ app
 
             $scope.checkboxes = [{
                 checked: true,
-                label: 'This application is for independent limo drivers to become a member of limologix nnetwork.The independenr limo driver will be known as a driver mwmber("DM")'
+                label: 'This application is for independent limo drivers to become a member of limologix network.The independent limo driver will be known as a Driver Member("DM")'
             }, {
                 checked: true,
-                label: "Limo Logix reservs the right to terminate any DM eho misuses the limo logix network and service"
+                label: "Limo Logix reserves the right to terminate any DM who misuses the Limo Logix network and service"
             }, {
                 checked: true,
-                label: 'DM has the right to use benifits of the limo logix network and website anywhere in the US that Limo Logix provides their service'
+                label: 'DM has the right to use benifits of the Limo Logix network and website anywhere in the US that Limo Logix provides their service'
             }, {
                 checked: true,
                 label: 'DM will provide Limo Logix with all up-to-date driver information ,car information or background checks.Limo Logix will periodically check-in to ensure they have the most up-to-date information.'
@@ -89,17 +89,21 @@ app
                 label: 'Limo Logix is the only authority to manage the Limo Logix website.'
             }, {
                 checked: true,
-                label: 'DM will immiditely become a user of the Limo Logix website once the independent driver Application is completed '
+                label: 'DM will immediately become a user of the Limo Logix website once the Independent Driver Application is completed'
             }, {
                 checked: true,
-                label: 'Limo logix will not collect any charges for the DM from limo companies and all charge for trip will be between the limo companies and DM. Limo Logix is not responsible for any froud or dispute between the limo company and the DM.'
+                label: 'Limo Logix will not collect any charges for the DM from limo companies and all charge for trip will be between the limo companies and DM. Limo Logix is not responsible for any fraud or dispute between the limo company and the DM.'
             }, {
                 checked: true,
-                label: 'When a DM needs assistance with a dispute with the limo company, they should contact Local Limo association,the city or national limo association on their own.'
+                label: 'When a DM needs assistance with a dispute with the limo company, they should contact Local Limo Association,the City or National Limo Association on their own.'
             }, {
                 checked: true,
                 label: 'DMs are all equal and have the right to get all benifits of the limo logix network and website equally.'
-            }];
+            }, {
+                checked: true,
+                label: 'If DM accept for a trip,$2 will be deducted automatically from his account'
+            }
+            ];
 
               $scope.cbChecked = function(){
                 $scope.allSelected = true;

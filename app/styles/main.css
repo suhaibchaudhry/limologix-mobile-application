@@ -19,7 +19,7 @@
   position: absolute;
   width: 100%;
   padding: 0px;
-  background-color: #262262;
+  background-color: #293b4c;
   background-image: -webkit-radial-gradient(center, ellipse cover, #262262 0%, #0b002f 100%); }
 
 .app-header {
@@ -12575,7 +12575,7 @@ html, body {
   position: relative;
   text-align: center;
   vertical-align: middle;
-  top: 90px; }
+  top: 40px; }
 
 .userName {
   font-size: 30px;
@@ -12829,7 +12829,7 @@ fa icon-close {
   width: 50%;
   height: 100% !important;
   margin: 0;
-  background-color: #231b42;
+  background-color: #293b4c;
   transition: right 0.35s ease; }
 
 #navbar2 .navbar-collapse.collapsing {
@@ -12852,5 +12852,18 @@ body.menu-slider.in #wrapper {
 
 .buttonArrived {
   background-color: "#3232ff"; }
+
+#progress {
+  position: fixed;
+  width: 100%;
+  bottom: 0px; }
+
+.btn_container .b1, .btn_container .b2 {
+  margin-top: 60px; }
+
+.fake_div {
+  background-color: #262262;
+  height: 50px;
+  width: 100%; }
 
 /*# sourceMappingURL=main.css.map */

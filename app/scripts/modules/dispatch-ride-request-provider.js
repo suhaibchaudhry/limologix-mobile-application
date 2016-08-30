@@ -78,12 +78,13 @@ function funcservices() {
 
 
                     function makeMarker_source(position, icon, title, map,check_infoWindow) {
-                        
+                      
+                        var pickup_point= pickup;
                         var marker_pickup = new google.maps.Marker({
                             position: position,
                             map: map,
                             icon: icon,
-                            title: (check_infoWindow == "pickuppoint") ? "<div><img border='0' align='Left' width='100%' src='images/driver/popup.2b0bebde.png'></img><a href = 'http://maps.google.com/maps?saddr=" + currLoc + "&amp;daddr=" + pickup + "' class = 'pickUpText'>" + pickup + "</p></div>" : title
+                            title: (check_infoWindow == "pickuppoint") ? "<div><img border='0' align='Left' width='100%' src='images/driver/popup.2b0bebde.png'></img><a href = 'http://maps.google.com/maps?saddr=" + currLoc + "&amp;daddr=" + pickup_point + "'class = 'pickUpText'>" + pickup_point + "</p></div>" : title
                             //title: (check_infoWindow == "pickuppoint") ? "<div><img border='0' align='Left' width='100%' src='images/driver/popup.2b0bebde.png'></img><a href ='http://maps.google.com/maps?saddr="+pickup+"&amp;daddr="+dropoff+"&amp;ll="+"kalyannagar"+"' class = 'pickUpText'>" + pickup + "</p></div>" : title
                             //title: (check_infoWindow == "pickuppoint") ? "<div><img border='0' align='Left' width='100%' src='images/driver/popup.2b0bebde.png'></img><p class = 'pickUpText'>" + pickup + "</p></div>" : title
                         });

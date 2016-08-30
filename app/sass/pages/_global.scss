@@ -17,7 +17,7 @@
   position: absolute;
   width: 100%;
   padding: 0px;
-  background-color: $slateblue;
+  background-color: #293b4c;
   //chrome
     background-image: -webkit-radial-gradient(center, ellipse cover, rgb(38, 34, 98) 0%, rgb(11, 0, 47) 100%);
 }
@@ -30,6 +30,6 @@
   left:0px;
 }
 ::-webkit-input-placeholder{
-	text-align:center;
+  text-align:center;
 }
 

@@ -161,7 +161,7 @@ html,body { -webkit-font-smoothing: antialiased; }
     position: relative;
     text-align: center;
     vertical-align: middle;
-    top:90px;
+    top:40px;
 }
 .userName{
     font-size: 30px;
@@ -440,7 +440,7 @@ p.comp_name {
     width: 50%;
     height: 100% !important;
     margin: 0;
-    background-color: rgb(35, 27, 66);
+    background-color: #293b4c;
     transition: right 0.35s ease;
 }
 
@@ -469,4 +469,18 @@ body.menu-slider.in #wrapper {
 }
 .buttonArrived{
     background-color:"#3232ff"
+}
+#progress{
+ position:fixed;
+ width:100%;
+ bottom:0px;
+}
+
+.btn_container .b1, .btn_container .b2{
+    margin-top:60px;
+}
+.fake_div {
+    background-color: #262262;
+    height:50px;
+    width:100%;
 }

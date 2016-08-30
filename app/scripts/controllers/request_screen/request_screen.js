@@ -16,7 +16,8 @@ app
             $rootScope.isAdsShow = false;
             $scope.isAccepted = false;
             getCustomerRoute();
-            dispatchRideProvider.getRoutes($scope.tripsummary.pickupAt, $scope.tripsummary.dropoffAt, notify, false, '', 'dvMap_requestscreen');
+            //($scope.currentLocation,$scope.tripsummary.pickupAt, $scope.tripsummary.dropoffAt,notify,true,'pickuppoint','dvMap_boarded');
+            dispatchRideProvider.getRoutes('',$scope.tripsummary.pickupAt, $scope.tripsummary.dropoffAt, notify, false, '', 'dvMap_requestscreen');
 
             function getCustomerRoute() {
                 $scope.tripsummary = {
@@ -59,24 +60,25 @@ app
             started(14);
 
 
+      
 
 
 
-            var progressBarWidth = jQuery(window).innerWidth();
-            $('#progressBar').width(progressBarWidth + 'px');
+            // var progressBarWidth = jQuery(window).innerWidth();
+            // $('#progressBar').width(progressBarWidth + 'px');
 
-            var progressBar = $('#progress-bar'),width = 0;
-            progressBar.width(width);
-            $scope.interval = setInterval(function() {
-                width += 7.25;//15;
-                progressBar.css('width', width + '%');
-                //if (width >= 105) {
-                if (width >= 101.25) {
-                    clearInterval($scope.interval);
-                    $state.go('core.home')
-                }
-                $('#js-Visit-count').html(width / 7.25);//15);
-            }, 1000)
+            // var progressBar = $('#progress-bar'),width = 0;
+            // progressBar.width(width);
+            // $scope.interval = setInterval(function() {
+            //     width += 7.25;//15;
+            //     progressBar.css('width', width + '%');
+            //     //if (width >= 105) {
+            //     if (width >= 101.25) {
+            //         clearInterval($scope.interval);
+            //         $state.go('core.home')
+            //     }
+            //     $('#js-Visit-count').html(width / 7.25);//15);
+            // }, 1000)
 
 
             $scope.trip_accept = function() {
@@ -117,6 +119,7 @@ app
                 // current GPS coordinates
                 //if (navigator.geolocation) {
                 var onSuccess = function(position) {
+                   
                     var url = appSettings.serverPath + appSettings.serviceApis.getChannelName;
                     services.funcGetRequest(url).then(function(response,status) {
                      $scope.channelName = response.data.channel;

@@ -125,7 +125,7 @@ app
            
                 FCMPlugin.getToken(
                   function(token){
-                   // alert(token);
+                   //alert(token);
                   },
                   function(err){
                     //alert('error retrieving token: ' + err);
@@ -133,7 +133,8 @@ app
                 )
                 //Receive notification from FCM
                 FCMPlugin.onNotification(   
-                    function(data){                      
+                    function(data){    
+                                 
                          if(data.wasTapped){
                          //Notification was received on device tray and tapped by the user.
                             if(data.aps){
@@ -168,6 +169,15 @@ app
                                   title: title,
                                   text: body,
                                   type: "success"
+                                },
+                                function(){
+                                 $state.go('core.home')
+                                })
+                           }else if(data.status === "trip_cancellation"){
+                                swal({
+                                  title: title,
+                                  text: body,
+                                  type: "warning"
                                 },
                                 function(){
                                  $state.go('core.home')
@@ -261,7 +271,7 @@ app
                            // get ride request alert
                            if(data.status === "dispatched"){
                               var end_destination = JSON.parse(data.end_destination).place;
-                               var start_destination = JSON.parse(data.start_destination).place
+                               var start_destination = JSON.parse(data.start_destination).place;
                                var id = data.id; 
 
                                driverLocationConstants.location = {
@@ -282,6 +292,15 @@ app
                                   title: title,
                                   text: body,
                                   type: "success"
+                                },
+                                function(){
+                                 $state.go('core.home')
+                                })
+                           }else if(data.status === "trip_cancellation"){
+                                swal({
+                                  title: title,
+                                  text: body,
+                                  type: "warning"
                                 },
                                 function(){
                                  $state.go('core.home')
@@ -327,7 +346,6 @@ app
                     $scope.topicName = response.data.topic;
                    //alert($scope.topicName)
                    FCMPlugin.subscribeToTopic($scope.topicName);
-                   //alert($scope.topicName)
                   }
                  
                  

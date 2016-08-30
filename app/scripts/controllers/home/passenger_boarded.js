@@ -28,7 +28,6 @@ app
                // $scope.tripsummary.dropoffAt = 'Hebbal, Bengaluru, Karnataka 560024, India';
                // $scope.tripsummary.trip_id = 3;
 
-
                $scope.tripsummary = {
                     pickupAt : driverLocationConstants.location.start_destination,
                     pickupAtLat : driverLocationConstants.location.start_destination_lat,
@@ -39,7 +38,7 @@ app
                     dropoffAtLng: driverLocationConstants.location.end_destination_lng,
 
                     trip_id: driverLocationConstants.location.id
-                };
+                };                
                 
             }
 
@@ -114,6 +113,8 @@ app
                         $scope.isBoarded = true;
                         $('#boardedBtn').addClass('buttonBoarded');
                       }) 
+                      $scope.isBoarded = true;
+                      $('#boardedBtn').addClass('buttonBoarded');
                       
                   }
 
