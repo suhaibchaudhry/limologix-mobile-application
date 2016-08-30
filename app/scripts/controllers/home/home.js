@@ -187,22 +187,23 @@ app
                                 swal({
                                       title: title,
                                       text: body,
-                                      type: "warning",
-                                      confirmButtonColor: "#3232ff",   
-                                      confirmButtonText: "Recharge", 
-                                      showCancelButton: true, 
-                                      closeOnConfirm: false
+                                      type: "warning"
+                                      // confirmButtonColor: "#3232ff",   
+                                      // confirmButtonText: "Recharge", 
+                                      // showCancelButton: true, 
+                                      // closeOnConfirm: false
                                   },
                                   //On click of recharge button
                                       function(){
-                                       var url = appSettings.serverPath + appSettings.serviceApis.driver_recharge;
-                                        services.funcPostRequest(url).then(function(response) {
-                                          $scope.remaining_balance = response.data.toll_credit;
-                                          swal("Remaining Balance", "You've " +"$"+ $scope.remaining_balance+ " in your account","success")
-                                          $state.go('core.home')
-                                        }, function(error) {
-                                            notify({ classes: 'alert-danger', message: error });
-                                        });
+                                         $state.go('core.home')
+                                       // var url = appSettings.serverPath + appSettings.serviceApis.driver_recharge;
+                                       //  services.funcPostRequest(url).then(function(response) {
+                                       //    $scope.remaining_balance = response.data.toll_credit;
+                                       //    swal("Remaining Balance", "You've " +"$"+ $scope.remaining_balance+ " in your account","success")
+                                       //    $state.go('core.home')
+                                       //  }, function(error) {
+                                       //      notify({ classes: 'alert-danger', message: error });
+                                       //  });
                                       //$state.go('core.home')
                                     })
                           }
@@ -310,22 +311,23 @@ app
                                 swal({
                                       title: title,
                                       text: body,
-                                      type: "warning",
-                                      confirmButtonColor: "#3232ff",   
-                                      confirmButtonText: "Recharge", 
-                                      showCancelButton: true, 
-                                      closeOnConfirm: false
+                                      type: "warning"
+                                      // confirmButtonColor: "#3232ff",   
+                                      // confirmButtonText: "Recharge", 
+                                      // showCancelButton: true, 
+                                      // closeOnConfirm: false
                                   },
                                   //On click of recharge button
                                       function(){
-                                       var url = appSettings.serverPath + appSettings.serviceApis.driver_recharge;
-                                        services.funcPostRequest(url).then(function(response) {
-                                          $scope.remaining_balance = response.data.toll_credit;
-                                          swal("Remaining Balance", "You've " +"$"+ $scope.remaining_balance+ " in your account","success")
-                                          $state.go('core.home')
-                                        }, function(error) {
-                                            notify({ classes: 'alert-danger', message: error });
-                                        });
+                                         $state.go('core.home')
+                                       // var url = appSettings.serverPath + appSettings.serviceApis.driver_recharge;
+                                       //  services.funcPostRequest(url).then(function(response) {
+                                       //    $scope.remaining_balance = response.data.toll_credit;
+                                       //    swal("Remaining Balance", "You've " +"$"+ $scope.remaining_balance+ " in your account","success")
+                                       //    $state.go('core.home')
+                                       //  }, function(error) {
+                                       //      notify({ classes: 'alert-danger', message: error });
+                                       //  });
                                       //$state.go('core.home')
                                     })
                           }
