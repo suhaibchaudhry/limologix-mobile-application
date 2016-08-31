@@ -148,7 +148,8 @@ app
                           // get ride request alert
                            if(data.status === "dispatched"){
                               var end_destination = JSON.parse(data.end_destination).place;
-                               var start_destination = JSON.parse(data.start_destination).place
+                               var start_destination = JSON.parse(data.start_destination).place;
+
                                var id = data.id; 
 
                                driverLocationConstants.location = {
@@ -158,7 +159,8 @@ app
                                   start_destination_lng: JSON.parse(data.start_destination).longitude,
                                   end_destination_lat: JSON.parse(data.end_destination).latitude,
                                   end_destination_lng: JSON.parse(data.end_destination).longitude,
-
+                                  customer_name: JSON.parse(data.customer.full_name),
+                                  price:data.price,
                                   id : id
                                }
                                console.log('home page constants',driverLocationConstants.location);
@@ -254,7 +256,8 @@ app
                               start_destination_lng: JSON.parse(data.start_destination).longitude,
                               end_destination_lat: JSON.parse(data.end_destination).latitude,
                               end_destination_lng: JSON.parse(data.end_destination).longitude,
-
+                              customer_name: JSON.parse(data.customer.full_name),
+                              price:data.price,
                               id : id
                            }
                            console.log('home page constants',driverLocationConstants.location);
@@ -282,7 +285,8 @@ app
                                   start_destination_lng: JSON.parse(data.start_destination).longitude,
                                   end_destination_lat: JSON.parse(data.end_destination).latitude,
                                   end_destination_lng: JSON.parse(data.end_destination).longitude,
-
+                                   customer_name: JSON.parse(data.customer.full_name),
+                                    price:data.price,
                                   id : id
                                }
                                console.log('home page constants',driverLocationConstants.location);

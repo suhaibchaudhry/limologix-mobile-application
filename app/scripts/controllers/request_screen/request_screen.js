@@ -23,6 +23,8 @@ app
                 $scope.tripsummary = {
                     pickupAt : driverLocationConstants.location.start_destination,
                     dropoffAt : driverLocationConstants.location.end_destination,
+                    customer_name: driverLocationConstants.location.customer_name,
+                    price: "$"+driverLocationConstants.location.price,
                     trip_id: driverLocationConstants.location.id
                 };
                // $scope.tripsummary.pickupAt = driverLocationConstants.location.start_destination;//'Marathahalli, Bengaluru, Karnataka 560037, India';
