@@ -12565,17 +12565,17 @@ html, body {
 
 .requestScreenText {
   font-size: 30px;
-  position: relative;
-  top: 25px;
+  position: absolute;
+  top: 12%;
   text-align: center;
-  vertical-align: middle; }
+  width: 100%; }
 
 .requestScreen_pickup_point {
   font-size: 30px;
   position: relative;
   text-align: center;
   vertical-align: middle;
-  top: 40px; }
+  top: 130px; }
 
 .userName {
   font-size: 30px;
@@ -12591,7 +12591,7 @@ html, body {
 
 .dvMap_circle {
   position: relative;
-  top: 30px;
+  top: 100px;
   border-radius: 50%; }
 
 #progressBar {

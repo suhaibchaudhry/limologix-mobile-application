@@ -149,19 +149,19 @@ html,body { -webkit-font-smoothing: antialiased; }
 }
 
 .requestScreenText {
-    font-size: 30px;
-    position: relative;
-    top: 25px;
+   font-size: 30px;
+    position: absolute;
+    top: 12%;
     text-align: center;
-    vertical-align: middle;
+    width: 100%;
 }
 
 .requestScreen_pickup_point {
     font-size: 30px;
-    position: relative;
-    text-align: center;
-    vertical-align: middle;
-    top:40px;
+position: relative;
+text-align: center;
+vertical-align: middle;
+top: 130px;
 }
 .userName{
     font-size: 30px;
@@ -178,9 +178,9 @@ html,body { -webkit-font-smoothing: antialiased; }
 }
 
 .dvMap_circle{
-    position:relative;
-    top: 30px;
-    border-radius: 50%;
+    position: relative;
+top: 100px;
+border-radius: 50%
 }
 
 #dvMap{

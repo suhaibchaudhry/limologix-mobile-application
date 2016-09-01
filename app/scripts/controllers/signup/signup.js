@@ -72,7 +72,7 @@ app
 
             $scope.allSelected = true;
 
-            $scope.checkboxes = [{
+            $scope.Items = [{
                 checked: true,
                 label: 'This application is for independent limo drivers to become a member of limologix network.The independent limo driver will be known as a Driver Member("DM")'
             }, {
@@ -101,29 +101,27 @@ app
                 label: 'DMs are all equal and have the right to get all benifits of the limo logix network and website equally.'
             }, {
                 checked: true,
-                label: 'If DM accept for a trip,$2 will be deducted automatically from his account'
+                label: 'Upon inputting your credit card information, you authorize Limo Logix to charge you $20.00 that will be credited to your Limo Logix Account.Each trip you accept, $2.00 will be subtracted from the Limo Logix Credit and upon accepting 8 trips and you have $4.00 left in your account, the card you have on file will be charged $20.00. This will be on recurring basis, each time the Limo Logix Credit is at $4.00, your card will be automatically charged $20.00.'
             }
             ];
 
-              $scope.cbChecked = function(){
-                $scope.allSelected = true;
-                angular.forEach($scope.checkboxes, function(v, k) {
-                  if(!v.checked){
-                    $scope.allSelected = false;
-                  }
-                });
-              }
-              
-              $scope.toggleAll = function() {
-                var bool = true;
-                if ($scope.allSelected) {
-                  bool = true;
-                }
-                angular.forEach($scope.checkboxes, function(v, k) {
-                  v.checked = !bool;
-                  $scope.allSelected = !bool;
-                });
-              }
+                  $scope.checkAll = function () {
+        if ($scope.selectedAll) {
+            $scope.selectedAll = true;
+        } else {
+            $scope.selectedAll = false;
+        }
+        angular.forEach($scope.Items, function (item) {
+            item.Selected = $scope.selectedAll;
+        });
+
+    };
+        
+        $scope.notifyMaster = function () {
+            $scope.selectedAll = !$scope.Items.some(function (item) {
+               return !item.Selected;  //check if ANY are unchecked
+            });
+        }
 
 
             getCountries();

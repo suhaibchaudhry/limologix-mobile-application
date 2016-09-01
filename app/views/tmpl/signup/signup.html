@@ -52,7 +52,7 @@
             <div class="row">
                 <div class="form-group col-md-12 mb-0">
                     <div class="col-md-12">
-                        <input type="password" name="password" id="password" class="form-control input-lg" placeholder="Password" ng-model="contact.password" required>
+                        <input type="password" name="password" id="password" ng-minlength="3"  ng-maxlength="10" class="form-control input-lg" placeholder="Password" ng-model="contact.password" required>
                     </div>
                 </div>
             </div>
@@ -423,7 +423,23 @@
         </form> -->
         <form name='step5' ng-show="isTermsAndConditions" id='selectionForm'>
             <h2 class="text-light text-white" style="position:absolute;top:20px;">Terms and Conditions</h2><br/><br/><br/>
-            <div style="text-align:left;color: #a79292">
+
+            <div style="text-align:left">
+    <ul>
+       
+        <li ng-repeat="item in Items">
+        <input type="checkbox" ng-model="item.Selected" ng-change="notifyMaster()"/>
+           {{item.label}}               
+           
+        </li>
+        
+         <li style="text-align:center;">Accept All
+            <input type="checkbox" ng-model="selectedAll" ng-click="checkAll()" />
+        </li>
+    </ul>
+</div>
+
+            <!-- <div style="text-align:left;color: #a79292">
                  
                   <div ng-repeat="cb in checkboxes">
                     <label><input type="checkbox" ng-model="cb.checked"  ng-disabled="true" ng-click="cbChecked()"/>
@@ -437,14 +453,8 @@
                     </label>
                     
                   </div>
-                <!-- <div ng-repeat="item in ListOfItems" >
-                    <div>
-                        <input type="checkbox" ng-model="item.isSelected" />
-                        <span style ='margin-left:20px;word-break: break-all;position:absolute;'>{{item.desc}}</span>
-                    </div>
-                    <br/><br/><br/>
-                </div>  -->
-            </div>
+                
+            </div> -->
            <!--  <select-all-checkbox checkboxes="ListOfItems" all-selected="AllSelectedItems" all-clear="NoSelectedItems"></select-all-checkbox><span style="margin-left:20px;font-size:20px;">select all</span>
             <br/><br/> -->        
 

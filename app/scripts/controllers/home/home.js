@@ -159,7 +159,8 @@ app
                                   start_destination_lng: JSON.parse(data.start_destination).longitude,
                                   end_destination_lat: JSON.parse(data.end_destination).latitude,
                                   end_destination_lng: JSON.parse(data.end_destination).longitude,
-                                  customer_name: JSON.parse(data.customer.full_name),
+                                  customer_name: JSON.parse(data.customer).full_name,
+                                  company_name:data.company_name,
                                   price:data.price,
                                   id : id
                                }
@@ -256,7 +257,8 @@ app
                               start_destination_lng: JSON.parse(data.start_destination).longitude,
                               end_destination_lat: JSON.parse(data.end_destination).latitude,
                               end_destination_lng: JSON.parse(data.end_destination).longitude,
-                              customer_name: JSON.parse(data.customer.full_name),
+                              customer_name: JSON.parse(data.customer).full_name,
+                              company_name:data.company_name,
                               price:data.price,
                               id : id
                            }
@@ -285,8 +287,9 @@ app
                                   start_destination_lng: JSON.parse(data.start_destination).longitude,
                                   end_destination_lat: JSON.parse(data.end_destination).latitude,
                                   end_destination_lng: JSON.parse(data.end_destination).longitude,
-                                   customer_name: JSON.parse(data.customer.full_name),
-                                    price:data.price,
+                                  customer_name: JSON.parse(data.customer).full_name,
+                                  price:data.price,
+                                  company_name:data.company_name,
                                   id : id
                                }
                                console.log('home page constants',driverLocationConstants.location);

@@ -24,6 +24,7 @@ app
                     pickupAt : driverLocationConstants.location.start_destination,
                     dropoffAt : driverLocationConstants.location.end_destination,
                     customer_name: driverLocationConstants.location.customer_name,
+                    company_name:driverLocationConstants.location.company_name,
                     price: "$"+driverLocationConstants.location.price,
                     trip_id: driverLocationConstants.location.id
                 };
@@ -110,6 +111,7 @@ app
                 var url = appSettings.serverPath + appSettings.serviceApis.tripDeny;
                     services.funcPostRequest(url,{"trip": $scope.trip}).then(function(response,status) {
                     clearInterval($scope.interval);
+                    notify({ classes: 'alert-success', message: response.message });
                     $state.go('core.home');
                 },function(error){
                       notify({ classes: 'alert-danger', message: error.message });
