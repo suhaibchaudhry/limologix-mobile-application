@@ -9,8 +9,8 @@
  */
 app
   .controller('LogoutCtrl',
-    ['$scope', '$rootScope','$state','$http','appSettings','notify','$rootScope','$window','services','AppConstants',
-    function ($scope, $rootScope, $state,$http,appSettings,notify,$rootScope,$window,services, constants) {
+    ['$scope', '$rootScope','$state','$http','appSettings','notify','$window','services','AppConstants',
+    function ($scope, $rootScope, $state,$http,appSettings,notify, $window,services, constants) {
   	  var url = appSettings.serverPath + appSettings.serviceApis.logout;
       var token = $window.sessionStorage['Auth-Token'];
       services.funcGetRequest(url).then(function(response,status) {
