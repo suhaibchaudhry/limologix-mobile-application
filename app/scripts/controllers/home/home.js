@@ -20,9 +20,9 @@ app
 
 
                 var galleryBottomPos =$('#dvMap').position().top + $(".footer-text").height();
-             $("#slide_cont").css({'bottom':(galleryBottomPos-20)+'px'})
-             var galleryImgLeftPos = ($(window).innerWidth() - $('#slideshow_image').innerWidth())/2;
-               $("#slideshow_image").css({'left':galleryImgLeftPos+'px'})
+                $("#slide_cont").css({'bottom':(galleryBottomPos-20)+'px'})
+                var galleryImgLeftPos = ($(window).innerWidth() - $('#slideshow_image').innerWidth())/2;
+                $("#slideshow_image").css({'left':galleryImgLeftPos+'px'})
 
                $('body').removeClass('menu-slider');$('body').removeClass('in');
 
@@ -115,7 +115,36 @@ app
                     $('#slideshow_image').fadeIn(1000);
                 }
 
-                  
+                if ($rootScope.status !== undefined) {
+                    $scope.status = $rootScope.status;
+                } else {
+                    $scope.status = true;
+                }
+
+                $scope.init = function() {
+                    $scope.status = $scope.status;
+                }
+
+                $scope.funcGetVisibleStatus = function() {
+
+                $scope.status = !$scope.status;
+                $rootScope.status = $scope.status;
+                var postData = {
+                    "driver": {
+                        "visible": $rootScope.status
+                    }
+                };
+               
+                var url = appSettings.serverPath + appSettings.serviceApis.getVisibleStatus;
+                services.funcPostRequest(url, postData).then(function(response) {
+                  notify({ classes: 'alert-success', message: response.message });
+                }, function(error) {
+                    if (error && error.message)
+                        notify({ classes: 'alert-danger', message: error.message });
+                    //$state.go('core.login');
+                });
+            }
+
 
                 $scope.funcCloseAds = function() {
                   $("#slide_cont").hide();
@@ -363,19 +392,21 @@ app
                 });
               
                 //FCMPlugin.subscribeToTopic('topicExample');
-   
+                getChannelName();
+                function getChannelName(){
+                  var url = appSettings.serverPath + appSettings.serviceApis.getChannelName;
+                    services.funcGetRequest(url).then(function(response,status) {
+                     $scope.channelName = response.data.channel;                     
+                    },function(error){
+                         notify({ classes: 'alert-danger', message: error.message });
+                    });
+                }
                                              
                 // onSuccess Callback
                 // This method accepts a Position object, which contains the
                 // current GPS coordinates
-                var onSuccess = function(position) { 
-                    var url = appSettings.serverPath + appSettings.serviceApis.getChannelName;
-                    services.funcGetRequest(url).then(function(response,status) {
-                     $scope.channelName = response.data.channel;
-                     faye(Faye,$scope,$window,position);
-                    },function(error){
-                         notify({ classes: 'alert-danger', message: response.message });
-                    });
+                var onSuccess = function(position) {
+                    faye(Faye,$scope,$window,position);                    
                 };
 
                 // onError Callback receives a PositionError object
@@ -398,7 +429,7 @@ app
                             var marker = new google.maps.Marker({
                                 position: LatLng,
                                 map: map,
-                                icon: 'images/driver/gps-icon.3919872e.png',
+                                icon: 'images/driver/location_ping.0b6a1b43.png',
                                 title: "<div style = 'height:60px;width:200px'><b>Your location:</b><br />Latitude: " + p.coords.latitude + "<br />Longitude: " + p.coords.longitude
                             });
                             google.maps.event.addListener(marker, "click", function(e) {

@@ -4,8 +4,9 @@
         <nav id="navbar2" class="navbar-default" role="navigation">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <a href="#" class="navbar-brand home"><img src="images/driver/bird-logo.png"></a>
-                    <div type="button" class="btn btn-primary mb-10" style="position: absolute;left:3px;top: 15px;text-decoration: none !important;">
+                    <a href="#" class="navbar-brand home homescreen_logo"><img src="images/driver/header_logo.png" style="width: 100%;
+margin-left:-10%"></a>
+                    <div type="button" class="btn btn-primary mb-10 dispatchBtn">
                         <a href="http://limologix.softwaystaging.com"><b class = 'text-white'>Dispatch</b></a>
                     </div>
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2" style="position:absolute;right:3%;top:1%">
@@ -20,11 +21,6 @@
                         <li>
                             <a href="#profile" ui-sref="core.profile.my_account">
                                 <fa name="user"></fa>&nbsp;&nbsp;Profile
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" ui-sref="core.profile.availability">
-                                <fa name="cog"></fa>&nbsp;&nbsp;Availability
                             </a>
                         </li>
                         <li>
@@ -55,9 +51,14 @@
     </div> 
     
 
-    <div class="footer-text"><p>{{driver_name}}</p><b class="company_name"><b>{{company_name}}</b></div>
-    <!-- <p class="comp_name"><b>{{company_name}}</b></p> -->
-
-          </div>
+    <div class="footer-text" style="background-color:#000;">
+        <p class="driverName">{{driver_name}}</p>
+        <div ng-init="init()" class = 'switchClass'>
+            <i class="fa fa-toggle-on active" ng-if="status == true" ng-click="funcGetVisibleStatus();"></i>
+            <i class="fa fa-toggle-on fa-rotate-180 inactive" ng-if="status == false" ng-click="funcGetVisibleStatus();"></i>
+        </div>
+        <div class="company_name"><b>{{company_name}}</div>
+    </div>
+    </div>
 </div>
 

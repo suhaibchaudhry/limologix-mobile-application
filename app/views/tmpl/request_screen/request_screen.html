@@ -1,8 +1,8 @@
-<div class="page page-signup">
+<div class="page page-signup" style="background-color:#231f20 !important">
     <div class="container">
         <div class="navbar-header">
             <i class="fa fa-angle-left nav_back_btn" aria-hidden="true" back></i>
-        <a href="#" class="navbar-brand"><img src="images/driver/bird-logo.png"></a>
+        <a href="#" class="navbar-brand"><img src="images/driver/header_logo.png"></a>
         <div uib-dropdown>
             <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#bs-navbar" aria-controls="bs-navbar" aria-expanded="false" uib-dropdown-toggle>
                 <a href class="dropdown-toggle">
@@ -17,11 +17,6 @@
                 <li>
                     <a href="#profile" ui-sref="core.profile.my_account">
                         <fa name="user"></fa>Profile
-                    </a>
-                </li>
-                <li>
-                    <a href="#" ui-sref="core.profile.availability">
-                        <fa name="cog"></fa>Availability
                     </a>
                 </li>
                 <li>
@@ -40,32 +35,30 @@
             
         </div>
     </div>
-    <div>
-        <p class="text-white" style="font-size:30px;float:left;margin-left:5px;">{{tripsummary.company_name}}</p>
-        <p class="text-white" style="font-size:30px;float:right;margin-right:5px;">{{tripsummary.customer_name}}</p>
-        <p class="requestScreenText text-white">You have got a ride request</p>
-    </div>
-    <div>
+    <div class="notification_screen">
+        <p class="text-white companyNameClass">{{tripsummary.company_name}}</p>
+        <p class="text-white customerNameClass">{{tripsummary.customer_name}}</p>
         
     </div>
-    <div id="dvMap_requestscreen" class='dvMap_circle' style="width: 100%;height:250px;"></div>
-    <p class='requestScreen_pickup_point text-white'>{{tripsummary.pickupAt}}</p>
-    <p class='requestScreen_pickup_point text-white'>{{tripsummary.price}}</p>
-    <div class="row">
-        <div class="col-xs-6">
-            <button type="button" class="b1 text-white btn btn-green btn-rounded btn-lg col-md-12 input-lg" ng-disabled="isAccepted" ng-click="trip_accept()">ACCEPT</button>
-        </div>
-        <div class="col-xs-6">
-            <button type="button" class="b2 text-white btn btn-red btn-rounded btn-lg col-md-12 input-lg" ng-click="trip_deny()" ng-disabled='step2.$invalid'>DENY</button>
-        </div>
+    <div>
+        <p class="requestScreenText text-white">You have got a ride request</p>
     </div>
-    <div class="fake_div"></div>
     
-   <div id='progress' style='background:red; height:50px;'><div id='timer' style="text-align:center;font-size:20px"></div></div>
+    <div id="dvMap_requestscreen" class='dvMap_circle' style="width: 100%;height:250px;"></div>
 
-   <!--  <div class="timer-container">
-        <div id="progress-bar">
-            <h1><span id="js-Visit-count">0</span></h1>
+    <div class="btn-container">
+        <p class='requestScreen_pickup_point text-white'>{{tripsummary.pickupAt}}</p>
+        <p class='requestScreen_pickup_point text-white'>{{tripsummary.price}}</p>
+        <div class="row">
+            <div class="col-xs-6">
+                <button type="button" class="b1 text-white btn btn-green btn-rounded btn-lg col-md-12 input-lg" ng-disabled="isAccepted" ng-click="trip_accept()">ACCEPT</button>
+            </div>
+            <div class="col-xs-6">
+                <button type="button" class="b2 text-white btn btn-red btn-rounded btn-lg col-md-12 input-lg" ng-click="trip_deny()" ng-disabled='step2.$invalid'>DENY</button>
+            </div>
         </div>
-    </div> -->
+    </div>    
+    <div id="progressCountdown"></div>
+    <div id="statusCountdown" class='count'></div>
+   
 </div>

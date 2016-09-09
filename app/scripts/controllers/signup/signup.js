@@ -45,6 +45,7 @@ app
             $scope.card = {
                 type: undefined
             }
+            localStorage.setItem("driverdata",'');
             //  $scope.enableNext = false;
 
             // $scope.isEnableContactNext = false;
@@ -70,7 +71,7 @@ app
             })
 
 
-            $scope.allSelected = true;
+            $scope.selectedAll = true;
 
             $scope.Items = [{
                 checked: true,
@@ -818,7 +819,7 @@ app
                     localStorage.clear();
                     $state.go('core.appSettings');
                 }, function(error) {
-                    notify({ classes: 'alert-danger', message: error });
+                    notify({ classes: 'alert-danger', message: error.message });
                     $state.go('core.signup');
                 });
             }

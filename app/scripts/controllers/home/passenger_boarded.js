@@ -89,6 +89,17 @@ app
 
 
 
+                getChannelName();
+                function getChannelName(){
+                  var url = appSettings.serverPath + appSettings.serviceApis.getChannelName;
+                    services.funcGetRequest(url).then(function(response,status) {
+                     $scope.channelName = response.data.channel;                     
+                    },function(error){
+                         notify({ classes: 'alert-danger', message: error.message });
+                    });
+                }
+
+
                 // onSuccess Callback
                 // This method accepts a Position object, which contains the
                 // current GPS coordinates
@@ -118,16 +129,16 @@ app
                       
                   }
 
-                    var url = appSettings.serverPath + appSettings.serviceApis.getChannelName;
-                    services.funcGetRequest(url).then(function(response,status) {
-                      if(response){
-                         $scope.channelName = response.data.channel;
+                    //var url = appSettings.serverPath + appSettings.serviceApis.getChannelName;
+                    // services.funcGetRequest(url).then(function(response,status) {
+                    //   if(response){
+                    //      $scope.channelName = response.data.channel;
                          faye(Faye,$scope,$window,position);
-                      }
+                    //   }
                     
-                    },function(error){
-                         notify({ classes: 'alert-danger', message: response.message });
-                    });
+                    // },function(error){
+                    //      notify({ classes: 'alert-danger', message: response.message });
+                    // });
                 }
 
                 // onError Callback receives a PositionError object

@@ -13,13 +13,13 @@
   width: 100%;
   height: 100%;
   padding: 60px 10px;
-  background-color: #262262; }
+  background-color: #ededee; }
 
 .page-signup {
   position: absolute;
   width: 100%;
   padding: 0px;
-  background-color: #293b4c;
+  background-color: #ededee;
   background-image: -webkit-radial-gradient(center, ellipse cover, #262262 0%, #0b002f 100%); }
 
 .app-header {
@@ -31,7 +31,7 @@
   left: 0px; }
 
 ::-webkit-input-placeholder {
-  text-align: center; }
+  text-align: left; }
 
 .page-tree {
   height: 100%;
@@ -12460,15 +12460,15 @@ html, body {
   height: 100%; }
 
 .splash_company {
-  background-color: #262262;
-  color: #fff;
+  background-color: #fff !important;
+  color: #466378;
   font-size: 40px;
   text-align: center;
   background-image: -webkit-radial-gradient(center, ellipse cover, #262262 0%, #0b002f 100%); }
 
 .splash_driver {
-  background-color: #16a085 !important;
-  color: #fff;
+  background-color: #f7f7f8 !important;
+  color: #d68716;
   font-size: 40px;
   text-align: center;
   background-image: -webkit-radial-gradient(center, ellipse cover, #00605f 0%, #003e40 100%);
@@ -12543,8 +12543,7 @@ html, body {
   font-size: 60px; }
 
 .appClick {
-  position: relative;
-  top: 60px; }
+  margin-left: 5%; }
 
 .AppText {
   position: relative;
@@ -12755,7 +12754,7 @@ p.comp_name {
   height: 40px; }
 
 #slide_cont {
-  background-color: #262262;
+  background-color: #f0ede5;
   width: 100%;
   height: 250px;
   position: absolute; }
@@ -12829,7 +12828,7 @@ fa icon-close {
   width: 50%;
   height: 100% !important;
   margin: 0;
-  background-color: #293b4c;
+  background-color: #000;
   transition: right 0.35s ease; }
 
 #navbar2 .navbar-collapse.collapsing {
@@ -12865,5 +12864,129 @@ body.menu-slider.in #wrapper {
   background-color: #262262;
   height: 50px;
   width: 100%; }
+
+.nav-icon {
+  float: left;
+  position: absolute;
+  top: -11px;
+  left: -50%;
+  height: 110px; }
+
+.login_name {
+  color: #3f3e40;
+  font-size: 45px !important; }
+
+.input_border {
+  border: 1px solid #000; }
+
+.btn-submit {
+  width: 100%;
+  background-color: #92c232;
+  color: #fff;
+  font-size: 25px; }
+
+.underline {
+  text-decoration: underline;
+  cursor: pointer; }
+
+.info_title {
+  padding: 15px 0px 20px 15px;
+  font-size: 34px; }
+
+.switchClass {
+  position: relative;
+  float: right;
+  margin-top: -15%; }
+
+.driverName {
+  width: 80%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; }
+
+.active, .inactive {
+  font-size: 40px;
+  cursor: pointer; }
+
+.active, .inactive {
+  font-size: 40px;
+  cursor: pointer; }
+
+i.active {
+  color: #5cb85c; }
+
+i.inactive {
+  color: #d9534f; }
+
+.limo_logo {
+  position: relative;
+  left: 35%;
+  margin-top: 20%; }
+
+.instruction {
+  font-size: 30px;
+  margin-top: 12%;
+  margin-left: 0%;
+  text-align: center;
+  width: 100%;
+  color: #000; }
+
+.dispatchBtn {
+  position: absolute;
+  left: 3px;
+  top: 15px;
+  text-decoration: none !important;
+  background-color: #000 !important; }
+
+.homescreen_logo {
+  width: 50%;
+  height: 70%;
+  margin-left: 30%;
+  margin-top: 3%; }
+
+.companyNameClass {
+  font-size: 26px;
+  float: left;
+  margin-left: 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 6em; }
+
+.customerNameClass {
+  font-size: 26px;
+  float: right;
+  margin-right: 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 6em;
+  text-align: right; }
+
+.dvMap_circle .gm-style {
+  border-radius: 50%; }
+
+#progressCountdown > .ui-progressbar-value {
+  background: #751015; }
+
+.ui-widget-content {
+  background: red !important;
+  border: none; }
+
+.ui-widget-header {
+  border: none !important; }
+
+.ui-progressbar {
+  height: 3em;
+  text-align: left;
+  overflow: hidden; }
+
+.count {
+  position: absolute;
+  top: 94%;
+  left: 50%;
+  color: blue;
+  font-size: 2em;
+  color: #ffffff; }
 
 /*# sourceMappingURL=main.css.map */

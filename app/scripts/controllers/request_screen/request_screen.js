@@ -33,34 +33,54 @@ app
                 
             }
 
-            function started(duration) {
-                var TotalSeconds = 14;
-                var documentWidth = $(document).width();
-                var start = Date.now();
-                $scope.intervalSetted = null;
+            $("#progressCountdown").progressbar({ value: 0 });
 
-                function timer() {
-                    var diff = duration - (((Date.now() - start) / 1000) | 0);
-                    var seconds = (diff % 60) | 0;
-                    seconds = seconds < 10 ? "0" + seconds : seconds;
-                    $('#timer').html(seconds);
-                    var progresBarWidth = (seconds * documentWidth / TotalSeconds);
+            var value = 112;
 
-                    $('#progress').css({
-                        width: progresBarWidth + 'px'
-                    });
+            countdown();
 
-                    if (diff <= 0) {
-                        clearInterval($scope.intervalSetted);
-                        $state.go('core.home')
-                    }
+            function countdown() {
+                value = value - 8;
+                $("#progressCountdown").progressbar("option", "value", value);
+                $("#statusCountdown").text(value / 8);
+
+                if (value > 0) {
+                    setTimeout(countdown, 1000);
+                } else {
+                    //$state.go("core.home");
+                    //$("#progressCountdown").progressbar("disable");
                 }
-
-                timer();
-                $scope.intervalSetted = setInterval(timer, 1000);
             }
+            
 
-            started(14);
+        //             function started(duration) {
+        //     var TotalSeconds = 14;
+        //     var documentWidth = $(document).width();
+        //     var start = Date.now();
+        //     var intervalSetted = null;
+
+        //     function timer() {
+        //         var diff = duration - (((Date.now() - start) / 1000) | 0);
+        //         var seconds = (diff % 60) | 0;
+        //         //seconds = seconds < 10 ? "0" + seconds : seconds;
+        //         $('#timer').html(seconds);
+        //         var progresBarWidth = (seconds * documentWidth / TotalSeconds);
+
+        //         $('#progress').css({
+        //             width: progresBarWidth + 'px'
+        //         });
+
+        //         if (diff <= 0) {
+        //             clearInterval(intervalSetted);
+                    
+        //         }
+        //     }
+
+        //     timer();
+        //     intervalSetted = setInterval(timer, 1000);
+        // }
+
+        // started(14);
 
 
       
@@ -118,19 +138,24 @@ app
                       $state.go('core.home');
                 });
             }
+
+            getChannelName();
+                function getChannelName(){
+                  var url = appSettings.serverPath + appSettings.serviceApis.getChannelName;
+                    services.funcGetRequest(url).then(function(response,status) {
+                     $scope.channelName = response.data.channel;                     
+                    },function(error){
+                         notify({ classes: 'alert-danger', message: error.message });
+                    });
+                }
+
+
                 // onSuccess Callback
                 // This method accepts a Position object, which contains the
                 // current GPS coordinates
                 //if (navigator.geolocation) {
                 var onSuccess = function(position) {
-                   
-                    var url = appSettings.serverPath + appSettings.serviceApis.getChannelName;
-                    services.funcGetRequest(url).then(function(response,status) {
-                     $scope.channelName = response.data.channel;
-                     faye(Faye,$scope,$window,position);
-                    },function(error){
-                         notify({ classes: 'alert-danger', message: response.message });
-                    });
+                   faye(Faye,$scope,$window,position);                    
                 };
 
                 // onError Callback receives a PositionError object
