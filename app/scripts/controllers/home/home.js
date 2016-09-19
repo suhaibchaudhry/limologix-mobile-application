@@ -17,10 +17,12 @@ app
                 var windowHeight = jQuery(window).innerHeight();
                 var mapHeight = windowHeight - ($(".navbar-header").height() + $(".footer-text").height());
                 $('#dvMap').height(mapHeight + 'px');
+                $('#dvMap').css({'top':'10%'});
 
 
-                var galleryBottomPos =$('#dvMap').position().top + $(".footer-text").height();
-                $("#slide_cont").css({'bottom':(galleryBottomPos-20)+'px'})
+                var galleryBottomPos =$('#dvMap').position().top; //+ $(".footer-text").height();
+                // $("#slide_cont").css({'bottom':(galleryBottomPos-20)+'px'})
+                $("#slide_cont").css({'bottom':'30%'})
                 var galleryImgLeftPos = ($(window).innerWidth() - $('#slideshow_image').innerWidth())/2;
                 $("#slideshow_image").css({'left':galleryImgLeftPos+'px'})
 
@@ -188,7 +190,7 @@ app
                                   start_destination_lng: JSON.parse(data.start_destination).longitude,
                                   end_destination_lat: JSON.parse(data.end_destination).latitude,
                                   end_destination_lng: JSON.parse(data.end_destination).longitude,
-                                  customer_name: JSON.parse(data.customer).full_name,
+                                  customer_name: data.first_name,
                                   company_name:data.company_name,
                                   price:data.price,
                                   id : id
@@ -286,7 +288,7 @@ app
                               start_destination_lng: JSON.parse(data.start_destination).longitude,
                               end_destination_lat: JSON.parse(data.end_destination).latitude,
                               end_destination_lng: JSON.parse(data.end_destination).longitude,
-                              customer_name: JSON.parse(data.customer).full_name,
+                              customer_name: data.first_name,
                               company_name:data.company_name,
                               price:data.price,
                               id : id
@@ -316,7 +318,7 @@ app
                                   start_destination_lng: JSON.parse(data.start_destination).longitude,
                                   end_destination_lat: JSON.parse(data.end_destination).latitude,
                                   end_destination_lng: JSON.parse(data.end_destination).longitude,
-                                  customer_name: JSON.parse(data.customer).full_name,
+                                  customer_name: data.first_name,
                                   price:data.price,
                                   company_name:data.company_name,
                                   id : id

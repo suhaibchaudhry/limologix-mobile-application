@@ -1,4 +1,46 @@
-<div class="page page-signup" style="background-color:#231f20 !important">
+<header>
+    <div class="col-xs-12 splash_header">
+        <img src="images/driver/header_logo.png">
+    </div>    
+</header>
+<div class="page-signup" style="background-color:#231f20 !important; height:100%">
+    
+    <div class="notification_screen" style="position: absolute;top: 18%;height: 100%;width:100%;background-color: #231f20 !important;">
+        <div>
+            <p class="text-white companyNameClass">{{tripsummary.company_name}}</p>
+            <p class="text-white customerNameClass">{{tripsummary.customer_name}}</p>
+        </div>
+    </div>
+    <div>
+        <p class="requestScreenText text-white text-uppercase">You have got a ride request</p>
+    </div>
+    
+    <div id="dvMap_requestscreen" class='dvMap_circle' style="width: 100%;height:250px;"></div>
+
+    <div class="btn-container" style="position:relative;">
+        <p class='requestScreen_pickup_point text-white'>{{tripsummary.pickupAt}}</p>
+        <p class='requestScreen_pickup_point text-white'>{{tripsummary.price}}</p>
+        <div class="row" style="position:relative;">
+            <div class="col-xs-6">
+                <button type="button" class="b1 text-white btn btn-app-green btn-lg col-md-12 input-lg" ng-disabled="isAccepted" ng-click="trip_accept()">ACCEPT</button>
+            </div>
+            <div class="col-xs-6">
+                <button type="button" class="b2 text-white btn btn-app-red btn-lg col-md-12 input-lg" ng-click="trip_deny()" ng-disabled='step2.$invalid'>DENY</button>
+            </div>
+        </div>
+    </div>    
+   
+   
+</div>
+
+<footer>
+    <div id="progressCountdown">
+        <div id="statusCountdown" class='count'></div>
+    </div>
+
+</footer> 
+
+<!-- <div class="page page-signup" style="background-color:#231f20 !important">
     <div class="container">
         <div class="navbar-header">
             <i class="fa fa-angle-left nav_back_btn" aria-hidden="true" back></i>
@@ -61,4 +103,4 @@
     <div id="progressCountdown"></div>
     <div id="statusCountdown" class='count'></div>
    
-</div>
+</div> -->

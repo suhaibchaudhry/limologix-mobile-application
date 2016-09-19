@@ -15,6 +15,33 @@ app
       	email :'',
       	password:''
     };
+
+               if (localStorage.chkbx && localStorage.chkbx != '') {
+                    $('#remember_me').attr('checked', 'checked');
+                    $scope.driver.email = localStorage.usrname;
+                    $scope.driver.password = localStorage.password;
+                } else {
+                    $('#remember_me').removeAttr('checked');
+                    $scope.driver.email = '';
+                    $scope.driver.password = '';
+                }
+ 
+                $('#remember_me').click(function() {
+ 
+                    if ($('#remember_me').is(':checked')) {
+                        // save email and passwordword
+                        localStorage.usrname = $scope.driver.email;
+                        localStorage.password = $scope.driver.password;
+                        localStorage.chkbx = $('#remember_me').val();
+                    } else {
+                        localStorage.usrname = '';
+                        localStorage.password = '';
+                        localStorage.chkbx = '';
+                    }
+                });
+           
+
+
     $scope.login = function() {
       $scope.driver = {
       	email : $scope.driver.email,

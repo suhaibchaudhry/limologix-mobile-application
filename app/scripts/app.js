@@ -72,11 +72,11 @@
         ])
 
         .constant('appSettings', {  
-            server_address: 'http://limologix.softwaystaging.com', //'http://172.16.130.107:9000',
+            server_address: 'http://limologix.softwaystaging.com', //'http://172.16.130.107:9000',//
             version: 'v1',
-            server_images_path : "http://limologix.api.softwaystaging.com/", //'http://172.16.130.107:9000',
-            serverPath: "http://limologix.api.softwaystaging.com/api/v1/", //'http://172.16.130.107:9000/api/v1/',
-            FayeServerURL : 'http://limologix.softwaystaging.com:9292/faye', //'http://172.16.130.107:9292/faye',
+            server_images_path : "http://limologix.api.softwaystaging.com/", //'http://172.16.130.107:9000',//
+            serverPath: "http://limologix.api.softwaystaging.com/api/v1/",  // 'http://172.16.130.107:9000/api/v1/',//
+            FayeServerURL : 'http://limologix.softwaystaging.com:9292/faye', //'http://172.16.130.107:9292/faye',//
             serviceApis: {
                 signin: 'drivers/sign_in',
                 forgotPassword:'drivers/forgot_password',

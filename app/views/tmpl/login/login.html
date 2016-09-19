@@ -1,10 +1,9 @@
-<div class="page page-signup page-core page-login">
- <div class="col-xs-12 login_header" style="padding:10px">
+<header>
+    <div class="col-xs-12 splash_header">
         <img src="images/driver/header_logo.png">
     </div>
-    <br/>
-    <br/>
-    <br/>
+</header>
+<div class="content_body">
     <div class="container w-420 p-15 mt-40 text-center">
         <h2 class="login_name">Login</h2>
         <span id="signin_error"></span>
@@ -20,21 +19,25 @@
             <div class="row">
                 <div class="form-group col-md-12 mb-0">
                     <div class="col-md-12">
-                        <input type="password" name="password" id="password" class="form-control input-lg input_border" placeholder="Password" ng-model="driver.password" required>
+                        <input type="password" name="password" id="password" ng-minlength="6" class="form-control input-lg input_border" placeholder="Password" ng-model="driver.password" required>
                     </div>
                 </div>
             </div>
             <br/>
+            <label class="checkbox">
+                    <input type="checkbox" value="remember-me" id="remember_me"> Remember me
+                </label>
             <div class="row">
                 <div class="form-group col-md-12 mb-0">
                     <div class="col-md-12">
-                        <button type="button" class=" text-light text-white btn btn-submit form-group col-md-12" ng-click="login()" ng-disabled='form.$invalid' required>Submit</button>
+                        <button type="button" class="btn btn-submit form-group col-md-12 btn-app-green" ng-click="login()" ng-disabled='form.$invalid' required>Submit</button>
                     </div>
                 </div>
             </div>
             <br/>
             <br/>
             <br/>
+
             <div class="row">
                 <h3><p class="underline" ui-sref="core.forgot_password">Forgot your password?</p></h3>
                 <h3><p class="underline" ui-sref="core.signup">Create an account.</p></h3>

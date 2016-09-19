@@ -43,7 +43,7 @@ function funcservices() {
                         var marker = new google.maps.Marker({
                             position: LatLng,
                             map: map,
-                            icon: 'images/driver/gps-icon.3919872e.png',
+                            icon: 'images/driver/location_ping.0b6a1b43.png',
                             title: "<div style = 'height:60px;width:200px'><b>Your location:</b><br />Latitude: " + p.coords.latitude + "<br />Longitude: " + p.coords.longitude
                         });
                         directionsDisplay.setMap(map);
@@ -87,7 +87,7 @@ function funcservices() {
                             //title: (check_infoWindow == "pickuppoint") ? "<div><img border='0' align='Left' width='100%' src='images/driver/popup.2b0bebde.png'></img><a href = 'http://maps.google.com/maps?saddr=" + currLoc + "&amp;daddr=" + pickup_point + "'class = 'pickUpText'>" + pickup_point + "</p></div>" : title
                             title: (check_infoWindow == "pickuppoint") ? "<div>"+
                             "<img border='0' id='infoWindowid' align='Left' width='100%' src='images/driver/popup.2b0bebde.png'></img>"+
-                            "<a href ='http://maps.google.com/maps?saddr=" + currLoc + "&amp;daddr=" + pickup_point + "'class = 'pickUpText'><img src='images/driver/nav-icon.png' class = 'nav-icon'/></a>"+
+                            "<a href ='http://maps.google.com/maps?saddr=" + currLoc + "&amp;daddr=" + pickup_point + "'class = 'pickUpText'><img src='images/driver/nav-icon.1a509916.png' class = 'nav-icon'/></a>"+
                             "<a href ='http://maps.google.com/maps?saddr=" + currLoc + "&amp;daddr=" + pickup_point + "'class = 'pickUpText'>" + pickup_point + "</p></div>" : title
                             //title: (check_infoWindow == "pickuppoint") ? "<div><img border='0' align='Left' width='100%' src='images/driver/popup.2b0bebde.png'></img><a href ='http://maps.google.com/maps?saddr="+pickup+"&amp;daddr="+dropoff+"&amp;ll="+"kalyannagar"+"' class = 'pickUpText'>" + pickup + "</p></div>" : title
                             //title: (check_infoWindow == "pickuppoint") ? "<div><img border='0' align='Left' width='100%' src='images/driver/popup.2b0bebde.png'></img><p class = 'pickUpText'>" + pickup + "</p></div>" : title
@@ -111,7 +111,7 @@ function funcservices() {
                             //title: (check_infoWindow == "dropoffpoint") ? "<div><img border='0' align='Left' width='100%' src='images/driver/popup.2b0bebde.png'></img><a href ='http://maps.google.com/maps?saddr=" + currLoc + "&amp;daddr=" + dropoff + "'class = 'pickUpText'>" + dropoff + "</p></div>" : title
                              title: (check_infoWindow == "dropoffpoint") ? "<div>"+
                             "<img border='0' id='infoWindowid' align='Left' width='100%' src='images/driver/popup.2b0bebde.png'></img>"+
-                            "<a href ='http://maps.google.com/maps?saddr=" + currLoc + "&amp;daddr=" + dropoff + "'class = 'pickUpText'><img src='images/driver/nav-icon.png' class = 'nav-icon'/></a>"+
+                            "<a href ='http://maps.google.com/maps?saddr=" + currLoc + "&amp;daddr=" + dropoff + "'class = 'pickUpText'><img src='images/driver/nav-icon.1a509916.png' class = 'nav-icon'/></a>"+
                             "<a href ='http://maps.google.com/maps?saddr=" + currLoc + "&amp;daddr=" + dropoff + "'class = 'pickUpText'>" + dropoff + "</p></div>" : title
                             //title: (check_infoWindow == "dropoffpoint") ? "<div><img border='0' align='Left' width='100%' src='images/driver/popup.2b0bebde.png'></img><p class = 'pickUpText'>" + dropoff + "</p></div>" : title
                         });

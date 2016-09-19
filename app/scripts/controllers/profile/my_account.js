@@ -145,6 +145,7 @@ app
                         company: response.company,
                         primary_phone_number: response.mobile_number,
                         primary_address:response.address.street,
+                        secondary_address:response.address.secondary_address,
                         city :response.address.city,
                         zipcode: response.address ? response.address.zipcode : ''
                     }
@@ -159,6 +160,8 @@ app
                         araImageName:response.ara_image.name,
                         ara_exp_Date:new Date(response.ara_expiry_date),
                         insurance_exp_Date:new Date(response.insurance_expiry_date),
+                        insuranceImage: appSettings.server_images_path + response.insurance_image.image,
+                        insuranceImageName: response.insurance_image.name,
                         companyName:response.insurance_company,
                         policyNumber:response.insurance_policy_number
                     }
@@ -301,11 +304,17 @@ app
             $scope.ARAUpload = function() {
                 $("input[id='araPicFileUpload']").click();
             }
+            $scope.insuranceUpload = function(){
+                $("input[id='insurancePicFileUpload']").click();
+            }
             $("#dlPicFileUpload").change(function() {
                 readURL(this, "dl");
             });
             $("#araPicFileUpload").change(function() {
                 readURL(this, "ara");
+            });
+            $("#insurancePicFileUpload").change(function(){
+                readURL(this, "insurance");
             });
 
             function readURL(input, str) {
@@ -318,6 +327,11 @@ app
                             $scope.personal.dlImage = e.target.result;
                             $scope.personal.dlImage_name = input.files[0].name;
                             localStorage.setItem("dlImageName", $scope.personal.dlImage_name)
+                        } else if(str === "insurance"){
+                            $('#insuranceImg').attr('src', e.target.result);
+                            $scope.personal.insuranceImage = e.target.result;
+                            $scope.personal.insuranceImage_name = input.files[0].name;
+                            localStorage.setItem("insuranceImageName", $scope.personal.insuranceImage_name);
                         } else {
                             $('#araImg').attr('src', e.target.result);
                             $scope.personal.araImage = e.target.result;
@@ -331,29 +345,34 @@ app
             }
 
             $scope.Contact_Next = function() {
+                window.scrollTo(0,0);               
                 $scope.isContact = false;
                 $scope.isPersonal = true;
                 $scope.isVehicle = false;
                 $scope.isCardDetails = false;
             }
             $scope.Personal_Next = function() {
+                window.scrollTo(0,0); 
                 $scope.isContact = false;
                 $scope.isPersonal = false;
                 $scope.isVehicle = true;
                 $scope.isCardDetails = false;
             }
             $scope.Vehicle_Next = function() {
+                window.scrollTo(0,0); 
                 $scope.isContact = false;
                 $scope.isPersonal = false;
                 $scope.isVehicle = false;
                 $scope.isCardDetails = true;
             }
             $scope.Personal_previous = function() {
+                window.scrollTo(0,0); 
                 $scope.isContact = true;
                 $scope.isPersonal = false;
                 $scope.isCardDetails = false;
             }
             $scope.card_previous = function(){
+                window.scrollTo(0,0); 
                 $scope.isVehicle = true;
                 $scope.isPersonal = false;
                 $scope.isCardDetails = false;
@@ -369,6 +388,7 @@ app
                         mobile_number: $scope.contact.primary_phone_number,
                         address:{
                             street: $scope.contact.primary_address,
+                            secondary_address: $scope.contact.secondary_address,
                             city: $scope.contact.city,
                             zipcode : $scope.contact.zipcode,
                             state_code: $scope.selected.selectedState.code,
@@ -399,6 +419,10 @@ app
                              name: $scope.personal.araImageName,
                         },                      
                         ara_expiry_date: new Date($scope.personal.ara_exp_Date),
+                        insurance_image:{
+                            name:$scope.personal.insuranceImage_name,
+                            image: $scope.personal.insuranceImage
+                        },
                         insurance_expiry_date: new Date($scope.personal.insurance_exp_Date),
                         insurance_company: $scope.personal.companyName,
                         insurance_policy_number: $scope.personal.policyNumber
@@ -412,7 +436,7 @@ app
                     $state.go('core.profile.my_account');
                 });
             }
-             $scope.update_vehicleInfo = function() {
+            $scope.update_vehicleInfo = function() {
                  $scope.featuresArr = [];
                     $scope.featuresArr.push($scope.vehicle.addFeature1);
                     $scope.featuresArr.push($scope.vehicle.addFeature2);
@@ -488,6 +512,9 @@ app
                 $scope.personalinfo.dlImage_name = dlImageName;
                 var araImageName = localStorage.getItem("araImageName");
                 $scope.personalinfo.araImage_name = araImageName;
+                var insuranceImageName = localStorage.getItem("insuranceImageName");
+                $scope.personalinfo.insuranceImage_name = insuranceImageName;
+
 
                 $scope.vehicleinfo = JSON.parse(data)[2];
                 $scope.driverDetails = {
@@ -500,6 +527,7 @@ app
                         company: $scope.contactinfo.company,
                         address: {
                             street: $scope.contactinfo.primary_address,
+                            secondary_address: $scope.contactinfo.secondary_address,
                             city: $scope.contactinfo.city,
                             zipcode: $scope.contactinfo.zipcode,
                             state_code: $scope.contactinfo.state_code.code,
@@ -518,6 +546,10 @@ app
                         ara_image: {
                             name: $scope.personalinfo.araImage_name,
                             image: $scope.personalinfo.araPic
+                        },
+                        insurance_image:{
+                            name:$scope.personalinfo.insuranceImage_name,
+                            image: $scope.personal.insuranceImage
                         },
                         insurance_company: $scope.personalinfo.companyName,
                         insurance_policy_number: $scope.personalinfo.policyNumber,

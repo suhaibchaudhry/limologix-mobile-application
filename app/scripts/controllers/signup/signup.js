@@ -35,6 +35,7 @@ app
             $scope.isVehicle = false;
             $scope.isCardDetails = false;
             $scope.isTermsAndConditions = false;
+            $scope.backBtn = false;
             $scope.selected = {};
             $scope.colorsArr = ['Red', 'Black', 'White', 'Other'];
             $scope.vehicle.Color = $scope.colorsArr[0];
@@ -71,7 +72,7 @@ app
             })
 
 
-            $scope.selectedAll = true;
+            $scope.selectedAll = false;
 
             $scope.Items = [{
                 checked: true,
@@ -87,7 +88,7 @@ app
                 label: 'DM will provide Limo Logix with all up-to-date driver information ,car information or background checks.Limo Logix will periodically check-in to ensure they have the most up-to-date information.'
             }, {
                 checked: true,
-                label: 'Limo Logix is the only authority to manage the Limo Logix website.'
+                label: 'Limo Logix has the right to manage limo Logix website and application.'
             }, {
                 checked: true,
                 label: 'DM will immediately become a user of the Limo Logix website once the Independent Driver Application is completed'
@@ -102,7 +103,7 @@ app
                 label: 'DMs are all equal and have the right to get all benifits of the limo logix network and website equally.'
             }, {
                 checked: true,
-                label: 'Upon inputting your credit card information, you authorize Limo Logix to charge you $20.00 that will be credited to your Limo Logix Account.Each trip you accept, $2.00 will be subtracted from the Limo Logix Credit and upon accepting 8 trips and you have $4.00 left in your account, the card you have on file will be charged $20.00. This will be on recurring basis, each time the Limo Logix Credit is at $4.00, your card will be automatically charged $20.00.'
+                label: 'Upon inputting your credit card information,you authorize Limo Logix to charge you $22.00,of which $20.00 will be credited to your Limo Logix Account. Of the $22.00 you are charged on a recurring basis, $2 are for taxes and admin fees which will not be credited to your Limo Logix account for a trip. Each trip you accept, $2.00 will be subtracted from the Limo Logix Credit and upon accepting 8 trips and you have $4.00 left in your account, the card you have on file will be charged $22.00.This will be on recurring basis,each time the Limo Logix Credit is at $4.00, your card will be automatically charged $22.00'
             }
             ];
 
@@ -150,6 +151,7 @@ app
                             confirmPassword: $scope.contactinfo.confirmPassword,
                             primary_phone_number: $scope.contactinfo.primary_phone_number,
                             primary_address: $scope.contactinfo.primary_address,
+                            secondary_address: $scope.contactinfo.secondary_address,
                             city: $scope.contactinfo.city,
                             zipcode: $scope.contactinfo.zipcode
                         }
@@ -166,33 +168,13 @@ app
 
                         }
                     } else {
-
                         var data = localStorage.getItem('driverdata');
                         if (data)
                             data = JSON.parse(data);
                         if (data) {
                             if (data == "" || !data[0].country_code) {
                                 funcUpdateCountries();
-                                /*var url = appSettings.serverPath + appSettings.serviceApis.company_getCountries;
-                                services.funcGetRequest(url).then(function(response) {
-                                    $scope.countries = response.data;
-                                    countriesConstant.countries = $scope.countries;
-                                    $scope.selected.selectedCountry = $scope.countries[0];
-                                    var address = {
-                                        "country": {
-                                            "code": "US",
-                                            "name": "United States"
-                                        },
-                                        "state": {
-                                            "code": "AK",
-                                            "name": "Alaska"
-                                        }
-                                    }
-                                    $scope.getStates(address);
-
-                                }, function(error) {
-                                    notify({ classes: 'alert-danger', message: error.message ? error.message : '' });
-                                });*/
+                               
                             }
                         }
                     }
@@ -204,61 +186,16 @@ app
                         data = JSON.parse(data);
                     if (data) {
                         if (data == "" || !data[0].country_code) {
-                            funcUpdateCountries();
-                            /*var url = appSettings.serverPath + appSettings.serviceApis.company_getCountries;
-                            services.funcGetRequest(url).then(function(response) {
-                                $scope.countries = response.data;
-                                countriesConstant.countries = $scope.countries;
-                                $scope.selected.selectedCountry = $scope.countries[0];
-                                var address = {
-                                    "country": {
-                                        "code": "US",
-                                        "name": "United States"
-                                    },
-                                    "state": {
-                                        "code": "AK",
-                                        "name": "Alaska"
-                                    }
-                                }
-                                $scope.getStates(address);
-
-                            }, function(error) {
-                                notify({ classes: 'alert-danger', message: error.message ? error.message : '' });
-                            });*/
+                            funcUpdateCountries();                           
                         }
                     } else {
-                        funcUpdateCountries();
-                        /*var url = appSettings.serverPath + appSettings.serviceApis.company_getCountries;
-                        services.funcGetRequest(url).then(function(response) {
-                            $scope.countries = response.data;
-                            countriesConstant.countries = $scope.countries;
-                            $scope.selected.selectedCountry = $scope.countries[0];
-                            var address = {
-                                "country": {
-                                    "code": "US",
-                                    "name": "United States"
-                                },
-                                "state": {
-                                    "code": "AK",
-                                    "name": "Alaska"
-                                }
-                            }
-                            $scope.getStates(address);
-
-                        }, function(error) {
-                            notify({ classes: 'alert-danger', message: error.message ? error.message : '' });
-                        });*/
+                        funcUpdateCountries();                       
                     }
 
                 }
             }
 
             function funcUpdateCountries() {
-                /*var data = localStorage.getItem('driverdata');
-                if (data)
-                    data = JSON.parse(data);
-                if (data) {
-                    if (data == "" || !data[0].country_code) {*/
                 var url = appSettings.serverPath + appSettings.serviceApis.company_getCountries;
                 services.funcGetRequest(url).then(function(response) {
                     $scope.countries = response.data;
@@ -516,6 +453,9 @@ app
                     //araImage_name :$scope.personalinfo.araImage_name,
                     ara_exp_Date: new Date($scope.personalinfo.ara_exp_Date),
                     insurance_exp_Date: new Date($scope.personalinfo.insurance_exp_Date),
+
+                    insuranceImage:$scope.personalinfo.insurancePic,
+
                     companyName: $scope.personalinfo.companyName,
                     policyNumber: $scope.personalinfo.policyNumber
                 }
@@ -542,11 +482,17 @@ app
             $scope.ARAUpload = function() {
                 $("input[id='araPicFileUpload']").click();
             }
+            $scope.insuranceUpload = function(){
+                $("input[id='insurancePicFileUpload']").click();
+            }
             $("#dlPicFileUpload").change(function() {
                 readURL(this, "dl");
             });
             $("#araPicFileUpload").change(function() {
                 readURL(this, "ara");
+            });
+            $("#insurancePicFileUpload").change(function(){
+                readURL(this, "insurance");
             });
 
             function readURL(input, str) {
@@ -559,6 +505,11 @@ app
                             $scope.personal.dlImage = e.target.result;
                             $scope.personal.dlImage_name = input.files[0].name;
                             localStorage.setItem("dlImageName", $scope.personal.dlImage_name);
+                        } else if(str === "insurance"){
+                            $('#insuranceImg').attr('src', e.target.result);
+                            $scope.personal.insuranceImage = e.target.result;
+                            $scope.personal.insuranceImage_name = input.files[0].name;
+                            localStorage.setItem("insuranceImageName", $scope.personal.insuranceImage_name);
                         } else {
                             $('#araImg').attr('src', e.target.result);
                             $scope.personal.araImage = e.target.result;
@@ -571,15 +522,10 @@ app
                 }
             }
 
-            $scope.Personal_previous = function() {
-                $scope.isContact = true;
-                $scope.isPersonal = false;
-            }
-
-
             $scope.save_contactInfo = function() {
 
-                $scope.contactinfo = {
+            
+                  $scope.contactinfo = {
                         fullName: $scope.contact.fullName,
                         lastName: $scope.contact.lastName,
                         email: $scope.contact.email,
@@ -588,6 +534,7 @@ app
                         confirmPassword: $scope.contact.confirmPassword,
                         primary_phone_number: $scope.contact.primary_phone_number,
                         primary_address: $scope.contact.primary_address,
+                        secondary_address: $scope.contact.secondary_address,
                         city: $scope.contact.city,
                         state_code: $scope.selected.selectedState,
                         country_code: $scope.selected.selectedCountry,
@@ -598,38 +545,12 @@ app
                 localStorage.setItem("driverdata", JSON.stringify($scope.localStorageArr));
                 $scope.isContact = false;
                 $scope.isPersonal = true;
+                $(".nav_back_btn").hide();
                 $scope.isVehicle = false;
-                $scope.isCardDetails = false;
-                /*$scope.featuresArr = [];
-                $scope.featuresArr.push($scope.vehicle.addFeature1);
-                $scope.featuresArr.push($scope.vehicle.addFeature2);
-                $scope.featuresArr.push($scope.vehicle.addFeature3);
-                $scope.featuresArr.push($scope.vehicle.addFeature4);
-                $scope.featuresArr.push($scope.vehicle.addFeature5);
-                $scope.featuresArr.push($scope.vehicle.addFeature6);
-
-                $scope.featuresArr = $scope.featuresArr.filter(function(element) {
-                    return !!element;
-                });
-
-                $scope.vehicleInfo = {
-                    make: $scope.selected.selectedMake,
-                    model: $scope.selected.selectedModel,
-                    selectType: $scope.selected.selectedVehicleType,
-                    vehicleId: $scope.vehicle.vehicleId,
-                    // selectTypeId:$scope.
-                    Color: $scope.vehicle.Color,
-                    HLL_Number: $scope.vehicle.HLL_Number,
-                    licencePlateNum: $scope.vehicle.licencePlateNum,
-                    Features: $scope.featuresArr
-                }*/
-
-                //$scope.localStorageArr[0] = $scope.contactinfo;
-                // [$scope.contactinfo, $scope.personalInfo, $scope.vehicleInfo]
-                //localStorage.setItem("driverdata", JSON.stringify([$scope.contactinfo, $scope.personalInfo, $scope.vehicleInfo]));
+                $scope.isCardDetails = false; 
+                window.scrollTo(0,0);               
             }
             $scope.save_personalInfo = function() {
-                // $scope.isEnablePersonalNext = true;
                 $scope.personalInfo = {
                     dl_number: $scope.personal.dl_number,
                     dlPic: '', //$scope.personal.dlImage,
@@ -641,6 +562,7 @@ app
                     araImage_name: $scope.personal.araImage_name,
                     ara_exp_Date: new Date($scope.personal.ara_exp_Date),
                     insurance_exp_Date: new Date($scope.personal.insurance_exp_Date),
+                    insurancePic:'',
                     companyName: $scope.personal.companyName,
                     policyNumber: $scope.personal.policyNumber
                 }
@@ -648,11 +570,15 @@ app
                 localStorage.setItem("driverdata", JSON.stringify($scope.localStorageArr));
                 $scope.isContact = false;
                 $scope.isPersonal = false;
+
+                $(".nav_back_btn").hide();
                 $scope.isVehicle = true;
                 $scope.isCardDetails = false;
+                window.scrollTo(0,0);
             }
             $scope.save_vehiclelInfo = function() {
                 // $scope.isEnablePersonalNext = true;
+                $scope.backBtn = true;
                 $scope.featuresArr = [];
                 $scope.featuresArr.push($scope.vehicle.addFeature1);
                 $scope.featuresArr.push($scope.vehicle.addFeature2);
@@ -682,9 +608,13 @@ app
                 $scope.isContact = false;
                 $scope.isPersonal = false;
                 $scope.isVehicle = false;
+
+                $(".nav_back_btn").hide();
                 $scope.isCardDetails = true;
+                window.scrollTo(0,0);
             }
             $scope.save_cardInfo = function(data) {
+                $scope.backBtn = true;
 
                 if ($scope.step4.$valid) {
                     // alert(data)
@@ -696,6 +626,7 @@ app
                     }
                     $scope.expiryDate = month + year.toString()[2] + year.toString()[3]; // valid data saving stuff here
                     //console.log("cardExpiryData=", expiryDate);
+
                 }
 
                 $scope.cardInfo = {
@@ -709,26 +640,40 @@ app
                 $scope.isPersonal = false;
                 $scope.isCardDetails = false;
                 $scope.isVehicle = false;
+
+                $(".nav_back_btn").hide();
                 $scope.isTermsAndConditions = true;
+                window.scrollTo(0,0);
                 $scope.localStorageArr[3] = $scope.cardInfo;
                 localStorage.setItem("driverdata", JSON.stringify($scope.localStorageArr));
+            }
+
+            $scope.Personal_previous = function() {
+                $scope.isContact = true;
+
+                $(".nav_back_btn").show();
+                $scope.isPersonal = false;
+                window.scrollTo(0,0);
             }
 
             $scope.Vehicle_Previous = function() {
                 $scope.isPersonal = true;
                 $scope.isVehicle = false;
+                window.scrollTo(0,0);
             }
             $scope.card_previous = function() {
                 $scope.isVehicle = true;
                 $scope.isCardDetails = false;
                 $scope.isPersonal = false;
+                window.scrollTo(0,0);
             }
             $scope.termsAndConditionsPrevious = function() {
                     $scope.isVehicle = false;
                     $scope.isCardDetails = true;
                     $scope.isPersonal = false;
                     $scope.isTermsAndConditions = false;
-                }
+                    window.scrollTo(0,0);
+            }
                 //Submit the form
             $scope.DriverSignup = function() {
                 var data = localStorage.getItem('driverdata');
@@ -745,7 +690,10 @@ app
                     $scope.personalinfo.dlImage_name = dlImageName;
                     var araImageName = localStorage.getItem("araImageName");
                     $scope.personalinfo.araImage_name = araImageName;
+                    var insuranceImageName = localStorage.getItem("insuranceImageName");
+                    $scope.personalinfo.insuranceImage_name = insuranceImageName;
                 }
+
                 $scope.featuresArr = [];
                 $scope.featuresArr.push($scope.vehicle.addFeature1);
                 $scope.featuresArr.push($scope.vehicle.addFeature2);
@@ -768,6 +716,7 @@ app
                         company: $scope.contactinfo.company,
                         address: {
                             street: $scope.contactinfo.primary_address,
+                            secondary_address: $scope.contactinfo.secondary_address,
                             city: $scope.contactinfo.city,
                             zipcode: $scope.contactinfo.zipcode,
                             state_code: $scope.contactinfo.state_code.code,
@@ -792,7 +741,11 @@ app
                         },
                         insurance_company: $scope.personalinfo.companyName,
                         insurance_policy_number: $scope.personalinfo.policyNumber,
-                        insurance_expiry_date: $scope.personalinfo.insurance_exp_Date
+                        insurance_expiry_date: $scope.personalinfo.insurance_exp_Date,
+                        insurance_image:{
+                            name:$scope.personalinfo.insuranceImage_name,
+                            image: $scope.personal.insuranceImage
+                        }
                     },
                     "vehicle": {
                         vehicle_make_id: $scope.vehicleinfo.make.id, //$scope.vehicleinfo.make,
