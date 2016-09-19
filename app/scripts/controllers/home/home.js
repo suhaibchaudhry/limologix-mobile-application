@@ -139,10 +139,14 @@ app
                
                 var url = appSettings.serverPath + appSettings.serviceApis.getVisibleStatus;
                 services.funcPostRequest(url, postData).then(function(response) {
+                  notify.closeAll();
                   notify({ classes: 'alert-success', message: response.message });
                 }, function(error) {
-                    if (error && error.message)
+                    if (error && error.message){
+                        notify.closeAll();
                         notify({ classes: 'alert-danger', message: error.message });
+                    }
+                        
                     //$state.go('core.login');
                 });
             }

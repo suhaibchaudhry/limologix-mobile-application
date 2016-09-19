@@ -29,18 +29,13 @@
   top:0px;
   left:0px;
 }
-::-webkit-input-placeholder {
-    color:    #000 !important;
-    text-align:left;
-}
-
 
 
 .btn-app-green{
     background-color:#8DC23F;
     border: 1px solid #000;
     border-bottom: 5px solid #55873B;
-    color:#fff;
+    color:#fff !important;
     font-size:15px;
     font-weight:bold;
 }
@@ -48,7 +43,7 @@
     background-color:#e31e29;
     border: 1px solid #000;
     border-bottom: 5px solid #991828;
-    color:#fff;
+    color:#fff !important;
     font-weight:bold;
 }
 .logo-blue{
@@ -62,9 +57,7 @@
     cursor:pointer;
     color:#000;
 }
-.input_border{
-    border:1px solid #000;
-}
+
 label{
   font-size:15px;
   font-weight:bold !important;

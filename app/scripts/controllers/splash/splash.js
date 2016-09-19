@@ -10,23 +10,17 @@
 app
     .controller('splashCtrl', ['$scope', '$state', '$http', '$window', 'services', '$location',
         function($scope, $state, $http, $window, services, $location) {
-            // $scope.$on('$viewContentLoaded', function() {
-            //     //Here your view content is fully loaded !!
-            //     splash();
-            // });
-
-            // $scope.$watch('$viewContentLoaded',
-            //     function(event) {splash();});
-            // angular.element(document).ready(function() {
-            //     console.log('page loading completed');
-            //     splash();
-            // });
-
-
-            setTimeout(function() {
+           
+            angular.element(document).ready(function() {
+                console.log('page loading completed');
                 rendersplashscreen();
-                // Do something after 1 second 
-            }, 500);
+            });
+
+
+            // setTimeout(function() {
+            //     rendersplashscreen();
+            //     // Do something after 1 second 
+            // }, 500);
 
             function rendersplashscreen() {
                 var totalheight = jQuery(window).outerHeight();

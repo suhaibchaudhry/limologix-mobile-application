@@ -1,9 +1,27 @@
 html, body { height:100%;  -webkit-font-smoothing: antialiased; }
 
 header { position:fixed; width:100%; top:0; z-index:9999 }
-.content_body { padding: 60px 0;background-color:#e7eaeb;}
+.content_body { padding: 40px 0;background-color:#e7eaeb;}
 footer { position:fixed; width:100%; bottom:0; line-height:3rem; }
 
+
+::-webkit-input-placeholder {
+    color: #D5D8D9 !important;
+    text-align:left;
+    font-style: normal !important;
+}
+.form-control{
+  border-color: #000;
+}
+.form-validation .form-control.ng-dirty.ng-valid {
+    border-color: #000; 
+}
+.form-validation .form-control.ng-dirty.ng-invalid {
+    border-color: #ff7b76; 
+}
+.input_border{
+    border:1px solid #000;
+}
 
 /* latin-ext */
 @font-face {
@@ -250,7 +268,7 @@ li{
 }
 .navbar-toggle{
     margin-right: 0px;
-    margin-top:15px;
+    margin-top:17px;
 }
 .navbar-toggle .icon-bar{
     width: 40px;
@@ -262,8 +280,6 @@ li{
     background: radial-gradient(ellipse at center, rgb(38,34,98) 0%,rgb(11,0,47) 100%);
 }
 .navbar-brand{
-    margin-top: 4px;
-    margin-bottom: 4px;
     padding: 9px 0px 0px;
     width: 80%;
     pointer-events:none;
@@ -431,9 +447,11 @@ p.comp_name {
        color:#262262;
     }
     .company_name{
-       position:relative;
-       left:13%;
+    clear:both;
+       padding-bottom:1%;
+       margin-left:5%;
        font-size:18px;
+
     }
 
 
@@ -562,20 +580,25 @@ body.menu-slider.in #wrapper {
 
 .info_title{
     font-size: 30px;
-    margin-top: 40%;
+    margin-top: 30%;
 }
 //Home screen
 
 .switchClass{
-  position: relative;
+    padding-top:1%;
     float: right;
-    margin-top: -12%;  
+    right:5%; 
 }
 .driverName{
-    width: 80%;
+
+    width: 60%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    margin-top:3%;
+    float:left;
+    margin-left:5%;
+    font-size:22px;
 }
 
 .active, .inactive {
@@ -596,10 +619,10 @@ i.inactive {
 .limo_logo{
     position:relative;
     left: 35%;
-    margin-top:20%;
+    margin-top:30%;
 }
 .instruction{
-    font-size: 30px;
+    font-size: 25px;
     margin-top: 12%;
     margin-left: 0%;
     text-align: center;
@@ -691,12 +714,7 @@ i.inactive {
     border: none;
     border-bottom: 5px solid #558738;
 }
-form-validation .form-control.ng-dirty.ng-valid {
-    border-color: #000; 
-}
-form-validation .form-control.ng-dirty.ng-invalid {
-    border-color: #ff7b76; 
-}
+
 .btn-container{
     position: relative;
     top: 35%;

@@ -92,7 +92,7 @@ app
                     services.funcGetRequest(url).then(function(response,status) {
                      $scope.channelName = response.data.channel;                     
                     },function(error){
-                         notify({ classes: 'alert-danger', message: error.message });
+                         //notify({ classes: 'alert-danger', message: error.message });
                     });
                 }
 
@@ -153,9 +153,11 @@ app
                 }
                 var url = appSettings.serverPath + appSettings.serviceApis.passengerArrived;
                 services.funcPostRequest(url, { "trip": $scope.trip }).then(function(response) {
+                  notify.closeAll();
                     notify({ classes: 'alert-success', message: response.message });
                     $state.go('core.home');
                 }, function(error) {
+                  notify.closeAll();
                     notify({ classes: 'alert-danger', message: error });
                     $state.go('core.home');
                 });

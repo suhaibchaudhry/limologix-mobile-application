@@ -53,11 +53,15 @@ app
                 };
                 var url = appSettings.serverPath + appSettings.serviceApis.reset_auth_details;
                 services.funcPostRequest(url, { "driver": driver }).then(function(response) {
+                     notify.closeAll();
                     notify({ classes: 'alert-success', message: response.message });
                     $state.go('core.login');
                 }, function(error, status) {
-                    if (error)
+                    if (error){
+                        notify.closeAll();
                         notify({ classes: 'alert-danger', message: error.message });
+                    }
+                         
                 })
             };
 

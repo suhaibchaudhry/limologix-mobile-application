@@ -398,8 +398,10 @@ app
                  var url = appSettings.serverPath + appSettings.serviceApis.update_contact_info;
                 services.funcPostRequest(url, {"driver":$scope.contactDetails}).then(function(response) {
                     console.log(response);
+                     notify.closeAll();
                     notify({ classes: 'alert-success', message: response.message });
                 }, function(error) {
+                     notify.closeAll();
                     notify({ classes: 'alert-danger', message: error });
                     $state.go('core.profile.my_account');
                 }); 
@@ -430,8 +432,10 @@ app
                 var url = appSettings.serverPath + appSettings.serviceApis.update_personal_info;
                 services.funcPostRequest(url, {"driver":$scope.personalDetails}).then(function(response) {
                     console.log(response);
+                     notify.closeAll();
                     notify({ classes: 'alert-success', message: response.message });
                 }, function(error) {
+                     notify.closeAll();
                     notify({ classes: 'alert-danger', message: error });
                     $state.go('core.profile.my_account');
                 });
@@ -461,8 +465,10 @@ app
                 var url = appSettings.serverPath + appSettings.serviceApis.update_vehicle_info;
                 services.funcPostRequest(url, {"vehicle":$scope.vehicleDetails}).then(function(response) {
                     console.log(response);
+                     notify.closeAll();
                     notify({ classes: 'alert-success', message: response.message });
                 }, function(error) {
+                     notify.closeAll();
                     notify({ classes: 'alert-danger', message: error });
                     $state.go('core.profile.my_account');
                 });
@@ -489,9 +495,10 @@ app
 
                 var url = appSettings.serverPath + appSettings.serviceApis.update_card_info;
                 services.funcPostRequest(url, { "driver": $scope.driver }).then(function(response) {
-                    
+                     notify.closeAll();
                     notify({ classes: 'alert-success', message: response.message });
                 }, function(error) {
+                     notify.closeAll();
                     notify({ classes: 'alert-danger', message: error });
                     $state.go('core.profile.my_account');
                 });

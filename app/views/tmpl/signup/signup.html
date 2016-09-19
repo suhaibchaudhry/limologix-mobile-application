@@ -1,10 +1,13 @@
 <header>
     <div class="col-xs-12 splash_header">
-        <i class="fa fa-angle-left nav_back_btn" aria-hidden="true" back></i>
+        <i class="fa fa-angle-left nav_back_btn" aria-hidden="true" back style="top:25px !important;"></i>
         <a href="#" class="navbar-brand" style="margin-left:15%"><img src="images/driver/header_logo.png"></a>
     </div>
 </header>
-
+<div id="pageloader" page-loader style="display:none !important"> 
+   <div class="dot1"></div>
+   <div class="dot2"></div>
+</div>
 <div class="content_body">
     <div class="container text-center">
         <form name='step1' class="form-validation mt-20" novalidate ng-show="isContact">
@@ -12,19 +15,19 @@
             <br/>
             <div class="row">
                 <div class="form-group col-md-12 mb-0">                   
-                        <input type="text" name="fullName" id="fullName" class="form-control input-lg input_border" placeholder="First Name" ng-model="contact.fullName" required>
+                        <input type="text" name="fullName" id="fullName" class="input_border form-control input-lg" placeholder="First Name" ng-model="contact.fullName" required>
                 </div>
             </div>
             <br/>
             <div class="row">
                 <div class="form-group col-md-12 mb-0">                 
-                        <input type="text" name="lastName" id="lastName" class="form-control input-lg input_border" placeholder="Last Name" ng-model="contact.lastName" required>
+                        <input type="text" name="lastName" id="lastName" class="input_border form-control input-lg" placeholder="Last Name" ng-model="contact.lastName" required>
                 </div>
             </div>
             <br/>
             <div class="row">
                 <div class="form-group col-md-12 mb-0">
-                        <input type="email" name="email" id="email" class="form-control input-lg input_border" ng-model="contact.email" placeholder="Email" required ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/">                   
+                        <input type="email" name="email" id="email" class="input_border form-control input-lg" ng-model="contact.email" placeholder="Email" required ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/">                   
                 </div>
             </div>
             <br/>
@@ -484,12 +487,12 @@
             <h2 class="info_title" style="padding: 15px 0 0px 5px;font-size: 28px;">Terms and Conditions</h2>
             <br/>
 
-            <div style="text-align:left">
+            <div style="text-align:left;margin-left:-7%">
                 <ul style="color:#939393">
            
-                    <li ng-repeat="item in Items">
-                        <input type="checkbox" ng-model="item.Selected" ng-change="notifyMaster()"/>
-                        {{item.label}}              
+                    <li ng-repeat="item in Items" style="clear:both;">
+                        <input type="checkbox" ng-model="item.Selected" ng-change="notifyMaster()" style="float: left;width: 10%"/>
+                        <span style="float: right;width: 90%;">{{item.label}}</span>              
                    
                     </li>
                 
@@ -498,7 +501,7 @@
                   </li>
                 </ul>
             </div>
-            <div class="row">
+            <div class="row" style="margin-bottom:10%">
                 <div class="col-md-12">
                     <div class="col-xs-4 previous">
                         <button type="button" class="previousBtn btn btn-app-green input-lg" ng-click="termsAndConditionsPrevious()"><i class="fa fa-arrow-circle-left">&nbsp;Previous</button>

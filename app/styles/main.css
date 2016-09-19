@@ -30,15 +30,11 @@
   top: 0px;
   left: 0px; }
 
-::-webkit-input-placeholder {
-  color: #000 !important;
-  text-align: left; }
-
 .btn-app-green {
   background-color: #8DC23F;
   border: 1px solid #000;
   border-bottom: 5px solid #55873B;
-  color: #fff;
+  color: #fff !important;
   font-size: 15px;
   font-weight: bold; }
 
@@ -46,7 +42,7 @@
   background-color: #e31e29;
   border: 1px solid #000;
   border-bottom: 5px solid #991828;
-  color: #fff;
+  color: #fff !important;
   font-weight: bold; }
 
 .logo-blue {
@@ -59,9 +55,6 @@
   text-decoration: underline;
   cursor: pointer;
   color: #000; }
-
-.input_border {
-  border: 1px solid #000; }
 
 label {
   font-size: 15px;
@@ -12495,7 +12488,7 @@ header {
   z-index: 9999; }
 
 .content_body {
-  padding: 60px 0;
+  padding: 40px 0;
   background-color: #e7eaeb; }
 
 footer {
@@ -12503,6 +12496,23 @@ footer {
   width: 100%;
   bottom: 0;
   line-height: 3rem; }
+
+::-webkit-input-placeholder {
+  color: #D5D8D9 !important;
+  text-align: left;
+  font-style: normal !important; }
+
+.form-control {
+  border-color: #000; }
+
+.form-validation .form-control.ng-dirty.ng-valid {
+  border-color: #000; }
+
+.form-validation .form-control.ng-dirty.ng-invalid {
+  border-color: #ff7b76; }
+
+.input_border {
+  border: 1px solid #000; }
 
 /* latin-ext */
 @font-face {
@@ -12698,7 +12708,7 @@ li {
 
 .navbar-toggle {
   margin-right: 0px;
-  margin-top: 15px; }
+  margin-top: 17px; }
 
 .navbar-toggle .icon-bar {
   width: 40px;
@@ -12710,8 +12720,6 @@ li {
   background: radial-gradient(ellipse at center, #262262 0%, #0b002f 100%); }
 
 .navbar-brand {
-  margin-top: 4px;
-  margin-bottom: 4px;
   padding: 9px 0px 0px;
   width: 80%;
   pointer-events: none; }
@@ -12871,8 +12879,9 @@ fa icon-close {
   color: #262262; }
 
 .company_name {
-  position: relative;
-  left: 13%;
+  clear: both;
+  padding-bottom: 1%;
+  margin-left: 5%;
   font-size: 18px; }
 
 #navbar2 .navbar-header {
@@ -12980,18 +12989,22 @@ body.menu-slider.in #wrapper {
 
 .info_title {
   font-size: 30px;
-  margin-top: 40%; }
+  margin-top: 30%; }
 
 .switchClass {
-  position: relative;
+  padding-top: 1%;
   float: right;
-  margin-top: -12%; }
+  right: 5%; }
 
 .driverName {
-  width: 80%;
+  width: 60%;
   white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis; }
+  text-overflow: ellipsis;
+  margin-top: 3%;
+  float: left;
+  margin-left: 5%;
+  font-size: 22px; }
 
 .active, .inactive {
   font-size: 40px;
@@ -13010,10 +13023,10 @@ i.inactive {
 .limo_logo {
   position: relative;
   left: 35%;
-  margin-top: 20%; }
+  margin-top: 30%; }
 
 .instruction {
-  font-size: 30px;
+  font-size: 25px;
   margin-top: 12%;
   margin-left: 0%;
   text-align: center;
@@ -13101,12 +13114,6 @@ i.inactive {
   background-color: #8dc23f !important;
   border: none;
   border-bottom: 5px solid #558738; }
-
-form-validation .form-control.ng-dirty.ng-valid {
-  border-color: #000; }
-
-form-validation .form-control.ng-dirty.ng-invalid {
-  border-color: #ff7b76; }
 
 .btn-container {
   position: relative;

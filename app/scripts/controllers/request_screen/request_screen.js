@@ -47,62 +47,10 @@ app
                 if (value > 0) {
                     setTimeout(countdown, 1000);
                 } else {
-                    //$state.go("core.home");
+                    $state.go("core.home");
                     //$("#progressCountdown").progressbar("disable");
                 }
-            }
-            
-
-        //             function started(duration) {
-        //     var TotalSeconds = 14;
-        //     var documentWidth = $(document).width();
-        //     var start = Date.now();
-        //     var intervalSetted = null;
-
-        //     function timer() {
-        //         var diff = duration - (((Date.now() - start) / 1000) | 0);
-        //         var seconds = (diff % 60) | 0;
-        //         //seconds = seconds < 10 ? "0" + seconds : seconds;
-        //         $('#timer').html(seconds);
-        //         var progresBarWidth = (seconds * documentWidth / TotalSeconds);
-
-        //         $('#progress').css({
-        //             width: progresBarWidth + 'px'
-        //         });
-
-        //         if (diff <= 0) {
-        //             clearInterval(intervalSetted);
-                    
-        //         }
-        //     }
-
-        //     timer();
-        //     intervalSetted = setInterval(timer, 1000);
-        // }
-
-        // started(14);
-
-
-      
-
-
-
-            // var progressBarWidth = jQuery(window).innerWidth();
-            // $('#progressBar').width(progressBarWidth + 'px');
-
-            // var progressBar = $('#progress-bar'),width = 0;
-            // progressBar.width(width);
-            // $scope.interval = setInterval(function() {
-            //     width += 7.25;//15;
-            //     progressBar.css('width', width + '%');
-            //     //if (width >= 105) {
-            //     if (width >= 101.25) {
-            //         clearInterval($scope.interval);
-            //         $state.go('core.home')
-            //     }
-            //     $('#js-Visit-count').html(width / 7.25);//15);
-            // }, 1000)
-
+            }              
 
             $scope.trip_accept = function() {
                 clearInterval($scope.interval);
@@ -118,6 +66,7 @@ app
                     $state.go('core.passenger_boarded');
 
                 },function(error){
+                     notify.closeAll();
                       notify({ classes: 'alert-danger', message: error.message });
                       $state.go('core.home');
                 });
@@ -131,9 +80,11 @@ app
                 var url = appSettings.serverPath + appSettings.serviceApis.tripDeny;
                     services.funcPostRequest(url,{"trip": $scope.trip}).then(function(response,status) {
                     clearInterval($scope.interval);
+                     notify.closeAll();
                     notify({ classes: 'alert-success', message: response.message });
                     $state.go('core.home');
                 },function(error){
+                     notify.closeAll();
                       notify({ classes: 'alert-danger', message: error.message });
                       $state.go('core.home');
                 });
@@ -145,7 +96,8 @@ app
                     services.funcGetRequest(url).then(function(response,status) {
                      $scope.channelName = response.data.channel;                     
                     },function(error){
-                         notify({ classes: 'alert-danger', message: error.message });
+                         notify.closeAll();
+                         //notify({ classes: 'alert-danger', message: error.message });
                     });
                 }
 

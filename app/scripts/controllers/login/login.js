@@ -57,10 +57,12 @@ app
             $window.sessionStorage['driver'] = JSON.stringify(constants.driver);
             $rootScope.isAdsShow = true;
             //$state.go('core.appSettings');   
-            $state.go('core.appSettings');          
+            $state.go('core.appSettings');   
+            notify.closeAll();       
             notify({ classes: 'alert-success',message:response.message});
        }, function(error){
            if(error && error.message)
+            notify.closeAll();  
            notify({ classes: 'alert-danger', message: error.message });
            $state.go('core.login');
        });

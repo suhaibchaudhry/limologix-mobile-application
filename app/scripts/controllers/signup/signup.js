@@ -75,34 +75,34 @@ app
             $scope.selectedAll = false;
 
             $scope.Items = [{
-                checked: true,
+                checked: false,
                 label: 'This application is for independent limo drivers to become a member of limologix network.The independent limo driver will be known as a Driver Member("DM")'
             }, {
-                checked: true,
+                checked: false,
                 label: "Limo Logix reserves the right to terminate any DM who misuses the Limo Logix network and service"
             }, {
-                checked: true,
+                checked: false,
                 label: 'DM has the right to use benifits of the Limo Logix network and website anywhere in the US that Limo Logix provides their service'
             }, {
-                checked: true,
+                checked: false,
                 label: 'DM will provide Limo Logix with all up-to-date driver information ,car information or background checks.Limo Logix will periodically check-in to ensure they have the most up-to-date information.'
             }, {
-                checked: true,
+                checked: false,
                 label: 'Limo Logix has the right to manage limo Logix website and application.'
             }, {
-                checked: true,
+                checked: false,
                 label: 'DM will immediately become a user of the Limo Logix website once the Independent Driver Application is completed'
             }, {
-                checked: true,
+                checked: false,
                 label: 'Limo Logix will not collect any charges for the DM from limo companies and all charge for trip will be between the limo companies and DM. Limo Logix is not responsible for any fraud or dispute between the limo company and the DM.'
             }, {
-                checked: true,
+                checked: false,
                 label: 'When a DM needs assistance with a dispute with the limo company, they should contact Local Limo Association,the City or National Limo Association on their own.'
             }, {
-                checked: true,
+                checked: false,
                 label: 'DMs are all equal and have the right to get all benifits of the limo logix network and website equally.'
             }, {
-                checked: true,
+                checked: false,
                 label: 'Upon inputting your credit card information,you authorize Limo Logix to charge you $22.00,of which $20.00 will be credited to your Limo Logix Account. Of the $22.00 you are charged on a recurring basis, $2 are for taxes and admin fees which will not be credited to your Limo Logix account for a trip. Each trip you accept, $2.00 will be subtracted from the Limo Logix Credit and upon accepting 8 trips and you have $4.00 left in your account, the card you have on file will be charged $22.00.This will be on recurring basis,each time the Limo Logix Credit is at $4.00, your card will be automatically charged $22.00'
             }
             ];
@@ -676,6 +676,7 @@ app
             }
                 //Submit the form
             $scope.DriverSignup = function() {
+                 $("#pageloader").css("display","block");
                 var data = localStorage.getItem('driverdata');
                 if (data) {
                     $scope.contactinfo = JSON.parse(data)[0];
@@ -758,20 +759,22 @@ app
                     }
 
                 };
+                
                 var url = appSettings.serverPath + appSettings.serviceApis.registration;
-                services.funcPostRequest(url, $scope.driverDetails).then(function(response) {
-                    console.log($scope.driverDetails);
-                    console.log(response);
+                services.funcPostRequest(url, $scope.driverDetails).then(function(response) {                   
+                    $("#pageloader").css("display","none");
                     $http.defaults.headers.common['Auth-Token'] = response.data['Auth-Token'];
                     $window.sessionStorage['Auth-Token'] = response.data['Auth-Token'];
                     AppConstants.driver = response.data;
                     AppConstants.driver.name = response.data.full_name;
                     AppConstants.driver.company = response.data.company;
                     $window.sessionStorage['driver'] = JSON.stringify(AppConstants.driver);
+                    notify.closeAll();  
                     notify({ classes: 'alert-success', message: response.message });
                     localStorage.clear();
                     $state.go('core.appSettings');
                 }, function(error) {
+                    notify.closeAll();  
                     notify({ classes: 'alert-danger', message: error.message });
                     $state.go('core.signup');
                 });
