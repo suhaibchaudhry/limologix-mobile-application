@@ -1,8 +1,10 @@
 <header>
     <div class="col-xs-12 splash_header">
-        <img src="images/driver/header_logo.png">
+        <i class="fa fa-angle-left nav_back_btn" aria-hidden="true" back style="top:25px !important;"></i>
+        <a href="#" class="navbar-brand" style="margin-left:15%"><img src="images/driver/header_logo.png"></a>
     </div>
 </header>
+ <img id="spinner" src="images/driver/loader.gif" style="display:none">
 <div class="content_body">
     <div class="container w-420 p-15 mt-40 text-center">
         <h2 class="login_name">Login</h2>
@@ -11,7 +13,7 @@
             <div class="row">
                 <div class="form-group col-md-12 mb-0">
                     <div class="col-md-12">
-                        <input type="text" name="email" id="email" class="form-control input-lg input_border" placeholder="User Email" ng-model="driver.email" required ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/">
+                        <input type="text" name="email" id="email" class="form-control input-lg input_border" placeholder="User Email" ng-model="driver.email" required ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/" style="text-transform:lowercase">
                     </div>
                 </div>
             </div>
@@ -30,7 +32,7 @@
             <div class="row">
                 <div class="form-group col-md-12 mb-0">
                     <div class="col-md-12">
-                        <button type="button" class="btn btn-submit form-group col-md-12 btn-app-green" ng-click="login()" ng-disabled='form.$invalid' required>Submit</button>
+                        <button type="button" class="btn btn-submit btn-lg form-group col-md-12 btn-app-green" ng-click="login()" ng-disabled='form.$invalid' required>Submit</button>
                     </div>
                 </div>
             </div>

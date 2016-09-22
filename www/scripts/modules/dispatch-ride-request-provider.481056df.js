@@ -5,7 +5,7 @@ app.provider('dispatchRideProvider', [funcservices]);
 function funcservices() {
     //Get routes and display route direction in google map
     return {
-        $get: function($http, $q) {
+        $get: function($http, $q,$rootScope) {
             return {
                 getRoutes: function(currLoc,pickup, dropoff, notify,isInfoWindowVisible,check_infoWindow,map_ele_id) {
                     var source, destination;
@@ -39,14 +39,14 @@ function funcservices() {
                         };
                         //var map = new google.maps.Map(document.getElementById('dvMap'));
 
-                        var map = new google.maps.Map(document.getElementById(map_ele_id), mapOptions);
-                        var marker = new google.maps.Marker({
+                       $rootScope.map = new google.maps.Map(document.getElementById(map_ele_id), mapOptions);
+                       $rootScope.marker = new google.maps.Marker({
                             position: LatLng,
-                            map: map,
+                            map: $rootScope.map,
                             icon: 'images/driver/location_ping.0b6a1b43.png',
                             title: "<div style = 'height:60px;width:200px'><b>Your location:</b><br />Latitude: " + p.coords.latitude + "<br />Longitude: " + p.coords.longitude
                         });
-                        directionsDisplay.setMap(map);
+                        directionsDisplay.setMap($rootScope.map);
 
                         source = pickup;
                         destination = dropoff;
@@ -61,11 +61,11 @@ function funcservices() {
                                 directionsDisplay.setDirections(response);
                                 var leg = response.routes[0].legs[0];
                                 if(!isInfoWindowVisible){
-                                    makeMarker(leg.start_location, icons.start, source, map);
-                                    makeMarker(leg.end_location, icons.end, destination, map);
+                                    makeMarker(leg.start_location, icons.start, source, $rootScope.map);
+                                    makeMarker(leg.end_location, icons.end, destination, $rootScope.map);
                                 }else{
-                                    makeMarker_source(leg.start_location, icons.start, source, map,check_infoWindow);
-                                    makeMarker_destination(leg.end_location, icons.end, destination, map,check_infoWindow);
+                                    makeMarker_source(leg.start_location, icons.start, source, $rootScope.map,check_infoWindow);
+                                    makeMarker_destination(leg.end_location, icons.end, destination, $rootScope.map,check_infoWindow);
                                 }
                                 
                             } else {
@@ -118,7 +118,7 @@ function funcservices() {
                          if(check_infoWindow == "dropoffpoint"){
                              var infoWindow = new google.maps.InfoWindow();
                              infoWindow.setContent(marker_dropoff.title);
-                             infoWindow.open(map, marker_dropoff);
+                             infoWindow.open($rootScope.map, marker_dropoff);
                              google.maps.event.addListener(marker_dropoff, "click", function(e) {
                                   infoWindow.setContent(marker_dropoff.title);
                                   infoWindow.open(map, marker_dropoff);

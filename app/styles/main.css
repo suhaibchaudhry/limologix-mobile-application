@@ -30,21 +30,6 @@
   top: 0px;
   left: 0px; }
 
-.btn-app-green {
-  background-color: #8DC23F;
-  border: 1px solid #000;
-  border-bottom: 5px solid #55873B;
-  color: #fff !important;
-  font-size: 15px;
-  font-weight: bold; }
-
-.btn-app-red {
-  background-color: #e31e29;
-  border: 1px solid #000;
-  border-bottom: 5px solid #991828;
-  color: #fff !important;
-  font-weight: bold; }
-
 .logo-blue {
   color: #436378; }
 
@@ -12479,7 +12464,8 @@ hr.line-full {
     opacity: 1; } }
 html, body {
   height: 100%;
-  -webkit-font-smoothing: antialiased; }
+  -webkit-font-smoothing: antialiased;
+  -webkit-user-select: none; }
 
 header {
   position: fixed;
@@ -12513,6 +12499,18 @@ footer {
 
 .input_border {
   border: 1px solid #000; }
+
+#spinner {
+  position: absolute;
+  top: 40%;
+  left: 40%;
+  margin: -50px 0px 0px -50px;
+  z-index: 9999; }
+
+.unfixed {
+  position: relative;
+  left: auto;
+  bottom: auto; }
 
 /* latin-ext */
 @font-face {
@@ -12658,34 +12656,44 @@ footer {
 
 .requestScreenText {
   font-size: 18px;
-  position: absolute;
-  top: 25%;
+  top: 0;
   text-align: center;
-  width: 100%; }
+  width: 100%;
+  overflow: hidden;
+  clear: both;
+  display: block; }
 
 .requestScreen_pickup_point {
-  font-size: 20px;
+  font-size: 17px;
   position: relative;
   text-align: center;
   vertical-align: middle;
-  top: 10%; }
+  top: 32px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  margin: 0; }
 
 .userName {
   font-size: 30px;
   margin-top: 75px; }
 
-.b1, .b2 {
-  margin: 10px;
-  border-radius: 2px;
-  margin-top: 135px; }
+.b1 {
+  float: left;
+  left: 15%;
+  width: 90%; }
 
 .b2 {
-  width: 130px; }
+  float: right;
+  right: 15%;
+  width: 90%; }
 
 .dvMap_circle {
   position: relative;
-  top: 33%;
-  border-radius: 50%; }
+  border-radius: 50%;
+  border: 10px double #d7d4ce; }
 
 #progressBar {
   width: 400px;
@@ -12772,12 +12780,16 @@ footer-text {
 .pickUpText {
   position: absolute;
   top: 37%;
-  right: 4%;
+  right: 3%;
   width: 60%;
   height: auto;
   font-weight: bold;
   font-size: 15px;
-  word-wrap: break-word; }
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical; }
 
 .nav_back_btn {
   position: absolute;
@@ -12941,18 +12953,31 @@ body.menu-slider.in #wrapper {
   right: 50%; }
 
 .buttonBoarded {
-  background-color: "#3232ff"; }
+  background-color: #8DC23F !important; }
 
 .buttonArrived {
-  background-color: "#3232ff"; }
+  background-color: #8DC23F !important; }
 
 #progress {
   position: fixed;
   width: 100%;
   bottom: 0px; }
 
-.btn_container .b1, .btn_container .b2 {
-  margin-top: 60px; }
+#boardedBtn {
+  font-size: 18px;
+  width: 100%;
+  margin: 0px;
+  height: 60px;
+  background-color: #000;
+  color: #fff !important; }
+
+#arrivedBtn {
+  font-size: 18px;
+  width: 100%;
+  margin: 0px;
+  height: 60px;
+  background-color: #000;
+  color: #fff !important; }
 
 .fake_div {
   background-color: #262262;
@@ -12962,9 +12987,9 @@ body.menu-slider.in #wrapper {
 .nav-icon {
   float: left;
   position: absolute;
-  top: -11px;
+  top: -5px;
   left: -50%;
-  height: 110px; }
+  height: 55px; }
 
 .login_name {
   color: #3f3e40;
@@ -13053,7 +13078,8 @@ i.inactive {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  width: 6em; }
+  width: 5em;
+  text-transform: capitalize; }
 
 .customerNameClass {
   font-size: 22px;
@@ -13062,8 +13088,9 @@ i.inactive {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  width: 6em;
-  text-align: right; }
+  width: 5em;
+  text-align: right;
+  text-transform: capitalize; }
 
 .dvMap_circle .gm-style {
   border-radius: 50%; }
@@ -13121,5 +13148,31 @@ i.inactive {
   font-size: 18px;
   height: 80%;
   background-color: #231f20; }
+
+.btn-app-green {
+  background-color: #8DC23F;
+  border: 1px solid #000;
+  border-bottom: 5px solid #55873B;
+  color: #fff !important;
+  font-size: 15px;
+  font-weight: bold; }
+
+.btn-app-red {
+  background-color: #e31e29;
+  border: 1px solid #000;
+  border-bottom: 5px solid #991828;
+  color: #fff !important;
+  font-weight: bold; }
+
+.fixed-head {
+  position: relative; }
+
+.fixed-footer {
+  position: absolute;
+  bottom: 100px;
+  padding: 0 5px;
+  left: 0;
+  right: 0;
+  text-align: center; }
 
 /*# sourceMappingURL=main.css.map */

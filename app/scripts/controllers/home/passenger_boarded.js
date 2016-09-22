@@ -28,6 +28,17 @@ app
                // $scope.tripsummary.dropoffAt = 'Hebbal, Bengaluru, Karnataka 560024, India';
                // $scope.tripsummary.trip_id = 3;
 
+
+                getChannelName();
+                function getChannelName(){
+                  var url = appSettings.serverPath + appSettings.serviceApis.getChannelName;
+                    services.funcGetRequest(url).then(function(response,status) {
+                     $scope.channelName = response.data.channel;                     
+                    },function(error){
+                         //notify({ classes: 'alert-danger', message: error.message });
+                    });
+                }
+
                $scope.tripsummary = {
                     pickupAt : driverLocationConstants.location.start_destination,
                     pickupAtLat : driverLocationConstants.location.start_destination_lat,
@@ -76,28 +87,10 @@ app
                 timeout: 3000,
                 enableHighAccuracy: true,
              }
-             // watch driver location 
-             //if(constants.driver){
-                //$rootScope.getLoc = setInterval(function(){
-                  // getLocTimer();
-                //},3000);
-            // }
+             // watch driver location           
 
-            // function getLocTimer(){
-               $scope.googleposition_id = navigator.geolocation.watchPosition(onSuccess,onError,options)
-            // }    
-
-
-
-                getChannelName();
-                function getChannelName(){
-                  var url = appSettings.serverPath + appSettings.serviceApis.getChannelName;
-                    services.funcGetRequest(url).then(function(response,status) {
-                     $scope.channelName = response.data.channel;                     
-                    },function(error){
-                         //notify({ classes: 'alert-danger', message: error.message });
-                    });
-                }
+           
+               $scope.googleposition_id = navigator.geolocation.watchPosition(onSuccess,onError,options)                 
 
 
                 // onSuccess Callback
@@ -108,37 +101,26 @@ app
                   console.log("position", position);
 
                   var p1 = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);                  
-                  var p2 = new google.maps.LatLng($scope.tripsummary.pickupAtLat, $scope.tripsummary.pickupAtLng);
-                  console.log('p1 and p2',p1,p2)
+                  var p2 = new google.maps.LatLng($scope.tripsummary.pickupAtLat, $scope.tripsummary.pickupAtLng);                                  
                   
-                  //alert(google.maps.geometry.spherical.computeDistanceBetween(p1, p2))
                   if (google.maps.geometry.spherical.computeDistanceBetween(p1, p2) < 1000) { //within 1km
-
                       swal({
-                              title: 'Boarded!',
-                              text: 'You are close to pickup location',
-                              type: "success"
+                            title: 'Boarded!',
+                            text: 'You are close to pickup location',
+                            type: "success"
                       },function(){
-                        //clearInterval($rootScope.getLoc);
                         navigator.geolocation.clearWatch($scope.googleposition_id);
                         $scope.isBoarded = true;
                         $('#boardedBtn').addClass('buttonBoarded');
                       }) 
                       $scope.isBoarded = true;
-                      $('#boardedBtn').addClass('buttonBoarded');
-                      
-                  }
+                      $('#boardedBtn').addClass('buttonBoarded');                      
+                  } 
+                      faye(Faye,$scope,$window,position);
 
-                    //var url = appSettings.serverPath + appSettings.serviceApis.getChannelName;
-                    // services.funcGetRequest(url).then(function(response,status) {
-                    //   if(response){
-                    //      $scope.channelName = response.data.channel;
-                         faye(Faye,$scope,$window,position);
-                    //   }
-                    
-                    // },function(error){
-                    //      notify({ classes: 'alert-danger', message: response.message });
-                    // });
+                      
+
+                   
                 }
 
                 // onError Callback receives a PositionError object
@@ -174,19 +156,27 @@ app
             function faye(Faye,$scope,$window,position) {
                 var Logger = {
                     incoming: function(message, callback) {
-                        console.log('incoming', message);
+                        console.log('passenger borded incoming', message);
                         callback(message);
                     },
                     outgoing: function(message, callback) {
                         message.ext = message.ext || {};
                         message.ext.auth_token = $window.sessionStorage['Auth-Token'];
                         message.ext.user_type = "driver";
-                        console.log('outgoing', message);
+                        console.log(' passenger borded outgoing', message);
                         callback(message);
                     }
                 };
                 var client = Faye.getClient();
                 client.addExtension(Logger);
+                //update marker position
+                if($rootScope.marker){
+                   $rootScope.marker.setPosition(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
+                   var center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+                   $rootScope.map.setCenter(center);
+                }
+               
+
                 var publication = client.publish('/publish/'+ $scope.channelName, { latitude: position.coords.latitude, longitude: position.coords.longitude });
 
                 publication.callback(function() {

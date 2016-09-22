@@ -22,8 +22,19 @@ app
 
             }
             $scope.resetPwd = {};
-            $scope.resetPwd.userName = constant.driver.name;
+            $scope.resetPwd.userName = constant.driver.full_name;
             $rootScope.isAdsShow = false;
+
+            //Fix for - Header moves down when device keyboard is open and when user scroll the screen
+            var adWrapper = $('header');
+
+            $(document).on('focusin', 'input, textarea', function() {
+                adWrapper.addClass('unfixed');
+            })
+            .on('focusout', 'input, textarea', function () {
+                adWrapper.removeClass('unfixed');
+            });
+            
 
              $('body').removeClass('menu-slider');$('body').removeClass('in');
 

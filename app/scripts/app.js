@@ -72,11 +72,11 @@
         ])
 
         .constant('appSettings', {  
-            server_address: 'http://limologix.softwaystaging.com', //'http://172.16.130.107:9000',//
+            server_address: 'http://limologix.softwaystaging.com', //'http://172.16.130.107:9000',
             version: 'v1',
-            server_images_path : "http://limologix.api.softwaystaging.com/", //'http://172.16.130.107:9000',//
-            serverPath: "http://limologix.api.softwaystaging.com/api/v1/",  // 'http://172.16.130.107:9000/api/v1/',//
-            FayeServerURL : 'http://limologix.softwaystaging.com:9292/faye', //'http://172.16.130.107:9292/faye',//
+            server_images_path : "http://limologix.api.softwaystaging.com/", //'http://172.16.130.107:9000',
+            serverPath: "http://limologix.api.softwaystaging.com/api/v1/", //'http://172.16.130.107:9000/api/v1/', 
+            FayeServerURL : 'http://limologix.softwaystaging.com:9292/faye', //'http://172.16.130.107:9292/faye', 
             serviceApis: {
                 signin: 'drivers/sign_in',
                 forgotPassword:'drivers/forgot_password',
@@ -146,6 +146,7 @@
     .factory('authHttpResponseInterceptor', ['$q', '$location', function($q, $location) {
         return {
             response: function(response) {
+                 $("#spinner").hide();
                 if (response.status === 401 || response.status === -1) {
                     //notify({ classes: 'alert-success', message: "Session expired" });
                     $location.url('/login');
@@ -160,9 +161,9 @@
             }
         }
     }])
-    .run(['$rootScope', '$state', '$http', '$stateParams', '$window', 'AppConstants','$timeout',function($rootScope, $state, $http, $stateParams, $window, constant,$timeout) {
+    .run(['$rootScope', 'notify','$state', '$http', '$stateParams', '$window', 'AppConstants','$timeout',function($rootScope, notify ,$state, $http, $stateParams, $window, constant,$timeout) {
 
-        
+        notify.config({duration:5000});
         //If driver logged in and 
         var driver = $window.sessionStorage['driver'] ? JSON.parse($window.sessionStorage['driver']) : {};
         if (driver['Auth-Token']) {
@@ -214,6 +215,14 @@
         $translateProvider.useSanitizeValueStrategy(null);
         //capture the response and process it before completing the call
         $httpProvider.interceptors.push('authHttpResponseInterceptor');
+
+        //Ajax request spinner
+          var spinnerFunction = function spinnerFunction(data, headersGetter) {
+            $("#spinner").show();
+            return data;
+          };
+
+          $httpProvider.defaults.transformRequest.push(spinnerFunction);
     }])
     // .config(function ($compileProvider){
     //     $compileProvider.urlSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|tel):/);

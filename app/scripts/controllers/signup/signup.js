@@ -47,6 +47,21 @@ app
                 type: undefined
             }
             localStorage.setItem("driverdata",'');
+
+            //Fix for - Header moves down when device keyboard is open and when user scroll the screen
+            var adWrapper = $('header');
+
+            $(document).on('focusin', 'input, textarea', function() {
+                adWrapper.addClass('unfixed');
+            })
+            .on('focusout', 'input, textarea', function () {
+                adWrapper.removeClass('unfixed');
+            });
+
+             
+
+
+
             //  $scope.enableNext = false;
 
             // $scope.isEnableContactNext = false;
@@ -300,58 +315,9 @@ app
                         if (localStorage.getItem('driverdata') == "" || !JSON.parse(el)[2].selectType) {
                             //Get countries from the server api when app loads for the first time.
                             funcUpdateTypeMakeModels();
-                            /*var url = appSettings.serverPath + appSettings.serviceApis.vehicle_getVehicleTypes;
-                            services.funcGetRequest(url).then(function(response) {
-                                $scope.vehicleTypes = response.data.vehicle_types;
-                                VehicleConstants.vehicleTypes = $scope.vehicleTypes;
-                                $scope.selected.selectedVehicleType = $scope.vehicleTypes[0];
-                                var info = {
-                                    "vehicle": {
-                                        "id": "1",
-                                        "name": "SUV"
-                                    },
-                                    "make": {
-                                        "id": "1",
-                                        "name": "Lincoln"
-                                    },
-                                    "model": {
-                                        "id": "1",
-                                        "name": "MKT"
-                                    }
-                                }
-                                $scope.getMakes(info);
-
-                            }, function(error) {
-                                notify({ classes: 'alert-danger', message: error.message ? error.message : '' });
-                            });*/
-
                         }
                     } else {
-                        funcUpdateTypeMakeModels();
-                        /*var url = appSettings.serverPath + appSettings.serviceApis.vehicle_getVehicleTypes;
-                        services.funcGetRequest(url).then(function(response) {
-                            $scope.vehicleTypes = response.data.vehicle_types;
-                            VehicleConstants.vehicleTypes = $scope.vehicleTypes;
-                            $scope.selected.selectedVehicleType = $scope.vehicleTypes[0];
-                            var info = {
-                                "vehicle": {
-                                    "id": "1",
-                                    "name": "SUV"
-                                },
-                                "make": {
-                                    "id": "1",
-                                    "name": "Lincoln"
-                                },
-                                "model": {
-                                    "id": "1",
-                                    "name": "MKT"
-                                }
-                            }
-                            $scope.getMakes(info);
-
-                        }, function(error) {
-                            notify({ classes: 'alert-danger', message: error.message ? error.message : '' });
-                        });*/
+                        funcUpdateTypeMakeModels();                       
                     }
 
                 }
@@ -522,9 +488,10 @@ app
                 }
             }
 
-            $scope.save_contactInfo = function() {
 
-            
+            //angular.element('.btn-next').triggerHandler('click')   
+            $scope.save_contactInfo = function() {        
+                 
                   $scope.contactinfo = {
                         fullName: $scope.contact.fullName,
                         lastName: $scope.contact.lastName,
@@ -548,7 +515,8 @@ app
                 $(".nav_back_btn").hide();
                 $scope.isVehicle = false;
                 $scope.isCardDetails = false; 
-                window.scrollTo(0,0);               
+                window.scrollTo(0,0); 
+                           
             }
             $scope.save_personalInfo = function() {
                 $scope.personalInfo = {
@@ -575,6 +543,7 @@ app
                 $scope.isVehicle = true;
                 $scope.isCardDetails = false;
                 window.scrollTo(0,0);
+                //angular.element('#personalNext').triggerHandler('click')   
             }
             $scope.save_vehiclelInfo = function() {
                 // $scope.isEnablePersonalNext = true;
@@ -612,6 +581,7 @@ app
                 $(".nav_back_btn").hide();
                 $scope.isCardDetails = true;
                 window.scrollTo(0,0);
+                //angular.element('#vehicleNext').triggerHandler('click')
             }
             $scope.save_cardInfo = function(data) {
                 $scope.backBtn = true;
@@ -644,6 +614,7 @@ app
                 $(".nav_back_btn").hide();
                 $scope.isTermsAndConditions = true;
                 window.scrollTo(0,0);
+                //angular.element('#vehicleNext').triggerHandler('click')
                 $scope.localStorageArr[3] = $scope.cardInfo;
                 localStorage.setItem("driverdata", JSON.stringify($scope.localStorageArr));
             }
@@ -654,18 +625,21 @@ app
                 $(".nav_back_btn").show();
                 $scope.isPersonal = false;
                 window.scrollTo(0,0);
+                 //angular.element('#personalPrev').triggerHandler('click')  
             }
 
             $scope.Vehicle_Previous = function() {
                 $scope.isPersonal = true;
                 $scope.isVehicle = false;
                 window.scrollTo(0,0);
+                //angular.element('#vehiclePrevious').triggerHandler('click')
             }
             $scope.card_previous = function() {
                 $scope.isVehicle = true;
                 $scope.isCardDetails = false;
                 $scope.isPersonal = false;
                 window.scrollTo(0,0);
+                //angular.element('#cardPrevious').triggerHandler('click')
             }
             $scope.termsAndConditionsPrevious = function() {
                     $scope.isVehicle = false;
@@ -673,10 +647,16 @@ app
                     $scope.isPersonal = false;
                     $scope.isTermsAndConditions = false;
                     window.scrollTo(0,0);
+                    //angular.element('#termsPrevious').triggerHandler('click')
             }
                 //Submit the form
             $scope.DriverSignup = function() {
-                 $("#pageloader").css("display","block");
+                $("#accept").removeClass('btn-success');
+                $("#accept").addClass('btn-default');
+                $('.acceptBtn').attr('disabled','true');
+                
+
+             
                 var data = localStorage.getItem('driverdata');
                 if (data) {
                     $scope.contactinfo = JSON.parse(data)[0];
@@ -759,14 +739,20 @@ app
                     }
 
                 };
+                //angular.element('#accept').triggerHandler('click')
                 
                 var url = appSettings.serverPath + appSettings.serviceApis.registration;
                 services.funcPostRequest(url, $scope.driverDetails).then(function(response) {                   
-                    $("#pageloader").css("display","none");
+                    
                     $http.defaults.headers.common['Auth-Token'] = response.data['Auth-Token'];
                     $window.sessionStorage['Auth-Token'] = response.data['Auth-Token'];
                     AppConstants.driver = response.data;
-                    AppConstants.driver.name = response.data.full_name;
+                    AppConstants.driver.firstName =  response.data.first_name;
+                    AppConstants.driver.lastName = response.data.last_name.charAt(0);
+
+                    //constants.driver.name = response.data.full_name;
+                    AppConstants.driver.full_name = AppConstants.driver.firstName +" "+  AppConstants.driver.lastName;
+                    //AppConstants.driver.name = response.data.full_name;
                     AppConstants.driver.company = response.data.company;
                     $window.sessionStorage['driver'] = JSON.stringify(AppConstants.driver);
                     notify.closeAll();  
@@ -779,36 +765,6 @@ app
                     $state.go('core.signup');
                 });
             }
-
-
-            // $scope.ListOfItems = [{
-            //     isSelected: false,
-            //     desc: 'This application is for independent limo drivers to become a member of limologix nnetwork.The independenr limo driver will be known as a driver mwmber("DM")'
-            // }, {
-            //     isSelected: false,
-            //     desc: "Limo Logix reservs the right to terminate any DM eho misuses the limo logix network and service"
-            // }, {
-            //     isSelected: false,
-            //     desc: 'DM has the right to use benifits of the limo logix network and website anywhere in the US that Limo Logix provides their service'
-            // }, {
-            //     isSelected: false,
-            //     desc: 'DM will provide Limo Logix with all up-to-date driver information ,car information or background checks.Limo Logix will periodically check-in to ensure they have the most up-to-date information.'
-            // }, {
-            //     isSelected: false,
-            //     desc: 'Limo Logix is the only authority to manage the Limo Logix website.'
-            // }, {
-            //     isSelected: false,
-            //     desc: 'DM will immiditely become a user of the Limo Logix website once the independent driver Application is completed '
-            // }, {
-            //     isSelected: false,
-            //     desc: 'limo logix will not collect any charges for the DM from limo companies and all charge for trip will be between the limo companies and DM. Limo Logix is not responsible for any froud or dispute between the limo company and the DM.'
-            // }, {
-            //     isSelected: false,
-            //     desc: 'When a DM needs assistance with a dispute with the limo company, they should contact Local Limo association,the city or national limo association on their own.'
-            // }, {
-            //     isSelected: false,
-            //     desc: 'DMs are all equal and have the right to get all benifits of the limo logix network and website equally.'
-            // }];
 
             $scope.AllSelectedItems = false;
             $scope.NoSelectedItems = false;

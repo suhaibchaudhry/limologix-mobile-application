@@ -431,24 +431,25 @@ app
                                 zoom: 13,
                                 mapTypeId: google.maps.MapTypeId.ROADMAP
                             };
-                            var map = new google.maps.Map(document.getElementById("dvMap"), mapOptions);
-                            var marker = new google.maps.Marker({
+                            $scope.map = new google.maps.Map(document.getElementById("dvMap"), mapOptions);
+                            $scope.marker = new google.maps.Marker({
                                 position: LatLng,
-                                map: map,
-                                icon: 'images/driver/location_ping.0b6a1b43.png',
-                                title: "<div style = 'height:60px;width:200px'><b>Your location:</b><br />Latitude: " + p.coords.latitude + "<br />Longitude: " + p.coords.longitude
+                                map: $scope.map,
+                                icon: 'images/driver/location_ping.0b6a1b43.png'
+                                //title: "<div style = 'height:60px;width:200px'><b>Your location:</b><br />Latitude: " + p.coords.latitude + "<br />Longitude: " + p.coords.longitude
                             });
-                            google.maps.event.addListener(marker, "click", function(e) {
-                                var infoWindow = new google.maps.InfoWindow();
-                                infoWindow.setContent(marker.title);
-                                infoWindow.open(map, marker);
-                            });
+                            // google.maps.event.addListener(marker, "click", function(e) {
+                            //     var infoWindow = new google.maps.InfoWindow();
+                            //     infoWindow.setContent(marker.title);
+                            //     infoWindow.open($scope.map, marker);
+                            // });
                         });
                 } else {
                     alert('Geo Location feature is not supported in this browser.');
                 }
 
                navigator.geolocation.watchPosition(onSuccess,onError,{timeout: 30000})
+
                function faye(Faye,$scope,$window,position) {
                     var Logger = {
                         incoming: function(message, callback) {
@@ -463,8 +464,16 @@ app
                             callback(message);
                         }
                     };
+
                     var client = Faye.getClient();
                     client.addExtension(Logger);
+
+                    //update marker position
+                    $scope.marker.setPosition(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
+                    var center = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+                    $scope.map.setCenter(center);
+
+
                     var publication = client.publish('/publish/'+ $scope.channelName, { latitude: position.coords.latitude, longitude: position.coords.longitude });
 
                     publication.callback(function() {

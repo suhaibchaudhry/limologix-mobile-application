@@ -75,13 +75,7 @@ app
                 enableHighAccuracy: true,
              }
 
-              // if(constants.driver){
-              //   $rootScope.getDestLoc = setInterval(function(){
-              //       getDestLoc();
-              //   },3000);   
-              // }
-
-             // function getDestLoc(){
+              // function getDestLoc(){
                 $scope.googlepositionDest_id = navigator.geolocation.watchPosition(onSuccess,onError,options)
             //  }
 
@@ -121,27 +115,14 @@ app
                   }
 
                   faye(Faye,$scope,$window,position);
-
-                    // var url = appSettings.serverPath + appSettings.serviceApis.getChannelName;
-                    // services.funcGetRequest(url).then(function(response,status) {
-                    //   if(response){
-                    //     $scope.channelName = response.data.channel;
-                    //     faye(Faye,$scope,$window,position);
-                    //   }
-                     
-                    // },function(error){
-                    //      notify({ classes: 'alert-danger', message: response.message });
-                    // });
+                 
                 }
 
                 // onError Callback receives a PositionError object
                 function onError(error) {
                     //alert('code: ' + error.code + '\n' +
                     // 'message: ' + error.message + '\n');
-                }
-
-
-              
+                }              
                            
 
             $scope.passenger_arrived = function(){
@@ -181,6 +162,16 @@ app
                     };
                     var client = Faye.getClient();
                     client.addExtension(Logger);
+
+                     //update marker position
+                     console.log('testttttt',$rootScope.marker,$rootScope.map,position)
+                      if($rootScope.marker){
+                   $rootScope.marker.setPosition(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
+                   var center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+                   $rootScope.map.setCenter(center);
+                }
+
+                      
                     var publication = client.publish('/publish/'+ $scope.channelName, { latitude: position.coords.latitude, longitude: position.coords.longitude });
 
                     publication.callback(function() {
