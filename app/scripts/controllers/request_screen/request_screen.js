@@ -17,7 +17,7 @@ app
 
             setTimeout(function() {
                var fixedDivs =jQuery('header').innerHeight() + jQuery('footer').innerHeight() + jQuery('.fixed-head').innerHeight() + jQuery('.fixed-footer').innerHeight();
-                var mapHeight = jQuery(window).innerHeight() - fixedDivs-5;
+                var mapHeight = jQuery(window).innerHeight() - fixedDivs-20;
                // console.log(jQuery('header').outerHeight(),jQuery('footer').innerHeight());
                 jQuery(".dvMap_circle").height(mapHeight);
                 jQuery(".dvMap_circle").width(mapHeight);

@@ -12502,7 +12502,7 @@ footer {
 
 #spinner {
   position: absolute;
-  top: 40%;
+  bottom: 20%;
   left: 40%;
   margin: -50px 0px 0px -50px;
   z-index: 9999; }
@@ -12972,7 +12972,7 @@ body.menu-slider.in #wrapper {
   color: #fff !important; }
 
 #arrivedBtn {
-  font-size: 18px;
+  font-size: 17px;
   width: 100%;
   margin: 0px;
   height: 60px;
@@ -12984,11 +12984,18 @@ body.menu-slider.in #wrapper {
   height: 50px;
   width: 100%; }
 
-.nav-icon {
+.nav-icon1 {
   float: left;
+  left: 8%;
   position: absolute;
-  top: -5px;
-  left: -50%;
+  top: 35px;
+  height: 55px; }
+
+.nav-icon2 {
+  float: left;
+  left: 8%;
+  position: absolute;
+  top: 35px;
   height: 55px; }
 
 .login_name {

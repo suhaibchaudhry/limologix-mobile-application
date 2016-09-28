@@ -1,13 +1,13 @@
 'use strict';
 
-app.provider('dispatchRideProvider', [funcservices]);
+app.service('dispatchRideProvider', ['$http', '$q','$rootScope',funcservices]);
 
-function funcservices() {
+function funcservices($http, $q,$rootScope) {
     //Get routes and display route direction in google map
-    return {
-        $get: function($http, $q,$rootScope) {
-            return {
-                getRoutes: function(currLoc,pickup, dropoff, notify,isInfoWindowVisible,check_infoWindow,map_ele_id) {
+                this.map;
+                this.marker;
+               this.getRoutes = function(currLoc,pickup, dropoff, notify,isInfoWindowVisible,check_infoWindow,map_ele_id) {
+                    var self = this;
                     var source, destination;
                     var directionsDisplay;
                     var directionsService = new google.maps.DirectionsService();
@@ -39,14 +39,14 @@ function funcservices() {
                         };
                         //var map = new google.maps.Map(document.getElementById('dvMap'));
 
-                       $rootScope.map = new google.maps.Map(document.getElementById(map_ele_id), mapOptions);
-                       $rootScope.marker = new google.maps.Marker({
+                       self.map = new google.maps.Map(document.getElementById(map_ele_id), mapOptions);
+                       self.marker = new google.maps.Marker({
                             position: LatLng,
-                            map: $rootScope.map,
+                            map: self.map,
                             icon: 'images/driver/location_ping.0b6a1b43.png',
                             title: "<div style = 'height:60px;width:200px'><b>Your location:</b><br />Latitude: " + p.coords.latitude + "<br />Longitude: " + p.coords.longitude
                         });
-                        directionsDisplay.setMap($rootScope.map);
+                        directionsDisplay.setMap(self.map);
 
                         source = pickup;
                         destination = dropoff;
@@ -61,11 +61,11 @@ function funcservices() {
                                 directionsDisplay.setDirections(response);
                                 var leg = response.routes[0].legs[0];
                                 if(!isInfoWindowVisible){
-                                    makeMarker(leg.start_location, icons.start, source, $rootScope.map);
-                                    makeMarker(leg.end_location, icons.end, destination, $rootScope.map);
+                                    makeMarker(leg.start_location, icons.start, source, self.map);
+                                    makeMarker(leg.end_location, icons.end, destination, self.map);
                                 }else{
-                                    makeMarker_source(leg.start_location, icons.start, source, $rootScope.map,check_infoWindow);
-                                    makeMarker_destination(leg.end_location, icons.end, destination, $rootScope.map,check_infoWindow);
+                                    makeMarker_source(leg.start_location, icons.start, source, self.map,check_infoWindow);
+                                    makeMarker_destination(leg.end_location, icons.end, destination, self.map,check_infoWindow);
                                 }
                                 
                             } else {
@@ -84,13 +84,13 @@ function funcservices() {
                             position: position,
                             map: map,
                             icon: icon,
-                            //title: (check_infoWindow == "pickuppoint") ? "<div><img border='0' align='Left' width='100%' src='images/driver/popup.2b0bebde.png'></img><a href = 'http://maps.google.com/maps?saddr=" + currLoc + "&amp;daddr=" + pickup_point + "'class = 'pickUpText'>" + pickup_point + "</p></div>" : title
+                            //title: (check_infoWindow == "pickuppoint") ? "<div><img border='0' align='Left' width='100%' src='images/driver/popup.68e646a6.png'></img><a href = 'http://maps.google.com/maps?saddr=" + currLoc + "&amp;daddr=" + pickup_point + "'class = 'pickUpText'>" + pickup_point + "</p></div>" : title
                             title: (check_infoWindow == "pickuppoint") ? "<div>"+
-                            "<img border='0' id='infoWindowid' align='Left' width='100%' src='images/driver/popup.2b0bebde.png'></img>"+
-                            "<a href ='http://maps.google.com/maps?saddr=" + currLoc + "&amp;daddr=" + pickup_point + "'class = 'pickUpText'><img src='images/driver/nav-icon.1a509916.png' class = 'nav-icon'/></a>"+
+                            "<img border='0' id='infoWindowid' align='Left' width='100%' src='images/driver/popup.68e646a6.png'></img>"+
+                            "<a href ='http://maps.google.com/maps?saddr=" + currLoc + "&amp;daddr=" + pickup_point + "'class = ''><img src='images/driver/nav-icon.1a509916.png' class = 'nav-icon1'/></a>"+
                             "<a href ='http://maps.google.com/maps?saddr=" + currLoc + "&amp;daddr=" + pickup_point + "'class = 'pickUpText'>" + pickup_point + "</p></div>" : title
-                            //title: (check_infoWindow == "pickuppoint") ? "<div><img border='0' align='Left' width='100%' src='images/driver/popup.2b0bebde.png'></img><a href ='http://maps.google.com/maps?saddr="+pickup+"&amp;daddr="+dropoff+"&amp;ll="+"kalyannagar"+"' class = 'pickUpText'>" + pickup + "</p></div>" : title
-                            //title: (check_infoWindow == "pickuppoint") ? "<div><img border='0' align='Left' width='100%' src='images/driver/popup.2b0bebde.png'></img><p class = 'pickUpText'>" + pickup + "</p></div>" : title
+                            //title: (check_infoWindow == "pickuppoint") ? "<div><img border='0' align='Left' width='100%' src='images/driver/popup.68e646a6.png'></img><a href ='http://maps.google.com/maps?saddr="+pickup+"&amp;daddr="+dropoff+"&amp;ll="+"kalyannagar"+"' class = 'pickUpText'>" + pickup + "</p></div>" : title
+                            //title: (check_infoWindow == "pickuppoint") ? "<div><img border='0' align='Left' width='100%' src='images/driver/popup.68e646a6.png'></img><p class = 'pickUpText'>" + pickup + "</p></div>" : title
                         });
                         if(check_infoWindow == "pickuppoint"){
                             var infoWindow = new google.maps.InfoWindow();
@@ -108,17 +108,17 @@ function funcservices() {
                             position: position,
                             map: map,
                             icon: icon,
-                            //title: (check_infoWindow == "dropoffpoint") ? "<div><img border='0' align='Left' width='100%' src='images/driver/popup.2b0bebde.png'></img><a href ='http://maps.google.com/maps?saddr=" + currLoc + "&amp;daddr=" + dropoff + "'class = 'pickUpText'>" + dropoff + "</p></div>" : title
+                            //title: (check_infoWindow == "dropoffpoint") ? "<div><img border='0' align='Left' width='100%' src='images/driver/popup.68e646a6.png'></img><a href ='http://maps.google.com/maps?saddr=" + currLoc + "&amp;daddr=" + dropoff + "'class = 'pickUpText'>" + dropoff + "</p></div>" : title
                              title: (check_infoWindow == "dropoffpoint") ? "<div>"+
-                            "<img border='0' id='infoWindowid' align='Left' width='100%' src='images/driver/popup.2b0bebde.png'></img>"+
-                            "<a href ='http://maps.google.com/maps?saddr=" + currLoc + "&amp;daddr=" + dropoff + "'class = 'pickUpText'><img src='images/driver/nav-icon.1a509916.png' class = 'nav-icon'/></a>"+
+                            "<img border='0' id='infoWindowid' align='Left' width='100%' src='images/driver/popup.68e646a6.png'></img>"+
+                            "<a href ='http://maps.google.com/maps?saddr=" + currLoc + "&amp;daddr=" + dropoff + "'class = ''><img src='images/driver/nav-icon.1a509916.png' class = 'nav-icon2'/></a>"+
                             "<a href ='http://maps.google.com/maps?saddr=" + currLoc + "&amp;daddr=" + dropoff + "'class = 'pickUpText'>" + dropoff + "</p></div>" : title
-                            //title: (check_infoWindow == "dropoffpoint") ? "<div><img border='0' align='Left' width='100%' src='images/driver/popup.2b0bebde.png'></img><p class = 'pickUpText'>" + dropoff + "</p></div>" : title
+                            //title: (check_infoWindow == "dropoffpoint") ? "<div><img border='0' align='Left' width='100%' src='images/driver/popup.68e646a6.png'></img><p class = 'pickUpText'>" + dropoff + "</p></div>" : title
                         });
-                         if(check_infoWindow == "dropoffpoint"){
+                         if(check_infoWindow == "dropoffpoint"){  
                              var infoWindow = new google.maps.InfoWindow();
                              infoWindow.setContent(marker_dropoff.title);
-                             infoWindow.open($rootScope.map, marker_dropoff);
+                             infoWindow.open(map, marker_dropoff);
                              google.maps.event.addListener(marker_dropoff, "click", function(e) {
                                   infoWindow.setContent(marker_dropoff.title);
                                   infoWindow.open(map, marker_dropoff);
@@ -135,8 +135,7 @@ function funcservices() {
                         });
                     }
                 }
-            };
-        }
-    }
+            
+        
 
 }

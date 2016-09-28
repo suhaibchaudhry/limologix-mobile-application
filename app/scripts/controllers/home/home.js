@@ -402,7 +402,7 @@ app
                 function getChannelName(){
                   var url = appSettings.serverPath + appSettings.serviceApis.getChannelName;
                     services.funcGetRequest(url).then(function(response,status) {
-                     $scope.channelName = response.data.channel;                     
+                     $rootScope.channelName = response.data.channel;                     
                     },function(error){
                          notify({ classes: 'alert-danger', message: error.message });
                     });
@@ -412,6 +412,12 @@ app
                 // This method accepts a Position object, which contains the
                 // current GPS coordinates
                 var onSuccess = function(position) {
+                    //update marker position
+                    if($scope.marker && $scope.map){
+                        $scope.marker.setPosition(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
+                        var center = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+                        $scope.map.setCenter(center);
+                    }
                     faye(Faye,$scope,$window,position);                    
                 };
 
@@ -448,19 +454,19 @@ app
                     alert('Geo Location feature is not supported in this browser.');
                 }
 
-               navigator.geolocation.watchPosition(onSuccess,onError,{timeout: 30000})
+               var watchID = navigator.geolocation.watchPosition(onSuccess,onError,{maximumAge: 3000000,timeout: 3000,enableHighAccuracy: true})
 
                function faye(Faye,$scope,$window,position) {
                     var Logger = {
                         incoming: function(message, callback) {
-                            console.log('incoming', message);
+                            //console.log('incoming', message);
                             callback(message);
                         },
                         outgoing: function(message, callback) {
                             message.ext = message.ext || {};
                             message.ext.auth_token = $window.sessionStorage['Auth-Token'];
                             message.ext.user_type = "driver";
-                            console.log('outgoing', message);
+                            //console.log('outgoing', message);
                             callback(message);
                         }
                     };
@@ -468,20 +474,20 @@ app
                     var client = Faye.getClient();
                     client.addExtension(Logger);
 
-                    //update marker position
-                    $scope.marker.setPosition(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
-                    var center = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
-                    $scope.map.setCenter(center);
+                    
 
+                    if($rootScope.channelName){
+                      var publication = client.publish('/publish/'+ $rootScope.channelName, { latitude: position.coords.latitude, longitude: position.coords.longitude });
 
-                    var publication = client.publish('/publish/'+ $scope.channelName, { latitude: position.coords.latitude, longitude: position.coords.longitude });
+                      publication.callback(function() {
+                          //alert('Connection established successfully.');
+                      });
+                      publication.errback(function(error) {
+                          // alert('There was a problem: ' + error.message);
+                      });
 
-                    publication.callback(function() {
-                        //alert('Connection established successfully.');
-                    });
-                    publication.errback(function(error) {
-                        // alert('There was a problem: ' + error.message);
-                    });
+                    }
+                    
                 }
                
             }   

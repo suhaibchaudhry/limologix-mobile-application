@@ -180,6 +180,10 @@ app
                     toDataUrl($scope.personal.araImage,false, function(base64_araImg) {
                       $scope.personal.araImage = base64_araImg;
                     });
+                    toDataUrl($scope.personal.insuranceImage,false, function(base64_insuranceImg) {
+                      $scope.personal.insuranceImage = base64_insuranceImg;
+                    });
+
                     $scope.vehicle = {
                         Color :response.vehicle.color,
                         HLL_Number :response.vehicle.hll_number,
@@ -431,7 +435,7 @@ app
                         },                      
                         ara_expiry_date: new Date($scope.personal.ara_exp_Date),
                         insurance_image:{
-                            name:$scope.personal.insuranceImage_name,
+                            name:$scope.personal.insuranceImageName,
                             image: $scope.personal.insuranceImage
                         },
                         insurance_expiry_date: new Date($scope.personal.insurance_exp_Date),
@@ -517,86 +521,86 @@ app
                 $scope.isPersonal = true;
                 $scope.isVehicle = false;
             }
-                //Submit the form
-            $scope.DriverSignup = function() {
-                var data = localStorage.getItem('driverdata');
-                $scope.contactinfo = JSON.parse(data)[0];
+            //     //Submit the form
+            // $scope.DriverSignup = function() {
+            //     var data = localStorage.getItem('driverdata');
+            //     $scope.contactinfo = JSON.parse(data)[0];
 
-                $scope.personalinfo = JSON.parse(data)[1];
-                //Get uploaded image names from localStorage
-                var dlImageName = localStorage.getItem("dlImageName");
-                $scope.personalinfo.dlImage_name = dlImageName;
-                var araImageName = localStorage.getItem("araImageName");
-                $scope.personalinfo.araImage_name = araImageName;
-                var insuranceImageName = localStorage.getItem("insuranceImageName");
-                $scope.personalinfo.insuranceImage_name = insuranceImageName;
+            //     $scope.personalinfo = JSON.parse(data)[1];
+            //     //Get uploaded image names from localStorage
+            //     var dlImageName = localStorage.getItem("dlImageName");
+            //     $scope.personalinfo.dlImage_name = dlImageName;
+            //     var araImageName = localStorage.getItem("araImageName");
+            //     $scope.personalinfo.araImage_name = araImageName;
+            //     var insuranceImageName = localStorage.getItem("insuranceImageName");
+            //     $scope.personalinfo.insuranceImage_name = insuranceImageName;
 
 
-                $scope.vehicleinfo = JSON.parse(data)[2];
-                $scope.driverDetails = {
-                    "driver": {
-                        first_name: $scope.contactinfo.fullName,
-                        last_name: $scope.contactinfo.lastName,
-                        password: $scope.contactinfo.password,
-                        mobile_number: $scope.contactinfo.primary_phone_number,
-                        email: $scope.contactinfo.email,
-                        company: $scope.contactinfo.company,
-                        address: {
-                            street: $scope.contactinfo.primary_address,
-                            secondary_address: $scope.contactinfo.secondary_address,
-                            city: $scope.contactinfo.city,
-                            zipcode: $scope.contactinfo.zipcode,
-                            state_code: $scope.contactinfo.state_code.code,
-                            country_code: $scope.contactinfo.country_code.code
-                        },
-                        license_number: $scope.personalinfo.dl_number,
-                        license_expiry_date: $scope.personalinfo.dl_exp_Date,
-                        license_image: {
-                            name: $scope.personalinfo.dlImage_name,
-                            image: $scope.personalinfo.dlPic
-                        },
-                        badge_number: $scope.personalinfo.limo_badge_number,
-                        badge_expiry_date: $scope.personalinfo.limo_badge_exp_Date,
-                        //ara_number: $scope.personalinfo.ar,
-                        ara_expiry_date: $scope.personalinfo.ara_exp_Date,
-                        ara_image: {
-                            name: $scope.personalinfo.araImage_name,
-                            image: $scope.personalinfo.araPic
-                        },
-                        insurance_image:{
-                            name:$scope.personalinfo.insuranceImage_name,
-                            image: $scope.personal.insuranceImage
-                        },
-                        insurance_company: $scope.personalinfo.companyName,
-                        insurance_policy_number: $scope.personalinfo.policyNumber,
-                        insurance_expiry_date: $scope.personalinfo.insurance_exp_Date
-                    },
-                    "vehicle": {
-                        vehicle_make_id: $scope.vehicleinfo.make.id, //$scope.vehicleinfo.make,
-                        vehicle_model_id: $scope.vehicleinfo.model.id, //$scope.vehicleinfo.model,
-                        hll_number: $scope.vehicleinfo.HLL_Number,
-                        color: $scope.vehicleinfo.Color,
-                        license_plate_number: $scope.vehicleinfo.licencePlateNum,
-                        vehicle_type_id: $scope.vehicleinfo.selectType.id,
-                        features: $scope.vehicleinfo.Features
-                    }
-                };
-                var url = appSettings.serverPath + appSettings.serviceApis.registration;
-                services.funcPostRequest(url, $scope.driverDetails).then(function(response) {
-                    console.log($scope.driverDetails);
-                    console.log(response);
-                    $http.defaults.headers.common['Auth-Token'] = response.data['Auth-Token'];
-                    $window.sessionStorage['Auth-Token'] = response.data['Auth-Token'];
-                    AppConstants.driver = response.data;
-                    AppConstants.driver.name = response.data.full_name;
-                    $window.sessionStorage['driver'] = JSON.stringify(AppConstants.driver);
-                    notify({ classes: 'alert-success', message: response.message });
-                    $state.go('core.appSettings');
-                }, function(error) {
-                    notify({ classes: 'alert-danger', message: error });
-                    $state.go('core.signup');
-                });
-            }
+            //     $scope.vehicleinfo = JSON.parse(data)[2];
+            //     $scope.driverDetails = {
+            //         "driver": {
+            //             first_name: $scope.contactinfo.fullName,
+            //             last_name: $scope.contactinfo.lastName,
+            //             password: $scope.contactinfo.password,
+            //             mobile_number: $scope.contactinfo.primary_phone_number,
+            //             email: $scope.contactinfo.email,
+            //             company: $scope.contactinfo.company,
+            //             address: {
+            //                 street: $scope.contactinfo.primary_address,
+            //                 secondary_address: $scope.contactinfo.secondary_address,
+            //                 city: $scope.contactinfo.city,
+            //                 zipcode: $scope.contactinfo.zipcode,
+            //                 state_code: $scope.contactinfo.state_code.code,
+            //                 country_code: $scope.contactinfo.country_code.code
+            //             },
+            //             license_number: $scope.personalinfo.dl_number,
+            //             license_expiry_date: $scope.personalinfo.dl_exp_Date,
+            //             license_image: {
+            //                 name: $scope.personalinfo.dlImage_name,
+            //                 image: $scope.personalinfo.dlPic
+            //             },
+            //             badge_number: $scope.personalinfo.limo_badge_number,
+            //             badge_expiry_date: $scope.personalinfo.limo_badge_exp_Date,
+            //             //ara_number: $scope.personalinfo.ar,
+            //             ara_expiry_date: $scope.personalinfo.ara_exp_Date,
+            //             ara_image: {
+            //                 name: $scope.personalinfo.araImage_name,
+            //                 image: $scope.personalinfo.araPic
+            //             },
+            //             insurance_image:{
+            //                 name:$scope.personalinfo.insuranceImage_name,
+            //                 image: $scope.personal.insuranceImage
+            //             },
+            //             insurance_company: $scope.personalinfo.companyName,
+            //             insurance_policy_number: $scope.personalinfo.policyNumber,
+            //             insurance_expiry_date: $scope.personalinfo.insurance_exp_Date
+            //         },
+            //         "vehicle": {
+            //             vehicle_make_id: $scope.vehicleinfo.make.id, //$scope.vehicleinfo.make,
+            //             vehicle_model_id: $scope.vehicleinfo.model.id, //$scope.vehicleinfo.model,
+            //             hll_number: $scope.vehicleinfo.HLL_Number,
+            //             color: $scope.vehicleinfo.Color,
+            //             license_plate_number: $scope.vehicleinfo.licencePlateNum,
+            //             vehicle_type_id: $scope.vehicleinfo.selectType.id,
+            //             features: $scope.vehicleinfo.Features
+            //         }
+            //     };
+            //     var url = appSettings.serverPath + appSettings.serviceApis.registration;
+            //     services.funcPostRequest(url, $scope.driverDetails).then(function(response) {
+            //         console.log($scope.driverDetails);
+            //         console.log(response);
+            //         $http.defaults.headers.common['Auth-Token'] = response.data['Auth-Token'];
+            //         $window.sessionStorage['Auth-Token'] = response.data['Auth-Token'];
+            //         AppConstants.driver = response.data;
+            //         AppConstants.driver.name = response.data.full_name;
+            //         $window.sessionStorage['driver'] = JSON.stringify(AppConstants.driver);
+            //         notify({ classes: 'alert-success', message: response.message });
+            //         $state.go('core.appSettings');
+            //     }, function(error) {
+            //         notify({ classes: 'alert-danger', message: error });
+            //         $state.go('core.signup');
+            //     });
+            // }
         }
     ])
 .directive('cardExpiration', function() {
