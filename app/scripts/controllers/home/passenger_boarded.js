@@ -99,7 +99,7 @@ app
                      dispatchRideProvider.map.setCenter(center);
                   }  
 
-                  faye(Faye,$scope,$rootScope,$window,position); 
+                  //faye(Faye,$scope,$rootScope,$window,position); 
 
                   console.log("test position", position.coords.latitude,position.coords.longitude);
                   var p1 = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);                  
@@ -145,20 +145,25 @@ app
                    id : $scope.tripsummary.trip_id
                 }           
 
-                var url = appSettings.serverPath + appSettings.serviceApis.passengerBoarded;
-                services.funcPostRequest(url, { "trip": $scope.trip }).then(function(response) { 
-                    notify.closeAll();                   
-                    notify({ classes: 'alert-success', message: response.message });                   
-                    $state.go('core.passenger_arrived');
-                }, function(error) {                  
-                    notify.closeAll();
-                    notify({ classes: 'alert-danger', message: error }); 
-                    $state.go('core.home');                   
-                });                             
-                $scope.bool.isBoardedBtnVisible = false;
-                if (!$scope.$$phase) {
-                  $scope.$digest();
-                };
+                if($rootScope.online){
+                   var url = appSettings.serverPath + appSettings.serviceApis.passengerBoarded;
+                    services.funcPostRequest(url, { "trip": $scope.trip }).then(function(response) { 
+                        notify.closeAll();                   
+                        notify({ classes: 'alert-success', message: response.message });                   
+                        $state.go('core.passenger_arrived');
+                    }, function(error) {                  
+                        notify.closeAll();
+                        notify({ classes: 'alert-danger', message: error }); 
+                        $state.go('core.home');                   
+                    });                             
+                    $scope.bool.isBoardedBtnVisible = false;
+                    if (!$scope.$$phase) {
+                      $scope.$digest();
+                    };
+                  }else{
+                    alert('The internet connection appears to be offline');
+                  }
+               
             }
 
             function faye(Faye,$scope,$rootScope,$window,position) {

@@ -8,8 +8,8 @@
  * Controller of the LimoCordova
  */
 app
-    .controller('splashCtrl', ['$scope', '$state', '$http', '$window', 'services', '$location',
-        function($scope, $state, $http, $window, services, $location) {
+    .controller('splashCtrl', ['$scope', '$rootScope','$state', '$http', '$window', 'services', '$location',
+        function($scope, $rootScope, $state, $http, $window, services, $location) {
            
             angular.element(document).ready(function() {
                 console.log('page loading completed');
@@ -17,6 +17,16 @@ app
             });
 
 
+            //alert($rootScope.isLoggedIn);
+            var isLoggedIn =  localStorage.getItem('isLoggedIn');
+
+            if(isLoggedIn === "true"){
+                $state.go('core.home');
+            }else{
+                $state.go('core.splash');
+            }
+
+ 
             // setTimeout(function() {
             //     rendersplashscreen();
             //     // Do something after 1 second 
@@ -34,13 +44,18 @@ app
 
             $scope.moveto_admin_panel = function() {
                 //$window.open("http://limologix.softwaystaging.com","_blank");
-                window.location.href  = 'http://limologix.softwaystaging.com';
+               // if(navigator.onLine){
+                   window.location.href  = 'http://limologix.softwaystaging.com';
+               // }
+                
                 // $location.path("http://limologix.softwaystaging.com");
             };
             $scope.moveto_app = function() {  
                 //$state.go('core.signup');
                // $scope.$apply(function(){
+                //if(navigator.onLine){
                     $location.path("core/login");
+                //}
                // });
             };
         }

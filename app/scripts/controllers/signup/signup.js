@@ -754,6 +754,12 @@ app
                     AppConstants.driver.full_name = AppConstants.driver.firstName +" "+  AppConstants.driver.lastName;
                     //AppConstants.driver.name = response.data.full_name;
                     AppConstants.driver.company = response.data.company;
+
+                    
+                    localStorage.setItem('Auth-Token',$window.sessionStorage['Auth-Token']);
+                    localStorage.setItem('driver_name',response.data.first_name+" "+response.data.last_name.charAt(0));
+                    localStorage.setItem('company_name',response.data.company);
+
                     $window.sessionStorage['driver'] = JSON.stringify(AppConstants.driver);
                     notify.closeAll();  
                     notify({ classes: 'alert-success', message: response.message });

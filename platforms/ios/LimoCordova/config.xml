@@ -21,6 +21,12 @@
     <feature name="Geolocation">
         <param name="ios-package" value="CDVLocation" />
     </feature>
+    <feature name="NetworkStatus">
+        <param name="ios-package" value="CDVConnection" />
+    </feature>
+    <feature name="Diagnostic">
+        <param name="ios-package" value="Diagnostic" />
+    </feature>
     <name>LimoCordova</name>
     <description>
         A sample Apache Cordova application that responds to the deviceready event.

@@ -24,10 +24,18 @@ footer { position:fixed; width:100%; bottom:0; line-height:3rem; }
 }
 
 #spinner{
-    position: absolute;
-    bottom: 20%;
-    left:40%;
-    margin: -50px 0px 0px -50px;
+    position: fixed;
+    top: 50%;
+    left:50%;
+    margin: -105px 0px 0px -105px;
+    z-index: 9999;
+}
+
+#custom_splash{
+    position: fixed;
+    top: 50%;
+    left:50%;
+    margin: 0px 0px 0px 0px;
     z-index: 9999;
 }
 
@@ -580,7 +588,7 @@ body.menu-slider.in #wrapper {
    float: left;
     left: 8%;
     position: absolute;
-    top: 35px;
+    top: 40px;
     height: 55px;
 }
 
@@ -588,7 +596,7 @@ body.menu-slider.in #wrapper {
     float: left;
     left: 8%;
     position: absolute;
-    top: 35px;
+    top: 40px;
     height: 55px;
 }
 
@@ -791,3 +799,14 @@ i.inactive {
     text-align:center;
 }
 
+#internet_connection_msg{
+    border: 2px solid red;
+    position: fixed;
+    width: 100%;
+    text-align: center;
+    background-color: red;
+    height: 30px;
+    color: #0d0b1a;
+    font-size: 17px;
+    bottom:-2%;
+}

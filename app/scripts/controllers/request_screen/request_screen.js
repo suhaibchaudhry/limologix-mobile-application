@@ -122,7 +122,7 @@ app
                 // current GPS coordinates
                 //if (navigator.geolocation) {
                 var onSuccess = function(position) {
-                   faye(Faye,$scope,$window,position);                    
+                   //faye(Faye,$scope,$window,position);                    
                 };
 
                 // onError Callback receives a PositionError object

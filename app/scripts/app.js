@@ -72,11 +72,11 @@
     ])
 
     .constant('appSettings', {  
-        server_address: 'http://limologix.softwaystaging.com', //'http://172.16.130.107:9000',
+        server_address: 'http://limologix.softwaystaging.com',//'http://172.16.10.212:9000', 
         version: 'v1',
-        server_images_path : "http://limologix.api.softwaystaging.com/", //'http://172.16.130.107:9000',
-        serverPath: "http://limologix.api.softwaystaging.com/api/v1/", //'http://172.16.130.107:9000/api/v1/', 
-        FayeServerURL : 'http://limologix.softwaystaging.com:9292/faye', //'http://172.16.130.107:9292/faye', 
+        server_images_path : "http://limologix.api.softwaystaging.com/", //'http://172.16.10.212:9000',
+        serverPath: "http://limologix.api.softwaystaging.com/api/v1/", //'http://172.16.10.212:9000/api/v1/',
+        FayeServerURL : 'http://limologix.softwaystaging.com:9292/faye', //'http://172.16.10.212:9292/faye',
         serviceApis: {
             signin: 'drivers/sign_in',
             forgotPassword:'drivers/forgot_password',
@@ -161,7 +161,32 @@
             }
         }
     }])
-    .run(['$rootScope', 'notify','$state', '$http', '$stateParams', '$window', 'AppConstants','$timeout',function($rootScope, notify ,$state, $http, $stateParams, $window, constant,$timeout) {
+    .run(['$rootScope', 'notify','$state', '$http', '$stateParams', '$window', 'AppConstants','$timeout',function($rootScope,notify ,$state, $http, $stateParams, $window, constant,$timeout) {
+
+        // //To Check network connectivity
+        // $rootScope.online = navigator.onLine;
+        // $window.addEventListener("offline", function() {
+        //     $rootScope.$apply(function() {
+        //         $rootScope.online = false;
+        //         alert('offline');
+        //         // swal({
+        //         //     title: 'App.js!',
+        //         //     text: 'Internet Disconnected',
+        //         //     type: "success"
+        //         // }, function() {
+        //         // })
+        //     });
+        // }, false);
+
+        // $window.addEventListener("online", function() {
+        //     $rootScope.$apply(function() {
+        //         $rootScope.online = true;
+        //         alert('online');
+        //         //$window.location.reload();
+        //     });
+        // }, false);
+
+
 
         notify.config({duration:5000});
         //If driver logged in and 
@@ -172,10 +197,15 @@
             constant.driver = {};
         }
 
-        //sets token on every refresh
-        if (constant.driver['Auth-Token']) {
-            $http.defaults.headers.common['Auth-Token'] = $window.sessionStorage['Auth-Token'];
+        
+        var isUserLoggedIn = localStorage.getItem('isLoggedIn');
+
+        //if (constant.driver['Auth-Token']) {
+        if(isUserLoggedIn){
+            //$http.defaults.headers.common['Auth-Token'] = $window.sessionStorage['Auth-Token'];
+            $http.defaults.headers.common['Auth-Token'] = localStorage.getItem('Auth-Token');
         } else {
+            $('#custom_splash').hide();
             $state.go('core.splash')
         }
         
@@ -228,7 +258,7 @@
     //     $compileProvider.urlSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|tel):/);
     // })
     .config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
-
+        $('#custom_splash').hide();
         $urlRouterProvider.otherwise('/core/splash');
 
         $stateProvider

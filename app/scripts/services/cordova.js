@@ -16,7 +16,7 @@ angular.module('LimoCordova')
         this.ready = d.promise;
 
         document.addEventListener('deviceready', function() {
-            alert('device ready')
+           // alert('device ready')
               
             resolved = true;
             d.resolve($window.cordova);

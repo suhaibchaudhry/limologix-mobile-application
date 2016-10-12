@@ -9,16 +9,19 @@
  */
 app
   .controller('LogoutCtrl',
-    ['$scope', '$rootScope','$state','$http','appSettings','notify','$window','services','AppConstants',
-    function ($scope, $rootScope, $state,$http,appSettings,notify, $window,services, constants) {
+    ['$scope', '$rootScope','$state','$http','appSettings','notify','$window','services','AppConstants','Faye',
+    function ($scope, $rootScope, $state,$http,appSettings,notify, $window,services, constants,Faye) {
   	  var url = appSettings.serverPath + appSettings.serviceApis.logout;
       var token = $window.sessionStorage['Auth-Token'];
       services.funcGetRequest(url).then(function(response,status) {
-          $state.go('core.login');   
+          $state.go('core.splash');   
           constants.driver = {};
-          //clearInterval($rootScope.getLoc);  // get driver current location  - Distance calculation
-          //clearInterval($rootScope.getDestLoc);   // get destination location - Distance caculation
           clearInterval($rootScope.FreeAds); // freeAds
+          localStorage.setItem('isLoggedIn',false);
+
+          var client = Faye.getClient();
+          client.disable('autodisconnect');
+
           notify({ classes: 'alert-success',message:response.message});
          // delete $window.sessionStorage['Auth-Token'];
       },function(error){

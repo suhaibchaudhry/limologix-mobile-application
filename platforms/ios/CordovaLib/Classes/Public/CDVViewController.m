@@ -269,6 +269,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     // Load settings
     [self loadSettings];
 

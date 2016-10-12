@@ -20,6 +20,8 @@ var app = {
     },
 
     onDeviceReady: function() {
+        alert('ffhghffgh');
+        document.addEventListener('offline', this.onOffline, false);
 
          //      var client = new Faye.Client('http://172.16.90.117:9292/faye'); 
          // alert(client)
@@ -77,6 +79,11 @@ var app = {
                 angular.bootstrap(domElem,['LimoCordova']); 
 
             });
+
+            document.addEventListener('offline',this.onOffline,false);
     },
+    onOffline:function(){
+        alert('u r offline')
+    }
 };
 app.initialize();
