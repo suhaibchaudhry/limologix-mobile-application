@@ -40,6 +40,20 @@ module.exports = [
         "clobbers": [
             "cordova.plugins.diagnostic"
         ]
+    },
+    {
+        "file": "plugins/cordova-plugin-request-location-accuracy/www/android/RequestLocationAccuracy.js",
+        "id": "cordova-plugin-request-location-accuracy.RequestLocationAccuracy",
+        "clobbers": [
+            "cordova.plugins.locationAccuracy"
+        ]
+    },
+    {
+        "file": "plugins/com.phonegap.plugins.nativesettingsopener/www/settings.js",
+        "id": "com.phonegap.plugins.nativesettingsopener.Settings",
+        "clobbers": [
+            "cordova.plugins.settings"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -50,7 +64,9 @@ module.exports.metadata =
     "cordova-plugin-geolocation": "2.2.0",
     "cordova-plugin-whitelist": "1.2.2",
     "cordova-plugin-network-information": "1.3.0",
-    "cordova.plugins.diagnostic.api-22": "2.3.10-api-22"
+    "cordova.plugins.diagnostic.api-22": "2.3.10-api-22",
+    "cordova-plugin-request-location-accuracy": "2.2.0",
+    "com.phonegap.plugins.nativesettingsopener": "1.2"
 };
 // BOTTOM OF METADATA
 });

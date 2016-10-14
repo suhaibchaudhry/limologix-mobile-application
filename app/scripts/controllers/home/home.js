@@ -8,8 +8,8 @@
  * Controller of the LimoCordova
  */
 app
-    .controller('homeCtrl', ['$scope', '$rootScope', '$state', '$http', 'appSettings', 'notify', '$window', 'services', 'AppConstants', '$timeout', '$location', 'Faye', 'driverLocationConstants',
-        function($scope, $rootScope, $state, $http, appSettings, notify, $window, services, constants, $timeout, $location, Faye, driverLocationConstants) {
+    .controller('homeCtrl', ['$scope', '$rootScope', '$state', '$http', 'appSettings', 'notify', '$window', 'services', 'AppConstants', '$timeout', '$location', 'Faye', 'driverLocationConstants','MapService',
+        function($scope, $rootScope, $state, $http, appSettings, notify, $window, services, constants, $timeout, $location, Faye, driverLocationConstants,MapService) {
 
             $scope.deviceOnline = $rootScope.online;
             
@@ -408,7 +408,7 @@ app
             //FCMPlugin.subscribeToTopic('topicExample');
 
 
-            getChannelName();
+            //getChannelName();
 
             function getChannelName() {
                 var url = appSettings.serverPath + appSettings.serviceApis.getChannelName;
@@ -421,87 +421,138 @@ app
                 });
             }
 
-            // onSuccess Callback
-            // This method accepts a Position object, which contains the
-            // current GPS coordinates
-            var onSuccess = function(position) {
-                //update marker position
-                if ($scope.marker && $scope.map) {
-                    $scope.marker.setPosition(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
-                    var center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-                    $scope.map.setCenter(center);
+            MapService.init();
+            MapService.getCurrentPositions();
+            MapService.watchPositions();
+             //Event listener when location services on/off
+            cordova.plugins.diagnostic.registerLocationAuthorizationStatusChangeHandler(function(status) {
+                alert(status)
+                console.log("home page-  \"not_determined\" to: " + status);
+                if (status == 'denied') {
+                    // if (typeof cordova.plugins.settings.openSetting != undefined) {
+                    //     cordova.plugins.settings.open(function() {
+                    //             alert("opened settings")
+                    //         },
+                    //         function() {
+                    //             alert("failed to open settings")
+                    //         });
+                    // }
+
+                    cordova.plugins.diagnostic.switchToSettings();
+                } else {
+                     MapService.getCurrentPositions();
+                    //getCurrentPosition();
                 }
-                faye(Faye, $scope, $window, position);
-            };
+            });
 
-            // onError Callback receives a PositionError object
-            function onError(error) {
-                //alert('code: ' + error.code + '\n' +
-                // 'message: ' + error.message + '\n');
-            }
+            // function getCurrentPosition(){
+            //     if (navigator.geolocation) {
+            //     navigator.geolocation.getCurrentPosition(function(p) {
+            //         var LatLng = new google.maps.LatLng(p.coords.latitude, p.coords.longitude);
+            //         var mapOptions = {
+            //             center: LatLng,
+            //             zoom: 13,
+            //             mapTypeId: google.maps.MapTypeId.ROADMAP
+            //         };
+            //         $scope.map = new google.maps.Map(document.getElementById("dvMap"), mapOptions);
+            //         $scope.marker = new google.maps.Marker({
+            //             position: LatLng,
+            //             map: $scope.map,
+            //             icon: 'images/driver/location_ping.0b6a1b43.png'
+            //                 //title: "<div style = 'height:60px;width:200px'><b>Your location:</b><br />Latitude: " + p.coords.latitude + "<br />Longitude: " + p.coords.longitude
+            //         });
+            //         // google.maps.event.addListener(marker, "click", function(e) {
+            //         //     var infoWindow = new google.maps.InfoWindow();
+            //         //     infoWindow.setContent(marker.title);
+            //         //     infoWindow.open($scope.map, marker);
+            //         // });
+            //     });
+            // } else {
+            //     alert('Geo Location feature is not supported in this browser.');
+            // }
+            // }
 
-            navigator.geolocation.getCurrentPosition(onSuccess, onError, { maximumAge: 3000, timeout: 5000, enableHighAccuracy: true });
+            // // onSuccess Callback
+            // // This method accepts a Position object, which contains the
+            // // current GPS coordinates
+            // var onSuccess = function(position) {
+            //     //update marker position
+            //     if ($scope.marker && $scope.map) {
+            //         $scope.marker.setPosition(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
+            //         var center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+            //         $scope.map.setCenter(center);
+            //     }
+            //     faye(Faye, $scope, $window, position);
+            // };
 
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(function(p) {
-                    var LatLng = new google.maps.LatLng(p.coords.latitude, p.coords.longitude);
-                    var mapOptions = {
-                        center: LatLng,
-                        zoom: 13,
-                        mapTypeId: google.maps.MapTypeId.ROADMAP
-                    };
-                    $scope.map = new google.maps.Map(document.getElementById("dvMap"), mapOptions);
-                    $scope.marker = new google.maps.Marker({
-                        position: LatLng,
-                        map: $scope.map,
-                        icon: 'images/driver/location_ping.0b6a1b43.png'
-                            //title: "<div style = 'height:60px;width:200px'><b>Your location:</b><br />Latitude: " + p.coords.latitude + "<br />Longitude: " + p.coords.longitude
-                    });
-                    // google.maps.event.addListener(marker, "click", function(e) {
-                    //     var infoWindow = new google.maps.InfoWindow();
-                    //     infoWindow.setContent(marker.title);
-                    //     infoWindow.open($scope.map, marker);
-                    // });
-                });
-            } else {
-                alert('Geo Location feature is not supported in this browser.');
-            }
+            // // onError Callback receives a PositionError object
+            // function onError(error) {
+            //     //alert('code: ' + error.code + '\n' +
+            //     // 'message: ' + error.message + '\n');
+            // }
 
-            var watchID = navigator.geolocation.watchPosition(onSuccess, onError, { maximumAge: 3000000, timeout: 3000, enableHighAccuracy: true })
+            // navigator.geolocation.getCurrentPosition(onSuccess, onError, { maximumAge: 3000, timeout: 5000, enableHighAccuracy: true });
 
-            function faye(Faye, $scope, $window, position) {
-                var Logger = {
-                    incoming: function(message, callback) {
-                        console.log('incoming home page', message);
-                        callback(message);
-                    },
-                    outgoing: function(message, callback) {
-                        message.ext = message.ext || {};
-                        message.ext.auth_token = $window.sessionStorage['Auth-Token'];
-                        message.ext.user_type = "driver";
-                        console.log('outgoing home page', message);
-                        callback(message);
-                    }
-                };
+            // if (navigator.geolocation) {
+            //     navigator.geolocation.getCurrentPosition(function(p) {
+            //         var LatLng = new google.maps.LatLng(p.coords.latitude, p.coords.longitude);
+            //         var mapOptions = {
+            //             center: LatLng,
+            //             zoom: 13,
+            //             mapTypeId: google.maps.MapTypeId.ROADMAP
+            //         };
+            //         $scope.map = new google.maps.Map(document.getElementById("dvMap"), mapOptions);
+            //         $scope.marker = new google.maps.Marker({
+            //             position: LatLng,
+            //             map: $scope.map,
+            //             icon: 'images/driver/location_ping.0b6a1b43.png'
+            //                 //title: "<div style = 'height:60px;width:200px'><b>Your location:</b><br />Latitude: " + p.coords.latitude + "<br />Longitude: " + p.coords.longitude
+            //         });
+            //         // google.maps.event.addListener(marker, "click", function(e) {
+            //         //     var infoWindow = new google.maps.InfoWindow();
+            //         //     infoWindow.setContent(marker.title);
+            //         //     infoWindow.open($scope.map, marker);
+            //         // });
+            //     });
+            // } else {
+            //     alert('Geo Location feature is not supported in this browser.');
+            // }
 
-                var client = Faye.getClient();
+            // var watchID = navigator.geolocation.watchPosition(onSuccess, onError, { maximumAge: 3000000, timeout: 3000, enableHighAccuracy: true })
+
+            // function faye(Faye, $scope, $window, position) {
+            //     var Logger = {
+            //         incoming: function(message, callback) {
+            //             console.log('incoming home page', message);
+            //             callback(message);
+            //         },
+            //         outgoing: function(message, callback) {
+            //             message.ext = message.ext || {};
+            //             message.ext.auth_token = $window.sessionStorage['Auth-Token'];
+            //             message.ext.user_type = "driver";
+            //             console.log('outgoing home page', message);
+            //             callback(message);
+            //         }
+            //     };
+
+            //     var client = Faye.getClient();
 
 
 
-                var isUserlogedIn = localStorage.getItem('isLoggedIn');
-                if ($rootScope.channelName && (isUserlogedIn == 'true')) {
-                    var publication = client.publish('/publish/' + $rootScope.channelName, { latitude: position.coords.latitude, longitude: position.coords.longitude });
-                    client.addExtension(Logger);
-                    publication.callback(function() {
-                        //alert('Connection established successfully.');
-                    });
-                    publication.errback(function(error) {
-                        // alert('There was a problem: ' + error.message);
-                    });
+            //     var isUserlogedIn = localStorage.getItem('isLoggedIn');
+            //     if ($rootScope.channelName && (isUserlogedIn == 'true')) {
+            //         var publication = client.publish('/publish/' + $rootScope.channelName, { latitude: position.coords.latitude, longitude: position.coords.longitude });
+            //         client.addExtension(Logger);
+            //         publication.callback(function() {
+            //             //alert('Connection established successfully.');
+            //         });
+            //         publication.errback(function(error) {
+            //             // alert('There was a problem: ' + error.message);
+            //         });
 
-                }
+            //     }
 
-            }
+            // }
 
         }
     ])

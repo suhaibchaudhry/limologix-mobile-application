@@ -107,7 +107,7 @@ app
                 }
 
 
-                //faye(Faye,$scope,$rootScope,$window,position);
+                faye(Faye,$scope,$rootScope,$window,position);
 
                 var p1 = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
                 var p2 = new google.maps.LatLng($scope.tripsummary.dropoffAtLat, $scope.tripsummary.dropoffAtLng);

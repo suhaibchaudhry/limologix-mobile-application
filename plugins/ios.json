@@ -7,6 +7,9 @@
         "files": {}
     },
     "installed_plugins": {
+        "com.phonegap.plugins.nativesettingsopener": {
+            "PACKAGE_NAME": "com.limo.limologix"
+        },
         "cordova-plugin-fcm": {
             "PACKAGE_NAME": "com.limo.limologix"
         },
@@ -14,6 +17,9 @@
             "PACKAGE_NAME": "com.limo.limologix"
         },
         "cordova-plugin-network-information": {
+            "PACKAGE_NAME": "com.limo.limologix"
+        },
+        "cordova-plugin-request-location-accuracy": {
             "PACKAGE_NAME": "com.limo.limologix"
         },
         "cordova-plugin-whitelist": {

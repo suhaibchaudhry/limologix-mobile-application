@@ -23,6 +23,8 @@ app
             var map_height = jQuery(window).innerHeight() - (jQuery('.b1').innerHeight() + jQuery('.navbar-header').innerHeight())
             jQuery('#dvMap_boarded').height(map_height);
             
+
+            
             function getCustomerRoute() {
                // $scope.tripsummary.pickupAt = 'Jalavayu Vihara, Kammanahalli, Bengaluru, Karnataka, India',//'Marathahalli, Bengaluru, Karnataka 560037, India';
                // $scope.tripsummary.dropoffAt = 'Hebbal, Bengaluru, Karnataka 560024, India';
@@ -99,7 +101,7 @@ app
                      dispatchRideProvider.map.setCenter(center);
                   }  
 
-                  //faye(Faye,$scope,$rootScope,$window,position); 
+                  faye(Faye,$scope,$rootScope,$window,position); 
 
                   console.log("test position", position.coords.latitude,position.coords.longitude);
                   var p1 = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);                  

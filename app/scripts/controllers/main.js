@@ -11,6 +11,7 @@ app
     .controller('MainCtrl', function($scope, $rootScope, $http, $translate, $state) {
         document.addEventListener("deviceready", onDeviceReady, false);
 
+        alert('halloooo');
         function onDeviceReady() {
             checkConnection();
         }
@@ -45,6 +46,7 @@ app
         }
 
         function onOnline() {
+            alert('u r online')
             $('#wrap').fadeTo("slow", 1);
             $('#wrap').css("pointer-events", "");
             $("#internet_connection_msg").remove();
@@ -53,16 +55,18 @@ app
 
         $rootScope.online = navigator.onLine;
         if (!$rootScope.online) {
+            alert('show network')
             $("body").append("<p id='internet_connection_msg'>Internet connection appears to be offline</p>");
         } else {
             $state.go('core.splash');
         }
 
-        cordova.plugins.diagnostic.isLocationEnabled(function(enabled) {
+        cordova.plugins.diagnostic.isLocationEnabledSetting(function(enabled) {
             console.log("Location setting is " + (enabled ? "enabled" : "disabled"));
-            if(enabled){
-                alert('location on')
-            }else{
+            if (enabled) {
+                alert('location on');
+               // getCurrentPosition();
+            } else {
                 alert('location off');
                 cordova.plugins.diagnostic.switchToSettings();
             }
@@ -70,19 +74,28 @@ app
             console.error("The following error occurred: " + error);
         });
 
-        //Event listener when location services on/off
-        cordova.plugins.diagnostic.registerLocationAuthorizationStatusChangeHandler(function(status){
-            alert(status)
-            console.log("Location authorization status changed from \"not_determined\" to: "+status);
-            if(status == 'denied'){
-                cordova.plugins.diagnostic.switchToSettings();
-            }else{
-                getCurrentPosition();
-            }
-        });
+        // //Event listener when location services on/off
+        // cordova.plugins.diagnostic.registerLocationAuthorizationStatusChangeHandler(function(status) {
+        //     alert(status)
+        //     console.log("Location authorization status changed from \"not_determined\" to: " + status);
+        //     if (status == 'denied') {
+        //         // if (typeof cordova.plugins.settings.openSetting != undefined) {
+        //         //     cordova.plugins.settings.open(function() {
+        //         //             alert("opened settings")
+        //         //         },
+        //         //         function() {
+        //         //             alert("failed to open settings")
+        //         //         });
+        //         // }
+
+        //         cordova.plugins.diagnostic.switchToSettings();
+        //     } else {
+        //         //getCurrentPosition();
+        //     }
+        // });
 
 
-        function getCurrentPosition(){            
+        function getCurrentPosition() {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(function(p) {
                     var LatLng = new google.maps.LatLng(p.coords.latitude, p.coords.longitude);
@@ -109,18 +122,18 @@ app
             }
         }
 
-         // cordova.plugins.diagnostic.registerLocationStateChangeHandler(function(state){
-         //        if(
-         //            (device.platform === "Android" && state !== cordova.plugins.diagnostic.locationMode.LOCATION_OFF)
-         //            || (device.platform === "iOS") && ( state === cordova.plugins.diagnostic.permissionStatus.GRANTED
-         //                || state === cordova.plugins.diagnostic.permissionStatus.GRANTED_WHEN_IN_USE)
-         //        )
-         //            {
-         //            alert("Location is available");
-         //        }else{
-         //            alert('location not available')
-         //        }
-         //    });
+        // cordova.plugins.diagnostic.registerLocationStateChangeHandler(function(state){
+        //        if(
+        //            (device.platform === "Android" && state !== cordova.plugins.diagnostic.locationMode.LOCATION_OFF)
+        //            || (device.platform === "iOS") && ( state === cordova.plugins.diagnostic.permissionStatus.GRANTED
+        //                || state === cordova.plugins.diagnostic.permissionStatus.GRANTED_WHEN_IN_USE)
+        //        )
+        //            {
+        //            alert("Location is available");
+        //        }else{
+        //            alert('location not available')
+        //        }
+        //    });
 
 
 

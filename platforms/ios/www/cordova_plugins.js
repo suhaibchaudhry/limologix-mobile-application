@@ -1,6 +1,14 @@
 cordova.define('cordova/plugin_list', function(require, exports, module) {
 module.exports = [
     {
+        "file": "plugins/com.phonegap.plugins.nativesettingsopener/www/settings.js",
+        "id": "com.phonegap.plugins.nativesettingsopener.Settings",
+        "pluginId": "com.phonegap.plugins.nativesettingsopener",
+        "clobbers": [
+            "cordova.plugins.settings"
+        ]
+    },
+    {
         "file": "plugins/cordova-plugin-fcm/www/FCMPlugin.js",
         "id": "cordova-plugin-fcm.FCMPlugin",
         "pluginId": "cordova-plugin-fcm",
@@ -58,6 +66,14 @@ module.exports = [
         ]
     },
     {
+        "file": "plugins/cordova-plugin-request-location-accuracy/www/ios/RequestLocationAccuracy.js",
+        "id": "cordova-plugin-request-location-accuracy.RequestLocationAccuracy",
+        "pluginId": "cordova-plugin-request-location-accuracy",
+        "clobbers": [
+            "cordova.plugins.locationAccuracy"
+        ]
+    },
+    {
         "file": "plugins/cordova.plugins.diagnostic.api-22/www/ios/diagnostic.js",
         "id": "cordova.plugins.diagnostic.api-22.Diagnostic",
         "pluginId": "cordova.plugins.diagnostic.api-22",
@@ -69,10 +85,12 @@ module.exports = [
 module.exports.metadata = 
 // TOP OF METADATA
 {
+    "com.phonegap.plugins.nativesettingsopener": "1.2",
     "cordova-plugin-compat": "1.0.0",
     "cordova-plugin-fcm": "1.1.1",
     "cordova-plugin-geolocation": "2.2.0",
     "cordova-plugin-network-information": "1.3.0",
+    "cordova-plugin-request-location-accuracy": "2.2.0",
     "cordova-plugin-whitelist": "1.2.2",
     "cordova.plugins.diagnostic.api-22": "2.3.10-api-22"
 }

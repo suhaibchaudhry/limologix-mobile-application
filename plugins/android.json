@@ -21,6 +21,12 @@
         },
         "cordova.plugins.diagnostic.api-22": {
             "PACKAGE_NAME": "com.limo.limologix"
+        },
+        "cordova-plugin-request-location-accuracy": {
+            "PACKAGE_NAME": "com.limo.limologix"
+        },
+        "com.phonegap.plugins.nativesettingsopener": {
+            "PACKAGE_NAME": "com.limo.limologix"
         }
     },
     "dependent_plugins": {
