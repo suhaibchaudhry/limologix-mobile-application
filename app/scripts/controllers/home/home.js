@@ -8,8 +8,10 @@
  * Controller of the LimoCordova
  */
 app
-    .controller('homeCtrl', ['$scope', '$rootScope', '$state', '$http', 'appSettings', 'notify', '$window', 'services', 'AppConstants', '$timeout', '$location', 'Faye', 'driverLocationConstants','MapService',
-        function($scope, $rootScope, $state, $http, appSettings, notify, $window, services, constants, $timeout, $location, Faye, driverLocationConstants,MapService) {
+    .controller('homeCtrl', ['MapServices', '$scope','$rootScope', '$state', '$http', 'appSettings', 'notify', '$window', 'services', 'AppConstants', '$timeout', '$location', 'Faye', 'driverLocationConstants', funchomeCtrl])
+        
+
+        function funchomeCtrl(MapServices, $scope, $rootScope, $state, $http, appSettings, notify, $window, services, constants, $timeout, $location, Faye, driverLocationConstants) {
 
             $scope.deviceOnline = $rootScope.online;
             
@@ -421,29 +423,10 @@ app
                 });
             }
 
-            MapService.init();
-            MapService.getCurrentPositions();
-            MapService.watchPositions();
-             //Event listener when location services on/off
-            cordova.plugins.diagnostic.registerLocationAuthorizationStatusChangeHandler(function(status) {
-                alert(status)
-                console.log("home page-  \"not_determined\" to: " + status);
-                if (status == 'denied') {
-                    // if (typeof cordova.plugins.settings.openSetting != undefined) {
-                    //     cordova.plugins.settings.open(function() {
-                    //             alert("opened settings")
-                    //         },
-                    //         function() {
-                    //             alert("failed to open settings")
-                    //         });
-                    // }
-
-                    cordova.plugins.diagnostic.switchToSettings();
-                } else {
-                     MapService.getCurrentPositions();
-                    //getCurrentPosition();
-                }
-            });
+            MapServices.init();
+            MapServices.getCurrentPositions();
+            MapServices.watchPositions();
+            
 
             // function getCurrentPosition(){
             //     if (navigator.geolocation) {
@@ -555,4 +538,4 @@ app
             // }
 
         }
-    ])
+    

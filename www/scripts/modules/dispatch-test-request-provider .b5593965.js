@@ -1,6 +1,6 @@
 'use strict';
 
-app.service('FayeService', ['$http', '$q','$rootScope',funcservices]);
+app.service('dispatchTestProvider', ['$http', '$q','$rootScope',funcservices]);
 
 function funcservices($http, $q,$rootScope) {
     //Get routes and display route direction in google map
@@ -134,10 +134,6 @@ function funcservices($http, $q,$rootScope) {
                             title: title
                         });
                     }
-                }
-
-                this.watchPositions = function(){
-                    
                 }
             
         

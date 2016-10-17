@@ -11,7 +11,7 @@ app
     .controller('MainCtrl', function($scope, $rootScope, $http, $translate, $state) {
         document.addEventListener("deviceready", onDeviceReady, false);
 
-        alert('halloooo');
+        
         function onDeviceReady() {
             checkConnection();
         }
@@ -46,7 +46,6 @@ app
         }
 
         function onOnline() {
-            alert('u r online')
             $('#wrap').fadeTo("slow", 1);
             $('#wrap').css("pointer-events", "");
             $("#internet_connection_msg").remove();
