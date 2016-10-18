@@ -11,7 +11,7 @@ app
     .controller('MainCtrl', function($scope, $rootScope, $http, $translate, $state) {
         document.addEventListener("deviceready", onDeviceReady, false);
 
-        
+
         function onDeviceReady() {
             checkConnection();
         }
@@ -64,10 +64,17 @@ app
             console.log("Location setting is " + (enabled ? "enabled" : "disabled"));
             if (enabled) {
                 alert('location on');
-               // getCurrentPosition();
+                // getCurrentPosition();
             } else {
-                alert('location off');
-                cordova.plugins.diagnostic.switchToSettings();
+                swal({
+                        title: 'GPS',
+                        text: 'Turn On Location Services to allow "LimoLogix" to Determine Your Location',
+                        type: "info",
+                        confirmButtonText: 'Settings'
+                    },
+                    function() {
+                        cordova.plugins.diagnostic.switchToSettings();
+                    })
             }
         }, function(error) {
             console.error("The following error occurred: " + error);

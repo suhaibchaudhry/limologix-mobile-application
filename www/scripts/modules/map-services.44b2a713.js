@@ -7,16 +7,17 @@ function funMapService($q, $rootScope, Faye, appSettings, services) {
     this.map;
     this.marker;
     this.channelName;
+    this.currentLocation;
     var self = this;
     alert('map service')
-    this.init = function() {
+    this.init = function(mapId) {
         var options = {
             center: new google.maps.LatLng(29.7630556, -95.3630556),
             zoom: 13,
             disableDefaultUI: true
         }
         self.map = new google.maps.Map(
-            document.getElementById("dvMap"), options
+            document.getElementById(mapId), options
         );
         self.places = new google.maps.places.PlacesService(self.map);
         self.addMarker();
@@ -40,15 +41,15 @@ function funMapService($q, $rootScope, Faye, appSettings, services) {
             console.log("home page-  \"not_determined\" to: " + status);
             if (status == 'denied' || status == "not_determined") {
                 swal({
-                        title: 'Location Service',
-                        text: 'Turn on your GPS',
-                        type: "warning",
-                        confirmButtonText:'Settings'
+                        title: 'GPS',
+                        text: 'Turn On Location Services to allow "LimoLogix" to determine your location',
+                        type: "info",
+                        confirmButtonText: 'Settings'
                     },
                     function() {
                         cordova.plugins.diagnostic.switchToSettings();
                     })
-                
+
             } else {
                 self.getCurrentPositions();
                 self.watchPositions();
@@ -56,6 +57,7 @@ function funMapService($q, $rootScope, Faye, appSettings, services) {
         });
 
         if (navigator.geolocation) {
+            var deferred = $q.defer();
             navigator.geolocation.getCurrentPosition(function(position) {
                 console.log('positions', position.coords.latitude, position.coords.longitude);
                 var LatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
@@ -65,14 +67,34 @@ function funMapService($q, $rootScope, Faye, appSettings, services) {
                     mapTypeId: google.maps.MapTypeId.ROADMAP
                 };
 
+
+                self.getLocationAddressByPositions(LatLng); // Get address name by positions for google navigator               
+
                 self.map.setCenter(LatLng);
                 self.marker.setPosition(LatLng);
                 self.getChannelToPublish(position);
+                deferred.resolve();
                 //self.watchPositions();
 
             });
         } else {
             alert('Geo Location feature is not supported in this browser.');
+            deferred.reject();
+        }
+        return deferred.promise;
+    }
+
+    this.getLocationAddressByPositions = function(LatLng) {
+        var geocoder = new google.maps.Geocoder();
+        if (geocoder) {
+            geocoder.geocode({
+                'latLng': LatLng
+            }, function(results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    console.log("driver current location = ", results[0].formatted_address);
+                    self.currentLocation = results[0].formatted_address;
+                }
+            });
         }
     }
 
@@ -82,11 +104,11 @@ function funMapService($q, $rootScope, Faye, appSettings, services) {
         cordova.plugins.diagnostic.registerLocationAuthorizationStatusChangeHandler(function(status) {
             console.log("home page-  \"not_determined\" to: " + status);
             if (status == 'denied' || status == "not_determined") {
-                  swal({
-                        title: 'Location Service',
-                        text: 'Turn on your GPS',
-                        type: "warning",
-                        confirmButtonText:'Settings'
+                swal({
+                        title: 'GPS',
+                        text: 'Turn On Location Services to allow "LimoLogix" to determine your location',
+                        type: "info",
+                        confirmButtonText: 'Settings'
                     },
                     function() {
                         cordova.plugins.diagnostic.switchToSettings();
@@ -109,8 +131,40 @@ function funMapService($q, $rootScope, Faye, appSettings, services) {
             self.map.setCenter(center);
         }
         self.sendLocationsToServerThroughFaye(position);
-        //faye(Faye, $scope, $window, position);
+        self.checkLocationReached(position);
     };
+
+    this.getPickupLatLng = function(pickup_lat,pickup_lng,cntrlScope){
+        self.pickup_lat = pickup_lat;
+        self.pickup_lng = pickup_lng;
+        self.cntrlScope = cntrlScope;
+    }
+
+    this.checkLocationReached = function(position) {
+        var p1 = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);//driver current location
+        var p2 = new google.maps.LatLng(self.pickup_lat, self.pickup_lng);//pickup location
+        console.log("p1 and p2", p1, p2, google.maps.geometry.spherical.computeDistanceBetween(p1, p2));
+        //alert(google.maps.geometry.spherical.computeDistanceBetween(p1, p2));
+        if (google.maps.geometry.spherical.computeDistanceBetween(p1, p2) < 500) { //within 1/2km 
+            swal({
+                title: 'Boarded!',
+                text: 'You are close to pickup location',
+                type: "success"
+            }, function() {
+                //navigator.geolocation.clearWatch($scope.googleposition_id);
+
+            })
+            $('#boardedBtn').addClass('buttonBoarded');
+            self.cntrlScope.bool.isBoardedBtnVisible = true;
+            // if (!$scope.$$phase) {
+            //     $scope.$digest();
+            // };
+            //$('#boardedBtn').addClass('buttonBoarded');                      
+        } else {
+            // alert('out of radius')                    
+
+        }
+    }
 
     // onError Callback receives a PositionError object
     this.onError = function(error) {
@@ -165,7 +219,7 @@ function funMapService($q, $rootScope, Faye, appSettings, services) {
         }
     }
 
-    this.addDirectionRoutes = function(address_type) {
+    this.addDirectionRoutes = function(address_type, current_location, start, end) {
             var source, destination;
             var directionsDisplay;
             var directionsService = new google.maps.DirectionsService();
@@ -177,9 +231,9 @@ function funMapService($q, $rootScope, Faye, appSettings, services) {
                 }
             });
             directionsDisplay.setMap(self.map);
-            calcRoute(address_type);
+            calcRoute(address_type, start, end);
 
-            function calcRoute(address_type) {
+            function calcRoute(address_type, start, end) {
                 var icons = {
                     start: new google.maps.MarkerImage(
                         'images/source_marker.png',
@@ -193,41 +247,48 @@ function funMapService($q, $rootScope, Faye, appSettings, services) {
                         new google.maps.Point(22, 32))
                 };
 
-                var start = 'Marathahalli, Bengaluru, Karnataka 560037, India';
-                var end = 'Hebbal, Bengaluru, Karnataka 560024, India';
+                self.start_point = start; //'Marathahalli, Bengaluru, Karnataka 560037, India';
+                self.end_point = end; //'Hebbal, Bengaluru, Karnataka 560024, India';
                 var request = {
-                    origin: start,
-                    destination: end,
+                    origin: self.start_point,
+                    destination: self.end_point,
                     travelMode: google.maps.TravelMode.DRIVING
                 };
                 directionsService.route(request, function(response, status) {
                     if (status == google.maps.DirectionsStatus.OK) {
                         directionsDisplay.setDirections(response);
                         var leg = response.routes[0].legs[0];
-                        makeSourceMarker(leg.start_location, icons.start, start, self.map, address_type);
-                        makeDestinationMarker(leg.end_location, icons.end, end, self.map, address_type);
+                        makeSourceMarker(leg.start_location, icons.start, self.start_point, self.map, address_type);
+                        makeDestinationMarker(leg.end_location, icons.end, self.end_point, self.map, address_type);
                     }
                 });
             }
 
-            function makeSourceMarker(position, icon, title, map, address_type) {
+            function makeSourceMarker(position, icon, pickup_point, map, address_type) {
                 var marker_pickup = new google.maps.Marker({
                     position: position,
                     map: self.map,
                     icon: icon,
-                    title: "<div><img border='0' align='Left' width='100%' src='images/driver/popup.png'></img><p class = 'pickUpText'>" + title + "</p></div>"
+                    title: "<div>" +
+                        "<img border='0' id='infoWindowid' align='Left' width='100%' src='images/driver/popup1.ab07a1b7.jpg'></img>" +
+                        "<a href ='http://maps.google.com/maps?saddr=" + self.currentLocation + "&amp;daddr=" + pickup_point + "'class = ''><img src='images/driver/nav-icon.1a509916.png' class = 'nav-icon1'/></a>" +
+                        "<a href ='http://maps.google.com/maps?saddr=" + self.currentLocation + "&amp;daddr=" + pickup_point + "'class = 'pickUpText'>" + pickup_point + "</p></div>"
+                        //"<div><img border='0' align='Left' width='100%' src='images/driver/popup.png'></img><p class = 'pickUpText'>" + title + "</p></div>"
                 });
                 self.map.setCenter(marker_pickup);
                 if (address_type == "pickup")
                     pickupInfoWindow(marker_pickup, marker_pickup.title);
             }
 
-            function makeDestinationMarker(position, icon, title, map) {
+            function makeDestinationMarker(position, icon, dropoff_point, map) {
                 var marker_dropoff = new google.maps.Marker({
                     position: position,
                     map: self.map,
                     icon: icon,
-                    title: "<div><img border='0' align='Left' width='100%' src='images/driver/popup.png'></img><p class = 'pickUpText'>" + title + "</p></div>"
+                    title: "<div>" +
+                        "<img border='0' id='infoWindowid' align='Left' width='100%' src='images/driver/popup1.ab07a1b7.jpg'></img>" +
+                        "<a href ='http://maps.google.com/maps?saddr=" + self.currentLocation + "&amp;daddr=" + dropoff_point + "'class = ''><img src='images/driver/nav-icon.1a509916.png' class = 'nav-icon1'/></a>" +
+                        "<a href ='http://maps.google.com/maps?saddr=" + self.currentLocation + "&amp;daddr=" + dropoff_point + "'class = 'pickUpText'>" + dropoff_point + "</p></div>"
                 });
                 self.map.setCenter(marker_dropoff);
                 if (address_type == "dropoff")

@@ -423,7 +423,7 @@ app
                 });
             }
 
-            MapServices.init();
+            MapServices.init('dvMap');
             MapServices.getCurrentPositions();
             MapServices.watchPositions();
             

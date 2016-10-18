@@ -24,9 +24,19 @@ app
             $scope.tripsummary = {};
             $rootScope.isAdsShow = false;
             $scope.isAccepted = false;
-            getCustomerRoute();
+            getCustomerRoute();            
+
+            MapServices.init('dvMap_requestscreen');
+            MapServices.getCurrentPositions().then(function(){
+                MapServices.addDirectionRoutes('notification','',$scope.tripsummary.pickupAt,$scope.tripsummary.dropoffAt);
+                MapServices.watchPositions();
+            },function(error){
+                console.log(error);
+            });
             
-            dispatchRideProvider.getRoutes('', $scope.tripsummary.pickupAt, $scope.tripsummary.dropoffAt, notify, false, '', 'dvMap_requestscreen');
+            
+
+            //dispatchRideProvider.getRoutes('', $scope.tripsummary.pickupAt, $scope.tripsummary.dropoffAt, notify, false, '', 'dvMap_requestscreen');
 
             function getCustomerRoute() {
                 $scope.tripsummary = {
@@ -37,12 +47,9 @@ app
                     price: "$" + driverLocationConstants.location.price,
                     trip_id: driverLocationConstants.location.id
                 };
-                // $scope.tripsummary.pickupAt = driverLocationConstants.location.start_destination;//'Marathahalli, Bengaluru, Karnataka 560037, India';
-                //$scope.tripsummary.dropoffAt = driverLocationConstants.location.end_destination;//'Hebbal, Bengaluru, Karnataka 560024, India';
-
             }
 
-            getChannelName();
+            //getChannelName();
 
             function getChannelName() {
                 var url = appSettings.serverPath + appSettings.serviceApis.getChannelName;
@@ -124,9 +131,9 @@ app
                 // 'message: ' + error.message + '\n');
             }
 
-            navigator.geolocation.getCurrentPosition(onSuccess, onError, { maximumAge: 3000, timeout: 5000, enableHighAccuracy: true });
+            //navigator.geolocation.getCurrentPosition(onSuccess, onError, { maximumAge: 3000, timeout: 5000, enableHighAccuracy: true });
 
-            navigator.geolocation.watchPosition(onSuccess, onError, { timeout: 30000 })
+            //navigator.geolocation.watchPosition(onSuccess, onError, { timeout: 30000 })
 
             function faye(Faye, $scope, $window, position) {
                 var Logger = {
