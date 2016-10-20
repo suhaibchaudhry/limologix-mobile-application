@@ -18,20 +18,11 @@
         </div>
     </div>
         <div id="dvMap_requestscreen" class='dvMap_circle' style="width:230px;height:230px;margin: 0 auto;"></div>
-        <div class="fixed-footer">
-            <p class='requestScreen_pickup_point text-white' style="display:-webkit-box !important">{{tripsummary.pickupAt}}</p><p class='requestScreen_pickup_point text-white'>{{tripsummary.price}}</p>
-            <div class="btn_container">
-          
-            
-            <!-- <div class="row" style="margin-top:35px;">
-                <div class="col-xs-6">
-                    <button type="button" class="b1 text-white btn btn-green btn-lg col-md-12 input-lg" ng-click="Personal_previous() ">ACCEPT</button>
-                </div>
-                <div class="col-xs-6">
-                    <button type="button" class="b2 text-white btn btn-red btn-lg col-md-12 input-lg" ng-click="Personal_Next()" ng-disabled='step2.$invalid'>DENY</button>
-                </div>
-            </div> -->
-
+        <div class="fixed-footer"> 
+            <p class='requestScreen_pickup_point text-white'>{{tripsummary.price}}</p>
+                   
+            <p class='requestScreen_pickup_point text-white' style="display:-webkit-box !important">{{tripsummary.pickupAt}}</p>
+            <div class="btn_container">          
             <div class="row" style="margin-top:35px;">
             <div class="col-xs-6">
                 <button type="button" class="b1 text-white btn btn-green btn-lg col-md-12 input-lg" ng-disabled="isAccepted" ng-click="trip_accept()">ACCEPT</button>

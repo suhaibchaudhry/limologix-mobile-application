@@ -22,7 +22,7 @@ app
 
             }
             $scope.resetPwd = {};
-            $scope.resetPwd.userName = constant.driver.full_name;
+            $scope.resetPwd.userName = localStorage.getItem('driver_name')//constant.driver.full_name;
             $rootScope.isAdsShow = false;
 
             //Fix for - Header moves down when device keyboard is open and when user scroll the screen

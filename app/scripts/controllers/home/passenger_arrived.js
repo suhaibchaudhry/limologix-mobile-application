@@ -15,6 +15,7 @@ app
             $scope.tripsummary = {};
             $rootScope.isAdsShow = false;
             $scope.bool = {};
+            $scope.cntrlName = "Arrived";
             $scope.bool.isArrived = false;
             getCustomerRoute();
             //clearInterval($rootScope.getLoc);
@@ -39,7 +40,19 @@ app
 
                     trip_id: driverLocationConstants.location.id
                 };
+
+                // MapServices.init('dvMap_arrived');
+                // MapServices.getCurrentPositions($scope).then(function() {
+                //     MapServices.addDirectionRoutes('dropoff', '', $scope.tripsummary.pickupAt, $scope.tripsummary.dropoffAt);
+                //     //Mapservices.getDropoffLatLng($scope.tripsummary.dropoffAtLat, $scope.tripsummary.dropoffAtLng, $scope);
+                //     MapServices.watchPositions();
+                // }, function(error) {
+                //     console.log(error);
+                // });
             }
+
+
+
 
             var options = {
                 maximumAge: 3600000,
@@ -71,15 +84,15 @@ app
 
             }
 
-            var options = {
-                maximumAge: 3000000,
-                timeout: 3000,
-                enableHighAccuracy: true,
-            }
+            // var options = {
+            //     maximumAge: 3000000,
+            //     timeout: 3000,
+            //     enableHighAccuracy: true,
+            // }
 
-            // function getDestLoc(){
+
             $scope.googlepositionDest_id = navigator.geolocation.watchPosition(onSuccess, onError, options)
-                //  }
+
 
 
             // getChannelName();
@@ -107,7 +120,7 @@ app
                 }
 
 
-                faye(Faye,$scope,$rootScope,$window,position);
+                //faye(Faye, $scope, $rootScope, $window, position);
 
                 var p1 = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
                 var p2 = new google.maps.LatLng($scope.tripsummary.dropoffAtLat, $scope.tripsummary.dropoffAtLng);

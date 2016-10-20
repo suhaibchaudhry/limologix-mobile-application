@@ -13,6 +13,7 @@ app
             
             $scope.go_online = function() {
                 $state.go('core.home');
+                //$state.go('core.passenger_boarded');
             }
             
         }

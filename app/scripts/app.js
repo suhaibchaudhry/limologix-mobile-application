@@ -213,7 +213,7 @@
         $rootScope.$state = $state;
         $rootScope.$stateParams = $stateParams;
         $rootScope.$on('$stateChangeSuccess', function(event, toState) {
-
+            //alert(toState.name);
             event.targetScope.$watch('$viewContentLoaded', function() {
                 angular.element('#pageloader').css('display','block');
                 angular.element('html, body, #content').animate({ scrollTop: 0 }, 200);

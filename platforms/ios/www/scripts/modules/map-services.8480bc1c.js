@@ -178,6 +178,7 @@ function funMapService($q, $rootScope, Faye, appSettings, services) {
                     $('#arrivedBtn').addClass('buttonArrived');
                     self.cntrlScope.bool.isArrived = true;
                 }
+
                 // if (!$scope.$$phase) {
                 //     $scope.$digest();
                 // };                   

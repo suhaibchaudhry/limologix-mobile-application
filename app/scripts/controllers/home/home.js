@@ -19,6 +19,7 @@ app
             $scope.driver_name = localStorage.getItem('driver_name');
             $scope.company_name = localStorage.getItem('company_name');
             $scope.showAds = false;
+            $scope.cntrlName = "home";
 
             //Store auth-token - After login and app kills
             $http.defaults.headers.common['Auth-Token'] = localStorage.getItem('Auth-Token');
@@ -423,9 +424,9 @@ app
                 });
             }
 
-            MapServices.init('dvMap');
-            MapServices.getCurrentPositions();
-            MapServices.watchPositions();
+            MapServices.init('dvMap',$scope);
+           // MapServices.getCurrentPositions($scope);
+           // MapServices.watchPositions();
             
 
             // function getCurrentPosition(){

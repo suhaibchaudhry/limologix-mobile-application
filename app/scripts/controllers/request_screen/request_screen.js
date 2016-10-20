@@ -9,8 +9,8 @@
  */
 app
     .controller('requestScreenCtrl', ['$scope', '$rootScope', '$state', '$http', 'appSettings', 'notify', '$window',
-        'services', 'AppConstants', 'dispatchRideProvider', 'driverLocationConstants', 'Faye', '$location','MapServices',
-        function($scope, $rootScope, $state, $http, appSettings, notify, $window, services, constants, dispatchRideProvider, driverLocationConstants, Faye, $location,MapServices) {
+        'services', 'AppConstants', 'dispatchRideProvider', 'driverLocationConstants', 'Faye', '$location', 'MapServices',
+        function($scope, $rootScope, $state, $http, appSettings, notify, $window, services, constants, dispatchRideProvider, driverLocationConstants, Faye, $location, MapServices) {
             setTimeout(function() {
                 var fixedDivs = jQuery('header').innerHeight() + jQuery('footer').innerHeight() + jQuery('.fixed-head').innerHeight() + jQuery('.fixed-footer').innerHeight();
                 var mapHeight = jQuery(window).innerHeight() - fixedDivs - 20;
@@ -24,17 +24,9 @@ app
             $scope.tripsummary = {};
             $rootScope.isAdsShow = false;
             $scope.isAccepted = false;
-            getCustomerRoute();            
+            $scope.cntrlName = 'notification';
+            getCustomerRoute();
 
-            MapServices.init('dvMap_requestscreen');
-            MapServices.getCurrentPositions().then(function(){
-                MapServices.addDirectionRoutes('notification','',$scope.tripsummary.pickupAt,$scope.tripsummary.dropoffAt);
-                MapServices.watchPositions();
-            },function(error){
-                console.log(error);
-            });
-            
-            
 
             //dispatchRideProvider.getRoutes('', $scope.tripsummary.pickupAt, $scope.tripsummary.dropoffAt, notify, false, '', 'dvMap_requestscreen');
 
@@ -47,6 +39,14 @@ app
                     price: "$" + driverLocationConstants.location.price,
                     trip_id: driverLocationConstants.location.id
                 };
+                console.log('price', $scope.tripsummary.price, driverLocationConstants.location.price)
+                MapServices.init('dvMap_requestscreen',$scope);
+               // MapServices.getCurrentPositions($scope).then(function() {
+                    MapServices.addDirectionRoutes('notification', '', $scope.tripsummary.pickupAt, $scope.tripsummary.dropoffAt);
+                //     MapServices.watchPositions();
+                // }, function(error) {
+                //     console.log(error);
+                // });
             }
 
             //getChannelName();
