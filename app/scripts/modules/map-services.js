@@ -9,8 +9,10 @@ function funMapService($q, $rootScope, Faye, appSettings, services) {
     this.channelName;
     this.currentLocation;
     this.cntrlScope;
+
     var self = this;
-    alert('map service')
+    self.boardedSwal = false;
+    self.arrivedSwal = false;
     this.init = function(mapId, cntrlScope) {
         self.mapId = mapId;
         var options = {
@@ -63,7 +65,7 @@ function funMapService($q, $rootScope, Faye, appSettings, services) {
         });
 
         if (navigator.geolocation) {
-            var deferred = $q.defer();
+            //var deferred = $q.defer();
             navigator.geolocation.getCurrentPosition(function(position) {
                 console.log('positions', position.coords.latitude, position.coords.longitude);
                 var LatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
@@ -74,7 +76,7 @@ function funMapService($q, $rootScope, Faye, appSettings, services) {
                 };
                 self.map = new google.maps.Map(document.getElementById(self.mapId), mapOptions);
                 if (self.marker) self.marker.setMap(null);
-               // var geolocate = new google.maps.LatLng( position.coords.latitude, position.coords.longitude);
+                // var geolocate = new google.maps.LatLng( position.coords.latitude, position.coords.longitude);
                 self.marker = new google.maps.Marker({
                     map: self.map,
                     position: LatLng,
@@ -88,15 +90,15 @@ function funMapService($q, $rootScope, Faye, appSettings, services) {
                 self.marker.setPosition(LatLng);
                 self.getChannelToPublish(position);
                 self.watchPositions();
-                deferred.resolve();
+                //deferred.resolve();
 
 
             });
         } else {
             alert('Geo Location feature is not supported in this browser.');
-            deferred.reject();
+            //deferred.reject();
         }
-        return deferred.promise;
+        //return deferred.promise;
     }
 
     this.getLocationAddressByPositions = function(LatLng) {
@@ -108,8 +110,8 @@ function funMapService($q, $rootScope, Faye, appSettings, services) {
                 if (status == google.maps.GeocoderStatus.OK) {
                     console.log("driver current location = ", results[0].formatted_address);
                     self.currentLocation = results[0].formatted_address;
-                    if(self.cntrlScope.tripsummary)
-                      self.addDirectionRoutes(self.cntrlScope.address_type, self.current_location, self.cntrlScope.tripsummary.pickupAt, self.cntrlScope.tripsummary.dropoffAt);
+                    if (self.cntrlScope.tripsummary)
+                        self.addDirectionRoutes(self.cntrlScope.address_type, self.current_location, self.cntrlScope.tripsummary.pickupAt, self.cntrlScope.tripsummary.dropoffAt);
                 }
             });
         }
@@ -147,51 +149,76 @@ function funMapService($q, $rootScope, Faye, appSettings, services) {
             var center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
             //self.map.setCenter(center);
         }
-        self.sendLocationsToServerThroughFaye(position);
-        console.log('self.cntrlScope', self.cntrlScope)
-            if (self.cntrlScope.tripsummary)
+        var isDriverLoggedIn = localStorage.getItem('isLoggedIn');
+        if (isDriverLoggedIn == 'true') {
+            self.sendLocationsToServerThroughFaye(position);
+            console.log('self.cntrlScope', self.cntrlScope)
+            //if (self.cntrlScope.tripsummary)
+            if (self.cntrlScope.address_type == "pickup")
                 self.checkLocationReached(position);
-            // if(self.cntrlScope.cntrlName != "notification")
-            //    self.checkLocationReached(position);
+            if (self.cntrlScope.address_type == "dropoff")
+                self.checkLocationReached(position);
+        }
+
+
+        // if(self.cntrlScope.cntrlName != "notification")
+        //    self.checkLocationReached(position);
     };
     this.checkLocationReached = function(position) {
         var p1 = new google.maps.LatLng(position.coords.latitude, position.coords.longitude); //driver current location
 
-        if (self.cntrlScope.cntrlName == "Boarded") {
+        if (self.cntrlScope.cntrlName == "Boarded" && !self.boardedSwal) {
             var p2 = new google.maps.LatLng(self.cntrlScope.tripsummary.pickupAtLat, self.cntrlScope.tripsummary.pickupAtLng); //pickup location
             var swal_title = "Boarded";
-            if (google.maps.geometry.spherical.computeDistanceBetween(p1, p2) < 500) {
+            if (google.maps.geometry.spherical.computeDistanceBetween(p1, p2) < 200) {
+               // alert('pickup') //within 1/2km 
+                swal({
+                    title: swal_title,
+                    text: 'You are close to' + self.cntrlScope.cntrlName + ' ' + 'location',
+                    type: "success"
+                }, function() {
+                    self.boardedSwal = true;
+                    //self.destroyWatchId();
+                    //navigator.geolocation.clearWatch($scope.googleposition_id);
+
+                })
+                $('#boardedBtn').addClass('buttonBoarded');
+                self.cntrlScope.bool.isBoardedBtnVisible = true;
+                if (!self.cntrlScope.$$phase) {
+                    self.cntrlScope.$digest();
+                };
+            } else {
+                // alert('out of radius')                    
+
+            }
+        } 
+        if (self.cntrlScope.cntrlName == "Arrived" && !self.arrivedSwal) {
+            var p2 = new google.maps.LatLng(self.cntrlScope.tripsummary.dropoffAtLat, self.cntrlScope.tripsummary.dropoffAtLng); //dropoff location
+            var swal_title = "Arrived";
+            if (google.maps.geometry.spherical.computeDistanceBetween(p1, p2) < 200) {
+              //alert('distination')
                 //alert('reached') //within 1/2km 
                 swal({
                     title: swal_title,
                     text: 'You are close to' + self.cntrlScope.cntrlName + ' ' + 'location',
                     type: "success"
                 }, function() {
-                    self.destroyWatchId();
+                    self.arrivedSwal = true;
+                    // self.destroyWatchId();
                     //navigator.geolocation.clearWatch($scope.googleposition_id);
 
                 })
-                if (self.cntrlScope.cntrlName == "Boarded") {
-                    $('#boardedBtn').addClass('buttonBoarded');
-                    self.cntrlScope.bool.isBoardedBtnVisible = true;
-                } else {
-                    $('#arrivedBtn').addClass('buttonArrived');
-                    self.cntrlScope.bool.isArrived = true;
-                }
-                // if (!$scope.$$phase) {
-                //     $scope.$digest();
-                // };                   
+
+                $('#arrivedBtn').addClass('buttonArrived');
+                self.cntrlScope.bool.isArrived = true;
+                if (!self.cntrlScope.$$phase) {
+                    self.cntrlScope.$digest();
+                };
             } else {
                 // alert('out of radius')                    
 
             }
-            // console.log("p1 and p2 = boarded", p1, p2, google.maps.geometry.spherical.computeDistanceBetween(p1, p2));
         }
-        // else{
-        //    var p2 = new google.maps.LatLng(self.cntrlScope.tripsummary.dropoffAtLat, self.cntrlScope.tripsummary.dropoffAtLng);//dropoff location
-        //    var swal_title = "Arrived"
-        //    //console.log("p1 and p2 = arrived", p1, p2, google.maps.geometry.spherical.computeDistanceBetween(p1, p2));
-        // }
 
 
 

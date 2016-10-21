@@ -16,6 +16,7 @@ app
             $rootScope.isAdsShow = false;
             $scope.bool = {};
             $scope.cntrlName = "Arrived";
+            $scope.address_type = "dropoff";
             $scope.bool.isArrived = false;
             getCustomerRoute();
             //clearInterval($rootScope.getLoc);
@@ -41,11 +42,11 @@ app
                     trip_id: driverLocationConstants.location.id
                 };
 
-                // MapServices.init('dvMap_arrived');
+                MapServices.init('dvMap_arrived',$scope);
                 // MapServices.getCurrentPositions($scope).then(function() {
                 //     MapServices.addDirectionRoutes('dropoff', '', $scope.tripsummary.pickupAt, $scope.tripsummary.dropoffAt);
                 //     //Mapservices.getDropoffLatLng($scope.tripsummary.dropoffAtLat, $scope.tripsummary.dropoffAtLng, $scope);
-                //     MapServices.watchPositions();
+               MapServices.watchPositions();
                 // }, function(error) {
                 //     console.log(error);
                 // });
@@ -165,7 +166,7 @@ app
                     id: $scope.tripsummary.trip_id
                 }
 
-                if ($rootScope.online) {
+                //if ($rootScope.online) {
                     var url = appSettings.serverPath + appSettings.serviceApis.passengerArrived;
                     services.funcPostRequest(url, { "trip": $scope.trip }).then(function(response) {
                         notify.closeAll();
@@ -181,9 +182,9 @@ app
                     if (!$scope.$$phase) {
                         $scope.$digest();
                     };
-                } else {
-                    alert('The internet connection appears to be offline');
-                }
+                // } else {
+                //     alert('The internet connection appears to be offline');
+                // }
 
             }
 

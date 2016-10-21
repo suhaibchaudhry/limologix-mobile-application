@@ -42,7 +42,7 @@ app
                 console.log('price', $scope.tripsummary.price, driverLocationConstants.location.price)
                 MapServices.init('dvMap_requestscreen',$scope);
                // MapServices.getCurrentPositions($scope).then(function() {
-                    MapServices.addDirectionRoutes('notification', '', $scope.tripsummary.pickupAt, $scope.tripsummary.dropoffAt);
+                   // MapServices.addDirectionRoutes('notification', '', $scope.tripsummary.pickupAt, $scope.tripsummary.dropoffAt);
                 //     MapServices.watchPositions();
                 // }, function(error) {
                 //     console.log(error);

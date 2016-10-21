@@ -42,7 +42,7 @@ app
                 //MapServices.getCurrentPositions($scope).then(function() {
                 // MapServices.addDirectionRoutes('pickup', '', $scope.tripsummary.pickupAt, $scope.tripsummary.dropoffAt);
                 //Mapservices.getPickupLatLng($scope.tripsummary.pickupAtLat,$scope.tripsummary.pickupAtLng,$scope);
-                //MapServices.watchPositions();
+                MapServices.watchPositions();
                 // }, function(error) {
                 //     console.log(error);
                 // });
@@ -149,7 +149,7 @@ app
                     id: $scope.tripsummary.trip_id
                 }
 
-                if ($rootScope.online) {
+               // if ($rootScope.online) {
                     var url = appSettings.serverPath + appSettings.serviceApis.passengerBoarded;
                     services.funcPostRequest(url, { "trip": $scope.trip }).then(function(response) {
                         notify.closeAll();
@@ -164,9 +164,9 @@ app
                     if (!$scope.$$phase) {
                         $scope.$digest();
                     };
-                } else {
-                    alert('The internet connection appears to be offline');
-                }
+                // } else {
+                //     alert('The internet connection appears to be offline');
+                // }
 
             }
 

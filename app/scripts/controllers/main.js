@@ -52,13 +52,13 @@ app
             //alert('online');
         }
 
-        $rootScope.online = navigator.onLine;
-        if (!$rootScope.online) {
-            alert('show network')
-            $("body").append("<p id='internet_connection_msg'>Internet connection appears to be offline</p>");
-        } else {
-            $state.go('core.splash');
-        }
+        // $rootScope.online = navigator.onLine;
+        // if (!$rootScope.online) {
+        //     alert('show network')
+        //     $("body").append("<p id='internet_connection_msg'>Internet connection appears to be offline</p>");
+        // } else {
+        //     $state.go('core.splash');
+        // }
 
         cordova.plugins.diagnostic.isLocationEnabledSetting(function(enabled) {
             console.log("Location setting is " + (enabled ? "enabled" : "disabled"));
