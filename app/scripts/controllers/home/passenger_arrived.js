@@ -9,8 +9,8 @@
  */
 app
     .controller('passengerArrivedCtrl', ['$scope', '$rootScope', '$state', '$http', 'appSettings', 'notify', '$window',
-        'services', 'AppConstants', 'dispatchRideProvider', 'Faye', '$location', 'driverLocationConstants',
-        function($scope, $rootScope, $state, $http, appSettings, notify, $window, services, constants, dispatchRideProvider, Faye, $location, driverLocationConstants) {
+        'services', 'AppConstants', 'dispatchRideProvider', 'Faye', '$location', 'driverLocationConstants','MapServices',
+        function($scope, $rootScope, $state, $http, appSettings, notify, $window, services, constants, dispatchRideProvider, Faye, $location, driverLocationConstants,MapServices) {
 
             $scope.tripsummary = {};
             $rootScope.isAdsShow = false;
@@ -18,6 +18,10 @@ app
             $scope.cntrlName = "Arrived";
             $scope.address_type = "dropoff";
             $scope.bool.isArrived = false;
+
+            // $rootScope.preState = $state.current.name;
+            // localStorage.setItem("lastState",$rootScope.preState);
+
             getCustomerRoute();
             //clearInterval($rootScope.getLoc);
 
@@ -61,7 +65,7 @@ app
                 enableHighAccuracy: true,
             }
 
-            navigator.geolocation.getCurrentPosition(getCurrentPosition, onError, options)
+            //navigator.geolocation.getCurrentPosition(getCurrentPosition, onError, options)
 
             function getCurrentPosition(position) {
                 console.log('driver at', position);
@@ -92,7 +96,7 @@ app
             // }
 
 
-            $scope.googlepositionDest_id = navigator.geolocation.watchPosition(onSuccess, onError, options)
+           // $scope.googlepositionDest_id = navigator.geolocation.watchPosition(onSuccess, onError, options)
 
 
 

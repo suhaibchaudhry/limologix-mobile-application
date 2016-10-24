@@ -12,8 +12,8 @@
 /*jshint -W079 */
 
 //document.addEventListener('deviceready', function onDeviceReady(){
-        //alert('app started')
-    var app = angular
+//alert('app started')
+var app = angular
     .module('LimoCordova', [
         'ngCordova',
         'ngAnimate',
@@ -71,21 +71,21 @@
         'faye'
     ])
 
-    .constant('appSettings', {  
-        server_address: 'http://limologix.softwaystaging.com',//'http://172.16.10.212:9000', 
+.constant('appSettings', {
+        server_address: 'http://limologix.softwaystaging.com', //'http://172.16.10.212:9000', 
         version: 'v1',
-        server_images_path : "http://limologix.api.softwaystaging.com/", //'http://172.16.10.212:9000',
+        server_images_path: "http://limologix.api.softwaystaging.com/", //'http://172.16.10.212:9000',
         serverPath: "http://limologix.api.softwaystaging.com/api/v1/", //'http://172.16.10.212:9000/api/v1/',
-        FayeServerURL : 'http://limologix.softwaystaging.com:9292/faye', //'http://172.16.10.212:9292/faye',
+        FayeServerURL: 'http://limologix.softwaystaging.com:9292/faye', //'http://172.16.10.212:9292/faye',
         serviceApis: {
             signin: 'drivers/sign_in',
-            forgotPassword:'drivers/forgot_password',
-            restpasswrdfromemail:'drivers/reset_password',
+            forgotPassword: 'drivers/forgot_password',
+            restpasswrdfromemail: 'drivers/reset_password',
             registration: 'drivers/registration',
             displayAdvertisements: 'master_data/advertisements',
             my_profile: 'drivers/profile/show',
             profileupdate: 'drivers/profile/update',
-            driver_recharge:'drivers/profile/recharge_account',
+            driver_recharge: 'drivers/profile/recharge_account',
             getDriverInfo: 'drivers/profile/show',
             getCreditCardInfo: 'drivers/profile/get_credit_card_info',
             tripAccept: 'drivers/trips/accept',
@@ -93,25 +93,25 @@
             company_getCountries: 'master_data/countries',
             company_getStates: 'master_data/states',
             vehicle_types: 'master_data/vehicles/types',
-            vehicle_getVehicleTypes :'master_data/vehicles/types',
-            vehicle_getMakes :'master_data/vehicles/makes',
-            vehicle_getModels :'master_data/vehicles/models',
-            update_contact_info :'drivers/profile/update_contact_information',
-            update_personal_info:'drivers/profile/update_personal_information',
-            update_vehicle_info:'drivers/profile/update_vehicle',
-            update_card_info:'/drivers/profile/update_credit_card',
-            getVisibleStatus:'drivers/profile/update_visible_status',
-            reset_auth_details:'drivers/profile/reset_authentication_details',
-            forgotPassword:'drivers/forgot_password',
-            restpasswrdfromemail:'drivers/reset_password',
-            getChannelName :'drivers/profile/channel',
-            getTopicName : 'drivers/profile/topic',
-            passengerBoarded : 'drivers/trips/start',
-            passengerArrived : 'drivers/trips/stop', 
+            vehicle_getVehicleTypes: 'master_data/vehicles/types',
+            vehicle_getMakes: 'master_data/vehicles/makes',
+            vehicle_getModels: 'master_data/vehicles/models',
+            update_contact_info: 'drivers/profile/update_contact_information',
+            update_personal_info: 'drivers/profile/update_personal_information',
+            update_vehicle_info: 'drivers/profile/update_vehicle',
+            update_card_info: '/drivers/profile/update_credit_card',
+            getVisibleStatus: 'drivers/profile/update_visible_status',
+            reset_auth_details: 'drivers/profile/reset_authentication_details',
+            forgotPassword: 'drivers/forgot_password',
+            restpasswrdfromemail: 'drivers/reset_password',
+            getChannelName: 'drivers/profile/channel',
+            getTopicName: 'drivers/profile/topic',
+            passengerBoarded: 'drivers/trips/start',
+            passengerArrived: 'drivers/trips/stop',
             logout: 'drivers/logout',
         }
     })
-    .factory('Faye', ['$window','appSettings',function($window,appSettings) {
+    .factory('Faye', ['$window', 'appSettings', function($window, appSettings) {
         var Logger = {
             incoming: function(message, callback) {
                 //console.log('incoming', message);
@@ -130,8 +130,8 @@
         var client = new Faye.Client(FayeServerURL);
         client.addExtension(Logger);
         return {
-            getClient: function(){
-              return client;
+            getClient: function() {
+                return client;
             },
             publish: function(channel, message) {
                 client.publish(channel, message);
@@ -146,7 +146,7 @@
     .factory('authHttpResponseInterceptor', ['$q', '$location', function($q, $location) {
         return {
             response: function(response) {
-                 $("#spinner").hide();
+                $("#spinner").hide();
                 if (response.status === 401 || response.status === -1) {
                     //notify({ classes: 'alert-success', message: "Session expired" });
                     $location.url('/login');
@@ -161,7 +161,7 @@
             }
         }
     }])
-    .run(['$rootScope', 'notify','$state', '$http', '$stateParams', '$window', 'AppConstants','$timeout',function($rootScope,notify ,$state, $http, $stateParams, $window, constant,$timeout) {
+    .run(['$rootScope', 'notify', '$state', '$http', '$stateParams', '$window', 'AppConstants', '$timeout', function($rootScope, notify, $state, $http, $stateParams, $window, constant, $timeout) {
 
         // //To Check network connectivity
         // $rootScope.online = navigator.onLine;
@@ -187,8 +187,7 @@
         // }, false);
 
 
-
-        notify.config({duration:5000});
+         notify.config({ duration: 5000 });
         //If driver logged in and 
         var driver = $window.sessionStorage['driver'] ? JSON.parse($window.sessionStorage['driver']) : {};
         if (driver['Auth-Token']) {
@@ -197,25 +196,25 @@
             constant.driver = {};
         }
 
-        
+
         var isUserLoggedIn = localStorage.getItem('isLoggedIn');
 
         //if (constant.driver['Auth-Token']) {
-        if(isUserLoggedIn){
+        if (isUserLoggedIn) {
             //$http.defaults.headers.common['Auth-Token'] = $window.sessionStorage['Auth-Token'];
             $http.defaults.headers.common['Auth-Token'] = localStorage.getItem('Auth-Token');
         } else {
             $('#custom_splash').hide();
             $state.go('core.splash')
         }
-        
+
 
         $rootScope.$state = $state;
         $rootScope.$stateParams = $stateParams;
         $rootScope.$on('$stateChangeSuccess', function(event, toState) {
             //alert(toState.name);
             event.targetScope.$watch('$viewContentLoaded', function() {
-                angular.element('#pageloader').css('display','block');
+                angular.element('#pageloader').css('display', 'block');
                 angular.element('html, body, #content').animate({ scrollTop: 0 }, 200);
 
                 setTimeout(function() {
@@ -230,12 +229,12 @@
         });
     }])
 
-    .config(['uiSelectConfig', function(uiSelectConfig) {
-        uiSelectConfig.theme = 'bootstrap';
-    }])
+.config(['uiSelectConfig', function(uiSelectConfig) {
+    uiSelectConfig.theme = 'bootstrap';
+}])
 
-    //angular-language
-    .config(['$translateProvider', '$httpProvider', function($translateProvider, $httpProvider) {
+//angular-language
+.config(['$translateProvider', '$httpProvider', function($translateProvider, $httpProvider) {
         $translateProvider.useStaticFilesLoader({
             prefix: 'languages/',
             suffix: '.json'
@@ -247,12 +246,12 @@
         $httpProvider.interceptors.push('authHttpResponseInterceptor');
 
         //Ajax request spinner
-          var spinnerFunction = function spinnerFunction(data, headersGetter) {
+        var spinnerFunction = function spinnerFunction(data, headersGetter) {
             $("#spinner").show();
             return data;
-          };
+        };
 
-          $httpProvider.defaults.transformRequest.push(spinnerFunction);
+        $httpProvider.defaults.transformRequest.push(spinnerFunction);
     }])
     // .config(function ($compileProvider){
     //     $compileProvider.urlSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|tel):/);
@@ -928,7 +927,7 @@
                 url: '/splash',
                 controller: 'splashCtrl',
                 templateUrl: 'views/tmpl/splash/splash.html'
-            })     
+            })
             //login
             .state('core.login', {
                 url: '/login',
@@ -942,7 +941,7 @@
                 templateUrl: 'views/tmpl/signup/signup.html'
             })
 
-            .state('core.appSettings', {
+        .state('core.appSettings', {
                 url: '/app_settings',
                 controller: 'appSettingCtrl',
                 templateUrl: 'views/tmpl/app_settings/app_settings.html'
@@ -982,7 +981,7 @@
                 templateUrl: 'views/tmpl/home/passenger_arrived.html'
             })
             .state('core.profile.reset_password', {
-                url:'/resetPassword',
+                url: '/resetPassword',
                 controller: 'resetPasswordCtrl',
                 templateUrl: 'views/tmpl/profile/reset_password.html'
             })
@@ -1099,5 +1098,3 @@
                 templateUrl: 'views/tmpl/help.html'
             });
     }])
-
- 

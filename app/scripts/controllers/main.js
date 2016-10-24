@@ -29,7 +29,7 @@ app
             states[Connection.CELL] = 'Cell generic connection';
             states[Connection.NONE] = 'No network connection';
 
-            alert('Connection type: ' + states[networkState]);
+            //alert('Connection type: ' + states[networkState]);
 
             //Event listeners when device lost/gets internet connection
             document.addEventListener("offline", onOffline, false);
@@ -63,7 +63,7 @@ app
         cordova.plugins.diagnostic.isLocationEnabledSetting(function(enabled) {
             console.log("Location setting is " + (enabled ? "enabled" : "disabled"));
             if (enabled) {
-                alert('location on');
+                //alert('location on');
                 // getCurrentPosition();
             } else {
                 swal({

@@ -74,7 +74,15 @@ function funMapService($q, $rootScope, Faye, appSettings, services) {
                     zoom: 13,
                     mapTypeId: google.maps.MapTypeId.ROADMAP
                 };
+                $('#'+self.mapId).children().remove();
                 self.map = new google.maps.Map(document.getElementById(self.mapId), mapOptions);
+                if(self.map){
+                  $("#spinner1").hide();
+                }else{
+                  $("#spinner1").show();
+                }
+                
+
                 if (self.marker) self.marker.setMap(null);
                 // var geolocate = new google.maps.LatLng( position.coords.latitude, position.coords.longitude);
                 self.marker = new google.maps.Marker({
@@ -174,7 +182,7 @@ function funMapService($q, $rootScope, Faye, appSettings, services) {
                // alert('pickup') //within 1/2km 
                 swal({
                     title: swal_title,
-                    text: 'You are close to' + self.cntrlScope.cntrlName + ' ' + 'location',
+                    text: 'You are close to' +' '+ self.cntrlScope.cntrlName + ' ' + 'location',
                     type: "success"
                 }, function() {
                     self.boardedSwal = true;
@@ -200,7 +208,7 @@ function funMapService($q, $rootScope, Faye, appSettings, services) {
                 //alert('reached') //within 1/2km 
                 swal({
                     title: swal_title,
-                    text: 'You are close to' + self.cntrlScope.cntrlName + ' ' + 'location',
+                    text: 'You are close to' + ' ' + self.cntrlScope.cntrlName + ' ' + 'location',
                     type: "success"
                 }, function() {
                     self.arrivedSwal = true;

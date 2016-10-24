@@ -22,6 +22,9 @@ function funchomeCtrl(MapServices, $scope, $rootScope, $state, $http, appSetting
     $scope.showAds = false;
     $scope.cntrlName = "home";
 
+    // $rootScope.preState = $state.current.name;
+    // localStorage.setItem("lastState", $rootScope.preState);
+
     //Store auth-token - After login and app kills
     $http.defaults.headers.common['Auth-Token'] = localStorage.getItem('Auth-Token');
 

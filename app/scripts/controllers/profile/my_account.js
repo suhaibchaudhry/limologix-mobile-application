@@ -52,6 +52,10 @@ app
                 type: undefined
             }
 
+
+            // $rootScope.preState = $state.current.name;
+            // localStorage.setItem("lastState",$rootScope.preState);
+            
             getCountries();
 
             $('body').removeClass('menu-slider');$('body').removeClass('in');
