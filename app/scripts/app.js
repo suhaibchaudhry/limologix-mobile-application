@@ -187,7 +187,11 @@ var app = angular
         // }, false);
 
 
-         notify.config({ duration: 5000 });
+
+
+
+
+        notify.config({ duration: 5000 });
         //If driver logged in and 
         var driver = $window.sessionStorage['driver'] ? JSON.parse($window.sessionStorage['driver']) : {};
         if (driver['Auth-Token']) {
@@ -200,10 +204,12 @@ var app = angular
         var isUserLoggedIn = localStorage.getItem('isLoggedIn');
 
         //if (constant.driver['Auth-Token']) {
-        if (isUserLoggedIn) {
+        if (isUserLoggedIn == "true") {
             //$http.defaults.headers.common['Auth-Token'] = $window.sessionStorage['Auth-Token'];
             $http.defaults.headers.common['Auth-Token'] = localStorage.getItem('Auth-Token');
+
         } else {
+           // alert('else');
             $('#custom_splash').hide();
             $state.go('core.splash')
         }
@@ -258,7 +264,16 @@ var app = angular
     // })
     .config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
         $('#custom_splash').hide();
-        $urlRouterProvider.otherwise('/core/splash');
+        // alert('otherwise');
+        // var prestate = localStorage.getItem("lastState");
+        // alert(prestate)
+        
+        // if (prestate) {
+        //     $urlRouterProvider.otherwise(prestate);
+        // }else{
+            $urlRouterProvider.otherwise('/core/splash');
+            //}
+        
 
         $stateProvider
 

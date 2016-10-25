@@ -19,8 +19,8 @@ app
              $scope.address_type = "pickup";
             $scope.bool.isBoardedBtnVisible = false;
 
-            // $rootScope.preState = $state.current.name;
-            // localStorage.setItem("lastState",$rootScope.preState);
+            $rootScope.preState = $state.current.url;
+            localStorage.setItem("lastState",$rootScope.preState);
             getCustomerRoute();
 
             //dispatchRideProvider.getRoutes($scope.tripsummary.pickupAt, $scope.tripsummary.dropoffAt,notify,true,'pickuppoint','dvMap_boarded');
