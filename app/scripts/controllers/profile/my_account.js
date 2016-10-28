@@ -53,8 +53,8 @@ app
             }
 
 
-            // $rootScope.preState = $state.current.name;
-            // localStorage.setItem("lastState",$rootScope.preState);
+            $rootScope.preState = $state.current.name;
+            localStorage.setItem("lastState",$rootScope.preState);
             
             getCountries();
 

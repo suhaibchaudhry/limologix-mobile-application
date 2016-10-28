@@ -19,10 +19,19 @@ app
             $scope.address_type = "dropoff";
             $scope.bool.isArrived = false;
 
-            // $rootScope.preState = $state.current.name;
-            // localStorage.setItem("lastState",$rootScope.preState);
+
+            $rootScope.preState = $state.current.name;
+            localStorage.setItem("lastState",$rootScope.preState);
 
             getCustomerRoute();
+
+            $scope.$watchGroup(['cntrlName','address_type','tripsummary','bool'], function(){
+                MapServices.cntrlName = $scope.cntrlName;
+                MapServices.address_type = $scope.address_type;
+                MapServices.tripsummary = $scope.tripsummary;
+                MapServices.bool = $scope.bool;
+
+            })
             //clearInterval($rootScope.getLoc);
 
             var map_height = jQuery(window).innerHeight() - (jQuery('.b2').innerHeight() + jQuery('.navbar-header').innerHeight())
@@ -43,14 +52,17 @@ app
                     dropoffAtLat: driverLocationConstants.location.end_destination_lat,
                     dropoffAtLng: driverLocationConstants.location.end_destination_lng,
 
-                    trip_id: driverLocationConstants.location.id
+                    trip_id: driverLocationConstants.location.id,
+
+                    source_place_id: driverLocationConstants.location.source_place_id,
+                    destination_place_id: driverLocationConstants.location.destination_place_id
                 };
 
-                MapServices.init('dvMap_arrived',$scope);
+                MapServices.init('dvMap_arrived');
                 // MapServices.getCurrentPositions($scope).then(function() {
                 //     MapServices.addDirectionRoutes('dropoff', '', $scope.tripsummary.pickupAt, $scope.tripsummary.dropoffAt);
                 //     //Mapservices.getDropoffLatLng($scope.tripsummary.dropoffAtLat, $scope.tripsummary.dropoffAtLng, $scope);
-               MapServices.watchPositions();
+              // MapServices.watchPositions();
                 // }, function(error) {
                 //     console.log(error);
                 // });
@@ -114,57 +126,57 @@ app
             // This method accepts a Position object, which contains the
             // current GPS coordinates
             //if (navigator.geolocation) {
-            function onSuccess(position) {
-                console.log("position", position);
+            // function onSuccess(position) {
+            //     console.log("position", position);
 
-                //update marker position
-                if (dispatchRideProvider.map && dispatchRideProvider.marker) {
-                    dispatchRideProvider.marker.setPosition(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
-                    var center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-                    dispatchRideProvider.map.setCenter(center);
-                }
+            //     //update marker position
+            //     if (dispatchRideProvider.map && dispatchRideProvider.marker) {
+            //         dispatchRideProvider.marker.setPosition(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
+            //         var center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+            //         dispatchRideProvider.map.setCenter(center);
+            //     }
 
 
-                //faye(Faye, $scope, $rootScope, $window, position);
+            //     //faye(Faye, $scope, $rootScope, $window, position);
 
-                var p1 = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-                var p2 = new google.maps.LatLng($scope.tripsummary.dropoffAtLat, $scope.tripsummary.dropoffAtLng);
-                //alert('destination distance',google.maps.geometry.spherical.computeDistanceBetween(p1, p2))
-                if (google.maps.geometry.spherical.computeDistanceBetween(p1, p2) < 500) {
-                    swal({
-                        title: 'Arrived!',
-                        text: 'You are close to dropoff location',
-                        type: "success"
-                    }, function() {
-                        navigator.geolocation.clearWatch($scope.googlepositionDest_id);
-                    })
-                    $('#arrivedBtn').addClass('buttonArrived');
-                    $scope.bool.isArrived = true;
-                    if (!$scope.$$phase) {
-                        $scope.$digest();
-                    };
+            //     var p1 = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+            //     var p2 = new google.maps.LatLng($scope.tripsummary.dropoffAtLat, $scope.tripsummary.dropoffAtLng);
+            //     //alert('destination distance',google.maps.geometry.spherical.computeDistanceBetween(p1, p2))
+            //     if (google.maps.geometry.spherical.computeDistanceBetween(p1, p2) < 500) {
+            //         swal({
+            //             title: 'Arrived!',
+            //             text: 'You are close to dropoff location',
+            //             type: "success"
+            //         }, function() {
+                        
+            //         })
+            //         $('#arrivedBtn').addClass('buttonArrived');
+            //         $scope.bool.isArrived = true;
+            //         if (!$scope.$$phase) {
+            //             $scope.$digest();
+            //         };
 
-                } else {
-                    // alert('dest-out of radius')
-                    // $('#arrivedBtn').removeClass('buttonArrived'); 
-                    // $scope.isArrived = false;
+            //     } else {
+            //         // alert('dest-out of radius')
+            //         // $('#arrivedBtn').removeClass('buttonArrived'); 
+            //         // $scope.isArrived = false;
 
-                }
+            //     }
 
-            }
+            // }
 
             $scope.$watch('bool', function() {
                 //alert('digest');              
             }, true)
 
             // onError Callback receives a PositionError object
-            function onError(error) {
-                //alert('code: ' + error.code + '\n' +
-                // 'message: ' + error.message + '\n');
-            }
+            // function onError(error) {
+            //     //alert('code: ' + error.code + '\n' +
+            //     // 'message: ' + error.message + '\n');
+            // }
 
             $scope.passenger_arrived = function() {
-                navigator.geolocation.clearWatch($scope.googlepositionDest_id);
+                //navigator.geolocation.clearWatch($scope.googlepositionDest_id);
                 //$state.go('core.passenger_arrived');
                 $scope.trip = {
                     id: $scope.tripsummary.trip_id

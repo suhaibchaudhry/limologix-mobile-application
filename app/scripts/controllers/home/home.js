@@ -21,9 +21,15 @@ function funchomeCtrl(MapServices, $scope, $rootScope, $state, $http, appSetting
     $scope.company_name = comp_name ? comp_name : '';
     $scope.showAds = false;
     $scope.cntrlName = "home";
+    //MapServices.cntrlScope = $scope;
 
-    $rootScope.preState = $state.current.url;
+    $rootScope.preState = $state.current.name;
     localStorage.setItem("lastState", $rootScope.preState);
+
+    $scope.$watchGroup(['cntrlName','tripsummary','address_type'], function() {
+        MapServices.cntrlName = $scope.cntrlName;
+        MapServices.tripsummary = '';
+    })
 
     // $rootScope.preState = $state.current.name;
     // localStorage.setItem("lastState", $rootScope.preState);
@@ -215,8 +221,12 @@ function funchomeCtrl(MapServices, $scope, $rootScope, $state, $http, appSetting
                         customer_name: data.first_name,
                         company_name: data.company_name,
                         price: data.price,
-                        id: id
+                        id: id,
+                        source_place_id: data.source_place_id,
+                        destination_place_id: data.destination_place_id,
                     }
+                    var stored_notification = JSON.stringify(driverLocationConstants.location);
+                    localStorage.setItem('notificationInfo', stored_notification);
                     $state.go('core.request_screen')
 
                 } else if (data.status === "account_approved") {
@@ -251,15 +261,6 @@ function funchomeCtrl(MapServices, $scope, $rootScope, $state, $http, appSetting
                         //On click of recharge button
                         function() {
                             $state.go('core.home')
-                                // var url = appSettings.serverPath + appSettings.serviceApis.driver_recharge;
-                                //  services.funcPostRequest(url).then(function(response) {
-                                //    $scope.remaining_balance = response.data.toll_credit;
-                                //    swal("Remaining Balance", "You've " +"$"+ $scope.remaining_balance+ " in your account","success")
-                                //    $state.go('core.home')
-                                //  }, function(error) {
-                                //      notify({ classes: 'alert-danger', message: error });
-                                //  });
-                                //$state.go('core.home')
                         })
                 }
 
@@ -274,7 +275,9 @@ function funchomeCtrl(MapServices, $scope, $rootScope, $state, $http, appSetting
                     customer_name: data.first_name,
                     company_name: data.company_name,
                     price: data.price,
-                    id: id
+                    id: id,
+                    source_place_id: data.source_place_id,
+                    destination_place_id: data.destination_place_id,
                 }
                 console.log('home page constants', driverLocationConstants.location);
 
@@ -304,9 +307,13 @@ function funchomeCtrl(MapServices, $scope, $rootScope, $state, $http, appSetting
                         customer_name: data.first_name,
                         price: data.price,
                         company_name: data.company_name,
-                        id: id
+                        id: id,
+
+                        source_place_id: data.source_place_id,
+                        destination_place_id: data.destination_place_id,
                     }
-                    console.log('home page constants', driverLocationConstants.location);
+                    var stored_notification = JSON.stringify(driverLocationConstants.location);
+                    localStorage.setItem('notificationInfo', stored_notification);
                     $state.go('core.request_screen')
 
                 } else if (data.status === "account_approved") {
@@ -391,7 +398,7 @@ function funchomeCtrl(MapServices, $scope, $rootScope, $state, $http, appSetting
         });
     }
 
-    MapServices.init('dvMap', $scope);
+    MapServices.init('dvMap');
     // MapServices.getCurrentPositions($scope);
     // MapServices.watchPositions();
 

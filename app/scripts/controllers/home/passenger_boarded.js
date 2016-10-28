@@ -16,12 +16,20 @@ app
             $rootScope.isAdsShow = false;
             $scope.bool = {};
             $scope.cntrlName = "Boarded";
-             $scope.address_type = "pickup";
+            $scope.address_type = "pickup";
             $scope.bool.isBoardedBtnVisible = false;
 
-            $rootScope.preState = $state.current.url;
+            $rootScope.preState = $state.current.name;
             localStorage.setItem("lastState",$rootScope.preState);
             getCustomerRoute();
+
+            $scope.$watchGroup(['cntrlName','address_type','tripsummary','bool'], function(){
+                MapServices.cntrlName = $scope.cntrlName;
+                MapServices.address_type = $scope.address_type;
+                MapServices.tripsummary = $scope.tripsummary;
+                MapServices.bool = $scope.bool;
+
+            })
 
             //dispatchRideProvider.getRoutes($scope.tripsummary.pickupAt, $scope.tripsummary.dropoffAt,notify,true,'pickuppoint','dvMap_boarded');
             var map_height = jQuery(window).innerHeight() - (jQuery('.b1').innerHeight() + jQuery('.navbar-header').innerHeight())
@@ -29,6 +37,8 @@ app
 
 
             function getCustomerRoute() {
+                var stored_notification = JSON.parse(localStorage.getItem("notificationInfo"));
+                console.log('driverLocationConstants',driverLocationConstants);
                 $scope.tripsummary = {
                     pickupAt: driverLocationConstants.location.start_destination,
                     pickupAtLat: driverLocationConstants.location.start_destination_lat,
@@ -38,18 +48,28 @@ app
                     dropoffAtLat: driverLocationConstants.location.end_destination_lat,
                     dropoffAtLng: driverLocationConstants.location.end_destination_lng,
 
-                    trip_id: driverLocationConstants.location.id
+                    trip_id: driverLocationConstants.location.id,
+
+                    source_place_id: driverLocationConstants.location.source_place_id,
+                    destination_place_id: driverLocationConstants.location.destination_place_id
                 };
+                // $scope.tripsummary = {
+                //     pickupAt: driverLocationConstants ? driverLocationConstants.location.start_destination : stored_notification.start_destination,
+                //     pickupAtLat: driverLocationConstants ? driverLocationConstants.location.start_destination_lat : stored_notification.start_destination_lat,
+                //     pickupAtLng: driverLocationConstants ? driverLocationConstants.location.start_destination_lng : stored_notification.start_destination_lng,
 
-                 MapServices.init('dvMap_boarded',$scope);
-                //MapServices.getCurrentPositions($scope).then(function() {
-                // MapServices.addDirectionRoutes('pickup', '', $scope.tripsummary.pickupAt, $scope.tripsummary.dropoffAt);
-                //Mapservices.getPickupLatLng($scope.tripsummary.pickupAtLat,$scope.tripsummary.pickupAtLng,$scope);
-                MapServices.watchPositions();
-                // }, function(error) {
-                //     console.log(error);
-                // });
+                //     dropoffAt: driverLocationConstants ? driverLocationConstants.location.end_destination : stored_notification.end_destination,
+                //     dropoffAtLat: driverLocationConstants ? driverLocationConstants.location.end_destination_lat : stored_notification.end_destination_lat,
+                //     dropoffAtLng: driverLocationConstants ? driverLocationConstants.location.end_destination_lng : stored_notification.end_destination_lng,
 
+                //     trip_id: driverLocationConstants ? driverLocationConstants.location.id : stored_notification.id,
+
+                //     source_place_id: driverLocationConstants ? driverLocationConstants.location.source_place_id : stored_notification.source_place_id,
+                //     destination_place_id: driverLocationConstants ? driverLocationConstants.location.destination_place_id : stored_notification.destination_place_id
+                // };
+
+                 MapServices.init('dvMap_boarded');
+                
             }
 
             ////////////old code befor refactoring ///////////////

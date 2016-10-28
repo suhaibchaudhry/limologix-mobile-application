@@ -164,7 +164,7 @@ var app = angular
     .run(['$rootScope', 'notify', '$state', '$http', '$stateParams', '$window', 'AppConstants', '$timeout', function($rootScope, notify, $state, $http, $stateParams, $window, constant, $timeout) {
 
         // //To Check network connectivity
-        // $rootScope.online = navigator.onLine;
+        $rootScope.online = navigator.onLine;
         // $window.addEventListener("offline", function() {
         //     $rootScope.$apply(function() {
         //         $rootScope.online = false;
@@ -264,7 +264,6 @@ var app = angular
     // })
     .config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
         $('#custom_splash').hide();
-        // alert('otherwise');
         // var prestate = localStorage.getItem("lastState");
         // alert(prestate)
         
@@ -273,6 +272,13 @@ var app = angular
         // }else{
             $urlRouterProvider.otherwise('/core/splash');
             //}
+
+        // var prestate = localStorage.getItem("lastState");
+        // alert(prestate)
+        
+        // if (prestate) {
+        //     $urlRouterProvider.otherwise(prestate);
+        // }else{
         
 
         $stateProvider

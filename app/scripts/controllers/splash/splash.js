@@ -8,9 +8,9 @@
  * Controller of the LimoCordova
  */
 app
-    .controller('splashCtrl', ['$scope', '$rootScope','$state', '$http', '$window', 'services', '$location',
+    .controller('splashCtrl', ['$scope', '$rootScope', '$state', '$http', '$window', 'services', '$location',
         function($scope, $rootScope, $state, $http, $window, services, $location) {
-           
+
             angular.element(document).ready(function() {
                 console.log('page loading completed');
                 rendersplashscreen();
@@ -18,15 +18,32 @@ app
 
 
             //alert($rootScope.isLoggedIn);
-            var isLoggedIn =  localStorage.getItem('isLoggedIn');
-
+            var isLoggedIn = localStorage.getItem('isLoggedIn');
             if(isLoggedIn === "true"){
                 $state.go('core.home');
             }else{
                 $state.go('core.splash');
             }
 
- 
+
+            // if (isLoggedIn == "true") {                
+            //     var prestate = localStorage.getItem("lastState");
+            //     alert(prestate)
+            //     if (prestate) {
+            //         $state.go(prestate);
+            //     } else {
+            //         $state.go('core.home')
+            //     }
+            // }else{
+            //     $state.go('core.splash');
+            // }
+
+
+
+
+
+
+
             // setTimeout(function() {
             //     rendersplashscreen();
             //     // Do something after 1 second 
@@ -37,26 +54,26 @@ app
                 var company_driver_height = totalheight - jQuery('.splash_header').outerHeight();
                 var div_height = company_driver_height / 2;
                 jQuery('.splash_company').height(div_height);
-                jQuery('.splash_company').css('line-height',div_height+'px');
+                jQuery('.splash_company').css('line-height', div_height + 'px');
                 jQuery('.splash_driver').height(div_height);
-                jQuery('.splash_driver').css('line-height',div_height+'px');
+                jQuery('.splash_driver').css('line-height', div_height + 'px');
             }
 
             $scope.moveto_admin_panel = function() {
                 //$window.open("http://limologix.softwaystaging.com","_blank");
-               // if(navigator.onLine){
-                   window.location.href  = 'http://limologix.softwaystaging.com';
-               // }
-                
+                // if(navigator.onLine){
+                window.location.href = 'http://limologix.softwaystaging.com';
+                // }
+
                 // $location.path("http://limologix.softwaystaging.com");
             };
-            $scope.moveto_app = function() {  
+            $scope.moveto_app = function() {
                 //$state.go('core.signup');
-               // $scope.$apply(function(){
+                // $scope.$apply(function(){
                 //if(navigator.onLine){
-                    $location.path("core/login");
+                $location.path("core/login");
                 //}
-               // });
+                // });
             };
         }
     ]);

@@ -25,24 +25,48 @@ app
             $rootScope.isAdsShow = false;
             $scope.isAccepted = false;
             $scope.cntrlName = 'notification';
+             $scope.address_type = "notification";
+              //MapServices.cntrlScope = $scope;
             getCustomerRoute();
 
+            $scope.$watchGroup(['cntrlName','tripsummary','address_type'], function(){
+                MapServices.cntrlName = $scope.cntrlName;
+                MapServices.tripsummary = $scope.tripsummary;
+                 MapServices.address_type = $scope.address_type;
+
+            })
 
             //dispatchRideProvider.getRoutes('', $scope.tripsummary.pickupAt, $scope.tripsummary.dropoffAt, notify, false, '', 'dvMap_requestscreen');
 
             function getCustomerRoute() {
+                var stored_notification = JSON.parse(localStorage.getItem("notificationInfo"));
                 $scope.tripsummary = {
                     pickupAt: driverLocationConstants.location.start_destination,
                     dropoffAt: driverLocationConstants.location.end_destination,
                     customer_name: driverLocationConstants.location.customer_name,
                     company_name: driverLocationConstants.location.company_name,
-                    price: "$" + driverLocationConstants.location.price,
-                    trip_id: driverLocationConstants.location.id
+                    price: "$" + (driverLocationConstants.location.price),
+                    trip_id: driverLocationConstants.location.id,
+                    source_place_id: driverLocationConstants.location.source_place_id, 
+                    destination_place_id: driverLocationConstants.location.destination_place_id
                 };
+
+                // $scope.tripsummary = {
+                //     pickupAt: driverLocationConstants ? driverLocationConstants.location.start_destination : stored_notification.start_destination,
+                //     dropoffAt: driverLocationConstants ? driverLocationConstants.location.end_destination : stored_notification.end_destination,
+                //     customer_name: driverLocationConstants ? driverLocationConstants.location.customer_name : stored_notification.customer_name,
+                //     company_name: driverLocationConstants ? driverLocationConstants.location.company_name : stored_notification.company_name,
+                //     price: "$" + (driverLocationConstants ? driverLocationConstants.location.price : stored_notification.price),
+                //     trip_id: driverLocationConstants ? driverLocationConstants.location.id : stored_notification.id,
+                //     source_place_id: driverLocationConstants ? driverLocationConstants.location.source_place_id : stored_notification.source_place_id, 
+                //     destination_place_id: driverLocationConstants ? driverLocationConstants.location.destination_place_id : stored_notification.destination_place_id
+                // };
+
+
                 console.log('price', $scope.tripsummary.price, driverLocationConstants.location.price)
-                MapServices.init('dvMap_requestscreen',$scope);
-               // MapServices.getCurrentPositions($scope).then(function() {
-                   // MapServices.addDirectionRoutes('notification', '', $scope.tripsummary.pickupAt, $scope.tripsummary.dropoffAt);
+                MapServices.init('dvMap_requestscreen', $scope);
+                // MapServices.getCurrentPositions($scope).then(function() {
+                // MapServices.addDirectionRoutes('notification', '', $scope.tripsummary.pickupAt, $scope.tripsummary.dropoffAt);
                 //     MapServices.watchPositions();
                 // }, function(error) {
                 //     console.log(error);

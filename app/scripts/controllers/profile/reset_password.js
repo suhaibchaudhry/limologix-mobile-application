@@ -22,8 +22,8 @@ app
 
             }
 
-            // $rootScope.preState = $state.current.name;
-            // localStorage.setItem("lastState",$rootScope.preState);
+            $rootScope.preState = $state.current.name;
+            localStorage.setItem("lastState",$rootScope.preState);
             
             $scope.resetPwd = {};
             $scope.resetPwd.userName = localStorage.getItem('driver_name')//constant.driver.full_name;
