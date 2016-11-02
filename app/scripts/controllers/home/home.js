@@ -23,16 +23,16 @@ function funchomeCtrl(MapServices, $scope, $rootScope, $state, $http, appSetting
     $scope.cntrlName = "home";
     //MapServices.cntrlScope = $scope;
 
-    $rootScope.preState = $state.current.name;
-    localStorage.setItem("lastState", $rootScope.preState);
+    // $rootScope.preState = $state.current.name;
+    // localStorage.setItem("lastState", $rootScope.preState);
 
     $scope.$watchGroup(['cntrlName','tripsummary','address_type'], function() {
         MapServices.cntrlName = $scope.cntrlName;
         MapServices.tripsummary = '';
     })
 
-    // $rootScope.preState = $state.current.name;
-    // localStorage.setItem("lastState", $rootScope.preState);
+    $rootScope.preState = $state.current.name;
+    localStorage.setItem("lastState", $rootScope.preState);
 
     //Store auth-token - After login and app kills
     $http.defaults.headers.common['Auth-Token'] = localStorage.getItem('Auth-Token');

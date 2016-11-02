@@ -66,6 +66,7 @@ app
                 }
                 var url = appSettings.serverPath + appSettings.serviceApis.signin;
                 services.funcPostRequest(url, $scope.driver).then(function(response) {
+
                     $http.defaults.headers.common['Auth-Token'] = response.data['Auth-Token'];
                     $window.sessionStorage['Auth-Token'] = response.data['Auth-Token'];
                     constants.driver = response.data;

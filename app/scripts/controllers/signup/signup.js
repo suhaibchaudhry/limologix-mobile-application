@@ -744,9 +744,19 @@ app
                 var url = appSettings.serverPath + appSettings.serviceApis.registration;
                 services.funcPostRequest(url, $scope.driverDetails).then(function(response) {                   
                     
+
+
+
                     $http.defaults.headers.common['Auth-Token'] = response.data['Auth-Token'];
                     $window.sessionStorage['Auth-Token'] = response.data['Auth-Token'];
-                    AppConstants.driver = response.data;
+                     AppConstants.driver = response.data;             
+                   
+                     console.log('signup',$window.sessionStorage['Auth-Token'])
+                    localStorage.setItem('Auth-Token', $window.sessionStorage['Auth-Token']);
+          
+                        
+
+
                     AppConstants.driver.firstName =  response.data.first_name;
                     AppConstants.driver.lastName = response.data.last_name.charAt(0);
 
@@ -756,14 +766,14 @@ app
                     AppConstants.driver.company = response.data.company;
 
                     
-                    localStorage.setItem('Auth-Token',$window.sessionStorage['Auth-Token']);
+                   
                     localStorage.setItem('driver_name',response.data.first_name+" "+response.data.last_name.charAt(0));
                     localStorage.setItem('company_name',response.data.company);
 
                     $window.sessionStorage['driver'] = JSON.stringify(AppConstants.driver);
                     notify.closeAll();  
                     notify({ classes: 'alert-success', message: response.message });
-                    localStorage.clear();
+                   // localStorage.clear();
                     $state.go('core.appSettings');
                 }, function(error) {
                     notify.closeAll();  

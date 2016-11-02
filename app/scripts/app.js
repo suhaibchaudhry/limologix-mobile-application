@@ -264,14 +264,14 @@ var app = angular
     // })
     .config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
         $('#custom_splash').hide();
-        // var prestate = localStorage.getItem("lastState");
-        // alert(prestate)
+        //var prestate = localStorage.getItem("lastState");
+       // alert(prestate)
         
         // if (prestate) {
         //     $urlRouterProvider.otherwise(prestate);
         // }else{
             $urlRouterProvider.otherwise('/core/splash');
-            //}
+        // }
 
         // var prestate = localStorage.getItem("lastState");
         // alert(prestate)

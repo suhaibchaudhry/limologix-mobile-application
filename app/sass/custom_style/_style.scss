@@ -23,11 +23,18 @@ footer { position:fixed; width:100%; bottom:0; line-height:3rem; }
     border:1px solid #000;
 }
 
-#spinner,#spinner1{
+#spinner{
     position: fixed;
     top: 50%;
     left:50%;
     margin: -105px 0px 0px -105px;
+    z-index: 9999;
+}
+
+#spinner1{
+    position: fixed;
+    top: 50%;
+    left:50%;    
     z-index: 9999;
 }
 
