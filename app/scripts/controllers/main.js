@@ -8,7 +8,7 @@
  * Controller of the LimoCordova
  */
 app
-    .controller('MainCtrl', function($scope, $rootScope, $http, $translate, $state) {
+    .controller('MainCtrl', function($scope, $rootScope, $http, $translate, $state,$stateParams) {
         document.addEventListener("deviceready", onDeviceReady, false);
 
 
@@ -37,8 +37,7 @@ app
         }
 
         function onOffline() {
-            $('#wrap').fadeTo("slow", 0.8);
-            $('#wrap').css("pointer-events", "none");
+            $('#wrap').css("pointer-events", "none").fadeTo("slow", 0.8);
             $("body").append("<p id='internet_connection_msg'>Internet connection appears to be offline</p>");
             $('body').animate({ scrollTop: $(document).height() }, 1000);
             //alert('The internet connection appears to be offline') 
@@ -46,9 +45,11 @@ app
         }
 
         function onOnline() {
-            $('#wrap').fadeTo("slow", 1);
-            $('#wrap').css("pointer-events", "");
+            $('#wrap').css("pointer-events", "").fadeTo("slow", 1);
             $("#internet_connection_msg").remove();
+            $state.transitionTo($state.current,$stateParams,{
+                reload:true,inherit:false,notify:true
+            });
             //alert('online');
         }
 

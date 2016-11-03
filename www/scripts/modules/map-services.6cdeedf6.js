@@ -73,32 +73,12 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
         self.map.setCenter(geolocate);
     }
 
-    this.getCurrentPositions = function() {
-
-        // cordova.plugins.diagnostic.isLocationEnabledSetting(function(enabled) {
-        //     console.log("Location setting is " + (enabled ? "enabled" : "disabled"));
-        //     if (enabled) {
-        //         //alert('location on');
-        //         // getCurrentPosition();
-        //     } else {
-        //         swal({
-        //                 title: 'GPS test',
-        //                 text: 'Turn On Location Services to allow "LimoLogix" to Determine Your Location',
-        //                 type: "info",
-        //                 confirmButtonText: 'Settings'
-        //             },
-        //             function() {
-        //                 cordova.plugins.diagnostic.switchToSettings();
-        //             })
-        //     }
-        // }, function(error) {
-        //     console.error("The following error occurred: " + error);
-        // });
+    this.getCurrentPositions = function() {       
 
         //Event listener when location services on/off
         cordova.plugins.diagnostic.registerLocationAuthorizationStatusChangeHandler(function(status) {
             console.log("home page-  \"not_determined\" to: " + status);
-            localStorage.setItem('gps_status', status);
+            
             if (status == 'denied' || status == "not_determined") {
                 swal({
                         title: 'GPS',
@@ -126,7 +106,10 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
                     zoom: 13,
                     mapTypeId: google.maps.MapTypeId.ROADMAP
                 };
-                $('#' + self.mapId).children().remove();
+               // $('#'+ self.mapId).empty();
+               $('.gm-style').remove();
+                //var node = document.getElementById(self.mapId); node.parentNode.removeChild(node)
+                //self.map = null;
                 self.map = new google.maps.Map(document.getElementById(self.mapId), mapOptions);
                 google.maps.event.addListenerOnce(self.map, "idle", function() {
                     $("#spinner1").hide();

@@ -209,7 +209,7 @@ var app = angular
             $http.defaults.headers.common['Auth-Token'] = localStorage.getItem('Auth-Token');
 
         } else {
-           // alert('else');
+            // alert('else');
             $('#custom_splash').hide();
             $state.go('core.splash')
         }
@@ -264,22 +264,26 @@ var app = angular
     // })
     .config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
         $('#custom_splash').hide();
-        //var prestate = localStorage.getItem("lastState");
-       // alert(prestate)
-        
-        // if (prestate) {
-        //     $urlRouterProvider.otherwise(prestate);
-        // }else{
+
+        var isLoggedIn = localStorage.getItem('isLoggedIn');
+        if (isLoggedIn == "true") {
+            var prestate = localStorage.getItem("lastState");            
+            var state = prestate.replace(/\./g,'/');
+            alert(state)
+            if (prestate) {
+                $urlRouterProvider.otherwise(state);
+            }
+        } else {
             $urlRouterProvider.otherwise('/core/splash');
-        // }
+        }
 
         // var prestate = localStorage.getItem("lastState");
         // alert(prestate)
-        
+
         // if (prestate) {
         //     $urlRouterProvider.otherwise(prestate);
         // }else{
-        
+
 
         $stateProvider
 
@@ -1002,7 +1006,7 @@ var app = angular
                 templateUrl: 'views/tmpl/home/passenger_arrived.html'
             })
             .state('core.profile.reset_password', {
-                url: '/resetPassword',
+                url: '/reset_password',
                 controller: 'resetPasswordCtrl',
                 templateUrl: 'views/tmpl/profile/reset_password.html'
             })

@@ -18,12 +18,12 @@ app
 
 
             //alert($rootScope.isLoggedIn);
-            var isLoggedIn = localStorage.getItem('isLoggedIn');
-            if(isLoggedIn === "true"){
-                $state.go('core.home');
-            }else{
-                $state.go('core.splash');
-            }
+            // var isLoggedIn = localStorage.getItem('isLoggedIn');
+            // if(isLoggedIn === "true"){
+            //     $state.go('core.home');
+            // }else{
+            //     $state.go('core.splash');
+            // }
 
 
             // if (isLoggedIn == "true") {                

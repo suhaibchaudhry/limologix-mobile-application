@@ -106,9 +106,9 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
                     zoom: 13,
                     mapTypeId: google.maps.MapTypeId.ROADMAP
                 };
-               // $('#'+ self.mapId).empty();
-               $('.gm-style').remove();
-                //var node = document.getElementById(self.mapId); node.parentNode.removeChild(node)
+                alert(self.mapId)
+                //$('#'+ self.mapId).empty();
+               // var node = document.getElementById(self.mapId); node.parentNode.removeChild(node)
                 //self.map = null;
                 self.map = new google.maps.Map(document.getElementById(self.mapId), mapOptions);
                 google.maps.event.addListenerOnce(self.map, "idle", function() {

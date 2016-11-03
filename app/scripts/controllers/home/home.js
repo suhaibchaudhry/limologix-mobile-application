@@ -13,7 +13,16 @@ app
 
 function funchomeCtrl(MapServices, $scope, $rootScope, $state, $http, appSettings, notify, $window, services, constants, $timeout, $location, Faye, driverLocationConstants) {
 
-    $scope.deviceOnline = $rootScope.online;
+    $scope.deviceOnline = navigator.onLine;//$rootScope.online;
+    alert($scope.deviceOnline)
+
+    // loadGoogleMaps();
+    // function loadGoogleMaps(){
+    //     var script_tag = document.createElement('script');
+    //     script_tag.setAttribute("type","text/javascript");
+    //     script_tag.setAttribute("src","http://maps.googleapis.com/maps/api/js?libraries=weather,geometry,visualization,places,drawing&language=en&v=3.23&key=AIzaSyDSvFic3Culq7fjKAcAMqDhsLU_Fj7g8");
+    //     (document.getElementsByTagName("head")[0] || document.documentElement).appendChild(script_tag);
+    // }
 
     var driver_name = localStorage.getItem('driver_name');
     var comp_name = localStorage.getItem('company_name');
@@ -23,16 +32,15 @@ function funchomeCtrl(MapServices, $scope, $rootScope, $state, $http, appSetting
     $scope.cntrlName = "home";
     //MapServices.cntrlScope = $scope;
 
-    // $rootScope.preState = $state.current.name;
-    // localStorage.setItem("lastState", $rootScope.preState);
+    $rootScope.preState = $state.current.name;
+    localStorage.setItem("lastState", $rootScope.preState);
 
     $scope.$watchGroup(['cntrlName','tripsummary','address_type'], function() {
         MapServices.cntrlName = $scope.cntrlName;
         MapServices.tripsummary = '';
     })
 
-    $rootScope.preState = $state.current.name;
-    localStorage.setItem("lastState", $rootScope.preState);
+   
 
     //Store auth-token - After login and app kills
     $http.defaults.headers.common['Auth-Token'] = localStorage.getItem('Auth-Token');
