@@ -18,6 +18,7 @@ app
             $scope.cntrlName = "Boarded";
             $scope.address_type = "pickup";
             $scope.bool.isBoardedBtnVisible = false;
+            $scope.boardedBtnEnabled = false;
 
             $rootScope.preState = $state.current.name;
             localStorage.setItem("lastState", $rootScope.preState);
@@ -28,11 +29,12 @@ app
 
             getCustomerRoute();
 
-            $scope.$watchGroup(['cntrlName', 'address_type', 'tripsummary', 'bool'], function() {
+            $scope.$watchGroup(['cntrlName', 'address_type', 'tripsummary', 'bool','boardedBtnEnabled'], function() {
                 MapServices.cntrlName = $scope.cntrlName;
                 MapServices.address_type = $scope.address_type;
                 MapServices.tripsummary = $scope.tripsummary;
                 MapServices.bool = $scope.bool;
+                MapServices.boardedBtnEnabled = $scope.boardedBtnEnabled;
 
             })
 
@@ -97,8 +99,22 @@ app
                 // };
 
                 MapServices.init('dvMap_boarded');
+                //MapServices.getCurrentPositions();
 
             }
+
+            // $scope.$watch('bool', function() {
+            //   $scope.$digest();     
+            // }, true)
+
+
+            $scope.$watch('boardedBtnEnabled',function(){
+                $('#boardedBtn').addClass('buttonBoarded');
+                    $scope.bool.isBoardedBtnVisible = true;
+                    if (!$scope.$$phase) {
+                        $scope.$digest();
+                    };
+            });
 
             ////////////old code befor refactoring ///////////////
 

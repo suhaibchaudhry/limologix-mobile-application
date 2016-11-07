@@ -4,22 +4,23 @@
 app.service('MapServices', ['$q', '$timeout', '$rootScope', 'Faye', 'appSettings', 'services', funMapService]);
 
 function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
-    this.map;
+    this.map = null;
     this.marker;
     this.channelName;
     this.currentLocation;
     this.cntrlScope;
+     this.boardedSwal = false;
+    this.arrivedSwal = false;
 
     var self = this;
-    self.boardedSwal = false;
-    self.arrivedSwal = false;
+   
 
     //$timeout(self.checkGPS,3000)
-    self.checkGPS = setInterval(function() {          
+    this.checkGPS = setInterval(function() {
         cordova.plugins.diagnostic.isLocationEnabledSetting(function(enabled) {
             console.log("timeout Location setting is " + (enabled ? "enabled" : "disabled"));
             if (enabled) {
-              swal.close();
+                swal.close();
                 //alert('location on');
                 // getCurrentPosition();
             } else {
@@ -31,8 +32,8 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
                         closeOnConfirm: true
                     },
                     function(isConfirm) {
-                      if(isConfirm)
-                        cordova.plugins.diagnostic.switchToSettings();
+                        if (isConfirm)
+                            cordova.plugins.diagnostic.switchToSettings();
                     })
             }
         }, function(error) {
@@ -41,24 +42,36 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
     }, 5000)
 
 
+    this.getCurrentPositionsWithInterval = setInterval(function() {
+        navigator.geolocation.getCurrentPosition(self.onSuccessInterval, self.onErrorInterval);
+    }, 3000);
+
+
 
     this.init = function(mapId) {
         $("#spinner1").show();
         self.mapId = mapId;
-        var options = {
-            center: new google.maps.LatLng(29.7630556, -95.3630556),
-            zoom: 13,
-            disableDefaultUI: true
-        }
-        self.map = new google.maps.Map(
-            document.getElementById(mapId), options
-        );
 
-        self.places = new google.maps.places.PlacesService(self.map);
-        self.addMarker();
+        // loadGoogleMaps();
+        // function loadGoogleMaps(){
+        // var script_tag = document.createElement('script');
+        // script_tag.setAttribute("type","text/javascript");
+        // script_tag.setAttribute("src","http://maps.googleapis.com/maps/api/js?libraries=weather,geometry,visualization,places,drawing&language=en&v=3.23&key=AIzaSyDSvFic3Culq7fjKAcAMqDhsLU_Fj7g8");
+        //(document.getElementsByTagName("head")[0] || document.documentElement).appendChild(script_tag);
+        // document.body.appendChild(script_tag);
+        // }
+        // var options = {
+        //     center: new google.maps.LatLng(29.7630556, -95.3630556),
+        //     zoom: 13,
+        //     disableDefaultUI: true
+        // }
+        // self.map = new google.maps.Map(
+        //     document.getElementById(mapId), options
+        // );
+
+        //self.places = new google.maps.places.PlacesService(self.map);
+        // self.addMarker();
         self.getCurrentPositions();
-
-
     }
 
     this.addMarker = function() {
@@ -73,12 +86,12 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
         self.map.setCenter(geolocate);
     }
 
-    this.getCurrentPositions = function() {       
+    this.getCurrentPositions = function() {
 
         //Event listener when location services on/off
         cordova.plugins.diagnostic.registerLocationAuthorizationStatusChangeHandler(function(status) {
             console.log("home page-  \"not_determined\" to: " + status);
-            
+
             if (status == 'denied' || status == "not_determined") {
                 swal({
                         title: 'GPS',
@@ -92,7 +105,7 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
 
             } else {
                 self.getCurrentPositions();
-                self.watchPositions();
+                //self.watchPositions();
             }
         });
 
@@ -104,16 +117,30 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
                 var mapOptions = {
                     center: LatLng,
                     zoom: 13,
+                    streetViewControl: false,
                     mapTypeId: google.maps.MapTypeId.ROADMAP
                 };
-               // $('#'+ self.mapId).empty();
-               $('.gm-style').remove();
-                //var node = document.getElementById(self.mapId); node.parentNode.removeChild(node)
+                // $('#'+ self.mapId).empty();
+                // $('.gm-style').remove();
+                //self.map.remove();
+                // var node = document.getElementById(self.mapId); 
+                // node.parentNode.removeChild(node);
+
+                // var div = document.createElement("div");
+                // div.setAttribute("id",self.mapId);
+                // var parent_div = document.getElementsByClassName('page-signup')[0]
+                // parent_div.appendChild(div);
+
+
                 //self.map = null;
+
                 self.map = new google.maps.Map(document.getElementById(self.mapId), mapOptions);
                 google.maps.event.addListenerOnce(self.map, "idle", function() {
                     $("#spinner1").hide();
                 });
+                if (self.map) {
+                    $("#spinner1").hide();
+                }
 
 
 
@@ -131,7 +158,7 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
                 self.map.setCenter(LatLng);
                 self.marker.setPosition(LatLng);
                 self.getChannelToPublish(position);
-                self.watchPositions();
+                // self.watchPositions();
                 //deferred.resolve();
 
 
@@ -160,37 +187,7 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
         }
     }
 
-
-    this.watchPositions = function() {
-        //Event listener when location services on/off
-        cordova.plugins.diagnostic.registerLocationAuthorizationStatusChangeHandler(function(status) {
-            console.log("home page-  \"not_determined\" to: " + status);
-            if (status == 'denied' || status == "not_determined") {
-                swal({
-                        title: 'GPS',
-                        text: 'Turn On Location Services to allow "LimoLogix" to determine your location',
-                        type: "info",
-                        confirmButtonText: 'Settings'
-                    },
-                    function() {
-                        cordova.plugins.diagnostic.switchToSettings();
-                    })
-            } else {
-                self.getCurrentPositions();
-                self.watchPositions();
-            }
-        });
-
-
-
-
-
-        if (navigator.geolocation) {
-            self.watchID = navigator.geolocation.watchPosition(self.onSuccess, self.onError, { maximumAge: 3000000, timeout: 3000, enableHighAccuracy: true })
-        }
-    }
-
-    this.onSuccess = function(position) {
+    this.onSuccessInterval = function(position) {
         //update marker position
         if (self.marker && self.map) {
             self.marker.setPosition(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
@@ -203,20 +200,90 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
 
             //if (self.cntrlScope.tripsummary)
             console.log('address_type', self.address_type)
-            if (self.address_type == "pickup")
-                self.checkLocationReached(position);
-            if (self.address_type == "dropoff")
-                self.checkLocationReached(position);
+            if (!self.boardedSwal) {
+                if (self.address_type == "pickup")
+                    self.checkLocationReached(position);
+            }
+            if (!self.arrived) {
+                if (self.address_type == "dropoff")
+                    self.checkLocationReached(position);
+            }
+
         }
 
 
         // if(self.cntrlScope.cntrlName != "notification")
         //    self.checkLocationReached(position);
     };
+
+    // onError Callback receives a PositionError object
+    this.onErrorInterval = function(error) {
+        //alert('code: ' + error.code + '\n' +
+        //  'message: ' + error.message + '\n');
+    }
+
+
+    // this.watchPositions = function() {
+    //     //Event listener when location services on/off
+    //     cordova.plugins.diagnostic.registerLocationAuthorizationStatusChangeHandler(function(status) {
+    //         console.log("home page-  \"not_determined\" to: " + status);
+    //         if (status == 'denied' || status == "not_determined") {
+    //             swal({
+    //                     title: 'GPS',
+    //                     text: 'Turn On Location Services to allow "LimoLogix" to determine your location',
+    //                     type: "info",
+    //                     confirmButtonText: 'Settings'
+    //                 },
+    //                 function() {
+    //                     cordova.plugins.diagnostic.switchToSettings();
+    //                 })
+    //         } else {
+    //             self.getCurrentPositions();
+    //             self.watchPositions();
+    //         }
+    //     });
+
+
+
+
+
+    //     if (navigator.geolocation) {
+    //         self.watchID = navigator.geolocation.watchPosition(self.onSuccess, self.onError, { maximumAge: 3000000, timeout: 3000, enableHighAccuracy: true })
+    //     }
+    // }
+
+    // this.onSuccess = function(position) {
+    //     //update marker position
+    //     if (self.marker && self.map) {
+    //         self.marker.setPosition(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
+    //         var center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+    //         //self.map.setCenter(center);
+    //     }
+    //     var isDriverLoggedIn = localStorage.getItem('isLoggedIn');
+    //     if (isDriverLoggedIn == 'true') {
+    //         self.sendLocationsToServerThroughFaye(position);
+
+    //         //if (self.cntrlScope.tripsummary)
+    //         console.log('address_type', self.address_type)
+    //         if (!self.boardedSwal) {
+    //             if (self.address_type == "pickup")
+    //                 self.checkLocationReached(position);
+    //         }
+    //         if (!self.arrived) {
+    //             if (self.address_type == "dropoff")
+    //                 self.checkLocationReached(position);
+    //         }
+
+    //     }
+
+
+    //     // if(self.cntrlScope.cntrlName != "notification")
+    //     //    self.checkLocationReached(position);
+    // };
     this.checkLocationReached = function(position) {
         console.log('checkLocationReached', self.cntrlName)
         var p1 = new google.maps.LatLng(position.coords.latitude, position.coords.longitude); //driver current location
-        if (self.cntrlName == "Boarded") { //&& !self.boardedSwal
+        if (self.cntrlName == "Boarded" && !self.boardedSwal) { 
             var p2 = new google.maps.LatLng(self.tripsummary.pickupAtLat, self.tripsummary.pickupAtLng); //pickup location
             var swal_title = "Boarded";
             console.log('p1,p2-boarded', p1, p2, google.maps.geometry.spherical.computeDistanceBetween(p1, p2))
@@ -228,10 +295,11 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
                     type: "success"
                 }, function() {
                     self.boardedSwal = true;
+                    self.boardedBtnEnabled = true;
                 })
 
-                $('#boardedBtn').addClass('buttonBoarded');
-                self.bool.isBoardedBtnVisible = true;
+                // $('#boardedBtn').addClass('buttonBoarded');
+                // self.bool.isBoardedBtnVisible = true;
                 // if (!self.cntrlScope.$$phase) {
                 //     self.cntrlScope.$digest();
                 // };
@@ -239,8 +307,7 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
                 // alert('out of radius')                    
 
             }
-        } else if (self.cntrlName == "Arrived") { //&& !self.arrivedSwal
-
+        } else if (self.cntrlName == "Arrived" && !self.arrivedSwal) {
             var p2 = new google.maps.LatLng(self.tripsummary.dropoffAtLat, self.tripsummary.dropoffAtLng); //dropoff location
             var swal_title = "Arrived";
             console.log('p1,p2-arived', p1, p2, google.maps.geometry.spherical.computeDistanceBetween(p1, p2))
@@ -252,10 +319,11 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
                     type: "success"
                 }, function() {
                     self.arrivedSwal = true;
+                    self.arrivedBtnEnabled = true;
                 })
 
-                $('#arrivedBtn').addClass('buttonArrived');
-                self.bool.isArrived = true;
+                // $('#arrivedBtn').addClass('buttonArrived');
+                // self.bool.isArrived = true;
 
                 // if (!self.cntrlScope.$$phase) {
                 //     self.cntrlScope.$digest();

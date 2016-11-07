@@ -72,11 +72,11 @@ var app = angular
     ])
 
 .constant('appSettings', {
-        server_address: 'http://limologix.softwaystaging.com', //'http://172.16.10.212:9000', 
+        server_address: 'http://172.16.10.212:9000', //'http://limologix.softwaystaging.com',
         version: 'v1',
-        server_images_path: "http://limologix.api.softwaystaging.com/", //'http://172.16.10.212:9000',
-        serverPath: "http://limologix.api.softwaystaging.com/api/v1/", //'http://172.16.10.212:9000/api/v1/',
-        FayeServerURL: 'http://limologix.softwaystaging.com:9292/faye', //'http://172.16.10.212:9292/faye',
+        server_images_path: 'http://172.16.10.212:9000', //"http://limologix.api.softwaystaging.com/",
+        serverPath: 'http://172.16.10.212:9000/api/v1/', //"http://limologix.api.softwaystaging.com/api/v1/",
+        FayeServerURL: 'http://172.16.10.212:9292/faye', //'http://limologix.softwaystaging.com:9292/faye',
         serviceApis: {
             signin: 'drivers/sign_in',
             forgotPassword: 'drivers/forgot_password',
@@ -269,7 +269,6 @@ var app = angular
         if (isLoggedIn == "true") {
             var prestate = localStorage.getItem("lastState");            
             var state = prestate.replace(/\./g,'/');
-            alert(state)
             if (prestate) {
                 $urlRouterProvider.otherwise(state);
             }

@@ -29,7 +29,12 @@ app
             states[Connection.CELL] = 'Cell generic connection';
             states[Connection.NONE] = 'No network connection';
 
-            //alert('Connection type: ' + states[networkState]);
+           // alert('Connection type: ' + states[networkState]);
+
+            // if(networkState == Connection.NONE){
+            //    onOffline(); 
+
+            // }
 
             //Event listeners when device lost/gets internet connection
             document.addEventListener("offline", onOffline, false);
@@ -37,6 +42,7 @@ app
         }
 
         function onOffline() {
+            //alert('offline event')
             $('#wrap').css("pointer-events", "none").fadeTo("slow", 0.8);
             $("body").append("<p id='internet_connection_msg'>Internet connection appears to be offline</p>");
             $('body').animate({ scrollTop: $(document).height() }, 1000);
@@ -47,9 +53,10 @@ app
         function onOnline() {
             $('#wrap').css("pointer-events", "").fadeTo("slow", 1);
             $("#internet_connection_msg").remove();
-            $state.transitionTo($state.current,$stateParams,{
-                reload:true,inherit:false,notify:true
-            });
+            // $state.transitionTo($state.current,$stateParams,{
+            //     reload:true,inherit:false,notify:true
+            // });
+            window.location.reload();
             //alert('online');
         }
 
@@ -102,32 +109,32 @@ app
         // });
 
 
-        function getCurrentPosition() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(function(p) {
-                    var LatLng = new google.maps.LatLng(p.coords.latitude, p.coords.longitude);
-                    var mapOptions = {
-                        center: LatLng,
-                        zoom: 13,
-                        mapTypeId: google.maps.MapTypeId.ROADMAP
-                    };
-                    $scope.map = new google.maps.Map(document.getElementById("dvMap"), mapOptions);
-                    $scope.marker = new google.maps.Marker({
-                        position: LatLng,
-                        map: $scope.map,
-                        icon: 'images/driver/location_ping.0b6a1b43.png'
-                            //title: "<div style = 'height:60px;width:200px'><b>Your location:</b><br />Latitude: " + p.coords.latitude + "<br />Longitude: " + p.coords.longitude
-                    });
-                    // google.maps.event.addListener(marker, "click", function(e) {
-                    //     var infoWindow = new google.maps.InfoWindow();
-                    //     infoWindow.setContent(marker.title);
-                    //     infoWindow.open($scope.map, marker);
-                    // });
-                });
-            } else {
-                alert('Geo Location feature is not supported in this browser.');
-            }
-        }
+        // function getCurrentPosition() {
+        //     if (navigator.geolocation) {
+        //         navigator.geolocation.getCurrentPosition(function(p) {
+        //             var LatLng = new google.maps.LatLng(p.coords.latitude, p.coords.longitude);
+        //             var mapOptions = {
+        //                 center: LatLng,
+        //                 zoom: 13,
+        //                 mapTypeId: google.maps.MapTypeId.ROADMAP
+        //             };
+        //             $scope.map = new google.maps.Map(document.getElementById("dvMap"), mapOptions);
+        //             $scope.marker = new google.maps.Marker({
+        //                 position: LatLng,
+        //                 map: $scope.map,
+        //                 icon: 'images/driver/location_ping.0b6a1b43.png'
+        //                     //title: "<div style = 'height:60px;width:200px'><b>Your location:</b><br />Latitude: " + p.coords.latitude + "<br />Longitude: " + p.coords.longitude
+        //             });
+        //             // google.maps.event.addListener(marker, "click", function(e) {
+        //             //     var infoWindow = new google.maps.InfoWindow();
+        //             //     infoWindow.setContent(marker.title);
+        //             //     infoWindow.open($scope.map, marker);
+        //             // });
+        //         });
+        //     } else {
+        //         alert('Geo Location feature is not supported in this browser.');
+        //     }
+        // }
 
         // cordova.plugins.diagnostic.registerLocationStateChangeHandler(function(state){
         //        if(

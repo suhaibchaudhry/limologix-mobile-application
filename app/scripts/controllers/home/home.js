@@ -14,8 +14,7 @@ app
 function funchomeCtrl(MapServices, $scope, $rootScope, $state, $http, appSettings, notify, $window, services, constants, $timeout, $location, Faye, driverLocationConstants) {
 
     $scope.deviceOnline = navigator.onLine;//$rootScope.online;
-    alert($scope.deviceOnline)
-
+    //alert($scope.deviceOnline)
     // loadGoogleMaps();
     // function loadGoogleMaps(){
     //     var script_tag = document.createElement('script');
@@ -407,117 +406,7 @@ function funchomeCtrl(MapServices, $scope, $rootScope, $state, $http, appSetting
     }
 
     MapServices.init('dvMap');
-    // MapServices.getCurrentPositions($scope);
-    // MapServices.watchPositions();
-
-
-    // function getCurrentPosition(){
-    //     if (navigator.geolocation) {
-    //     navigator.geolocation.getCurrentPosition(function(p) {
-    //         var LatLng = new google.maps.LatLng(p.coords.latitude, p.coords.longitude);
-    //         var mapOptions = {
-    //             center: LatLng,
-    //             zoom: 13,
-    //             mapTypeId: google.maps.MapTypeId.ROADMAP
-    //         };
-    //         $scope.map = new google.maps.Map(document.getElementById("dvMap"), mapOptions);
-    //         $scope.marker = new google.maps.Marker({
-    //             position: LatLng,
-    //             map: $scope.map,
-    //             icon: 'images/driver/location_ping.0b6a1b43.png'
-    //                 //title: "<div style = 'height:60px;width:200px'><b>Your location:</b><br />Latitude: " + p.coords.latitude + "<br />Longitude: " + p.coords.longitude
-    //         });
-    //         // google.maps.event.addListener(marker, "click", function(e) {
-    //         //     var infoWindow = new google.maps.InfoWindow();
-    //         //     infoWindow.setContent(marker.title);
-    //         //     infoWindow.open($scope.map, marker);
-    //         // });
-    //     });
-    // } else {
-    //     alert('Geo Location feature is not supported in this browser.');
-    // }
-    // }
-
-    // // onSuccess Callback
-    // // This method accepts a Position object, which contains the
-    // // current GPS coordinates
-    // var onSuccess = function(position) {
-    //     //update marker position
-    //     if ($scope.marker && $scope.map) {
-    //         $scope.marker.setPosition(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
-    //         var center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-    //         $scope.map.setCenter(center);
-    //     }
-    //     faye(Faye, $scope, $window, position);
-    // };
-
-    // // onError Callback receives a PositionError object
-    // function onError(error) {
-    //     //alert('code: ' + error.code + '\n' +
-    //     // 'message: ' + error.message + '\n');
-    // }
-
-    // navigator.geolocation.getCurrentPosition(onSuccess, onError, { maximumAge: 3000, timeout: 5000, enableHighAccuracy: true });
-
-    // if (navigator.geolocation) {
-    //     navigator.geolocation.getCurrentPosition(function(p) {
-    //         var LatLng = new google.maps.LatLng(p.coords.latitude, p.coords.longitude);
-    //         var mapOptions = {
-    //             center: LatLng,
-    //             zoom: 13,
-    //             mapTypeId: google.maps.MapTypeId.ROADMAP
-    //         };
-    //         $scope.map = new google.maps.Map(document.getElementById("dvMap"), mapOptions);
-    //         $scope.marker = new google.maps.Marker({
-    //             position: LatLng,
-    //             map: $scope.map,
-    //             icon: 'images/driver/location_ping.0b6a1b43.png'
-    //                 //title: "<div style = 'height:60px;width:200px'><b>Your location:</b><br />Latitude: " + p.coords.latitude + "<br />Longitude: " + p.coords.longitude
-    //         });
-    //         // google.maps.event.addListener(marker, "click", function(e) {
-    //         //     var infoWindow = new google.maps.InfoWindow();
-    //         //     infoWindow.setContent(marker.title);
-    //         //     infoWindow.open($scope.map, marker);
-    //         // });
-    //     });
-    // } else {
-    //     alert('Geo Location feature is not supported in this browser.');
-    // }
-
-    // var watchID = navigator.geolocation.watchPosition(onSuccess, onError, { maximumAge: 3000000, timeout: 3000, enableHighAccuracy: true })
-
-    // function faye(Faye, $scope, $window, position) {
-    //     var Logger = {
-    //         incoming: function(message, callback) {
-    //             console.log('incoming home page', message);
-    //             callback(message);
-    //         },
-    //         outgoing: function(message, callback) {
-    //             message.ext = message.ext || {};
-    //             message.ext.auth_token = $window.sessionStorage['Auth-Token'];
-    //             message.ext.user_type = "driver";
-    //             console.log('outgoing home page', message);
-    //             callback(message);
-    //         }
-    //     };
-
-    //     var client = Faye.getClient();
-
-
-
-    //     var isUserlogedIn = localStorage.getItem('isLoggedIn');
-    //     if ($rootScope.channelName && (isUserlogedIn == 'true')) {
-    //         var publication = client.publish('/publish/' + $rootScope.channelName, { latitude: position.coords.latitude, longitude: position.coords.longitude });
-    //         client.addExtension(Logger);
-    //         publication.callback(function() {
-    //             //alert('Connection established successfully.');
-    //         });
-    //         publication.errback(function(error) {
-    //             // alert('There was a problem: ' + error.message);
-    //         });
-
-    //     }
-
-    // }
+    //MapServices.getCurrentPositions();
+    // MapServices.watchPositions();  
 
 }
