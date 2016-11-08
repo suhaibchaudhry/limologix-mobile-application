@@ -9,11 +9,16 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
     this.channelName;
     this.currentLocation;
     this.cntrlScope;
-     this.boardedSwal = false;
+    this.boardedSwal = false;
     this.arrivedSwal = false;
+    this.defer = $q.defer();
+   // $rootScope.boardedBtnEnabled = false;
+    //$rootScope.arrivedBtnEnabled = false;
 
     var self = this;
-   
+
+
+
 
     //$timeout(self.checkGPS,3000)
     this.checkGPS = setInterval(function() {
@@ -43,6 +48,7 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
 
 
     this.getCurrentPositionsWithInterval = setInterval(function() {
+        //console.log('test',$rootScope.btns.boardedBtnEnabled)
         navigator.geolocation.getCurrentPosition(self.onSuccessInterval, self.onErrorInterval);
     }, 3000);
 
@@ -200,14 +206,14 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
 
             //if (self.cntrlScope.tripsummary)
             console.log('address_type', self.address_type)
-            if (!self.boardedSwal) {
+           // if (!self.boardedSwal) {
                 if (self.address_type == "pickup")
                     self.checkLocationReached(position);
-            }
-            if (!self.arrived) {
+           // }
+           // if (!self.arrived) {
                 if (self.address_type == "dropoff")
                     self.checkLocationReached(position);
-            }
+           // }
 
         }
 
@@ -282,12 +288,13 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
     // };
     this.checkLocationReached = function(position) {
         console.log('checkLocationReached', self.cntrlName)
+
         var p1 = new google.maps.LatLng(position.coords.latitude, position.coords.longitude); //driver current location
-        if (self.cntrlName == "Boarded" && !self.boardedSwal) { 
+        if (self.cntrlName == "Boarded" && !self.boardedSwal) {
             var p2 = new google.maps.LatLng(self.tripsummary.pickupAtLat, self.tripsummary.pickupAtLng); //pickup location
             var swal_title = "Boarded";
             console.log('p1,p2-boarded', p1, p2, google.maps.geometry.spherical.computeDistanceBetween(p1, p2))
-            if (google.maps.geometry.spherical.computeDistanceBetween(p1, p2) < 500) {
+            if (google.maps.geometry.spherical.computeDistanceBetween(p1, p2) < 50) {
                 // alert('pickup') //within 1/2km 
                 swal({
                     title: swal_title,
@@ -295,11 +302,15 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
                     type: "success"
                 }, function() {
                     self.boardedSwal = true;
-                    self.boardedBtnEnabled = true;
+                    //self.defer.notify(self.boardedSwal);
                 })
 
-                // $('#boardedBtn').addClass('buttonBoarded');
-                // self.bool.isBoardedBtnVisible = true;
+                $rootScope.btns.boardedBtnEnabled = true;
+
+                //self.boardedBtnEnabled = true;
+
+                //$('#boardedBtn').addClass('buttonBoarded');
+                //self.bool.isBoardedBtnVisible = true;
                 // if (!self.cntrlScope.$$phase) {
                 //     self.cntrlScope.$digest();
                 // };
@@ -311,7 +322,7 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
             var p2 = new google.maps.LatLng(self.tripsummary.dropoffAtLat, self.tripsummary.dropoffAtLng); //dropoff location
             var swal_title = "Arrived";
             console.log('p1,p2-arived', p1, p2, google.maps.geometry.spherical.computeDistanceBetween(p1, p2))
-            if (google.maps.geometry.spherical.computeDistanceBetween(p1, p2) < 500) {
+            if (google.maps.geometry.spherical.computeDistanceBetween(p1, p2) < 50) {
                 //within 1/2km 
                 swal({
                     title: swal_title,
@@ -319,11 +330,13 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
                     type: "success"
                 }, function() {
                     self.arrivedSwal = true;
-                    self.arrivedBtnEnabled = true;
+                   // self.arrivedBtnEnabled = true;
                 })
 
-                // $('#arrivedBtn').addClass('buttonArrived');
-                // self.bool.isArrived = true;
+                $rootScope.arrivedBtnEnabled = true;
+
+                $('#arrivedBtn').addClass('buttonArrived');
+                self.bool.isArrived = true;
 
                 // if (!self.cntrlScope.$$phase) {
                 //     self.cntrlScope.$digest();
@@ -338,6 +351,10 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
 
 
 
+    }
+
+    this.watchBoardedBtn = function(){
+        return self.defer.promise;
     }
 
     // onError Callback receives a PositionError object

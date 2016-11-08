@@ -12,7 +12,7 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
     this.boardedSwal = false;
     this.arrivedSwal = false;
     this.defer = $q.defer();
-    // $rootScope.boardedBtnEnabled = false;
+   // $rootScope.boardedBtnEnabled = false;
     //$rootScope.arrivedBtnEnabled = false;
 
     var self = this;
@@ -48,7 +48,6 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
 
 
     this.getCurrentPositionsWithInterval = setInterval(function() {
-        //console.log('test',$rootScope.btns.boardedBtnEnabled)
         navigator.geolocation.getCurrentPosition(self.onSuccessInterval, self.onErrorInterval);
     }, 3000);
 
@@ -206,14 +205,14 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
 
             //if (self.cntrlScope.tripsummary)
             console.log('address_type', self.address_type)
-                // if (!self.boardedSwal) {
-            if (self.address_type == "pickup")
-                self.checkLocationReached(position);
-            // }
-            // if (!self.arrived) {
-            if (self.address_type == "dropoff")
-                self.checkLocationReached(position);
-            // }
+            //if (!self.boardedSwal) {
+                if (self.address_type == "pickup")
+                    self.checkLocationReached(position);
+            //}
+            //if (!self.arrived) {
+                if (self.address_type == "dropoff")
+                    self.checkLocationReached(position);
+           // }
 
         }
 
@@ -228,36 +227,89 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
         //  'message: ' + error.message + '\n');
     }
 
+
+    // this.watchPositions = function() {
+    //     //Event listener when location services on/off
+    //     cordova.plugins.diagnostic.registerLocationAuthorizationStatusChangeHandler(function(status) {
+    //         console.log("home page-  \"not_determined\" to: " + status);
+    //         if (status == 'denied' || status == "not_determined") {
+    //             swal({
+    //                     title: 'GPS',
+    //                     text: 'Turn On Location Services to allow "LimoLogix" to determine your location',
+    //                     type: "info",
+    //                     confirmButtonText: 'Settings'
+    //                 },
+    //                 function() {
+    //                     cordova.plugins.diagnostic.switchToSettings();
+    //                 })
+    //         } else {
+    //             self.getCurrentPositions();
+    //             self.watchPositions();
+    //         }
+    //     });
+
+
+
+
+
+    //     if (navigator.geolocation) {
+    //         self.watchID = navigator.geolocation.watchPosition(self.onSuccess, self.onError, { maximumAge: 3000000, timeout: 3000, enableHighAccuracy: true })
+    //     }
+    // }
+
+    // this.onSuccess = function(position) {
+    //     //update marker position
+    //     if (self.marker && self.map) {
+    //         self.marker.setPosition(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
+    //         var center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+    //         //self.map.setCenter(center);
+    //     }
+    //     var isDriverLoggedIn = localStorage.getItem('isLoggedIn');
+    //     if (isDriverLoggedIn == 'true') {
+    //         self.sendLocationsToServerThroughFaye(position);
+
+    //         //if (self.cntrlScope.tripsummary)
+    //         console.log('address_type', self.address_type)
+    //         if (!self.boardedSwal) {
+    //             if (self.address_type == "pickup")
+    //                 self.checkLocationReached(position);
+    //         }
+    //         if (!self.arrived) {
+    //             if (self.address_type == "dropoff")
+    //                 self.checkLocationReached(position);
+    //         }
+
+    //     }
+
+
+    //     // if(self.cntrlScope.cntrlName != "notification")
+    //     //    self.checkLocationReached(position);
+    // };
     this.checkLocationReached = function(position) {
         console.log('checkLocationReached', self.cntrlName)
 
         var p1 = new google.maps.LatLng(position.coords.latitude, position.coords.longitude); //driver current location
-        if (self.cntrlName == "Boarded") { //&& !self.boardedSwal
+        if (self.cntrlName == "Boarded" && !self.boardedSwal) {
             var p2 = new google.maps.LatLng(self.tripsummary.pickupAtLat, self.tripsummary.pickupAtLng); //pickup location
             var swal_title = "Boarded";
             console.log('p1,p2-boarded', p1, p2, google.maps.geometry.spherical.computeDistanceBetween(p1, p2))
-            if (google.maps.geometry.spherical.computeDistanceBetween(p1, p2) < 150) {
+            if (google.maps.geometry.spherical.computeDistanceBetween(p1, p2) < 500) {
                 // alert('pickup') //within 1/2km 
+                swal({
+                    title: swal_title,
+                    text: 'You are close to' + ' ' + self.cntrlName + ' ' + 'location',
+                    type: "success"
+                }, function() {
+                    self.boardedSwal = true;
+                    //self.defer.notify(self.boardedSwal);
+                })
 
-                if (!self.boardedSwal) {
-                    swal({
-                        title: swal_title,
-                        text: 'You are close to' + ' ' + self.cntrlName + ' ' + 'location',
-                        type: "success"
-                    }, function() {
-                        self.boardedSwal = true;
-                        //self.defer.notify(self.boardedSwal);
-                    })
-                }
-
-
-                // $rootScope.btns.boardedBtnEnabled = true;
+                $rootScope.boardedBtnEnabled = true;
 
                 //self.boardedBtnEnabled = true;
 
-                $('#boardedBtn').addClass('buttonBoarded');
-                self.bool.isBoardedBtnVisible = true;
-                $rootScope.$digest();
+                // $('#boardedBtn').addClass('buttonBoarded');
+                // self.bool.isBoardedBtnVisible = true;
                 // if (!self.cntrlScope.$$phase) {
                 //     self.cntrlScope.$digest();
                 // };
@@ -265,30 +317,25 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
                 // alert('out of radius')                    
 
             }
-        } else if (self.cntrlName == "Arrived") { //&& !self.arrivedSwal
+        } else if (self.cntrlName == "Arrived" && !self.arrivedSwal) {
             var p2 = new google.maps.LatLng(self.tripsummary.dropoffAtLat, self.tripsummary.dropoffAtLng); //dropoff location
             var swal_title = "Arrived";
             console.log('p1,p2-arived', p1, p2, google.maps.geometry.spherical.computeDistanceBetween(p1, p2))
-            if (google.maps.geometry.spherical.computeDistanceBetween(p1, p2) < 150) {
+            if (google.maps.geometry.spherical.computeDistanceBetween(p1, p2) < 500) {
                 //within 1/2km 
+                swal({
+                    title: swal_title,
+                    text: 'You are close to' + ' ' + self.cntrlName + ' ' + 'location',
+                    type: "success"
+                }, function() {
+                    self.arrivedSwal = true;
+                   // self.arrivedBtnEnabled = true;
+                })
 
-                if (!self.arrivedSwal) {
-                    swal({
-                        title: swal_title,
-                        text: 'You are close to' + ' ' + self.cntrlName + ' ' + 'location',
-                        type: "success"
-                    }, function() {
-                        self.arrivedSwal = true;
-                        // self.arrivedBtnEnabled = true;
-                    })
-                }
+                $rootScope.arrivedBtnEnabled = true;
 
-
-                //$rootScope.arrivedBtnEnabled = true;
-
-                $('#arrivedBtn').addClass('buttonArrived');
-                self.bool.isArrived = true;
-                $rootScope.$digest();
+                // $('#arrivedBtn').addClass('buttonArrived');
+                // self.bool.isArrived = true;
 
                 // if (!self.cntrlScope.$$phase) {
                 //     self.cntrlScope.$digest();
@@ -305,7 +352,7 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
 
     }
 
-    this.watchBoardedBtn = function() {
+    this.watchBoardedBtn = function(){
         return self.defer.promise;
     }
 

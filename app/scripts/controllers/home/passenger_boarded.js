@@ -18,7 +18,7 @@ app
             $scope.cntrlName = "Boarded";
             $scope.address_type = "pickup";
             $scope.bool.isBoardedBtnVisible = false;
-            $scope.boardedBtnEnabled = false;
+            //$scope.boardedBtnEnabled = false;
 
             $rootScope.preState = $state.current.name;
             localStorage.setItem("lastState", $rootScope.preState);
@@ -29,12 +29,12 @@ app
 
             getCustomerRoute();
 
-            $scope.$watchGroup(['cntrlName', 'address_type', 'tripsummary', 'bool','boardedBtnEnabled'], function() {
+            $scope.$watchGroup(['cntrlName', 'address_type', 'tripsummary', 'bool'], function() {
                 MapServices.cntrlName = $scope.cntrlName;
                 MapServices.address_type = $scope.address_type;
                 MapServices.tripsummary = $scope.tripsummary;
                 MapServices.bool = $scope.bool;
-                MapServices.boardedBtnEnabled = $scope.boardedBtnEnabled;
+                //MapServices.boardedBtnEnabled = $scope.boardedBtnEnabled;
 
             })
 
@@ -103,18 +103,26 @@ app
 
             }
 
+            //$scope.test = MapServices.boardedSwal;
+
             // $scope.$watch('bool', function() {
             //   $scope.$digest();     
             // }, true)
 
+            // MapServices.watchBoardedBtn().then(null,null,function(boardedSwal){
+            //     console.log('test',$scope.test);
+            // })
 
-            $scope.$watch('boardedBtnEnabled',function(){
-                $('#boardedBtn').addClass('buttonBoarded');
-                    $scope.bool.isBoardedBtnVisible = true;
-                    if (!$scope.$$phase) {
-                        $scope.$digest();
-                    };
-            });
+
+            // $scope.$watch('test',function(){
+            //     alert('dsfs')
+            //     console.log('watch',$scope.test)
+            //     $('#boardedBtn').addClass('buttonBoarded');
+            //         $scope.bool.isBoardedBtnVisible = true;
+            //         if (!$scope.$$phase) {
+            //             $scope.$digest();
+            //         };
+            // });
 
             ////////////old code befor refactoring ///////////////
 
@@ -163,42 +171,42 @@ app
             //   // This method accepts a Position object, which contains the
             //   // current GPS coordinates
             //if (navigator.geolocation) {
-            function onSuccess(position) {
+            // function onSuccess(position) {
 
-                //update marker position
-                if (dispatchRideProvider.map && dispatchRideProvider.marker) {
-                    dispatchRideProvider.marker.setPosition(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
-                    var center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-                    dispatchRideProvider.map.setCenter(center);
-                }
+            //     //update marker position
+            //     if (dispatchRideProvider.map && dispatchRideProvider.marker) {
+            //         dispatchRideProvider.marker.setPosition(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
+            //         var center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+            //         dispatchRideProvider.map.setCenter(center);
+            //     }
 
-                // faye(Faye,$scope,$rootScope,$window,position); 
+            //     // faye(Faye,$scope,$rootScope,$window,position); 
 
-                console.log("test position", position.coords.latitude, position.coords.longitude);
-                var p1 = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-                var p2 = new google.maps.LatLng($scope.tripsummary.pickupAtLat, $scope.tripsummary.pickupAtLng);
-                console.log("p1 and p2", p1, p2, google.maps.geometry.spherical.computeDistanceBetween(p1, p2));
-                //alert(google.maps.geometry.spherical.computeDistanceBetween(p1, p2));
-                if (google.maps.geometry.spherical.computeDistanceBetween(p1, p2) < 500) { //within 1km //18.66
-                    swal({
-                        title: 'Boarded!',
-                        text: 'You are close to pickup location',
-                        type: "success"
-                    }, function() {
-                        navigator.geolocation.clearWatch($scope.googleposition_id);
+            //     console.log("test position", position.coords.latitude, position.coords.longitude);
+            //     var p1 = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+            //     var p2 = new google.maps.LatLng($scope.tripsummary.pickupAtLat, $scope.tripsummary.pickupAtLng);
+            //     console.log("p1 and p2", p1, p2, google.maps.geometry.spherical.computeDistanceBetween(p1, p2));
+            //     //alert(google.maps.geometry.spherical.computeDistanceBetween(p1, p2));
+            //     if (google.maps.geometry.spherical.computeDistanceBetween(p1, p2) < 500) { //within 1km //18.66
+            //         swal({
+            //             title: 'Boarded!',
+            //             text: 'You are close to pickup location',
+            //             type: "success"
+            //         }, function() {
+            //             navigator.geolocation.clearWatch($scope.googleposition_id);
 
-                    })
-                    $('#boardedBtn').addClass('buttonBoarded');
-                    $scope.bool.isBoardedBtnVisible = true;
-                    if (!$scope.$$phase) {
-                        $scope.$digest();
-                    };
-                    //$('#boardedBtn').addClass('buttonBoarded');                      
-                } else {
-                    // alert('out of radius')                    
+            //         })
+            //         $('#boardedBtn').addClass('buttonBoarded');
+            //         $scope.bool.isBoardedBtnVisible = true;
+            //         if (!$scope.$$phase) {
+            //             $scope.$digest();
+            //         };
+            //         //$('#boardedBtn').addClass('buttonBoarded');                      
+            //     } else {
+            //         // alert('out of radius')                    
 
-                }
-            }
+            //     }
+            // }
 
             // onError Callback receives a PositionError object
             function onError(error) {
@@ -207,9 +215,9 @@ app
             }
 
 
-            $scope.$watch('bool', function() {
-                //alert('digest');              
-            }, true)
+            // $scope.$watch('bool', function() {
+            //     //alert('digest');              
+            // }, true)
 
             $scope.passenger_boarded = function() {
                 $scope.trip = {

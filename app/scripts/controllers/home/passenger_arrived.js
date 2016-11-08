@@ -18,7 +18,8 @@ app
             $scope.cntrlName = "Arrived";
             $scope.address_type = "dropoff";
             $scope.bool.isArrived = false;
-            $scope.arrivedBtnEnabled = false;
+           // $rootScope.arrivedBtnEnabled = false;
+            //$scope.arrivedBtnEnabled = false;
 
 
 
@@ -30,12 +31,12 @@ app
 
             getCustomerRoute();
 
-            $scope.$watchGroup(['cntrlName', 'address_type', 'tripsummary', 'bool', 'arrivedBtnEnabled'], function() {
+            $scope.$watchGroup(['cntrlName', 'address_type', 'tripsummary', 'bool'], function() {
                     MapServices.cntrlName = $scope.cntrlName;
                     MapServices.address_type = $scope.address_type;
                     MapServices.tripsummary = $scope.tripsummary;
                     MapServices.bool = $scope.bool;
-                    Mapservices.arrivedBtnEnabled = $scope.arrivedBtnEnabled;
+                    //Mapservices.arrivedBtnEnabled = $scope.arrivedBtnEnabled;
 
                 })
                 //clearInterval($rootScope.getLoc);
@@ -95,13 +96,17 @@ app
             }
 
 
-            $scope.$watch('arrivedBtnEnabled', function() {
-                        $('#arrivedBtn').addClass('buttonArrived');
-                        $scope.bool.isArrived = true;
-                        if (!$scope.$$phase) {
-                            $scope.$digest();
-                        };  
-            });
+            // $scope.$watch('arrivedBtnEnabled', function() {
+            //     alert('a - watch')
+            //     if ($rootScope.arrivedBtnEnabled) {
+            //         $('#arrivedBtn').addClass('buttonArrived');
+            //         $scope.bool.isArrived = true;
+            //         if (!$scope.$$phase) {
+            //             $scope.$digest();
+            //         };
+            //     }               
+
+            // });
 
 
 
