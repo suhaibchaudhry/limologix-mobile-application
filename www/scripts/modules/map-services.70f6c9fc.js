@@ -12,8 +12,13 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
     this.boardedSwal = false;
     this.arrivedSwal = false;
     this.defer = $q.defer();
+    // $rootScope.boardedBtnEnabled = false;
+    //$rootScope.arrivedBtnEnabled = false;
 
     var self = this;
+
+
+
 
     //$timeout(self.checkGPS,3000)
     this.checkGPS = setInterval(function() {
@@ -21,6 +26,8 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
             console.log("timeout Location setting is " + (enabled ? "enabled" : "disabled"));
             if (enabled) {
                 swal.close();
+                //alert('location on');
+                // getCurrentPosition();
             } else {
                 swal({
                         title: 'GPS',
@@ -40,9 +47,36 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
     }, 5000)
 
 
+    this.getCurrentPositionsWithInterval = setInterval(function() {
+        //console.log('test',$rootScope.btns.boardedBtnEnabled)
+        navigator.geolocation.getCurrentPosition(self.onSuccessInterval, self.onErrorInterval);
+    }, 3000);
+
+
+
     this.init = function(mapId) {
         $("#spinner1").show();
         self.mapId = mapId;
+
+        // loadGoogleMaps();
+        // function loadGoogleMaps(){
+        // var script_tag = document.createElement('script');
+        // script_tag.setAttribute("type","text/javascript");
+        // script_tag.setAttribute("src","http://maps.googleapis.com/maps/api/js?libraries=weather,geometry,visualization,places,drawing&language=en&v=3.23&key=AIzaSyDSvFic3Culq7fjKAcAMqDhsLU_Fj7g8");
+        //(document.getElementsByTagName("head")[0] || document.documentElement).appendChild(script_tag);
+        // document.body.appendChild(script_tag);
+        // }
+        // var options = {
+        //     center: new google.maps.LatLng(29.7630556, -95.3630556),
+        //     zoom: 13,
+        //     disableDefaultUI: true
+        // }
+        // self.map = new google.maps.Map(
+        //     document.getElementById(mapId), options
+        // );
+
+        //self.places = new google.maps.places.PlacesService(self.map);
+        // self.addMarker();
         self.getCurrentPositions();
     }
 
@@ -92,6 +126,19 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
                     streetViewControl: false,
                     mapTypeId: google.maps.MapTypeId.ROADMAP
                 };
+                // $('#'+ self.mapId).empty();
+                // $('.gm-style').remove();
+                //self.map.remove();
+                // var node = document.getElementById(self.mapId); 
+                // node.parentNode.removeChild(node);
+
+                // var div = document.createElement("div");
+                // div.setAttribute("id",self.mapId);
+                // var parent_div = document.getElementsByClassName('page-signup')[0]
+                // parent_div.appendChild(div);
+
+
+                //self.map = null;
 
                 self.map = new google.maps.Map(document.getElementById(self.mapId), mapOptions);
                 google.maps.event.addListenerOnce(self.map, "idle", function() {
@@ -127,11 +174,6 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
             //deferred.reject();
         }
         //return deferred.promise;
-        //this.getCurrentPositionsWithInterval =
-        setInterval(function() {
-            //console.log('test',$rootScope.btns.boardedBtnEnabled)
-            navigator.geolocation.getCurrentPosition(self.onSuccessInterval, self.onErrorInterval);
-        }, 3000);
     }
 
     this.getLocationAddressByPositions = function(LatLng) {
@@ -162,15 +204,22 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
         if (isDriverLoggedIn == 'true') {
             self.sendLocationsToServerThroughFaye(position);
 
+            //if (self.cntrlScope.tripsummary)
             console.log('address_type', self.address_type)
-
+                // if (!self.boardedSwal) {
             if (self.address_type == "pickup")
                 self.checkLocationReached(position);
-
+            // }
+            // if (!self.arrived) {
             if (self.address_type == "dropoff")
                 self.checkLocationReached(position);
+            // }
 
         }
+
+
+        // if(self.cntrlScope.cntrlName != "notification")
+        //    self.checkLocationReached(position);
     };
 
     // onError Callback receives a PositionError object
@@ -187,7 +236,9 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
             var p2 = new google.maps.LatLng(self.tripsummary.pickupAtLat, self.tripsummary.pickupAtLng); //pickup location
             var swal_title = "Boarded";
             console.log('p1,p2-boarded', p1, p2, google.maps.geometry.spherical.computeDistanceBetween(p1, p2))
-            if (google.maps.geometry.spherical.computeDistanceBetween(p1, p2) < 20) { //within 1/2km                
+            if (google.maps.geometry.spherical.computeDistanceBetween(p1, p2) < 150) {
+                // alert('pickup') //within 1/2km 
+
                 if (!self.boardedSwal) {
                     swal({
                         title: swal_title,
@@ -198,6 +249,12 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
                         //self.defer.notify(self.boardedSwal);
                     })
                 }
+
+
+                // $rootScope.btns.boardedBtnEnabled = true;
+
+                //self.boardedBtnEnabled = true;
+
                 $('#boardedBtn').addClass('buttonBoarded');
                 self.bool.isBoardedBtnVisible = true;
                 $rootScope.$digest();
@@ -212,7 +269,7 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
             var p2 = new google.maps.LatLng(self.tripsummary.dropoffAtLat, self.tripsummary.dropoffAtLng); //dropoff location
             var swal_title = "Arrived";
             console.log('p1,p2-arived', p1, p2, google.maps.geometry.spherical.computeDistanceBetween(p1, p2))
-            if (google.maps.geometry.spherical.computeDistanceBetween(p1, p2) < 20) {
+            if (google.maps.geometry.spherical.computeDistanceBetween(p1, p2) < 150) {
                 //within 1/2km 
 
                 if (!self.arrivedSwal) {
@@ -226,9 +283,13 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
                     })
                 }
 
+
+                //$rootScope.arrivedBtnEnabled = true;
+
                 $('#arrivedBtn').addClass('buttonArrived');
                 self.bool.isArrived = true;
                 $rootScope.$digest();
+
                 // if (!self.cntrlScope.$$phase) {
                 //     self.cntrlScope.$digest();
                 // };
@@ -239,11 +300,14 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
         } else {
 
         }
+
+
+
     }
 
-    // this.watchBoardedBtn = function() {
-    //     return self.defer.promise;
-    // }
+    this.watchBoardedBtn = function() {
+        return self.defer.promise;
+    }
 
     // onError Callback receives a PositionError object
     this.onError = function(error) {
@@ -367,6 +431,8 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
 
         })
 
+
+
         function route(origin_place_id, destination_place_id, travel_mode,
             directionsService, directionsDisplay) {
             if (!origin_place_id || !destination_place_id) {
@@ -400,6 +466,59 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
                 }
             });
         }
+
+
+
+        //old///
+
+        // var source, destination;
+        // var directionsDisplay;
+        // var directionsService = new google.maps.DirectionsService();
+        // directionsDisplay = new google.maps.DirectionsRenderer({
+        //     suppressMarkers: true,
+        //     polylineOptions: {
+        //         strokeColor: "#9ACD32",
+        //         strokeWeight: 5
+        //     }
+        // });
+        // directionsDisplay.setMap(self.map);
+        // calcRoute(address_type, start, end, directionsService);
+
+        // function calcRoute(address_type, start, end, directionsService) {
+        //     var icons = {
+        //         start: new google.maps.MarkerImage(
+        //             'images/source_marker.9db0b1d4.png',
+        //             new google.maps.Size(44, 32), //width,height
+        //             new google.maps.Point(0, 0), // The origin point (x,y)
+        //             new google.maps.Point(22, 32)),
+        //         end: new google.maps.MarkerImage(
+        //             'images/destination_marker.23597b9e.png',
+        //             new google.maps.Size(44, 32),
+        //             new google.maps.Point(0, 0),
+        //             new google.maps.Point(22, 32))
+        //     };
+
+        //     self.start_point = start; //'Marathahalli, Bengaluru, Karnataka 560037, India';
+        //     self.end_point = end; //'Hebbal, Bengaluru, Karnataka 560024, India';
+        //     var request = {
+        //         origin: self.start_point,
+        //         destination: self.end_point,
+        //         travelMode: google.maps.TravelMode.DRIVING
+        //     };
+        //     directionsService.route(request, function(response, status) {
+        //         if (status == google.maps.DirectionsStatus.OK) {
+        //             directionsDisplay.setDirections(response);
+        //             var leg = response.routes[0].legs[0];
+        //             self.makeSourceMarker(leg.start_location, icons.start, self.start_point, self.map, address_type);
+        //             self.makeDestinationMarker(leg.end_location, icons.end, self.end_point, self.map, address_type);
+        //         }
+        //     });
+        // }
+
+
+
+
+
     }
     this.makeSourceMarker = function(position, icon, pickup_point, map, address_type) {
         var marker_pickup = new google.maps.Marker({
@@ -453,4 +572,7 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
         });
 
     }
+
+
+
 };

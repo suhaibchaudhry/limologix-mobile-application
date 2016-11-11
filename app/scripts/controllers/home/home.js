@@ -13,9 +13,15 @@ app
 
 function funchomeCtrl(MapServices, $scope, $rootScope, $state, $http, appSettings, notify, $window, services, constants, $timeout, $location, Faye, driverLocationConstants) {
 
-    $scope.deviceOnline = navigator.onLine; //$rootScope.online;
+    $scope.deviceOnline = navigator.onLine;//$rootScope.online;
     //alert($scope.deviceOnline)
-
+    // loadGoogleMaps();
+    // function loadGoogleMaps(){
+    //     var script_tag = document.createElement('script');
+    //     script_tag.setAttribute("type","text/javascript");
+    //     script_tag.setAttribute("src","http://maps.googleapis.com/maps/api/js?libraries=weather,geometry,visualization,places,drawing&language=en&v=3.23&key=AIzaSyDSvFic3Culq7fjKAcAMqDhsLU_Fj7g8");
+    //     (document.getElementsByTagName("head")[0] || document.documentElement).appendChild(script_tag);
+    // }
 
     var driver_name = localStorage.getItem('driver_name');
     var comp_name = localStorage.getItem('company_name');
@@ -28,12 +34,12 @@ function funchomeCtrl(MapServices, $scope, $rootScope, $state, $http, appSetting
     $rootScope.preState = $state.current.name;
     localStorage.setItem("lastState", $rootScope.preState);
 
-    $scope.$watchGroup(['cntrlName', 'tripsummary', 'address_type'], function() {
+    $scope.$watchGroup(['cntrlName','tripsummary','address_type'], function() {
         MapServices.cntrlName = $scope.cntrlName;
         MapServices.tripsummary = '';
     })
 
-
+   
 
     //Store auth-token - After login and app kills
     $http.defaults.headers.common['Auth-Token'] = localStorage.getItem('Auth-Token');
@@ -349,7 +355,15 @@ function funchomeCtrl(MapServices, $scope, $rootScope, $state, $http, appSetting
                         //On click of recharge button
                         function() {
                             $state.go('core.home')
-
+                                // var url = appSettings.serverPath + appSettings.serviceApis.driver_recharge;
+                                //  services.funcPostRequest(url).then(function(response) {
+                                //    $scope.remaining_balance = response.data.toll_credit;
+                                //    swal("Remaining Balance", "You've " +"$"+ $scope.remaining_balance+ " in your account","success")
+                                //    $state.go('core.home')
+                                //  }, function(error) {
+                                //      notify({ classes: 'alert-danger', message: error });
+                                //  });
+                                //$state.go('core.home')
                         })
                 }
 
@@ -392,5 +406,7 @@ function funchomeCtrl(MapServices, $scope, $rootScope, $state, $http, appSetting
     }
 
     MapServices.init('dvMap');
+    //MapServices.getCurrentPositions();
+    // MapServices.watchPositions();  
 
 }
