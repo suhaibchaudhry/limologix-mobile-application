@@ -1,6 +1,6 @@
 'use strict';
 
-app.service('dispatchRideProvider', ['$http', '$q','$rootScope',funcservices]);
+app.service('dispatchTestProvider', ['$http', '$q','$rootScope',funcservices]);
 
 function funcservices($http, $q,$rootScope) {
     //Get routes and display route direction in google map

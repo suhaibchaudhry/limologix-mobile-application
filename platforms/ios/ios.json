@@ -13,14 +13,6 @@
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"FCMPlugin\"><param name=\"ios-package\" value=\"FCMPlugin\" /></feature>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"Geolocation\"><param name=\"ios-package\" value=\"CDVLocation\" /></feature>",
-                            "count": 1
-                        },
-                        {
                             "xml": "<feature name=\"NetworkStatus\"><param name=\"ios-package\" value=\"CDVConnection\" /></feature>",
                             "count": 1
                         },
@@ -31,6 +23,14 @@
                         {
                             "xml": "<feature name=\"Diagnostic\"><param name=\"ios-package\" value=\"Diagnostic\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Geolocation\"><param name=\"ios-package\" value=\"CDVLocation\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"FCMPlugin\"><param name=\"ios-package\" value=\"FCMPlugin\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -39,11 +39,11 @@
                 "parents": {
                     "NSLocationWhenInUseUsageDescription": [
                         {
-                            "xml": "<string />",
+                            "xml": "<string>This app will now only track your location when the screen is on and the app is displayed.</string>",
                             "count": 1
                         },
                         {
-                            "xml": "<string>This app will now only track your location when the screen is on and the app is displayed.</string>",
+                            "xml": "<string />",
                             "count": 1
                         }
                     ],
@@ -61,25 +61,25 @@
         "com.phonegap.plugins.nativesettingsopener": {
             "PACKAGE_NAME": "com.limo.limologix"
         },
-        "cordova-plugin-compat": {
-            "PACKAGE_NAME": "com.limo.limologix"
-        },
-        "cordova-plugin-fcm": {
-            "PACKAGE_NAME": "com.limo.limologix"
-        },
-        "cordova-plugin-geolocation": {
-            "PACKAGE_NAME": "com.limo.limologix"
-        },
         "cordova-plugin-network-information": {
             "PACKAGE_NAME": "com.limo.limologix"
         },
         "cordova-plugin-request-location-accuracy": {
             "PACKAGE_NAME": "com.limo.limologix"
         },
-        "cordova-plugin-whitelist": {
+        "cordova.plugins.diagnostic.api-22": {
             "PACKAGE_NAME": "com.limo.limologix"
         },
-        "cordova.plugins.diagnostic.api-22": {
+        "cordova-plugin-compat": {
+            "PACKAGE_NAME": "com.limo.limologix"
+        },
+        "cordova-plugin-geolocation": {
+            "PACKAGE_NAME": "com.limo.limologix"
+        },
+        "cordova-plugin-fcm": {
+            "PACKAGE_NAME": "com.limo.limologix"
+        },
+        "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "com.limo.limologix"
         }
     },
@@ -94,11 +94,36 @@
             ]
         },
         {
-            "file": "plugins/cordova-plugin-fcm/www/FCMPlugin.js",
-            "id": "cordova-plugin-fcm.FCMPlugin",
-            "pluginId": "cordova-plugin-fcm",
+            "file": "plugins/cordova-plugin-network-information/www/network.js",
+            "id": "cordova-plugin-network-information.network",
+            "pluginId": "cordova-plugin-network-information",
             "clobbers": [
-                "FCMPlugin"
+                "navigator.connection",
+                "navigator.network.connection"
+            ]
+        },
+        {
+            "file": "plugins/cordova-plugin-network-information/www/Connection.js",
+            "id": "cordova-plugin-network-information.Connection",
+            "pluginId": "cordova-plugin-network-information",
+            "clobbers": [
+                "Connection"
+            ]
+        },
+        {
+            "file": "plugins/cordova-plugin-request-location-accuracy/www/ios/RequestLocationAccuracy.js",
+            "id": "cordova-plugin-request-location-accuracy.RequestLocationAccuracy",
+            "pluginId": "cordova-plugin-request-location-accuracy",
+            "clobbers": [
+                "cordova.plugins.locationAccuracy"
+            ]
+        },
+        {
+            "file": "plugins/cordova.plugins.diagnostic.api-22/www/ios/diagnostic.js",
+            "id": "cordova.plugins.diagnostic.api-22.Diagnostic",
+            "pluginId": "cordova.plugins.diagnostic.api-22",
+            "clobbers": [
+                "cordova.plugins.diagnostic"
             ]
         },
         {
@@ -134,47 +159,22 @@
             ]
         },
         {
-            "file": "plugins/cordova-plugin-network-information/www/network.js",
-            "id": "cordova-plugin-network-information.network",
-            "pluginId": "cordova-plugin-network-information",
+            "file": "plugins/cordova-plugin-fcm/www/FCMPlugin.js",
+            "id": "cordova-plugin-fcm.FCMPlugin",
+            "pluginId": "cordova-plugin-fcm",
             "clobbers": [
-                "navigator.connection",
-                "navigator.network.connection"
-            ]
-        },
-        {
-            "file": "plugins/cordova-plugin-network-information/www/Connection.js",
-            "id": "cordova-plugin-network-information.Connection",
-            "pluginId": "cordova-plugin-network-information",
-            "clobbers": [
-                "Connection"
-            ]
-        },
-        {
-            "file": "plugins/cordova-plugin-request-location-accuracy/www/ios/RequestLocationAccuracy.js",
-            "id": "cordova-plugin-request-location-accuracy.RequestLocationAccuracy",
-            "pluginId": "cordova-plugin-request-location-accuracy",
-            "clobbers": [
-                "cordova.plugins.locationAccuracy"
-            ]
-        },
-        {
-            "file": "plugins/cordova.plugins.diagnostic.api-22/www/ios/diagnostic.js",
-            "id": "cordova.plugins.diagnostic.api-22.Diagnostic",
-            "pluginId": "cordova.plugins.diagnostic.api-22",
-            "clobbers": [
-                "cordova.plugins.diagnostic"
+                "FCMPlugin"
             ]
         }
     ],
     "plugin_metadata": {
         "com.phonegap.plugins.nativesettingsopener": "1.2",
-        "cordova-plugin-compat": "1.0.0",
-        "cordova-plugin-fcm": "1.1.1",
-        "cordova-plugin-geolocation": "2.2.0",
         "cordova-plugin-network-information": "1.3.0",
         "cordova-plugin-request-location-accuracy": "2.2.0",
-        "cordova-plugin-whitelist": "1.2.2",
-        "cordova.plugins.diagnostic.api-22": "2.3.10-api-22"
+        "cordova.plugins.diagnostic.api-22": "2.3.10-api-22",
+        "cordova-plugin-compat": "1.1.0",
+        "cordova-plugin-geolocation": "2.4.0",
+        "cordova-plugin-fcm": "1.1.5",
+        "cordova-plugin-whitelist": "1.3.0"
     }
 }

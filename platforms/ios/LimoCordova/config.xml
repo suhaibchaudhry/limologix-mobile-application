@@ -18,12 +18,6 @@
     <feature name="NativeSettings">
         <param name="ios-package" value="NativeSettings" />
     </feature>
-    <feature name="FCMPlugin">
-        <param name="ios-package" value="FCMPlugin" />
-    </feature>
-    <feature name="Geolocation">
-        <param name="ios-package" value="CDVLocation" />
-    </feature>
     <feature name="NetworkStatus">
         <param name="ios-package" value="CDVConnection" />
     </feature>
@@ -32,6 +26,12 @@
     </feature>
     <feature name="Diagnostic">
         <param name="ios-package" value="Diagnostic" />
+    </feature>
+    <feature name="Geolocation">
+        <param name="ios-package" value="CDVLocation" />
+    </feature>
+    <feature name="FCMPlugin">
+        <param name="ios-package" value="FCMPlugin" />
     </feature>
     <name>LimoCordova</name>
     <description>
