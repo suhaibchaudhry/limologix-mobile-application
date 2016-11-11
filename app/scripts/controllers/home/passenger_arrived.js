@@ -9,8 +9,8 @@
  */
 app
     .controller('passengerArrivedCtrl', ['$scope', '$rootScope', '$state', '$http', 'appSettings', 'notify', '$window',
-        'services', 'AppConstants', 'dispatchRideProvider', 'Faye', '$location', 'driverLocationConstants', 'MapServices',
-        function($scope, $rootScope, $state, $http, appSettings, notify, $window, services, constants, dispatchRideProvider, Faye, $location, driverLocationConstants, MapServices) {
+        'services', 'AppConstants', 'Faye', '$location', 'driverLocationConstants', 'MapServices',
+        function($scope, $rootScope, $state, $http, appSettings, notify, $window, services, constants, Faye, $location, driverLocationConstants, MapServices) {
 
             $scope.tripsummary = {};
             $rootScope.isAdsShow = false;
@@ -18,10 +18,6 @@ app
             $scope.cntrlName = "Arrived";
             $scope.address_type = "dropoff";
             $scope.bool.isArrived = false;
-           // $rootScope.arrivedBtnEnabled = false;
-            //$scope.arrivedBtnEnabled = false;
-
-
 
             $rootScope.preState = $state.current.name;
             localStorage.setItem("lastState", $rootScope.preState);
@@ -32,24 +28,17 @@ app
             getCustomerRoute();
 
             $scope.$watchGroup(['cntrlName', 'address_type', 'tripsummary', 'bool'], function() {
-                    MapServices.cntrlName = $scope.cntrlName;
-                    MapServices.address_type = $scope.address_type;
-                    MapServices.tripsummary = $scope.tripsummary;
-                    MapServices.bool = $scope.bool;
-                    //Mapservices.arrivedBtnEnabled = $scope.arrivedBtnEnabled;
-
-                })
-                //clearInterval($rootScope.getLoc);
+                MapServices.cntrlName = $scope.cntrlName;
+                MapServices.address_type = $scope.address_type;
+                MapServices.tripsummary = $scope.tripsummary;
+                MapServices.bool = $scope.bool;
+            })
 
             var map_height = jQuery(window).innerHeight() - (jQuery('.b2').innerHeight() + jQuery('.navbar-header').innerHeight())
 
             jQuery('#dvMap_arrived').height(map_height);
 
             function getCustomerRoute() {
-                //    $scope.tripsummary.pickupAt = 'Marathahalli, Bengaluru, Karnataka 560037, India';
-                //    $scope.tripsummary.dropoffAt = 'Hebbal, Bengaluru, Karnataka 560024, India';
-                //    $scope.tripsummary.trip_id = 3;
-
                 var stored_notification = JSON.parse(localStorage.getItem("notificationInfo"));
 
                 var location = {
@@ -59,170 +48,30 @@ app
                     start_destination_lng: stored_notification ? stored_notification.start_destination_lng : driverLocationConstants.location.start_destination_lng,
                     end_destination_lat: stored_notification ? stored_notification.end_destination_lat : driverLocationConstants.location.end_destination_lat,
                     end_destination_lng: stored_notification ? stored_notification.end_destination_lng : driverLocationConstants.location.end_destination_lng,
-
                     id: stored_notification ? stored_notification.id : driverLocationConstants.location.id,
-
                     source_place_id: stored_notification ? stored_notification.source_place_id : driverLocationConstants.location.source_place_id,
                     destination_place_id: stored_notification ? stored_notification.destination_place_id : driverLocationConstants.location.destination_place_id,
                 }
-
                 driverLocationConstants.location = location;
-
                 $scope.tripsummary = {
-
                     pickupAt: driverLocationConstants.location.start_destination,
                     pickupAtLat: driverLocationConstants.location.start_destination_lat,
                     pickupAtLng: driverLocationConstants.location.start_destination_lng,
-
                     dropoffAt: driverLocationConstants.location.end_destination,
                     dropoffAtLat: driverLocationConstants.location.end_destination_lat,
                     dropoffAtLng: driverLocationConstants.location.end_destination_lng,
-
                     trip_id: driverLocationConstants.location.id,
-
                     source_place_id: driverLocationConstants.location.source_place_id,
                     destination_place_id: driverLocationConstants.location.destination_place_id
                 };
 
                 MapServices.init('dvMap_arrived');
-                //  MapServices.getCurrentPositions();
-                // MapServices.getCurrentPositions($scope).then(function() {
-                //     MapServices.addDirectionRoutes('dropoff', '', $scope.tripsummary.pickupAt, $scope.tripsummary.dropoffAt);
-                //     //Mapservices.getDropoffLatLng($scope.tripsummary.dropoffAtLat, $scope.tripsummary.dropoffAtLng, $scope);
-                // MapServices.watchPositions();
-                // }, function(error) {
-                //     console.log(error);
-                // });
             }
-
-
-            // $scope.$watch('arrivedBtnEnabled', function() {
-            //     alert('a - watch')
-            //     if ($rootScope.arrivedBtnEnabled) {
-            //         $('#arrivedBtn').addClass('buttonArrived');
-            //         $scope.bool.isArrived = true;
-            //         if (!$scope.$$phase) {
-            //             $scope.$digest();
-            //         };
-            //     }               
-
-            // });
-
-
-
-
-            var options = {
-                maximumAge: 3600000,
-                timeout: 3000,
-                enableHighAccuracy: true,
-            }
-
-            //navigator.geolocation.getCurrentPosition(getCurrentPosition, onError, options)
-
-            function getCurrentPosition(position) {
-                console.log('driver at', position);
-                var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-                var geocoder = new google.maps.Geocoder();
-                if (geocoder) {
-                    geocoder.geocode({
-                        'latLng': latlng
-                    }, function(results, status) {
-                        if (status == google.maps.GeocoderStatus.OK) {
-                            console.log("driver place= ", results[0].formatted_address);
-                            $scope.currentLocation = results[0].formatted_address;
-                            dispatchRideProvider.getRoutes($scope.currentLocation, $scope.tripsummary.pickupAt, $scope.tripsummary.dropoffAt, notify, true, 'dropoffpoint', 'dvMap_arrived');
-
-                            //dispatchRideProvider.getRoutes($scope.currentLocation,$scope.tripsummary.pickupAt, $scope.tripsummary.dropoffAt,notify,true,'pickuppoint','dvMap_boarded');
-
-                            // dispatchRideProvider.getRoutes($scope.currentLocation, $scope.tripsummary.pickupAt, $scope.tripsummary.dropoffAt, notify, true, 'pickuppoint');
-                        }
-                    });
-                }
-
-            }
-
-            // var options = {
-            //     maximumAge: 3000000,
-            //     timeout: 3000,
-            //     enableHighAccuracy: true,
-            // }
-
-
-            // $scope.googlepositionDest_id = navigator.geolocation.watchPosition(onSuccess, onError, options)
-
-
-
-            // getChannelName();
-            //   function getChannelName(){
-            //     var url = appSettings.serverPath + appSettings.serviceApis.getChannelName;
-            //       services.funcGetRequest(url).then(function(response,status) {
-            //        $scope.channelName = response.data.channel;                     
-            //       },function(error){
-            //            //notify({ classes: 'alert-danger', message: error.message });
-            //       });
-            //   }
-
-            // onSuccess Callback
-            // This method accepts a Position object, which contains the
-            // current GPS coordinates
-            //if (navigator.geolocation) {
-            // function onSuccess(position) {
-            //     console.log("position", position);
-
-            //     //update marker position
-            //     if (dispatchRideProvider.map && dispatchRideProvider.marker) {
-            //         dispatchRideProvider.marker.setPosition(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
-            //         var center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-            //         dispatchRideProvider.map.setCenter(center);
-            //     }
-
-
-            //     //faye(Faye, $scope, $rootScope, $window, position);
-
-            //     var p1 = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-            //     var p2 = new google.maps.LatLng($scope.tripsummary.dropoffAtLat, $scope.tripsummary.dropoffAtLng);
-            //     //alert('destination distance',google.maps.geometry.spherical.computeDistanceBetween(p1, p2))
-            //     if (google.maps.geometry.spherical.computeDistanceBetween(p1, p2) < 500) {
-            //         swal({
-            //             title: 'Arrived!',
-            //             text: 'You are close to dropoff location',
-            //             type: "success"
-            //         }, function() {
-
-            //         })
-            //         $('#arrivedBtn').addClass('buttonArrived');
-            //         $scope.bool.isArrived = true;
-            //         if (!$scope.$$phase) {
-            //             $scope.$digest();
-            //         };
-
-            //     } else {
-            //         // alert('dest-out of radius')
-            //         // $('#arrivedBtn').removeClass('buttonArrived'); 
-            //         // $scope.isArrived = false;
-
-            //     }
-
-            // }
-
-            // $scope.$watch('bool', function() {
-            //     //alert('digest');              
-            // }, true)
-
-            // onError Callback receives a PositionError object
-            // function onError(error) {
-            //     //alert('code: ' + error.code + '\n' +
-            //     // 'message: ' + error.message + '\n');
-            // }
 
             $scope.passenger_arrived = function() {
-                //navigator.geolocation.clearWatch($scope.googlepositionDest_id);
-                //$state.go('core.passenger_arrived');
                 $scope.trip = {
                     id: $scope.tripsummary.trip_id
                 }
-
-                //if ($rootScope.online) {
                 var url = appSettings.serverPath + appSettings.serviceApis.passengerArrived;
                 services.funcPostRequest(url, { "trip": $scope.trip }).then(function(response) {
                     notify.closeAll();
@@ -238,45 +87,6 @@ app
                 if (!$scope.$$phase) {
                     $scope.$digest();
                 };
-                // } else {
-                //     alert('The internet connection appears to be offline');
-                // }
-
             }
-
-
-
-            function faye(Faye, $scope, $rootScope, $window, position) {
-                var Logger = {
-                    incoming: function(message, callback) {
-                        //  console.log('incoming', message);
-                        callback(message);
-                    },
-                    outgoing: function(message, callback) {
-                        message.ext = message.ext || {};
-                        message.ext.auth_token = $window.sessionStorage['Auth-Token'];
-                        message.ext.user_type = "driver";
-                        //console.log('outgoing', message);
-                        callback(message);
-                    }
-                };
-                var client = Faye.getClient();
-                client.addExtension(Logger);
-
-
-                if ($rootScope.channelName) {
-                    var publication = client.publish('/publish/' + $rootScope.channelName, { latitude: position.coords.latitude, longitude: position.coords.longitude });
-
-                    publication.callback(function() {
-                        //alert('Connection established successfully.');
-                    });
-                    publication.errback(function(error) {
-                        // alert('There was a problem: ' + error.message);
-                    });
-
-                }
-
-            }
-
         }
     ])

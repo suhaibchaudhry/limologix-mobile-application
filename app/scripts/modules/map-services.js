@@ -12,22 +12,12 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
     this.boardedSwal = false;
     this.arrivedSwal = false;
     this.defer = $q.defer();
-    // $rootScope.boardedBtnEnabled = false;
-    //$rootScope.arrivedBtnEnabled = false;
-
     var self = this;
-
-
-
-
-    //$timeout(self.checkGPS,3000)
     this.checkGPS = setInterval(function() {
         cordova.plugins.diagnostic.isLocationEnabledSetting(function(enabled) {
             console.log("timeout Location setting is " + (enabled ? "enabled" : "disabled"));
             if (enabled) {
                 swal.close();
-                //alert('location on');
-                // getCurrentPosition();
             } else {
                 swal({
                         title: 'GPS',
@@ -48,35 +38,12 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
 
 
     this.getCurrentPositionsWithInterval = setInterval(function() {
-        //console.log('test',$rootScope.btns.boardedBtnEnabled)
         navigator.geolocation.getCurrentPosition(self.onSuccessInterval, self.onErrorInterval);
     }, 3000);
-
-
 
     this.init = function(mapId) {
         $("#spinner1").show();
         self.mapId = mapId;
-
-        // loadGoogleMaps();
-        // function loadGoogleMaps(){
-        // var script_tag = document.createElement('script');
-        // script_tag.setAttribute("type","text/javascript");
-        // script_tag.setAttribute("src","http://maps.googleapis.com/maps/api/js?libraries=weather,geometry,visualization,places,drawing&language=en&v=3.23&key=AIzaSyDSvFic3Culq7fjKAcAMqDhsLU_Fj7g8");
-        //(document.getElementsByTagName("head")[0] || document.documentElement).appendChild(script_tag);
-        // document.body.appendChild(script_tag);
-        // }
-        // var options = {
-        //     center: new google.maps.LatLng(29.7630556, -95.3630556),
-        //     zoom: 13,
-        //     disableDefaultUI: true
-        // }
-        // self.map = new google.maps.Map(
-        //     document.getElementById(mapId), options
-        // );
-
-        //self.places = new google.maps.places.PlacesService(self.map);
-        // self.addMarker();
         self.getCurrentPositions();
     }
 
@@ -93,7 +60,6 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
     }
 
     this.getCurrentPositions = function() {
-
         //Event listener when location services on/off
         cordova.plugins.diagnostic.registerLocationAuthorizationStatusChangeHandler(function(status) {
             console.log("home page-  \"not_determined\" to: " + status);
@@ -111,7 +77,6 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
 
             } else {
                 self.getCurrentPositions();
-                //self.watchPositions();
             }
         });
 
@@ -126,20 +91,6 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
                     streetViewControl: false,
                     mapTypeId: google.maps.MapTypeId.ROADMAP
                 };
-                // $('#'+ self.mapId).empty();
-                // $('.gm-style').remove();
-                //self.map.remove();
-                // var node = document.getElementById(self.mapId); 
-                // node.parentNode.removeChild(node);
-
-                // var div = document.createElement("div");
-                // div.setAttribute("id",self.mapId);
-                // var parent_div = document.getElementsByClassName('page-signup')[0]
-                // parent_div.appendChild(div);
-
-
-                //self.map = null;
-
                 self.map = new google.maps.Map(document.getElementById(self.mapId), mapOptions);
                 google.maps.event.addListenerOnce(self.map, "idle", function() {
                     $("#spinner1").hide();
@@ -147,9 +98,6 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
                 if (self.map) {
                     $("#spinner1").hide();
                 }
-
-
-
                 if (self.marker) self.marker.setMap(null);
                 // var geolocate = new google.maps.LatLng( position.coords.latitude, position.coords.longitude);
                 self.marker = new google.maps.Marker({
@@ -166,8 +114,6 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
                 self.getChannelToPublish(position);
                 // self.watchPositions();
                 //deferred.resolve();
-
-
             });
         } else {
             alert('Geo Location feature is not supported in this browser.');
@@ -203,23 +149,11 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
         var isDriverLoggedIn = localStorage.getItem('isLoggedIn');
         if (isDriverLoggedIn == 'true') {
             self.sendLocationsToServerThroughFaye(position);
-
-            //if (self.cntrlScope.tripsummary)
-            console.log('address_type', self.address_type)
-                // if (!self.boardedSwal) {
             if (self.address_type == "pickup")
                 self.checkLocationReached(position);
-            // }
-            // if (!self.arrived) {
             if (self.address_type == "dropoff")
                 self.checkLocationReached(position);
-            // }
-
         }
-
-
-        // if(self.cntrlScope.cntrlName != "notification")
-        //    self.checkLocationReached(position);
     };
 
     // onError Callback receives a PositionError object
@@ -229,80 +163,31 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
     }
 
     this.checkLocationReached = function(position) {
-        console.log('checkLocationReached', self.cntrlName)
 
         var p1 = new google.maps.LatLng(position.coords.latitude, position.coords.longitude); //driver current location
-        if (self.cntrlName == "Boarded") { //&& !self.boardedSwal
+        if (self.cntrlName == "Boarded") {
             var p2 = new google.maps.LatLng(self.tripsummary.pickupAtLat, self.tripsummary.pickupAtLng); //pickup location
             var swal_title = "Boarded";
-            console.log('p1,p2-boarded', p1, p2, google.maps.geometry.spherical.computeDistanceBetween(p1, p2))
-            if (google.maps.geometry.spherical.computeDistanceBetween(p1, p2) < 500) {
-                // alert('pickup') //within 1/2km 
-
-                // if (!self.boardedSwal) {
-                //     swal({
-                //         title: swal_title,
-                //         text: 'You are close to' + ' ' + self.cntrlName + ' ' + 'location',
-                //         type: "success"
-                //     }, function() {
-                //         self.boardedSwal = true;
-                //         //self.defer.notify(self.boardedSwal);
-                //     })
-                // }
-
-
-                // $rootScope.btns.boardedBtnEnabled = true;
-
-                //self.boardedBtnEnabled = true;
-
+            if (google.maps.geometry.spherical.computeDistanceBetween(p1, p2) < 500) { //within 1/2km
                 $('#boardedBtn').addClass('buttonBoarded');
                 self.bool.isBoardedBtnVisible = true;
                 $rootScope.$digest();
-                // if (!self.cntrlScope.$$phase) {
-                //     self.cntrlScope.$digest();
-                // };
             } else {
-                // alert('out of radius')                    
-
+                // alert('out of radius')
             }
-        } else if (self.cntrlName == "Arrived") { //&& !self.arrivedSwal
+        } else if (self.cntrlName == "Arrived") {
             var p2 = new google.maps.LatLng(self.tripsummary.dropoffAtLat, self.tripsummary.dropoffAtLng); //dropoff location
             var swal_title = "Arrived";
-            console.log('p1,p2-arived', p1, p2, google.maps.geometry.spherical.computeDistanceBetween(p1, p2))
-            if (google.maps.geometry.spherical.computeDistanceBetween(p1, p2) < 500) {
-                //within 1/2km 
-
-                // if (!self.arrivedSwal) {
-                //     swal({
-                //         title: swal_title,
-                //         text: 'You are close to' + ' ' + self.cntrlName + ' ' + 'location',
-                //         type: "success"
-                //     }, function() {
-                //         self.arrivedSwal = true;
-                //         // self.arrivedBtnEnabled = true;
-                //     })
-                // }
-
-
-                //$rootScope.arrivedBtnEnabled = true;
-
+            if (google.maps.geometry.spherical.computeDistanceBetween(p1, p2) < 500) {  //within 1/2km               
                 $('#arrivedBtn').addClass('buttonArrived');
                 self.bool.isArrived = true;
                 $rootScope.$digest();
-
-                // if (!self.cntrlScope.$$phase) {
-                //     self.cntrlScope.$digest();
-                // };
             } else {
-                // alert('out of radius')                    
 
             }
         } else {
 
         }
-
-
-
     }
 
     this.watchBoardedBtn = function() {
@@ -329,7 +214,6 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
             notify({ classes: 'alert-danger', message: error.message });
         });
     }
-
 
     this.sendLocationsToServerThroughFaye = function(p) {
         var Logger = {

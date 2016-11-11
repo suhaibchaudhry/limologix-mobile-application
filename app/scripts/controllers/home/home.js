@@ -2,10 +2,10 @@
 
 /**
  * @ngdoc function
- * @name LimoCordova.controller:homeCtrl
+ * @name Limo Logix.controller:homeCtrl
  * @description
  * # homeCtrl
- * Controller of the LimoCordova
+ * Controller of the Limo Logix
  */
 app
     .controller('homeCtrl', ['MapServices', '$scope', '$rootScope', '$state', '$http', 'appSettings', 'notify', '$window', 'services', 'AppConstants', '$timeout', '$location', 'Faye', 'driverLocationConstants', funchomeCtrl])
@@ -13,16 +13,7 @@ app
 
 function funchomeCtrl(MapServices, $scope, $rootScope, $state, $http, appSettings, notify, $window, services, constants, $timeout, $location, Faye, driverLocationConstants) {
 
-    $scope.deviceOnline = navigator.onLine;//$rootScope.online;
-    //alert($scope.deviceOnline)
-    // loadGoogleMaps();
-    // function loadGoogleMaps(){
-    //     var script_tag = document.createElement('script');
-    //     script_tag.setAttribute("type","text/javascript");
-    //     script_tag.setAttribute("src","http://maps.googleapis.com/maps/api/js?libraries=weather,geometry,visualization,places,drawing&language=en&v=3.23&key=AIzaSyDSvFic3Culq7fjKAcAMqDhsLU_Fj7g8");
-    //     (document.getElementsByTagName("head")[0] || document.documentElement).appendChild(script_tag);
-    // }
-
+    $scope.deviceOnline = navigator.onLine; //$rootScope.online;
     var driver_name = localStorage.getItem('driver_name');
     var comp_name = localStorage.getItem('company_name');
     $scope.driver_name = driver_name ? driver_name : '';
@@ -34,14 +25,11 @@ function funchomeCtrl(MapServices, $scope, $rootScope, $state, $http, appSetting
     $rootScope.preState = $state.current.name;
     localStorage.setItem("lastState", $rootScope.preState);
 
-    $scope.$watchGroup(['cntrlName','tripsummary','address_type'], function() {
-        MapServices.cntrlName = $scope.cntrlName;
-        MapServices.tripsummary = '';
-    })
-
-   
-
-    //Store auth-token - After login and app kills
+    $scope.$watchGroup(['cntrlName', 'tripsummary', 'address_type'], function() {
+            MapServices.cntrlName = $scope.cntrlName;
+            MapServices.tripsummary = '';
+        })
+        //Store auth-token - After login and app kills
     $http.defaults.headers.common['Auth-Token'] = localStorage.getItem('Auth-Token');
 
     var windowHeight = jQuery(window).innerHeight();
@@ -90,7 +78,6 @@ function funchomeCtrl(MapServices, $scope, $rootScope, $state, $http, appSetting
 
             if (response.data) {
                 //$scope.showAds = true;
-
                 $scope.adsJSON = response.data.advertisements;
                 for (var i = 0; i < Object.keys($scope.adsJSON).length; i++) {
                     var imgs = $scope.adsJSON[i].poster.image;
@@ -119,8 +106,6 @@ function funchomeCtrl(MapServices, $scope, $rootScope, $state, $http, appSetting
     $("#next_image").click(function() {
         next();
     });
-
-
 
     function prev() {
         $('#slideshow_image').fadeOut(300, function() {
@@ -159,7 +144,6 @@ function funchomeCtrl(MapServices, $scope, $rootScope, $state, $http, appSetting
     }
 
     $scope.funcGetVisibleStatus = function() {
-
         $scope.status = !$scope.status;
         $rootScope.status = $scope.status;
         var postData = {
@@ -177,8 +161,6 @@ function funchomeCtrl(MapServices, $scope, $rootScope, $state, $http, appSetting
                 notify.closeAll();
                 notify({ classes: 'alert-danger', message: error.message });
             }
-
-            //$state.go('core.login');
         });
     }
 
@@ -187,7 +169,7 @@ function funchomeCtrl(MapServices, $scope, $rootScope, $state, $http, appSetting
         $("#slide_cont").hide();
     }
 
-    //Push notifications from FCM 
+    //Push notifications from FCM
 
     FCMPlugin.getToken(
             function(token) {
@@ -197,7 +179,7 @@ function funchomeCtrl(MapServices, $scope, $rootScope, $state, $http, appSetting
                 //alert('error retrieving token: ' + err);
             }
         )
-        //Receive notification from FCM
+    //Receive notification from FCM
     FCMPlugin.onNotification(
         function(data) {
 
@@ -347,23 +329,14 @@ function funchomeCtrl(MapServices, $scope, $rootScope, $state, $http, appSetting
                             title: title,
                             text: body,
                             type: "warning"
-                                // confirmButtonColor: "#3232ff",   
-                                // confirmButtonText: "Recharge", 
-                                // showCancelButton: true, 
+                                // confirmButtonColor: "#3232ff",
+                                // confirmButtonText: "Recharge",
+                                // showCancelButton: true,
                                 // closeOnConfirm: false
                         },
                         //On click of recharge button
                         function() {
                             $state.go('core.home')
-                                // var url = appSettings.serverPath + appSettings.serviceApis.driver_recharge;
-                                //  services.funcPostRequest(url).then(function(response) {
-                                //    $scope.remaining_balance = response.data.toll_credit;
-                                //    swal("Remaining Balance", "You've " +"$"+ $scope.remaining_balance+ " in your account","success")
-                                //    $state.go('core.home')
-                                //  }, function(error) {
-                                //      notify({ classes: 'alert-danger', message: error });
-                                //  });
-                                //$state.go('core.home')
                         })
                 }
 
@@ -381,35 +354,15 @@ function funchomeCtrl(MapServices, $scope, $rootScope, $state, $http, appSetting
     services.funcGetRequest(url).then(function(response, status) {
         if (response && response.data) {
             $scope.topicName = response.data.topic;
-            setInterval(function(){
-            FCMPlugin.subscribeToTopic($scope.topicName);
-            },1000)
+            setInterval(function() {
+                FCMPlugin.subscribeToTopic($scope.topicName);
+            }, 1000)
             $rootScope.topicName = $scope.topicName;
         }
-
 
     }, function(error) {
         notify({ classes: 'alert-danger', message: response.message });
     });
 
-    //FCMPlugin.subscribeToTopic('topicExample');
-
-
-    //getChannelName();
-
-    function getChannelName() {
-        var url = appSettings.serverPath + appSettings.serviceApis.getChannelName;
-        services.funcGetRequest(url).then(function(response, status) {
-
-            $rootScope.channelName = response.data.channel;
-            alert($rootScope.channelName)
-        }, function(error) {
-            notify({ classes: 'alert-danger', message: error.message });
-        });
-    }
-
     MapServices.init('dvMap');
-    //MapServices.getCurrentPositions();
-    // MapServices.watchPositions();  
-
 }

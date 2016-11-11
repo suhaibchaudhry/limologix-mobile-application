@@ -165,32 +165,6 @@ var app = angular
 
         // //To Check network connectivity
         $rootScope.online = navigator.onLine;
-        // $window.addEventListener("offline", function() {
-        //     $rootScope.$apply(function() {
-        //         $rootScope.online = false;
-        //         alert('offline');
-        //         // swal({
-        //         //     title: 'App.js!',
-        //         //     text: 'Internet Disconnected',
-        //         //     type: "success"
-        //         // }, function() {
-        //         // })
-        //     });
-        // }, false);
-
-        // $window.addEventListener("online", function() {
-        //     $rootScope.$apply(function() {
-        //         $rootScope.online = true;
-        //         alert('online');
-        //         //$window.location.reload();
-        //     });
-        // }, false);
-
-
-
-
-
-
         notify.config({ duration: 5000 });
         //If driver logged in and 
         var driver = $window.sessionStorage['driver'] ? JSON.parse($window.sessionStorage['driver']) : {};
@@ -267,7 +241,7 @@ var app = angular
 
         var isLoggedIn = localStorage.getItem('isLoggedIn');
         if (isLoggedIn == "true") {
-            var prestate = localStorage.getItem("lastState");            
+            var prestate = localStorage.getItem("lastState");
             var state = prestate.replace(/\./g,'/');
             if (prestate) {
                 $urlRouterProvider.otherwise(state);
@@ -275,13 +249,6 @@ var app = angular
         } else {
             $urlRouterProvider.otherwise('/core/splash');
         }
-
-        // var prestate = localStorage.getItem("lastState");
-        // alert(prestate)
-
-        // if (prestate) {
-        //     $urlRouterProvider.otherwise(prestate);
-        // }else{
 
 
         $stateProvider
