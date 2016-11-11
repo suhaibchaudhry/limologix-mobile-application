@@ -66,7 +66,8 @@ module.exports.metadata =
     "cordova-plugin-compat": "1.1.0",
     "cordova-plugin-geolocation": "2.4.0",
     "cordova-plugin-fcm": "1.1.5",
-    "cordova-plugin-whitelist": "1.3.0"
+    "cordova-plugin-whitelist": "1.3.0",
+    "cordova-plugin-app-name": "1.0.0"
 };
 // BOTTOM OF METADATA
 });

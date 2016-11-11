@@ -63,5 +63,15 @@
         },
         "is_top_level": true,
         "variables": {}
+    },
+    "cordova-plugin-app-name": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-app-name"
+        },
+        "is_top_level": true,
+        "variables": {
+            "APP_NAME": "Limo Logix"
+        }
     }
 }

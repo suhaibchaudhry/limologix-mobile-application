@@ -20,6 +20,7 @@ app
           clearInterval($rootScope.FreeAds); // freeAds
           localStorage.setItem('isLoggedIn',false);
           localStorage.clear();
+          FCMPlugin.unsubscribeFromTopic($rootScope.topicName);
           var client = Faye.getClient();
           client.disable('autodisconnect');
 

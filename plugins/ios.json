@@ -10,22 +10,26 @@
         "com.phonegap.plugins.nativesettingsopener": {
             "PACKAGE_NAME": "com.limo.limologix"
         },
+        "cordova-plugin-app-name": {
+            "APP_NAME": "Limo Logix",
+            "PACKAGE_NAME": "com.limo.limologix"
+        },
+        "cordova-plugin-fcm": {
+            "PACKAGE_NAME": "com.limo.limologix"
+        },
+        "cordova-plugin-geolocation": {
+            "PACKAGE_NAME": "com.limo.limologix"
+        },
         "cordova-plugin-network-information": {
             "PACKAGE_NAME": "com.limo.limologix"
         },
         "cordova-plugin-request-location-accuracy": {
             "PACKAGE_NAME": "com.limo.limologix"
         },
-        "cordova.plugins.diagnostic.api-22": {
-            "PACKAGE_NAME": "com.limo.limologix"
-        },
-        "cordova-plugin-geolocation": {
-            "PACKAGE_NAME": "com.limo.limologix"
-        },
-        "cordova-plugin-fcm": {
-            "PACKAGE_NAME": "com.limo.limologix"
-        },
         "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "com.limo.limologix"
+        },
+        "cordova.plugins.diagnostic.api-22": {
             "PACKAGE_NAME": "com.limo.limologix"
         }
     },

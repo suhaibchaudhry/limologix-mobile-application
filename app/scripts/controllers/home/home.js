@@ -381,7 +381,10 @@ function funchomeCtrl(MapServices, $scope, $rootScope, $state, $http, appSetting
     services.funcGetRequest(url).then(function(response, status) {
         if (response && response.data) {
             $scope.topicName = response.data.topic;
+            setInterval(function(){
             FCMPlugin.subscribeToTopic($scope.topicName);
+            },1000)
+            $rootScope.topicName = $scope.topicName;
         }
 
 
