@@ -66,12 +66,12 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
         if(typeof cordova.plugins.diagnostic.registerLocationAuthorizationStatusChangeHandler === "function") {
           changeDetector = cordova.plugins.diagnostic.registerLocationAuthorizationStatusChangeHandler;
         } else {
-          changeDetector = cordova.plugins.diagnostic.requestLocationAuthorization;
+          changeDetector = cordova.plugins.diagnostic.isLocationEnabled;
         }
         changeDetector(function(status) {
             console.log("home page-  \"not_determined\" to: " + status);
 
-            if (status == 'denied' || status == "not_determined") {
+            if (status === false || status == 'denied' || status == "not_determined") {
                 swal({
                         title: 'GPS',
                         text: 'Turn On Location Services to allow "LimoLogix" to determine your location',
