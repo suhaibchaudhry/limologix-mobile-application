@@ -101,6 +101,6 @@ app
                     notify({ classes: 'alert-danger', message: error.message });
                     $state.go('core.home');
                 });
-            }Ó
+            }
         }
     ])
