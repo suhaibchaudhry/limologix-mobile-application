@@ -61,7 +61,14 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
 
     this.getCurrentPositions = function() {
         //Event listener when location services on/off
-        cordova.plugins.diagnostic.registerLocationAuthorizationStatusChangeHandler(function(status) {
+        //registerLocationAuthorizationStatusChangeHandler is Deprecated: https://github.com/dpa99c/cordova-diagnostic-plugin/issues/67
+        var changeDetector;
+        if(typeof cordova.plugins.diagnostic.registerLocationAuthorizationStatusChangeHandler === "function") {
+          changeDetector = cordova.plugins.diagnostic.registerLocationAuthorizationStatusChangeHandler;
+        } else {
+          changeDetector = cordova.plugins.diagnostic.requestLocationAuthorization;
+        }
+        changeDetector(function(status) {
             console.log("home page-  \"not_determined\" to: " + status);
 
             if (status == 'denied' || status == "not_determined") {
@@ -107,7 +114,7 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
                     icon: 'images/driver/location_ping.0b6a1b43.png'
                 });
 
-                self.getLocationAddressByPositions(LatLng); // Get address name by positions for google navigator               
+                self.getLocationAddressByPositions(LatLng); // Get address name by positions for google navigator
 
                 self.map.setCenter(LatLng);
                 self.marker.setPosition(LatLng);
@@ -178,7 +185,7 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
         } else if (self.cntrlName == "Arrived") {
             var p2 = new google.maps.LatLng(self.tripsummary.dropoffAtLat, self.tripsummary.dropoffAtLng); //dropoff location
             var swal_title = "Arrived";
-            if (google.maps.geometry.spherical.computeDistanceBetween(p1, p2) < 500) {  //within 1/2km               
+            if (google.maps.geometry.spherical.computeDistanceBetween(p1, p2) < 500) {  //within 1/2km
                 $('#arrivedBtn').addClass('buttonArrived');
                 self.bool.isArrived = true;
                 $rootScope.$digest();
