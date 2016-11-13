@@ -66,7 +66,7 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
         if(typeof cordova.plugins.diagnostic.registerLocationAuthorizationStatusChangeHandler === "function") {
           changeDetector = cordova.plugins.diagnostic.registerLocationAuthorizationStatusChangeHandler;
         } else {
-          changeDetector = cordova.plugins.diagnostic.isLocationEnabled;
+          changeDetector = _.trottle(cordova.plugins.diagnostic.isLocationEnabled, 5000);
         }
         changeDetector(function(status) {
             console.log("home page-  \"not_determined\" to: " + status);
