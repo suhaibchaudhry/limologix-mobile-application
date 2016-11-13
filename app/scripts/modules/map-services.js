@@ -65,27 +65,25 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
         var changeDetector;
         if(typeof cordova.plugins.diagnostic.registerLocationAuthorizationStatusChangeHandler === "function") {
           changeDetector = cordova.plugins.diagnostic.registerLocationAuthorizationStatusChangeHandler;
-        } else {
-          changeDetector = _.trottle(cordova.plugins.diagnostic.isLocationEnabled, 5000);
+          changeDetector(function(status) {
+              console.log("home page-  \"not_determined\" to: " + status);
+
+              if (status === false || status == 'denied' || status == "not_determined") {
+                  swal({
+                          title: 'GPS',
+                          text: 'Turn On Location Services to allow "LimoLogix" to determine your location',
+                          type: "info",
+                          confirmButtonText: 'Settings'
+                      },
+                      function() {
+                          cordova.plugins.diagnostic.switchToSettings();
+                      })
+
+              } else {
+                  self.getCurrentPositions();
+              }
+          });
         }
-        changeDetector(function(status) {
-            console.log("home page-  \"not_determined\" to: " + status);
-
-            if (status === false || status == 'denied' || status == "not_determined") {
-                swal({
-                        title: 'GPS',
-                        text: 'Turn On Location Services to allow "LimoLogix" to determine your location',
-                        type: "info",
-                        confirmButtonText: 'Settings'
-                    },
-                    function() {
-                        cordova.plugins.diagnostic.switchToSettings();
-                    })
-
-            } else {
-                self.getCurrentPositions();
-            }
-        });
 
         if (navigator.geolocation) {
             //var deferred = $q.defer();
