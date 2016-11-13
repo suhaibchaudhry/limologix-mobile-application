@@ -52,7 +52,7 @@ app
             window.location.reload();
         }
 
-        cordova.plugins.diagnostic.isLocationEnabledSetting(function(enabled) {
+        cordova.plugins.diagnostic.isLocationEnabled(function(enabled) {
             console.log("Location setting is " + (enabled ? "enabled" : "disabled"));
             if (enabled) {
             } else {

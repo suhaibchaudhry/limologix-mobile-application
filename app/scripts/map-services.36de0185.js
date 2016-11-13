@@ -22,7 +22,7 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
 
     //$timeout(self.checkGPS,3000)
     this.checkGPS = setInterval(function() {
-        cordova.plugins.diagnostic.isLocationEnabledSetting(function(enabled) {
+        cordova.plugins.diagnostic.isLocationEnabled(function(enabled) {
             console.log("timeout Location setting is " + (enabled ? "enabled" : "disabled"));
             if (enabled) {
                 swal.close();
