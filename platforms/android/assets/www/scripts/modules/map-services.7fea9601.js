@@ -97,14 +97,11 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
                     mapTypeId: google.maps.MapTypeId.ROADMAP
                 };
                 self.map = new google.maps.Map(document.getElementById(self.mapId), mapOptions);
-                console.log("Queue kill");
                 google.maps.event.addListenerOnce(self.map, "idle", function() {
                     $("#spinner1").hide();
-                    console.log("Queue killed");
                 });
                 if (self.map) {
                     $("#spinner1").hide();
-                    console.log("Queue killed");
                 }
                 if (self.marker) self.marker.setMap(null);
                 // var geolocate = new google.maps.LatLng( position.coords.latitude, position.coords.longitude);
@@ -122,6 +119,12 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
                 self.getChannelToPublish(position);
                 // self.watchPositions();
                 //deferred.resolve();
+            },
+            function(error){
+                 alert(error.message);
+            }, {
+                 enableHighAccuracy: true
+                      ,timeout : 5000
             });
         } else {
             alert('Geo Location feature is not supported in this browser.');
