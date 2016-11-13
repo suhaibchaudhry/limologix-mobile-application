@@ -56,9 +56,9 @@ module.exports = [
         ]
     },
     {
-        "id": "cordova.plugins.diagnostic.api-22.Diagnostic",
-        "file": "plugins/cordova.plugins.diagnostic.api-22/www/android/diagnostic.js",
-        "pluginId": "cordova.plugins.diagnostic.api-22",
+        "id": "cordova.plugins.diagnostic.Diagnostic",
+        "file": "plugins/cordova.plugins.diagnostic/www/android/diagnostic.js",
+        "pluginId": "cordova.plugins.diagnostic",
         "clobbers": [
             "cordova.plugins.diagnostic"
         ]
@@ -75,7 +75,7 @@ module.exports.metadata =
     "cordova-plugin-network-information": "1.3.0",
     "cordova-plugin-request-location-accuracy": "2.2.0",
     "cordova-plugin-whitelist": "1.3.0",
-    "cordova.plugins.diagnostic.api-22": "2.3.10-api-22"
+    "cordova.plugins.diagnostic": "3.3.2"
 };
 // BOTTOM OF METADATA
 });

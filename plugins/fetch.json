@@ -15,14 +15,6 @@
         "is_top_level": true,
         "variables": {}
     },
-    "cordova.plugins.diagnostic.api-22": {
-        "source": {
-            "type": "registry",
-            "id": "cordova.plugins.diagnostic.api-22"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
     "cordova-plugin-request-location-accuracy": {
         "source": {
             "type": "registry",
@@ -73,5 +65,13 @@
         "variables": {
             "APP_NAME": "Limo Logix"
         }
+    },
+    "cordova.plugins.diagnostic": {
+        "source": {
+            "type": "registry",
+            "id": "cordova.plugins.diagnostic"
+        },
+        "is_top_level": true,
+        "variables": {}
     }
 }
