@@ -20,10 +20,6 @@
     <feature name="RequestLocationAccuracy">
         <param name="android-package" value="cordova.plugin.RequestLocationAccuracy" />
     </feature>
-    <feature name="Diagnostic">
-        <param name="android-package" value="cordova.plugins.Diagnostic" />
-        <param name="onload" value="true" />
-    </feature>
     <name>Limo Logix</name>
     <description>
         A sample Apache Cordova application that responds to the deviceready event.
@@ -42,4 +38,7 @@
     <allow-intent href="market:*" />
     <preference name="loglevel" value="DEBUG" />
     <preference name="AppName" value="Limo Logix" />
+    <feature name="Diagnostic">
+        <param name="android-package" value="cordova.plugins.Diagnostic" />
+    </feature>
 </widget>

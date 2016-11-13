@@ -66,10 +66,10 @@
             "APP_NAME": "Limo Logix"
         }
     },
-    "cordova.plugins.diagnostic": {
+    "cordova.plugins.diagnostic.api-22": {
         "source": {
             "type": "registry",
-            "id": "cordova.plugins.diagnostic"
+            "id": "cordova.plugins.diagnostic.api-22"
         },
         "is_top_level": true,
         "variables": {}
