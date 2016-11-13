@@ -119,6 +119,12 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
                 self.getChannelToPublish(position);
                 // self.watchPositions();
                 //deferred.resolve();
+            },
+            function(error){
+                 alert(error.message);
+            }, {
+                 enableHighAccuracy: true
+                      ,timeout : 5000
             });
         } else {
             alert('Geo Location feature is not supported in this browser.');
