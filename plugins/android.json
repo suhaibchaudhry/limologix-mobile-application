@@ -17,9 +17,6 @@
         "cordova-plugin-fcm": {
             "PACKAGE_NAME": "com.limo.limologix"
         },
-        "cordova-plugin-geolocation": {
-            "PACKAGE_NAME": "com.limo.limologix"
-        },
         "cordova-plugin-network-information": {
             "PACKAGE_NAME": "com.limo.limologix"
         },
@@ -33,9 +30,5 @@
             "PACKAGE_NAME": "com.limo.limologix"
         }
     },
-    "dependent_plugins": {
-        "cordova-plugin-compat": {
-            "PACKAGE_NAME": "com.limo.limologix"
-        }
-    }
+    "dependent_plugins": {}
 }
