@@ -13,7 +13,7 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
     this.arrivedSwal = false;
     this.defer = $q.defer();
     var self = this;
-    this.checkGPS = setInterval(function() {
+    /*this.checkGPS = setInterval(function() {
         cordova.plugins.diagnostic.isLocationEnabled(function(enabled) {
             console.log("timeout Location setting is " + (enabled ? "enabled" : "disabled"));
             if (enabled) {
@@ -21,7 +21,7 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
             } else {
                 swal({
                         title: 'GPS',
-                        text: 'Turn On Location Services to allow "LimoLogix" to Determine Your Location',
+                        text: 'Turn On Location Services in High Accuracy mode and restart your device to allow "LimoLogix" to determine your location',
                         type: "info",
                         confirmButtonText: 'Settings',
                         closeOnConfirm: true
@@ -34,15 +34,15 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
         }, function(error) {
             console.error("The following error occurred: " + error);
         });
-    }, 5000)
+    }, 5000)*/
 
 
-    this.getCurrentPositionsWithInterval = setInterval(function() {
+    /*this.getCurrentPositionsWithInterval = setInterval(function() {
         navigator.geolocation.getCurrentPosition(self.onSuccessInterval, self.onErrorInterval, {
              enableHighAccuracy: true
             , timeout : 2000
         });
-    }, 3000);
+    }, 3000);*/
 
     this.init = function(mapId) {
         $("#spinner1").show();
@@ -74,7 +74,7 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
               if (status === false || status == 'denied' || status == "not_determined") {
                   swal({
                           title: 'GPS',
-                          text: 'Turn On Location Services to allow "LimoLogix" to determine your location',
+                          text: 'Turn On Location Services in High Accuracy mode and restart your device to allow "LimoLogix" to determine your location',
                           type: "info",
                           confirmButtonText: 'Settings'
                       },
@@ -134,8 +134,7 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
                   cordova.plugins.diagnostic.switchToSettings();
               });
             }, {
-                 enableHighAccuracy: true
-                , timeout : 5000
+                 maximumAge: 0, timeout: 10000, enableHighAccuracy:true
             });
         } else {
             alert('Geo Location feature is not supported in this browser.');
@@ -180,15 +179,6 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
 
     // onError Callback receives a PositionError object
     this.onErrorInterval = function(error) {
-        swal({
-            title: 'GPS',
-            text: 'Turn On Location Services in High Accuracy mode to allow "LimoLogix" to determine your location',
-            type: "info",
-            confirmButtonText: 'Settings'
-        },
-        function() {
-            cordova.plugins.diagnostic.switchToSettings();
-        });
         //alert('code: ' + error.code + '\n' +
         //  'message: ' + error.message + '\n');
     }
