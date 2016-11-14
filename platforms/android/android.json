@@ -23,6 +23,14 @@
                         {
                             "xml": "<feature name=\"Whitelist\"><param name=\"android-package\" value=\"org.apache.cordova.whitelist.WhitelistPlugin\" /><param name=\"onload\" value=\"true\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Notification\"><param name=\"android-package\" value=\"org.apache.cordova.dialogs.Notification\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"BackgroundGeolocation\"><param name=\"android-package\" value=\"com.transistorsoft.cordova.bggeo.CDVBackgroundGeolocation\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -59,11 +67,77 @@
                         {
                             "xml": "<service android:name=\"com.gae.scaffolder.plugin.MyFirebaseInstanceIDService\"><intent-filter><action android:name=\"com.google.firebase.INSTANCE_ID_EVENT\" /></intent-filter></service>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<service android:name=\"com.transistorsoft.locationmanager.BackgroundGeolocationService\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<service android:name=\"com.transistorsoft.locationmanager.LocationService\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<service android:name=\"com.transistorsoft.locationmanager.ActivityRecognitionService\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<service android:name=\"com.transistorsoft.locationmanager.geofence.GeofenceService\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<service android:name=\"com.transistorsoft.locationmanager.scheduler.ScheduleAlarmService\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<receiver android:name=\"com.transistorsoft.locationmanager.BootReceiver\"><intent-filter><action android:name=\"android.intent.action.BOOT_COMPLETED\" /></intent-filter></receiver>",
+                            "count": 1
                         }
                     ],
                     "/*": [
                         {
                             "xml": "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\" />",
+                            "count": 1
+                        }
+                    ],
+                    "/manifest": [
+                        {
+                            "xml": "<uses-feature android:name=\"android.hardware.location.gps\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.GET_TASKS\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.ACCESS_LOCATION_EXTRA_COMMANDS\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.INTERNET\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.WAKE_LOCK\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"com.google.android.gms.permission.ACTIVITY_RECOGNITION\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.RECEIVE_BOOT_COMPLETED\" />",
                             "count": 1
                         }
                     ]
@@ -92,6 +166,15 @@
             "PACKAGE_NAME": "com.limo.limologix"
         },
         "cordova.plugins.diagnostic.api-22": {
+            "PACKAGE_NAME": "com.limo.limologix"
+        },
+        "cordova-plugin-dialogs": {
+            "PACKAGE_NAME": "com.limo.limologix"
+        },
+        "cordova-plugin-background-fetch": {
+            "PACKAGE_NAME": "com.limo.limologix"
+        },
+        "com.transistorsoft.cordova.background-geolocation": {
             "PACKAGE_NAME": "com.limo.limologix"
         }
     },
@@ -145,6 +228,38 @@
             "clobbers": [
                 "cordova.plugins.diagnostic"
             ]
+        },
+        {
+            "id": "cordova-plugin-dialogs.notification",
+            "file": "plugins/cordova-plugin-dialogs/www/notification.js",
+            "pluginId": "cordova-plugin-dialogs",
+            "merges": [
+                "navigator.notification"
+            ]
+        },
+        {
+            "id": "cordova-plugin-dialogs.notification_android",
+            "file": "plugins/cordova-plugin-dialogs/www/android/notification.js",
+            "pluginId": "cordova-plugin-dialogs",
+            "merges": [
+                "navigator.notification"
+            ]
+        },
+        {
+            "id": "cordova-plugin-background-fetch.BackgroundFetch",
+            "file": "plugins/cordova-plugin-background-fetch/www/BackgroundFetch.js",
+            "pluginId": "cordova-plugin-background-fetch",
+            "clobbers": [
+                "window.BackgroundFetch"
+            ]
+        },
+        {
+            "id": "com.transistorsoft.cordova.background-geolocation.BackgroundGeolocation",
+            "file": "plugins/com.transistorsoft.cordova.background-geolocation/www/BackgroundGeolocation.js",
+            "pluginId": "com.transistorsoft.cordova.background-geolocation",
+            "clobbers": [
+                "window.BackgroundGeolocation"
+            ]
         }
     ],
     "plugin_metadata": {
@@ -154,6 +269,9 @@
         "cordova-plugin-network-information": "1.3.0",
         "cordova-plugin-request-location-accuracy": "2.2.0",
         "cordova-plugin-whitelist": "1.3.0",
-        "cordova.plugins.diagnostic.api-22": "2.3.10-api-22"
+        "cordova.plugins.diagnostic.api-22": "2.3.10-api-22",
+        "cordova-plugin-dialogs": "1.3.0",
+        "cordova-plugin-background-fetch": "4.0.0",
+        "com.transistorsoft.cordova.background-geolocation": "2.1.6"
     }
 }

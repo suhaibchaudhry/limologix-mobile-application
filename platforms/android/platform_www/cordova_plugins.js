@@ -48,6 +48,38 @@ module.exports = [
         "clobbers": [
             "cordova.plugins.diagnostic"
         ]
+    },
+    {
+        "id": "cordova-plugin-dialogs.notification",
+        "file": "plugins/cordova-plugin-dialogs/www/notification.js",
+        "pluginId": "cordova-plugin-dialogs",
+        "merges": [
+            "navigator.notification"
+        ]
+    },
+    {
+        "id": "cordova-plugin-dialogs.notification_android",
+        "file": "plugins/cordova-plugin-dialogs/www/android/notification.js",
+        "pluginId": "cordova-plugin-dialogs",
+        "merges": [
+            "navigator.notification"
+        ]
+    },
+    {
+        "id": "cordova-plugin-background-fetch.BackgroundFetch",
+        "file": "plugins/cordova-plugin-background-fetch/www/BackgroundFetch.js",
+        "pluginId": "cordova-plugin-background-fetch",
+        "clobbers": [
+            "window.BackgroundFetch"
+        ]
+    },
+    {
+        "id": "com.transistorsoft.cordova.background-geolocation.BackgroundGeolocation",
+        "file": "plugins/com.transistorsoft.cordova.background-geolocation/www/BackgroundGeolocation.js",
+        "pluginId": "com.transistorsoft.cordova.background-geolocation",
+        "clobbers": [
+            "window.BackgroundGeolocation"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -59,7 +91,10 @@ module.exports.metadata =
     "cordova-plugin-network-information": "1.3.0",
     "cordova-plugin-request-location-accuracy": "2.2.0",
     "cordova-plugin-whitelist": "1.3.0",
-    "cordova.plugins.diagnostic.api-22": "2.3.10-api-22"
+    "cordova.plugins.diagnostic.api-22": "2.3.10-api-22",
+    "cordova-plugin-dialogs": "1.3.0",
+    "cordova-plugin-background-fetch": "4.0.0",
+    "com.transistorsoft.cordova.background-geolocation": "2.1.6"
 };
 // BOTTOM OF METADATA
 });

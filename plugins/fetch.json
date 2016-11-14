@@ -65,5 +65,30 @@
         "variables": {
             "APP_NAME": "Limo Logix"
         }
+    },
+    "com.transistorsoft.cordova.background-geolocation": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/transistorsoft/cordova-background-geolocation.git",
+            "subdir": "."
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-dialogs": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-dialogs"
+        },
+        "is_top_level": false,
+        "variables": {}
+    },
+    "cordova-plugin-background-fetch": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-background-fetch"
+        },
+        "is_top_level": false,
+        "variables": {}
     }
 }

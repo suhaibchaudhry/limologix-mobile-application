@@ -89,6 +89,7 @@ ext {
 
 // PLUGIN GRADLE EXTENSIONS START
 apply from: "cordova-plugin-fcm/limologix-FCMPlugin.gradle"
+apply from: "com.transistorsoft.cordova.background-geolocation/limologix-build.gradle"
 // PLUGIN GRADLE EXTENSIONS END
 
 def hasBuildExtras = file('build-extras.gradle').exists()
