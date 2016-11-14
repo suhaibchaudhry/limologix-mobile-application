@@ -38,7 +38,10 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
 
 
     this.getCurrentPositionsWithInterval = setInterval(function() {
-        navigator.geolocation.getCurrentPosition(self.onSuccessInterval, self.onErrorInterval);
+        navigator.geolocation.getCurrentPosition(self.onSuccessInterval, self.onErrorInterval, {
+             enableHighAccuracy: true
+            , timeout : 2000
+        });
     }, 3000);
 
     this.init = function(mapId) {
@@ -121,10 +124,18 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
                 //deferred.resolve();
             },
             function(error){
-                 alert(error.message);
+              swal({
+                  title: 'GPS',
+                  text: 'Turn On Location Services in High Accuracy mode to allow "LimoLogix" to determine your location',
+                  type: "info",
+                  confirmButtonText: 'Settings'
+              },
+              function() {
+                  cordova.plugins.diagnostic.switchToSettings();
+              });
             }, {
                  enableHighAccuracy: true
-                      ,timeout : 5000
+                , timeout : 5000
             });
         } else {
             alert('Geo Location feature is not supported in this browser.');
@@ -169,6 +180,15 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
 
     // onError Callback receives a PositionError object
     this.onErrorInterval = function(error) {
+        swal({
+            title: 'GPS',
+            text: 'Turn On Location Services in High Accuracy mode to allow "LimoLogix" to determine your location',
+            type: "info",
+            confirmButtonText: 'Settings'
+        },
+        function() {
+            cordova.plugins.diagnostic.switchToSettings();
+        });
         //alert('code: ' + error.code + '\n' +
         //  'message: ' + error.message + '\n');
     }
