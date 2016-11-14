@@ -21,7 +21,7 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
             } else {
                 swal({
                         title: 'GPS',
-                        text: 'Turn On Location Services in High Accuracy mode and restart your device to allow "LimoLogix" to determine your location',
+                        text: 'Turn On Location Services to allow "LimoLogix" to Determine Your Location',
                         type: "info",
                         confirmButtonText: 'Settings',
                         closeOnConfirm: true
@@ -74,7 +74,7 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
               if (status === false || status == 'denied' || status == "not_determined") {
                   swal({
                           title: 'GPS',
-                          text: 'Turn On Location Services in High Accuracy mode and restart your device to allow "LimoLogix" to determine your location',
+                          text: 'Turn On Location Services to allow "LimoLogix" to determine your location',
                           type: "info",
                           confirmButtonText: 'Settings'
                       },
@@ -182,7 +182,7 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
     this.onErrorInterval = function(error) {
         swal({
             title: 'GPS',
-            text: 'Turn On Location Services in High Accuracy mode and restart your device to allow "LimoLogix" to determine your location',
+            text: 'Turn On Location Services in High Accuracy mode to allow "LimoLogix" to determine your location',
             type: "info",
             confirmButtonText: 'Settings'
         },
