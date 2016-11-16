@@ -44,6 +44,22 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
 
     var failureFn = function(error) {
         console.log('BackgroundGeoLocation error', error);
+        console.log("timeout Location setting is " + (enabled ? "enabled" : "disabled"));
+        if (enabled) {
+            swal.close();
+        } else {
+            swal({
+                    title: 'GPS',
+                    text: 'Turn On Location Services to allow "LimoLogix" to Determine Your Location',
+                    type: "info",
+                    confirmButtonText: 'Settings',
+                    closeOnConfirm: true
+                },
+                function(isConfirm) {
+                    if (isConfirm)
+                        cordova.plugins.diagnostic.switchToSettings();
+                })
+        }
     }
 
     bgGeo.configure({
