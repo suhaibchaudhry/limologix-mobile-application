@@ -41,4 +41,5 @@
     <allow-intent href="market:*" />
     <preference name="loglevel" value="DEBUG" />
     <preference name="AppName" value="Limo Logix" />
+    <preference name="cordova-background-geolocation-license" value="782e13a5d5283b482680cc66802b72c5d23c4c412612b35abbb9f0e82a0747d3" />
 </widget>

@@ -21,6 +21,7 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
 
         if(self.firstLoad) {
           self.getCurrentPositions(location);
+          self.firstLoad = false;
         } else {
           self.locationUpdateInterval(location);
         }
