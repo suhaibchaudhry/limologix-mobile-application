@@ -52,7 +52,7 @@ app
             window.location.reload();
         }
 
-        cordova.plugins.diagnostic.isLocationEnabledSetting(function(enabled) {
+        /*cordova.plugins.diagnostic.isLocationEnabledSetting(function(enabled) {
             console.log("Location setting is " + (enabled ? "enabled" : "disabled"));
             if (enabled) {
             } else {
@@ -68,7 +68,7 @@ app
             }
         }, function(error) {
             console.error("The following error occurred: " + error);
-        });
+        });*/
 
         //cordova.ready.then(function() {
         $scope.main = {
