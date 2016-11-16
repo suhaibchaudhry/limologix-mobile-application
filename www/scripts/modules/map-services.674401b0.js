@@ -20,11 +20,11 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
         console.log('- Location', location);
 
         if(self.firstLoad) {
-          self.getCurrentPositions(location);
+          self.getChannelToPublish(location);
           self.firstLoad = false;
-        } else {
-          self.locationUpdateInterval(location);
         }
+        self.locationUpdateInterval(location);
+        //}
         // The plugin records multiple samples when doing motionchange events.
         // It sends these to the location callback for you convenience.
         // You might uses these to "progressively" update user's current
@@ -104,9 +104,9 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
     this.init = function(mapId) {
         $("#spinner1").show();
         self.mapId = mapId;
-        //self.getCurrentPositions();
-        console.log('initializing');
-         bgGeo.on('location', callbackFn, failureFn);
+        self.getCurrentPositions();
+        console.log('initializing location');
+        bgGeo.on('location', callbackFn, failureFn);
     }
     /*
     //Unused
@@ -146,8 +146,8 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
         if (navigator.geolocation) {
             //var deferred = $q.defer();
             navigator.geolocation.getCurrentPosition(function(position) {*/
-                console.log('positions', position.coords.latitude, position.coords.longitude);
-                var LatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+                console.log('positions', 29.760427, -95.369803);
+                var LatLng = new google.maps.LatLng(29.760427, -95.369803);
                 var mapOptions = {
                     center: LatLng,
                     zoom: 13,
@@ -174,7 +174,6 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
 
                 self.map.setCenter(LatLng);
                 self.marker.setPosition(LatLng);
-                self.getChannelToPublish(position);
                 // self.watchPositions();
                 //deferred.resolve();
         /*    });*/
