@@ -223,7 +223,7 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
         if (self.marker && self.map) {
             self.marker.setPosition(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
             var center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-            //self.map.setCenter(center);
+            self.map.setCenter(center);
         }
         var isDriverLoggedIn = localStorage.getItem('isLoggedIn');
         if (isDriverLoggedIn == 'true') {
