@@ -17,7 +17,8 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
     var bgGeo = window.BackgroundGeolocation;
 
     var callbackFn = function(location, taskId) {
-        console.log('- Location', location);
+        console.log('Location: ');
+        console.log(location);
 
         if(self.firstLoad) {
           self.getChannelToPublish(location);
