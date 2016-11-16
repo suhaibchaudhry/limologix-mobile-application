@@ -105,6 +105,7 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
         self.mapId = mapId;
         //self.getCurrentPositions();
         console.log('initializing');
+         bgGeo.on('location', callbackFn, failureFn);
     }
     /*
     //Unused
