@@ -33,12 +33,12 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
             console.log('- Ignore samples');
 
             // IMPORTANT:  send signal to native code that your callback is complete.
-            bgGeo.finish();
+            bgGeo.finish(taskId);
             return;
         }
 
         // IMPORTANT:  send signal to native code that your callback is
-        bgGeo.finish();
+        bgGeo.finish(taskId);
         return;
     };
 
