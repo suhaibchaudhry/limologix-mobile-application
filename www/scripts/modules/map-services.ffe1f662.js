@@ -11,9 +11,68 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
     this.cntrlScope;
     this.boardedSwal = false;
     this.arrivedSwal = false;
+    this.firstLoad = true;
     this.defer = $q.defer();
     var self = this;
-    this.checkGPS = setInterval(function() {
+    var bgGeo = window.BackgroundGeolocation;
+
+    var callbackFn = function(location, taskId) {
+        console.log('- Location', location);
+
+        if(self.firstLoad) {
+          self.getCurrentPositions(location);
+        } else {
+          self.locationUpdateInterval(location);
+        }
+        // The plugin records multiple samples when doing motionchange events.
+        // It sends these to the location callback for you convenience.
+        // You might uses these to "progressively" update user's current
+        // position on a map, for example.
+        if (location.sample) {
+            console.log('- Ignore samples');
+
+            // IMPORTANT:  send signal to native code that your callback is complete.
+            bgGeo.finish();
+            return;
+        }
+
+        // IMPORTANT:  send signal to native code that your callback is
+        bgGeo.finish();
+        return;
+    };
+
+    var failureFn = function(error) {
+        console.log('BackgroundGeoLocation error', error);
+    }
+
+    bgGeo.configure({
+        // Geolocation config
+        desiredAccuracy: 0,
+        stationaryRadius: 50,
+        distanceFilter: 50,
+
+        // Activity recognition config
+        activityRecognitionInterval: 10000,
+        stopTimeout: 5,  // Stop-detection timeout minutes (wait x minutes to turn off tracking)
+
+        // Application config
+        debug: true, // <-- enable this hear sounds for background-geolocation life-cycle.
+        logLevel: 5,    // Verbose logging.  0: NONE
+        stopOnTerminate: false,              // <-- Don't stop tracking when user closes app.
+        startOnBoot: true,                   // <-- [Android] Auto start background-service in headless mode when device is powered-up.
+
+        // HTTP / SQLite config
+        url: 'http://posttestserver.com/post.php?dir=cordova-background-geolocation',
+        batchSync: false,       // <-- [Default: false] Set true to sync locations to server in a single HTTP request.
+        autoSync: true,         // <-- [Default: true] Set true to sync each location to server as it arrives.
+        maxDaysToPersist: 1,    // <-- Maximum days to persist a location in plugin's SQLite database when HTTP fails
+    }, function(state) {
+      // Plugin is configured and ready to use.
+      if (!state.enabled) {
+        bgGeo.start();  // <-- start-tracking
+      }
+    });
+    /*this.checkGPS = setInterval(function() {
         cordova.plugins.diagnostic.isLocationEnabledSetting(function(enabled) {
             console.log("timeout Location setting is " + (enabled ? "enabled" : "disabled"));
             if (enabled) {
@@ -34,19 +93,21 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
         }, function(error) {
             console.error("The following error occurred: " + error);
         });
-    }, 5000)
+    }, 5000)*/
 
 
-    this.getCurrentPositionsWithInterval = setInterval(function() {
+    /*this.getCurrentPositionsWithInterval = setInterval(function() {
         navigator.geolocation.getCurrentPosition(self.onSuccessInterval, self.onErrorInterval);
-    }, 3000);
+    }, 3000);*/
 
     this.init = function(mapId) {
         $("#spinner1").show();
         self.mapId = mapId;
-        self.getCurrentPositions();
+        //self.getCurrentPositions();
+        console.log('initializing');
     }
-
+    /*
+    //Unused
     this.addMarker = function() {
         if (self.marker) self.marker.setMap(null);
         var geolocate = new google.maps.LatLng(29.7630556, -95.3630556);
@@ -57,10 +118,10 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
             icon: 'images/driver/location_ping.0b6a1b43.png'
         });
         self.map.setCenter(geolocate);
-    }
+    }*/
 
-    this.getCurrentPositions = function() {
-        //Event listener when location services on/off
+    this.getCurrentPositions = function(position) {
+        /*//Event listener when location services on/off
         cordova.plugins.diagnostic.registerLocationAuthorizationStatusChangeHandler(function(status) {
             console.log("home page-  \"not_determined\" to: " + status);
 
@@ -82,7 +143,7 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
 
         if (navigator.geolocation) {
             //var deferred = $q.defer();
-            navigator.geolocation.getCurrentPosition(function(position) {
+            navigator.geolocation.getCurrentPosition(function(position) {*/
                 console.log('positions', position.coords.latitude, position.coords.longitude);
                 var LatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
                 var mapOptions = {
@@ -107,19 +168,19 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
                     icon: 'images/driver/location_ping.0b6a1b43.png'
                 });
 
-                self.getLocationAddressByPositions(LatLng); // Get address name by positions for google navigator               
+                self.getLocationAddressByPositions(LatLng); // Get address name by positions for google navigator
 
                 self.map.setCenter(LatLng);
                 self.marker.setPosition(LatLng);
                 self.getChannelToPublish(position);
                 // self.watchPositions();
                 //deferred.resolve();
-            });
-        } else {
+        /*    });*/
+        /*} else {
             alert('Geo Location feature is not supported in this browser.');
             //deferred.reject();
-        }
-        //return deferred.promise;
+        }*/
+        //return deferred.promise;*/
     }
 
     this.getLocationAddressByPositions = function(LatLng) {
@@ -139,7 +200,7 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
         }
     }
 
-    this.onSuccessInterval = function(position) {
+    this.locationUpdateInterval = function(position) {
         //update marker position
         if (self.marker && self.map) {
             self.marker.setPosition(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
@@ -156,11 +217,11 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
         }
     };
 
-    // onError Callback receives a PositionError object
+    /*// onError Callback receives a PositionError object
     this.onErrorInterval = function(error) {
         //alert('code: ' + error.code + '\n' +
         //  'message: ' + error.message + '\n');
-    }
+    }*/
 
     this.checkLocationReached = function(position) {
 
@@ -178,7 +239,7 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
         } else if (self.cntrlName == "Arrived") {
             var p2 = new google.maps.LatLng(self.tripsummary.dropoffAtLat, self.tripsummary.dropoffAtLng); //dropoff location
             var swal_title = "Arrived";
-            if (google.maps.geometry.spherical.computeDistanceBetween(p1, p2) < 500) {  //within 1/2km               
+            if (google.maps.geometry.spherical.computeDistanceBetween(p1, p2) < 500) {  //within 1/2km
                 $('#arrivedBtn').addClass('buttonArrived');
                 self.bool.isArrived = true;
                 $rootScope.$digest();
