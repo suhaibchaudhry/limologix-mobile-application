@@ -174,15 +174,18 @@ function funchomeCtrl(MapServices, $scope, $rootScope, $state, $http, appSetting
     FCMPlugin.getToken(
             function(token) {
                 //alert(token);
+                console.log('FCM Token');
+                console.log(token);
             },
             function(err) {
-                //alert('error retrieving token: ' + err);
+                console.log('error retrieving token: ' + err);
             }
         )
     //Receive notification from FCM
     FCMPlugin.onNotification(
         function(data) {
-
+          console.log('Notification: ');
+          console.log(data);
             if (data.wasTapped) {
                 //Notification was received on device tray and tapped by the user.
                 if (data.aps) {
@@ -242,9 +245,9 @@ function funchomeCtrl(MapServices, $scope, $rootScope, $state, $http, appSetting
                             title: title,
                             text: body,
                             type: "warning"
-                                // confirmButtonColor: "#3232ff",   
-                                // confirmButtonText: "Recharge", 
-                                // showCancelButton: true, 
+                                // confirmButtonColor: "#3232ff",
+                                // confirmButtonText: "Recharge",
+                                // showCancelButton: true,
                                 // closeOnConfirm: false
                         },
                         //On click of recharge button
@@ -354,6 +357,7 @@ function funchomeCtrl(MapServices, $scope, $rootScope, $state, $http, appSetting
     services.funcGetRequest(url).then(function(response, status) {
         if (response && response.data) {
             $scope.topicName = response.data.topic;
+            console.log('FCM Topic: '+$scope.topicName);
             setInterval(function() {
                 FCMPlugin.subscribeToTopic($scope.topicName);
             }, 1000)
