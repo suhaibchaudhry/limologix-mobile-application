@@ -148,6 +148,7 @@ var app = angular
             response: function(response) {
                 $("#spinner").hide();
                 if (response.status === 401 || response.status === -1) {
+                     localStorage.setItem("lastState",'')
                     //notify({ classes: 'alert-success', message: "Session expired" });
                     $location.url('/login');
                 }
@@ -155,6 +156,7 @@ var app = angular
             },
             responseError: function(rejection) {
                 if (rejection.status === 401 || rejection.status === -1) {
+                    localStorage.setItem("lastState",'')
                     $location.url('/login');
                 }
                 return $q.reject(rejection);
