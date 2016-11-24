@@ -21,9 +21,9 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
         console.log(location);
 
         if(self.firstLoad) {
-          self.getChannelToPublish(location);
           self.firstLoad = false;
         }
+        self.getChannelToPublish(location);
         self.locationUpdateInterval(location);
         //}
         // The plugin records multiple samples when doing motionchange events.
@@ -163,8 +163,8 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
         if (navigator.geolocation) {
             //var deferred = $q.defer();
             navigator.geolocation.getCurrentPosition(function(position) {*/
-                console.log('positions', 29.760427, -95.369803);
-                var LatLng = new google.maps.LatLng(29.760427, -95.369803);
+                console.log('positions', 29.6637309,-95.4892921);
+                var LatLng = new google.maps.LatLng(29.6637309,-95.4892921);
                 var mapOptions = {
                     center: LatLng,
                     zoom: 13,
@@ -191,6 +191,7 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
 
                 self.map.setCenter(LatLng);
                 self.marker.setPosition(LatLng);
+                //self.getChannelToPublish();
                 // self.watchPositions();
                 //deferred.resolve();
         /*    });*/
