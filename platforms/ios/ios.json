@@ -1,0 +1,201 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {
+            "config.xml": {
+                "parents": {
+                    "/*": [
+                        {
+                            "xml": "<feature name=\"NativeSettings\"><param name=\"ios-package\" value=\"NativeSettings\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Notification\"><param name=\"ios-package\" value=\"CDVNotification\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"BackgroundFetch\"><param name=\"ios-package\" value=\"CDVBackgroundFetch\" /><param name=\"onload\" value=\"true\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"BackgroundGeolocation\"><param name=\"ios-package\" value=\"CDVBackgroundGeolocation\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"FCMPlugin\"><param name=\"ios-package\" value=\"FCMPlugin\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"NetworkStatus\"><param name=\"ios-package\" value=\"CDVConnection\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"RequestLocationAccuracy\"><param name=\"ios-package\" value=\"RequestLocationAccuracy\" /></feature>",
+                            "count": 1
+                        }
+                    ]
+                }
+            },
+            "*-Info.plist": {
+                "parents": {
+                    "UIBackgroundModes": [
+                        {
+                            "xml": "<array><string>fetch</string></array>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<array><string>location</string></array>",
+                            "count": 1
+                        }
+                    ],
+                    "NSLocationAlwaysUsageDescription": [
+                        {
+                            "xml": "<string>App requires background location tracking</string>",
+                            "count": 1
+                        }
+                    ],
+                    "NSLocationWhenInUseUsageDescription": [
+                        {
+                            "xml": "<string>App requires background location tracking</string>",
+                            "count": 1
+                        }
+                    ],
+                    "NSMotionUsageDescription": [
+                        {
+                            "xml": "<string>Accelerometer use increases battery efficiency by intelligently toggling location-tracking</string>",
+                            "count": 1
+                        }
+                    ],
+                    "CFBundleName": [
+                        {
+                            "xml": "<string>Limo Logix</string>",
+                            "count": 1
+                        }
+                    ],
+                    "CFBundleDisplayName": [
+                        {
+                            "xml": "<string>Limo Logix</string>",
+                            "count": 1
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    "installed_plugins": {
+        "com.phonegap.plugins.nativesettingsopener": {
+            "PACKAGE_NAME": "com.limo.limologix"
+        },
+        "cordova-plugin-dialogs": {
+            "PACKAGE_NAME": "com.limo.limologix"
+        },
+        "cordova-plugin-background-fetch": {
+            "PACKAGE_NAME": "com.limo.limologix"
+        },
+        "cordova-plugin-cocoalumberjack": {
+            "PACKAGE_NAME": "com.limo.limologix"
+        },
+        "com.transistorsoft.cordova.background-geolocation": {
+            "PACKAGE_NAME": "com.limo.limologix"
+        },
+        "cordova-plugin-app-name": {
+            "APP_NAME": "Limo Logix",
+            "PACKAGE_NAME": "com.limo.limologix"
+        },
+        "cordova-plugin-fcm": {
+            "PACKAGE_NAME": "com.limo.limologix"
+        },
+        "cordova-plugin-network-information": {
+            "PACKAGE_NAME": "com.limo.limologix"
+        },
+        "cordova-plugin-request-location-accuracy": {
+            "PACKAGE_NAME": "com.limo.limologix"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "com.limo.limologix"
+        }
+    },
+    "dependent_plugins": {},
+    "modules": [
+        {
+            "id": "com.phonegap.plugins.nativesettingsopener.Settings",
+            "file": "plugins/com.phonegap.plugins.nativesettingsopener/www/settings.js",
+            "pluginId": "com.phonegap.plugins.nativesettingsopener",
+            "clobbers": [
+                "cordova.plugins.settings"
+            ]
+        },
+        {
+            "id": "cordova-plugin-dialogs.notification",
+            "file": "plugins/cordova-plugin-dialogs/www/notification.js",
+            "pluginId": "cordova-plugin-dialogs",
+            "merges": [
+                "navigator.notification"
+            ]
+        },
+        {
+            "id": "cordova-plugin-background-fetch.BackgroundFetch",
+            "file": "plugins/cordova-plugin-background-fetch/www/BackgroundFetch.js",
+            "pluginId": "cordova-plugin-background-fetch",
+            "clobbers": [
+                "window.BackgroundFetch"
+            ]
+        },
+        {
+            "id": "com.transistorsoft.cordova.background-geolocation.BackgroundGeolocation",
+            "file": "plugins/com.transistorsoft.cordova.background-geolocation/www/BackgroundGeolocation.js",
+            "pluginId": "com.transistorsoft.cordova.background-geolocation",
+            "clobbers": [
+                "window.BackgroundGeolocation"
+            ]
+        },
+        {
+            "id": "cordova-plugin-fcm.FCMPlugin",
+            "file": "plugins/cordova-plugin-fcm/www/FCMPlugin.js",
+            "pluginId": "cordova-plugin-fcm",
+            "clobbers": [
+                "FCMPlugin"
+            ]
+        },
+        {
+            "id": "cordova-plugin-network-information.network",
+            "file": "plugins/cordova-plugin-network-information/www/network.js",
+            "pluginId": "cordova-plugin-network-information",
+            "clobbers": [
+                "navigator.connection",
+                "navigator.network.connection"
+            ]
+        },
+        {
+            "id": "cordova-plugin-network-information.Connection",
+            "file": "plugins/cordova-plugin-network-information/www/Connection.js",
+            "pluginId": "cordova-plugin-network-information",
+            "clobbers": [
+                "Connection"
+            ]
+        },
+        {
+            "id": "cordova-plugin-request-location-accuracy.RequestLocationAccuracy",
+            "file": "plugins/cordova-plugin-request-location-accuracy/www/ios/RequestLocationAccuracy.js",
+            "pluginId": "cordova-plugin-request-location-accuracy",
+            "clobbers": [
+                "cordova.plugins.locationAccuracy"
+            ]
+        }
+    ],
+    "plugin_metadata": {
+        "com.phonegap.plugins.nativesettingsopener": "1.2",
+        "cordova-plugin-dialogs": "1.3.0",
+        "cordova-plugin-background-fetch": "4.0.0",
+        "cordova-plugin-cocoalumberjack": "0.0.1",
+        "com.transistorsoft.cordova.background-geolocation": "2.1.6",
+        "cordova-plugin-app-name": "1.0.0",
+        "cordova-plugin-fcm": "1.1.5",
+        "cordova-plugin-network-information": "1.3.0",
+        "cordova-plugin-request-location-accuracy": "2.2.0",
+        "cordova-plugin-whitelist": "1.3.0"
+    }
+}

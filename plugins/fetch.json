@@ -82,5 +82,13 @@
         },
         "is_top_level": false,
         "variables": {}
+    },
+    "cordova-plugin-cocoalumberjack": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-cocoalumberjack"
+        },
+        "is_top_level": false,
+        "variables": {}
     }
 }

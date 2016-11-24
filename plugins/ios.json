@@ -10,14 +10,14 @@
         "com.phonegap.plugins.nativesettingsopener": {
             "PACKAGE_NAME": "com.limo.limologix"
         },
+        "com.transistorsoft.cordova.background-geolocation": {
+            "PACKAGE_NAME": "com.limo.limologix"
+        },
         "cordova-plugin-app-name": {
             "APP_NAME": "Limo Logix",
             "PACKAGE_NAME": "com.limo.limologix"
         },
         "cordova-plugin-fcm": {
-            "PACKAGE_NAME": "com.limo.limologix"
-        },
-        "cordova-plugin-geolocation": {
             "PACKAGE_NAME": "com.limo.limologix"
         },
         "cordova-plugin-network-information": {
@@ -28,13 +28,16 @@
         },
         "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "com.limo.limologix"
-        },
-        "cordova.plugins.diagnostic.api-22": {
-            "PACKAGE_NAME": "com.limo.limologix"
         }
     },
     "dependent_plugins": {
-        "cordova-plugin-compat": {
+        "cordova-plugin-dialogs": {
+            "PACKAGE_NAME": "com.limo.limologix"
+        },
+        "cordova-plugin-background-fetch": {
+            "PACKAGE_NAME": "com.limo.limologix"
+        },
+        "cordova-plugin-cocoalumberjack": {
             "PACKAGE_NAME": "com.limo.limologix"
         }
     }
