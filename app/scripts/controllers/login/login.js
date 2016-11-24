@@ -70,9 +70,9 @@ app
                     $http.defaults.headers.common['Auth-Token'] = response.data['Auth-Token'];
                     $window.sessionStorage['Auth-Token'] = response.data['Auth-Token'];
                     constants.driver = response.data;
-                    if ($('#remember_me').is(':checked')) {
+                    //if ($('#remember_me').is(':checked')) {
                         localStorage.setItem('isLoggedIn', true);
-                    }
+                    //}
 
                     localStorage.setItem('Auth-Token', $window.sessionStorage['Auth-Token']);
 
@@ -90,7 +90,7 @@ app
 
                     $window.sessionStorage['driver'] = JSON.stringify(constants.driver);
                     $rootScope.isAdsShow = true;
-                    //$state.go('core.appSettings');   
+                    //$state.go('core.appSettings');
                     $state.go('core.appSettings');
                     notify.closeAll();
                     notify({ classes: 'alert-success', message: response.message });
