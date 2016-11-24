@@ -25,6 +25,7 @@
 		450336567ACA41AE9C472F18 /* RequestLocationAccuracy.m in Sources */ = {isa = PBXBuildFile; fileRef = 14DB3975F85B4E8BBAD2170F /* RequestLocationAccuracy.m */; };
 		4B08262484C6402FAD247B74 /* libCocoaLumberjack.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C61416D3003B4450BDEA2E7D /* libCocoaLumberjack.a */; };
 		55980254035B423EBFDCAE3E /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C64CB3342A8049A1BD9790FE /* CoreLocation.framework */; };
+		57396DE11DE770ED007DC6F1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 57396DE01DE770ED007DC6F1 /* GoogleService-Info.plist */; };
 		59A91FD70023468DBDE302FE /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13AA40BE6F9E49FD9690621F /* AudioToolbox.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		5D34D1766C8E44208E6BAC27 /* GoogleSymbolUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78B88496096D4B798966FD8A /* GoogleSymbolUtilities.framework */; };
 		6565171B1C2047C7BE12E39A /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BB27622747E48F186B34A60 /* Security.framework */; };
@@ -92,6 +93,7 @@
 		40E34B7E9E82434B8696433A /* libz.tbd */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		4ED4F1C08890403E820CF1F6 /* TSLocationManager.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = TSLocationManager.framework; path = "Limo Logix/Plugins/com.transistorsoft.cordova.background-geolocation/TSLocationManager.framework"; sourceTree = "<group>"; };
 		511D5C2AD5EE40CEB3C7CFD4 /* CDVBackgroundGeolocation.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = CDVBackgroundGeolocation.m; path = "com.transistorsoft.cordova.background-geolocation/CDVBackgroundGeolocation.m"; sourceTree = "<group>"; };
+		57396DE01DE770ED007DC6F1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		581389904C5A4C778A4A29D5 /* CDVNotification.bundle */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.plug-in"; path = CDVNotification.bundle; sourceTree = "<group>"; };
 		5915766C438D48AEB6777D90 /* CDVNotification.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = CDVNotification.h; path = "cordova-plugin-dialogs/CDVNotification.h"; sourceTree = "<group>"; };
 		5AE3487DF2B14C50927E7E74 /* FirebaseMessaging.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = FirebaseMessaging.framework; path = "Limo Logix/Plugins/cordova-plugin-fcm/FirebaseMessaging.framework"; sourceTree = "<group>"; };
@@ -186,6 +188,7 @@
 			isa = PBXGroup;
 			children = (
 				EB87FDF41871DAF40020F90C /* config.xml */,
+				57396DE01DE770ED007DC6F1 /* GoogleService-Info.plist */,
 				EB87FDF31871DA8E0020F90C /* www */,
 				EB87FDF11871DA420020F90C /* Staging */,
 				301BF52D109A57CC0062928A /* CordovaLib.xcodeproj */,
@@ -379,6 +382,7 @@
 			files = (
 				302D95F214D2391D003F00A1 /* MainViewController.xib in Resources */,
 				0207DA581B56EA530066E2B4 /* Images.xcassets in Resources */,
+				57396DE11DE770ED007DC6F1 /* GoogleService-Info.plist in Resources */,
 				6AFF5BF91D6E424B00AB3073 /* CDVLaunchScreen.storyboard in Resources */,
 				44EB88D749774598976D12D7 /* CDVNotification.bundle in Resources */,
 			);

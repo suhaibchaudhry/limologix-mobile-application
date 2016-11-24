@@ -21,9 +21,12 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
         console.log(location);
 
         if(self.firstLoad) {
+          console.log('First location publish');
+          console.log(location);
+          self.getChannelToPublish(location);
           self.firstLoad = false;
         }
-        self.getChannelToPublish(location);
+        console.log('calling interval');
         self.locationUpdateInterval(location);
         //}
         // The plugin records multiple samples when doing motionchange events.
@@ -227,6 +230,8 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
             self.map.setCenter(center);
         }
         var isDriverLoggedIn = localStorage.getItem('isLoggedIn');
+        console.log('Sending to Faye');
+        console.log(position);
         if (isDriverLoggedIn == 'true') {
             self.sendLocationsToServerThroughFaye(position);
             if (self.address_type == "pickup")
