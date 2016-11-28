@@ -317,12 +317,13 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
             }
         };
 
+        var msg = { latitude: p.coords.latitude, longitude: p.coords.longitude };
+        console.log('Pushing out');
+        console.log(msg);
+        console.log(self.channelName);
         var client = Faye.getClient();
         var isUserlogedIn = localStorage.getItem('isLoggedIn');
         if (self.channelName && isUserlogedIn === 'true') {
-            var msg = { latitude: p.coords.latitude, longitude: p.coords.longitude };
-            console.log('Pushing out');
-            console.log(msg);
             var publication = client.publish('/publish/' + self.channelName, msg);
             client.addExtension(Logger);
             publication.callback(function() {
