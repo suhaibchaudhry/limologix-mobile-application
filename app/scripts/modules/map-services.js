@@ -305,12 +305,14 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
             incoming: function(message, callback) {
                 console.log('incoming home page', message);
                 callback(message);
+                console.log(message);
             },
             outgoing: function(message, callback) {
                 message.ext = message.ext || {};
                 //message.ext.auth_token = $window.sessionStorage['Auth-Token'];
                 message.ext.user_type = "driver";
-                console.log('outgoing home page', message);
+                console.log('outgoing home page');
+                console.log(message);
                 callback(message);
             }
         };
@@ -318,8 +320,10 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
         var client = Faye.getClient();
         var isUserlogedIn = localStorage.getItem('isLoggedIn');
         if (self.channelName && isUserlogedIn === 'true') {
-
-            var publication = client.publish('/publish/' + self.channelName, { latitude: p.coords.latitude, longitude: p.coords.longitude });
+            var msg = { latitude: p.coords.latitude, longitude: p.coords.longitude };
+            console.log('Pushing out');
+            console.log(msg);
+            var publication = client.publish('/publish/' + self.channelName, msg);
             client.addExtension(Logger);
             publication.callback(function() {
                 //alert('Connection established successfully.');
