@@ -71,8 +71,10 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
     var url;
     if (isUserLoggedIn == "true") {
         console.log('Providing Token');
+        console.log(AuthToken);
         url = 'http://limologix.softwaystaging.com:9800/?token='+AuthToken;
     } else {
+        console.log(AuthToken);
         console.log('Token Access Failed');
         url = 'http://limologix.softwaystaging.com:9800/';
     }

@@ -66,6 +66,19 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
         }
     }
 
+    var isUserLoggedIn = localStorage.getItem('isLoggedIn');
+    var AuthToken = localStorage.getItem('Auth-Token');
+    var url;
+    if (isUserLoggedIn == "true") {
+        console.log('Providing Token');
+        console.log(AuthToken);
+        url = 'http://limologix.softwaystaging.com:9800/?token='+AuthToken;
+    } else {
+        console.log(AuthToken);
+        console.log('Token Access Failed');
+        url = 'http://limologix.softwaystaging.com:9800/';
+    }
+
     bgGeo.configure({
         // Geolocation config
         desiredAccuracy: 0,
