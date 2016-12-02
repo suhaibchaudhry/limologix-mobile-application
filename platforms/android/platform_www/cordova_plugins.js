@@ -1,74 +1,65 @@
 cordova.define('cordova/plugin_list', function(require, exports, module) {
 module.exports = [
     {
-        "id": "com.phonegap.plugins.nativesettingsopener.Settings",
         "file": "plugins/com.phonegap.plugins.nativesettingsopener/www/settings.js",
-        "pluginId": "com.phonegap.plugins.nativesettingsopener",
+        "id": "com.phonegap.plugins.nativesettingsopener.Settings",
         "clobbers": [
             "cordova.plugins.settings"
         ]
     },
     {
-        "id": "cordova-plugin-dialogs.notification",
         "file": "plugins/cordova-plugin-dialogs/www/notification.js",
-        "pluginId": "cordova-plugin-dialogs",
+        "id": "cordova-plugin-dialogs.notification",
         "merges": [
             "navigator.notification"
         ]
     },
     {
-        "id": "cordova-plugin-dialogs.notification_android",
         "file": "plugins/cordova-plugin-dialogs/www/android/notification.js",
-        "pluginId": "cordova-plugin-dialogs",
+        "id": "cordova-plugin-dialogs.notification_android",
         "merges": [
             "navigator.notification"
         ]
     },
     {
-        "id": "cordova-plugin-background-fetch.BackgroundFetch",
         "file": "plugins/cordova-plugin-background-fetch/www/BackgroundFetch.js",
-        "pluginId": "cordova-plugin-background-fetch",
+        "id": "cordova-plugin-background-fetch.BackgroundFetch",
         "clobbers": [
             "window.BackgroundFetch"
         ]
     },
     {
-        "id": "com.transistorsoft.cordova.background-geolocation.BackgroundGeolocation",
         "file": "plugins/com.transistorsoft.cordova.background-geolocation/www/BackgroundGeolocation.js",
-        "pluginId": "com.transistorsoft.cordova.background-geolocation",
+        "id": "com.transistorsoft.cordova.background-geolocation.BackgroundGeolocation",
         "clobbers": [
             "window.BackgroundGeolocation"
         ]
     },
     {
-        "id": "cordova-plugin-fcm.FCMPlugin",
         "file": "plugins/cordova-plugin-fcm/www/FCMPlugin.js",
-        "pluginId": "cordova-plugin-fcm",
+        "id": "cordova-plugin-fcm.FCMPlugin",
         "clobbers": [
             "FCMPlugin"
         ]
     },
     {
-        "id": "cordova-plugin-network-information.network",
         "file": "plugins/cordova-plugin-network-information/www/network.js",
-        "pluginId": "cordova-plugin-network-information",
+        "id": "cordova-plugin-network-information.network",
         "clobbers": [
             "navigator.connection",
             "navigator.network.connection"
         ]
     },
     {
-        "id": "cordova-plugin-network-information.Connection",
         "file": "plugins/cordova-plugin-network-information/www/Connection.js",
-        "pluginId": "cordova-plugin-network-information",
+        "id": "cordova-plugin-network-information.Connection",
         "clobbers": [
             "Connection"
         ]
     },
     {
-        "id": "cordova-plugin-request-location-accuracy.RequestLocationAccuracy",
         "file": "plugins/cordova-plugin-request-location-accuracy/www/android/RequestLocationAccuracy.js",
-        "pluginId": "cordova-plugin-request-location-accuracy",
+        "id": "cordova-plugin-request-location-accuracy.RequestLocationAccuracy",
         "clobbers": [
             "cordova.plugins.locationAccuracy"
         ]
@@ -82,6 +73,7 @@ module.exports.metadata =
     "cordova-plugin-background-fetch": "4.0.0",
     "com.transistorsoft.cordova.background-geolocation": "2.1.6",
     "cordova-plugin-app-name": "1.0.0",
+    "cordova-plugin-cocoalumberjack": "0.0.1",
     "cordova-plugin-fcm": "1.1.5",
     "cordova-plugin-network-information": "1.3.0",
     "cordova-plugin-request-location-accuracy": "2.2.0",

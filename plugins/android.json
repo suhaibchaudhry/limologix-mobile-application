@@ -36,6 +36,9 @@
         },
         "cordova-plugin-background-fetch": {
             "PACKAGE_NAME": "com.limo.limologix"
+        },
+        "cordova-plugin-cocoalumberjack": {
+            "PACKAGE_NAME": "com.limo.limologix"
         }
     }
 }

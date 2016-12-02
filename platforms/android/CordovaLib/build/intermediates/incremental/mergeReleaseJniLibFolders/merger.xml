@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="/home/asad/tmp/limologix-mobile-application/platforms/android/CordovaLib/src/main/jniLibs"/></dataSet><dataSet config="release"><source path="/home/asad/tmp/limologix-mobile-application/platforms/android/CordovaLib/src/release/jniLibs"/></dataSet></merger>
+<merger version="3"><dataSet config="main"><source path="/Users/admin/Documents/WorkSpace/limologix/limologix-mobile-application-android/platforms/android/CordovaLib/src/main/jniLibs"/></dataSet><dataSet config="release"><source path="/Users/admin/Documents/WorkSpace/limologix/limologix-mobile-application-android/platforms/android/CordovaLib/src/release/jniLibs"/></dataSet></merger>

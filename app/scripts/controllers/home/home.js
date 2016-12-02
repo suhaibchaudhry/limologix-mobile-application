@@ -185,7 +185,7 @@ function funchomeCtrl(MapServices, $scope, $rootScope, $state, $http, appSetting
     FCMPlugin.onNotification(
         function(data) {
           console.log('Notification: ');
-          console.log(data);
+          console.log('data', data); 
             if (data.wasTapped) {
                 //Notification was received on device tray and tapped by the user.
                 if (data.aps) {
@@ -276,13 +276,13 @@ function funchomeCtrl(MapServices, $scope, $rootScope, $state, $http, appSetting
 
             } else {
                 //Notification was received in foreground. Maybe the user needs to be notified.
-                if (data.aps) {
-                    var title = data.aps.alert.title;
-                    var body = data.aps.alert.body;
-                } else {
-                    var title = data.notification.title;
-                    var body = data.notification.body;
-                }
+                // if (data.aps) {
+                //     var title = data.aps.alert.title;
+                //     var body = data.aps.alert.body;
+                // } else {
+                //     var title = data.notification.title;
+                //     var body = data.notification.body;
+                // }
                 // get ride request alert
                 if (data.status === "dispatched") {
                     var end_destination = JSON.parse(data.end_destination).place;
@@ -352,7 +352,7 @@ function funchomeCtrl(MapServices, $scope, $rootScope, $state, $http, appSetting
             //alert('Error registering onNotification callback: ' + err);
         }
     );
-
+    
     var url = appSettings.serverPath + appSettings.serviceApis.getTopicName;
     services.funcGetRequest(url).then(function(response, status) {
         if (response && response.data) {
