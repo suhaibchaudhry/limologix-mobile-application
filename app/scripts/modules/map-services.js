@@ -1,7 +1,7 @@
 'use strict';
 
 
-app.service('MapServices', ['$q', '$timeout', '$rootScope', 'Faye', 'appSettings', 'services', funMapService]);
+app.service('MapServices', ['$q', '$timeout', '$rootScope', 'Faye', 'appSettings', 'services','notify',funMapService]);
 
 function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
     this.map = null;
@@ -17,12 +17,10 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
     var bgGeo = window.BackgroundGeolocation;
 
     var callbackFn = function(location, taskId) {
-        console.log('Location: ');
         console.log(location);
 
         if(self.firstLoad) {
-          console.log('First location publish');
-          console.log(location);
+          console.log('First location publish',location);
           self.getChannelToPublish(location);
           self.firstLoad = false;
         }
@@ -70,8 +68,7 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
     var AuthToken = localStorage.getItem('Auth-Token');
     var url;
     if (isUserLoggedIn == "true") {
-        console.log('Providing Token');
-        console.log(AuthToken);
+        //console.log('Providing Token',AuthToken);
         url = 'http://limologix.softwaystaging.com:9800/?token='+AuthToken;
     } else {
         console.log(AuthToken);
@@ -90,15 +87,15 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
         stopTimeout: 5,  // Stop-detection timeout minutes (wait x minutes to turn off tracking)
 
         // Application config
-        debug: true, // <-- enable this hear sounds for background-geolocation life-cycle.
-        logLevel: 5,    // Verbose logging.  0: NONE
+        debug: false, // <-- enable this hear sounds for background-geolocation life-cycle.
+        logLevel: 0,    // Verbose logging.  0: NONE
         stopOnTerminate: false,              // <-- Don't stop tracking when user closes app.
         startOnBoot: false,                   // <-- [Android] Auto start background-service in headless mode when device is powered-up.
 
         // HTTP / SQLite config
         url: 'http://limologix.softwaystaging.com:9800/',
         batchSync: false,       // <-- [Default: false] Set true to sync locations to server in a single HTTP request.
-        autoSync: true,         // <-- [Default: true] Set true to sync each location to server as it arrives.
+        autoSync: false,         // <-- [Default: true] Set true to sync each location to server as it arrives.
         maxDaysToPersist: 1,    // <-- Maximum days to persist a location in plugin's SQLite database when HTTP fails
     }, function(state) {
       // Plugin is configured and ready to use.
@@ -107,6 +104,7 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
       }
     });
 
+    //location tracking
     this.getCurrentPositionsWithInterval = setInterval(function() {
         bgGeo.getCurrentPosition(self.onSuccessInterval, self.onErrorInterval);
     }, 3000);
@@ -270,8 +268,7 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
             self.map.setCenter(center);
         }
         var isDriverLoggedIn = localStorage.getItem('isLoggedIn');
-        console.log('Sending to Faye');
-        console.log(position);
+        console.log('Sending to Faye',position);
         if (isDriverLoggedIn == 'true') {
             self.sendLocationsToServerThroughFaye(position);
             if (self.address_type == "pickup")
@@ -357,10 +354,8 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
             }
         };
 
-        var msg = { latitude: p.coords.latitude, longitude: p.coords.longitude };
-        console.log('Pushing out');
-        console.log(msg);
-        console.log(self.channelName);
+        var msg = { latitude: p.coords.latitude, longitude: p.coords.longitude, platform:device.platform };
+        //console.log('Pushing out',self.channelName);
         var client = Faye.getClient();
         var isUserlogedIn = localStorage.getItem('isLoggedIn');
         if (self.channelName && isUserlogedIn === 'true') {

@@ -24,6 +24,9 @@ app
           var client = Faye.getClient();
           client.disable('autodisconnect');
 
+          var bgGeo = window.BackgroundGeolocation;
+          bgGeo.stop();
+
           notify({ classes: 'alert-success',message:response.message});
          // delete $window.sessionStorage['Auth-Token'];
       },function(error){

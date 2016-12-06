@@ -21,6 +21,9 @@
         <param name="android-package" value="org.apache.cordova.whitelist.WhitelistPlugin" />
         <param name="onload" value="true" />
     </feature>
+    <feature name="Device">
+        <param name="android-package" value="org.apache.cordova.device.Device" />
+    </feature>
     <preference name="AppName" value="Limo Logix" />
     <feature name="RequestLocationAccuracy">
         <param name="android-package" value="cordova.plugin.RequestLocationAccuracy" />

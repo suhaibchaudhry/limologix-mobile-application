@@ -63,6 +63,13 @@ module.exports = [
         "clobbers": [
             "cordova.plugins.locationAccuracy"
         ]
+    },
+    {
+        "file": "plugins/cordova-plugin-device/www/device.js",
+        "id": "cordova-plugin-device.device",
+        "clobbers": [
+            "device"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -77,7 +84,8 @@ module.exports.metadata =
     "cordova-plugin-fcm": "1.1.5",
     "cordova-plugin-network-information": "1.3.0",
     "cordova-plugin-request-location-accuracy": "2.2.0",
-    "cordova-plugin-whitelist": "1.3.0"
+    "cordova-plugin-whitelist": "1.3.0",
+    "cordova-plugin-device": "1.1.3"
 };
 // BOTTOM OF METADATA
 });

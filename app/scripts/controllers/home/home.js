@@ -192,8 +192,8 @@ function funchomeCtrl(MapServices, $scope, $rootScope, $state, $http, appSetting
                     var title = data.aps.alert.title;
                     var body = data.aps.alert.body;
                 } else {
-                    var title = data.notification.title;
-                    var body = data.notification.body;
+                    var title = data.title;
+                    var body = data.body;
                 }
 
                 // get ride request alert
@@ -210,7 +210,7 @@ function funchomeCtrl(MapServices, $scope, $rootScope, $state, $http, appSetting
                         start_destination_lng: JSON.parse(data.start_destination).longitude,
                         end_destination_lat: JSON.parse(data.end_destination).latitude,
                         end_destination_lng: JSON.parse(data.end_destination).longitude,
-                        customer_name: data.first_name,
+                        customer_name: data.full_name,
                         company_name: data.company_name,
                         price: data.price,
                         id: id,
@@ -264,7 +264,7 @@ function funchomeCtrl(MapServices, $scope, $rootScope, $state, $http, appSetting
                     start_destination_lng: JSON.parse(data.start_destination).longitude,
                     end_destination_lat: JSON.parse(data.end_destination).latitude,
                     end_destination_lng: JSON.parse(data.end_destination).longitude,
-                    customer_name: data.first_name,
+                    customer_name: data.full_name,
                     company_name: data.company_name,
                     price: data.price,
                     id: id,
@@ -276,13 +276,13 @@ function funchomeCtrl(MapServices, $scope, $rootScope, $state, $http, appSetting
 
             } else {
                 //Notification was received in foreground. Maybe the user needs to be notified.
-                // if (data.aps) {
-                //     var title = data.aps.alert.title;
-                //     var body = data.aps.alert.body;
-                // } else {
-                //     var title = data.notification.title;
-                //     var body = data.notification.body;
-                // }
+                if (data.aps) {
+                    var title = data.aps.alert.title;
+                    var body = data.aps.alert.body;
+                } else {
+                    var title = data.title;
+                    var body = data.body;
+                }
                 // get ride request alert
                 if (data.status === "dispatched") {
                     var end_destination = JSON.parse(data.end_destination).place;
@@ -296,7 +296,7 @@ function funchomeCtrl(MapServices, $scope, $rootScope, $state, $http, appSetting
                         start_destination_lng: JSON.parse(data.start_destination).longitude,
                         end_destination_lat: JSON.parse(data.end_destination).latitude,
                         end_destination_lng: JSON.parse(data.end_destination).longitude,
-                        customer_name: data.first_name,
+                        customer_name: data.full_name,
                         price: data.price,
                         company_name: data.company_name,
                         id: id,

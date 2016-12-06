@@ -11,6 +11,7 @@ app
     .controller('MainCtrl', function($scope, $rootScope, $http, $translate, $state, $stateParams) {
         document.addEventListener("deviceready", onDeviceReady, false);
         function onDeviceReady() {
+           
             checkConnection();
         }
         //Handles Network connectivity

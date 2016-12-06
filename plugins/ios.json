@@ -28,6 +28,9 @@
         },
         "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "com.limo.limologix"
+        },
+        "cordova-plugin-device": {
+            "PACKAGE_NAME": "com.limo.limologix"
         }
     },
     "dependent_plugins": {
