@@ -12894,7 +12894,7 @@ p.comp_name {
   right: 3.5%;
   font-size: -webkit-xxx-large; }
 
-.close {
+.ad_close {
   position: absolute;
   top: -7%;
   right: 0px;
@@ -12991,6 +12991,14 @@ body.menu-slider.in #wrapper {
   margin: 0px;
   height: 60px;
   background-color: #000;
+  color: #fff !important; }
+
+#tripDetailsBtn {
+  font-size: 18px;
+  width: 100%;
+  margin: 0px;
+  height: 60px;
+  background-color: #A9A9A9;
   color: #fff !important; }
 
 .fake_div {
@@ -13206,5 +13214,21 @@ i.inactive {
   color: #0d0b1a;
   font-size: 17px;
   bottom: -2%; }
+
+.boarded_modal-dialog {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin-top: 40px; }
+
+.boarded_modal-content {
+  height: 100%;
+  border-radius: 0;
+  background-color: #fff; }
+
+.modalClose {
+  font-size: 30px;
+  margin-top: -8px !important;
+  opacity: 1; }
 
 /*# sourceMappingURL=main.css.map */

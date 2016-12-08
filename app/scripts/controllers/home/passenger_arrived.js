@@ -66,6 +66,23 @@ app
                 };
 
                 MapServices.init('dvMap_arrived');
+                passenger_arrived_trip_details();
+            }
+            function passenger_arrived_trip_details() {
+                $scope.trip = {
+                    id: $scope.tripsummary.trip_id
+                }
+                var url = appSettings.serverPath + appSettings.serviceApis.tripSummary;
+                services.funcPostRequest(url, { "trip": $scope.trip }).then(function(response) {
+                    $scope.tripinfo = response.data.trip;
+                    notify.closeAll();
+                    //notify({ classes: 'alert-success', message: response.message });
+                    //$state.go('core.passenger_arrived');
+                }, function(error) {
+                    notify.closeAll();
+                    notify({ classes: 'alert-danger', message: error });
+                    //$state.go('core.home');
+                });
             }
 
             $scope.passenger_arrived = function() {

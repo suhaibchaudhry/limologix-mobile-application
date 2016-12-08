@@ -90,6 +90,7 @@ var app = angular
             getCreditCardInfo: 'drivers/profile/get_credit_card_info',
             tripAccept: 'drivers/trips/accept',
             tripDeny: 'drivers/trips/deny',
+            tripSummary: 'drivers/trips/show',
             company_getCountries: 'master_data/countries',
             company_getStates: 'master_data/states',
             vehicle_types: 'master_data/vehicles/types',

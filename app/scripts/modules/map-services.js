@@ -1,7 +1,7 @@
 'use strict';
 
 
-app.service('MapServices', ['$q', '$timeout', '$rootScope', 'Faye', 'appSettings', 'services','notify',funMapService]);
+app.service('MapServices', ['$q', '$timeout', '$rootScope', 'Faye', 'appSettings', 'services', 'notify', funMapService]);
 
 function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
     this.map = null;
@@ -9,6 +9,7 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
     this.channelName;
     this.currentLocation;
     this.cntrlScope;
+    $rootScope.getCurrentPositionsWithInterval;
     this.boardedSwal = false;
     this.arrivedSwal = false;
     this.firstLoad = true;
@@ -17,14 +18,9 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
     var bgGeo = window.BackgroundGeolocation;
 
     var callbackFn = function(location, taskId) {
-        console.log(location);
-
-        if(self.firstLoad) {
-          console.log('First location publish',location);
-          self.getChannelToPublish(location);
-          self.firstLoad = false;
+        if (self.firstLoad) {
+            self.firstLoad = false;
         }
-        console.log('calling interval');
         self.locationUpdateInterval(location);
         //}
         // The plugin records multiple samples when doing motionchange events.
@@ -46,22 +42,22 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
 
     var failureFn = function(error) {
         console.log('BackgroundGeoLocation error', error);
-        console.log("timeout Location setting is " + (enabled ? "enabled" : "disabled"));
-        if (enabled) {
-            swal.close();
-        } else {
-            swal({
-                    title: 'GPS',
-                    text: 'Turn On Location Services to allow "LimoLogix" to Determine Your Location',
-                    type: "info",
-                    confirmButtonText: 'Settings',
-                    closeOnConfirm: true
-                },
-                function(isConfirm) {
-                    if (isConfirm)
-                        cordova.plugins.diagnostic.switchToSettings();
-                })
-        }
+        //console.log("timeout Location setting is " + (enabled ? "enabled" : "disabled"));
+        // if (enabled) {
+        //     swal.close();
+        // } else {
+        //     swal({
+        //             title: 'GPS',
+        //             text: 'Turn On Location Services to allow "LimoLogix" to Determine Your Location',
+        //             type: "info",
+        //             confirmButtonText: 'Settings',
+        //             closeOnConfirm: true
+        //         },
+        //         function(isConfirm) {
+        //             if (isConfirm)
+        //                 cordova.plugins.diagnostic.switchToSettings();
+        //         })
+        // }
     }
 
     var isUserLoggedIn = localStorage.getItem('isLoggedIn');
@@ -69,7 +65,7 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
     var url;
     if (isUserLoggedIn == "true") {
         //console.log('Providing Token',AuthToken);
-        url = 'http://limologix.softwaystaging.com:9800/?token='+AuthToken;
+        url = 'http://limologix.softwaystaging.com:9800/?token=' + AuthToken;
     } else {
         console.log(AuthToken);
         console.log('Token Access Failed');
@@ -84,36 +80,40 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
 
         // Activity recognition config
         activityRecognitionInterval: 10000,
-        stopTimeout: 5,  // Stop-detection timeout minutes (wait x minutes to turn off tracking)
+        stopTimeout: 5, // Stop-detection timeout minutes (wait x minutes to turn off tracking)
 
         // Application config
         debug: false, // <-- enable this hear sounds for background-geolocation life-cycle.
-        logLevel: 0,    // Verbose logging.  0: NONE
-        stopOnTerminate: false,              // <-- Don't stop tracking when user closes app.
-        startOnBoot: false,                   // <-- [Android] Auto start background-service in headless mode when device is powered-up.
+        logLevel: 0, // Verbose logging.  0: NONE
+        stopOnTerminate: false, // <-- Don't stop tracking when user closes app.
+        startOnBoot: false, // <-- [Android] Auto start background-service in headless mode when device is powered-up.
 
         // HTTP / SQLite config
         url: 'http://limologix.softwaystaging.com:9800/',
-        batchSync: false,       // <-- [Default: false] Set true to sync locations to server in a single HTTP request.
-        autoSync: false,         // <-- [Default: true] Set true to sync each location to server as it arrives.
-        maxDaysToPersist: 1,    // <-- Maximum days to persist a location in plugin's SQLite database when HTTP fails
+        batchSync: false, // <-- [Default: false] Set true to sync locations to server in a single HTTP request.
+        autoSync: false, // <-- [Default: true] Set true to sync each location to server as it arrives.
+        maxDaysToPersist: 1, // <-- Maximum days to persist a location in plugin's SQLite database when HTTP fails
     }, function(state) {
-      // Plugin is configured and ready to use.
-      if (!state.enabled) {
-        bgGeo.start();  // <-- start-tracking
-      }
+        // Plugin is configured and ready to use.
+        if (!state.enabled) {
+            bgGeo.start(); // <-- start-tracking
+        }
     });
 
     //location tracking
-    this.getCurrentPositionsWithInterval = setInterval(function() {
-        bgGeo.getCurrentPosition(self.onSuccessInterval, self.onErrorInterval);
-    }, 3000);
+    function trackCycle() {
+        $rootScope.getCurrentPositionsWithInterval = setInterval(function() {
+            bgGeo.getCurrentPosition(self.onSuccessInterval, self.onErrorInterval);
+        }, 3000);
+    }
+
 
     this.onSuccessInterval = function(position) {
         //update marker position
         if (self.marker && self.map) {
             self.marker.setPosition(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
             var center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+            self.getLocationAddressByPositions(center);
             //self.map.setCenter(center);
         }
         var isDriverLoggedIn = localStorage.getItem('isLoggedIn');
@@ -128,31 +128,31 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
 
     // onError Callback receives a PositionError object
     this.onErrorInterval = function(error) {
-        //alert('code: ' + error.code + '\n' +
-        //  'message: ' + error.message + '\n');
-    }
-    /*this.checkGPS = setInterval(function() {
-        cordova.plugins.diagnostic.isLocationEnabledSetting(function(enabled) {
-            console.log("timeout Location setting is " + (enabled ? "enabled" : "disabled"));
-            if (enabled) {
-                swal.close();
-            } else {
-                swal({
-                        title: 'GPS',
-                        text: 'Turn On Location Services to allow "LimoLogix" to Determine Your Location',
-                        type: "info",
-                        confirmButtonText: 'Settings',
-                        closeOnConfirm: true
-                    },
-                    function(isConfirm) {
-                        if (isConfirm)
-                            cordova.plugins.diagnostic.switchToSettings();
-                    })
-            }
-        }, function(error) {
-            console.error("The following error occurred: " + error);
-        });
-    }, 5000)*/
+            //alert('code: ' + error.code + '\n' +
+            //  'message: ' + error.message + '\n');
+        }
+        /*this.checkGPS = setInterval(function() {
+            cordova.plugins.diagnostic.isLocationEnabledSetting(function(enabled) {
+                console.log("timeout Location setting is " + (enabled ? "enabled" : "disabled"));
+                if (enabled) {
+                    swal.close();
+                } else {
+                    swal({
+                            title: 'GPS',
+                            text: 'Turn On Location Services to allow "LimoLogix" to Determine Your Location',
+                            type: "info",
+                            confirmButtonText: 'Settings',
+                            closeOnConfirm: true
+                        },
+                        function(isConfirm) {
+                            if (isConfirm)
+                                cordova.plugins.diagnostic.switchToSettings();
+                        })
+                }
+            }, function(error) {
+                console.error("The following error occurred: " + error);
+            });
+        }, 5000)*/
 
 
     /*this.getCurrentPositionsWithInterval = setInterval(function() {
@@ -160,25 +160,27 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
     }, 3000);*/
 
     this.init = function(mapId) {
-        $("#spinner1").show();
-        self.mapId = mapId;
-        self.getCurrentPositions();
-        console.log('initializing location');
-        bgGeo.on('location', callbackFn, failureFn);
-    }
-    /*
-    //Unused
-    this.addMarker = function() {
-        if (self.marker) self.marker.setMap(null);
-        var geolocate = new google.maps.LatLng(29.7630556, -95.3630556);
-        self.marker = new google.maps.Marker({
-            map: self.map,
-            position: geolocate,
-            //animation: google.maps.Animation.DROP,
-            icon: 'images/driver/location_ping.0b6a1b43.png'
-        });
-        self.map.setCenter(geolocate);
-    }*/
+            $("#spinner1").show();
+            self.mapId = mapId;
+            self.channelName = '';
+            self.getCurrentPositions();
+            console.log('initializing location');
+            bgGeo.on('location', callbackFn, failureFn);
+             trackCycle();
+        }
+        /*
+        //Unused
+        this.addMarker = function() {
+            if (self.marker) self.marker.setMap(null);
+            var geolocate = new google.maps.LatLng(29.7630556, -95.3630556);
+            self.marker = new google.maps.Marker({
+                map: self.map,
+                position: geolocate,
+                //animation: google.maps.Animation.DROP,
+                icon: 'images/driver/location_ping.0b6a1b43.png'
+            });
+            self.map.setCenter(geolocate);
+        }*/
 
     this.getCurrentPositions = function(position) {
         /*//Event listener when location services on/off
@@ -204,37 +206,41 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
         if (navigator.geolocation) {
             //var deferred = $q.defer();
             navigator.geolocation.getCurrentPosition(function(position) {*/
-                console.log('positions', 29.6637309,-95.4892921);
-                var LatLng = new google.maps.LatLng(29.6637309,-95.4892921);
-                var mapOptions = {
-                    center: LatLng,
-                    zoom: 13,
-                    streetViewControl: false,
-                    mapTypeId: google.maps.MapTypeId.ROADMAP
-                };
-                self.map = new google.maps.Map(document.getElementById(self.mapId), mapOptions);
-                google.maps.event.addListenerOnce(self.map, "idle", function() {
-                    $("#spinner1").hide();
-                });
-                if (self.map) {
-                    $("#spinner1").hide();
-                }
-                if (self.marker) self.marker.setMap(null);
-                // var geolocate = new google.maps.LatLng( position.coords.latitude, position.coords.longitude);
-                self.marker = new google.maps.Marker({
-                    map: self.map,
-                    position: LatLng,
-                    //animation: google.maps.Animation.DROP,
-                    icon: 'images/driver/location_ping.0b6a1b43.png'
-                });
+        console.log('positions', 29.6637309, -95.4892921);
+        var LatLng = new google.maps.LatLng(29.6637309, -95.4892921);
+        var mapOptions = {
+            center: LatLng,
+            zoom: 13,
+            streetViewControl: false,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        self.map = new google.maps.Map(document.getElementById(self.mapId), mapOptions);
+        google.maps.event.addListener(self.map, "idle", function() {
+            google.maps.event.trigger(self.map, 'resize');
+        });
+        google.maps.event.addListenerOnce(self.map, "idle", function() {
+            $("#spinner1").hide();
+        });
+        if (self.map) {
+            $("#spinner1").hide();
+        }
+        if (self.marker) self.marker.setMap(null);
+        // var geolocate = new google.maps.LatLng( position.coords.latitude, position.coords.longitude);
+        self.marker = new google.maps.Marker({
+            map: self.map,
+            position: LatLng,
+            //animation: google.maps.Animation.DROP,
+            icon: 'images/driver/location_ping.0b6a1b43.png'
+        });
 
-                self.getLocationAddressByPositions(LatLng); // Get address name by positions for google navigator
+        self.getLocationAddressByPositions(LatLng); // Get address name by positions for google navigator
 
-                self.map.setCenter(LatLng);
-                self.marker.setPosition(LatLng);
-                //self.getChannelToPublish();
-                // self.watchPositions();
-                //deferred.resolve();
+        self.map.setCenter(LatLng);
+        self.marker.setPosition(LatLng);
+        self.getChannelToPublish();
+        //self.getChannelToPublish();
+        // self.watchPositions();
+        //deferred.resolve();
         /*    });*/
         /*} else {
             alert('Geo Location feature is not supported in this browser.');
@@ -268,7 +274,7 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
             self.map.setCenter(center);
         }
         var isDriverLoggedIn = localStorage.getItem('isLoggedIn');
-        console.log('Sending to Faye',position);
+        console.log('Sending to Faye', position);
         if (isDriverLoggedIn == 'true') {
             self.sendLocationsToServerThroughFaye(position);
             if (self.address_type == "pickup")
@@ -300,7 +306,7 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
         } else if (self.cntrlName == "Arrived") {
             var p2 = new google.maps.LatLng(self.tripsummary.dropoffAtLat, self.tripsummary.dropoffAtLng); //dropoff location
             var swal_title = "Arrived";
-            if (google.maps.geometry.spherical.computeDistanceBetween(p1, p2) < 500) {  //within 1/2km
+            if (google.maps.geometry.spherical.computeDistanceBetween(p1, p2) < 500) { //within 1/2km
                 $('#arrivedBtn').addClass('buttonArrived');
                 self.bool.isArrived = true;
                 $rootScope.$digest();
@@ -327,11 +333,11 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
         self.watchID = null;
     }
 
-    this.getChannelToPublish = function(position) {
+    this.getChannelToPublish = function() {
         var url = appSettings.serverPath + appSettings.serviceApis.getChannelName;
         services.funcGetRequest(url).then(function(response, status) {
             self.channelName = response.data.channel;
-            self.sendLocationsToServerThroughFaye(position);
+            //self.sendLocationsToServerThroughFaye(position);
         }, function(error) {
             notify({ classes: 'alert-danger', message: error.message });
         });
@@ -348,16 +354,17 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
                 message.ext = message.ext || {};
                 //message.ext.auth_token = $window.sessionStorage['Auth-Token'];
                 message.ext.user_type = "driver";
-                console.log('outgoing home page',message);
+                console.log('outgoing home page', message);
                 //console.log(message);
                 callback(message);
             }
         };
 
-        var msg = { latitude: p.coords.latitude, longitude: p.coords.longitude, platform:device.platform };
+        var msg = { latitude: p.coords.latitude, longitude: p.coords.longitude, platform: device.platform };
         //console.log('Pushing out',self.channelName);
         var client = Faye.getClient();
         var isUserlogedIn = localStorage.getItem('isLoggedIn');
+        console.log('self.channelName', self.channelName);
         if (self.channelName && isUserlogedIn === 'true') {
             var publication = client.publish('/publish/' + self.channelName, msg);
             client.addExtension(Logger);

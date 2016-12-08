@@ -25,7 +25,6 @@ app
             //Store auth-token - After login and app kills
             $http.defaults.headers.common['Auth-Token'] = localStorage.getItem('Auth-Token');
 
-
             getCustomerRoute();
 
             $scope.$watchGroup(['cntrlName', 'address_type', 'tripsummary', 'bool'], function() {
@@ -42,8 +41,6 @@ app
             function getCustomerRoute() {
                 var stored_notification = JSON.parse(localStorage.getItem("notificationInfo"));
                 console.log('driverLocationConstants', driverLocationConstants);
-
-
 
                 var location = {
                     end_destination: stored_notification ? stored_notification.end_destination : driverLocationConstants.location.end_destination,
@@ -71,9 +68,27 @@ app
                 };
 
                 MapServices.init('dvMap_boarded');
+                passenger_boarded_trip_details();
             }
 
+            function passenger_boarded_trip_details() {
+                $scope.trip = {
+                    id: $scope.tripsummary.trip_id
+                }
+                var url = appSettings.serverPath + appSettings.serviceApis.tripSummary;
+                services.funcPostRequest(url, { "trip": $scope.trip }).then(function(response) {
+                    $scope.tripinfo = response.data.trip;
+                    notify.closeAll();
+                    //notify({ classes: 'alert-success', message: response.message });
+                }, function(error) {
+                    notify.closeAll();
+                    notify({ classes: 'alert-danger', message: error });
+                    //$state.go('core.home');
+                });
+            }
+            
             $scope.passenger_boarded = function() {
+
                 $scope.trip = {
                     id: $scope.tripsummary.trip_id
                 }

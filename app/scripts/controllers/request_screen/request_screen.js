@@ -13,7 +13,7 @@ app
         function($scope, $rootScope, $state, $http, appSettings, notify, $window, services, constants, driverLocationConstants, Faye, $location, MapServices) {
             setTimeout(function() {
                 var fixedDivs = jQuery('header').innerHeight() + jQuery('footer').innerHeight() + jQuery('.fixed-head').innerHeight() + jQuery('.fixed-footer').innerHeight();
-                var mapHeight = jQuery(window).innerHeight() - fixedDivs - 100;
+                var mapHeight = jQuery(window).innerHeight() - fixedDivs - 100 -15;
                 jQuery(".dvMap_circle").height(mapHeight);
                 jQuery(".dvMap_circle").width(mapHeight);
             }, 1000);
