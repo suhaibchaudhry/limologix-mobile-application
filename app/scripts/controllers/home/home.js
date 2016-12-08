@@ -365,7 +365,7 @@ function funchomeCtrl(MapServices, $scope, $rootScope, $state, $http, appSetting
         }
 
     }, function(error) {
-        notify({ classes: 'alert-danger', message: response.message });
+        notify({ classes: 'alert-danger', message: error.message });
     });
 
     MapServices.init('dvMap');

@@ -16,7 +16,7 @@ app
       clearInterval(MapServices.checkGPS);
 
       services.funcGetRequest(url).then(function(response,status) {
-          $state.go('core.splash');   
+          $state.go('core.splash');
           constants.driver = {};
           clearInterval($rootScope.FreeAds); // freeAds
           localStorage.setItem('isLoggedIn',false);
@@ -31,10 +31,8 @@ app
           clearInterval($rootScope.getCurrentPositionsWithInterval);
 
           notify({ classes: 'alert-success',message:response.message});
-         // delete $window.sessionStorage['Auth-Token'];
       },function(error){
-          notify({ classes: 'alert-danger', message: response.message });
+          notify({ classes: 'alert-danger', message: error.message });
           $state.go('core.login');
-          //delete $window.sessionStorage['Auth-Token'];
       });
 }]);

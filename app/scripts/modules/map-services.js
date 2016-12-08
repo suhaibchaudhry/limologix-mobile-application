@@ -3,7 +3,7 @@
 
 app.service('MapServices', ['$q', '$timeout', '$rootScope', 'Faye', 'appSettings', 'services', 'notify', funMapService]);
 
-function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
+function funMapService($q, $timeout, $rootScope, Faye, appSettings, services, notify) {
     this.map = null;
     this.marker;
     this.channelName;
@@ -28,8 +28,6 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
         // You might uses these to "progressively" update user's current
         // position on a map, for example.
         if (location.sample) {
-            console.log('- Ignore samples');
-
             // IMPORTANT:  send signal to native code that your callback is complete.
             bgGeo.finish(taskId);
             return;
@@ -42,35 +40,10 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
 
     var failureFn = function(error) {
         console.log('BackgroundGeoLocation error', error);
-        //console.log("timeout Location setting is " + (enabled ? "enabled" : "disabled"));
-        // if (enabled) {
-        //     swal.close();
-        // } else {
-        //     swal({
-        //             title: 'GPS',
-        //             text: 'Turn On Location Services to allow "LimoLogix" to Determine Your Location',
-        //             type: "info",
-        //             confirmButtonText: 'Settings',
-        //             closeOnConfirm: true
-        //         },
-        //         function(isConfirm) {
-        //             if (isConfirm)
-        //                 cordova.plugins.diagnostic.switchToSettings();
-        //         })
-        // }
     }
 
     var isUserLoggedIn = localStorage.getItem('isLoggedIn');
     var AuthToken = localStorage.getItem('Auth-Token');
-    var url;
-    if (isUserLoggedIn == "true") {
-        //console.log('Providing Token',AuthToken);
-        url = 'http://limologix.softwaystaging.com:9800/?token=' + AuthToken;
-    } else {
-        console.log(AuthToken);
-        console.log('Token Access Failed');
-        url = 'http://limologix.softwaystaging.com:9800/';
-    }
 
     bgGeo.configure({
         // Geolocation config
@@ -113,8 +86,6 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
         if (self.marker && self.map) {
             self.marker.setPosition(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
             var center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-            self.getLocationAddressByPositions(center);
-            //self.map.setCenter(center);
         }
         var isDriverLoggedIn = localStorage.getItem('isLoggedIn');
         if (isDriverLoggedIn == 'true') {
@@ -131,82 +102,17 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
             //alert('code: ' + error.code + '\n' +
             //  'message: ' + error.message + '\n');
         }
-        /*this.checkGPS = setInterval(function() {
-            cordova.plugins.diagnostic.isLocationEnabledSetting(function(enabled) {
-                console.log("timeout Location setting is " + (enabled ? "enabled" : "disabled"));
-                if (enabled) {
-                    swal.close();
-                } else {
-                    swal({
-                            title: 'GPS',
-                            text: 'Turn On Location Services to allow "LimoLogix" to Determine Your Location',
-                            type: "info",
-                            confirmButtonText: 'Settings',
-                            closeOnConfirm: true
-                        },
-                        function(isConfirm) {
-                            if (isConfirm)
-                                cordova.plugins.diagnostic.switchToSettings();
-                        })
-                }
-            }, function(error) {
-                console.error("The following error occurred: " + error);
-            });
-        }, 5000)*/
-
-
-    /*this.getCurrentPositionsWithInterval = setInterval(function() {
-        navigator.geolocation.getCurrentPosition(self.onSuccessInterval, self.onErrorInterval);
-    }, 3000);*/
-
+     
     this.init = function(mapId) {
-            $("#spinner1").show();
-            self.mapId = mapId;
-            self.channelName = '';
-            self.getCurrentPositions();
-            console.log('initializing location');
-            bgGeo.on('location', callbackFn, failureFn);
-             trackCycle();
-        }
-        /*
-        //Unused
-        this.addMarker = function() {
-            if (self.marker) self.marker.setMap(null);
-            var geolocate = new google.maps.LatLng(29.7630556, -95.3630556);
-            self.marker = new google.maps.Marker({
-                map: self.map,
-                position: geolocate,
-                //animation: google.maps.Animation.DROP,
-                icon: 'images/driver/location_ping.0b6a1b43.png'
-            });
-            self.map.setCenter(geolocate);
-        }*/
+        $("#spinner1").show();
+        self.mapId = mapId;
+        self.channelName = '';
+        self.getCurrentPositions();
+        bgGeo.on('location', callbackFn, failureFn);
+        trackCycle();
+    }
 
-    this.getCurrentPositions = function(position) {
-        /*//Event listener when location services on/off
-        cordova.plugins.diagnostic.registerLocationAuthorizationStatusChangeHandler(function(status) {
-            console.log("home page-  \"not_determined\" to: " + status);
-
-            if (status == 'denied' || status == "not_determined") {
-                swal({
-                        title: 'GPS',
-                        text: 'Turn On Location Services to allow "LimoLogix" to determine your location',
-                        type: "info",
-                        confirmButtonText: 'Settings'
-                    },
-                    function() {
-                        cordova.plugins.diagnostic.switchToSettings();
-                    })
-
-            } else {
-                self.getCurrentPositions();
-            }
-        });
-
-        if (navigator.geolocation) {
-            //var deferred = $q.defer();
-            navigator.geolocation.getCurrentPosition(function(position) {*/
-        console.log('positions', 29.6637309, -95.4892921);
+    this.getCurrentPositions = function(position) {      
         var LatLng = new google.maps.LatLng(29.6637309, -95.4892921);
         var mapOptions = {
             center: LatLng,
@@ -215,6 +121,7 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
             mapTypeId: google.maps.MapTypeId.ROADMAP
         };
         self.map = new google.maps.Map(document.getElementById(self.mapId), mapOptions);
+        //Fix for googl map grayed out issue
         google.maps.event.addListener(self.map, "idle", function() {
             google.maps.event.trigger(self.map, 'resize');
         });
@@ -225,28 +132,21 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
             $("#spinner1").hide();
         }
         if (self.marker) self.marker.setMap(null);
-        // var geolocate = new google.maps.LatLng( position.coords.latitude, position.coords.longitude);
         self.marker = new google.maps.Marker({
             map: self.map,
             position: LatLng,
-            //animation: google.maps.Animation.DROP,
             icon: 'images/driver/location_ping.0b6a1b43.png'
         });
 
-        self.getLocationAddressByPositions(LatLng); // Get address name by positions for google navigator
-
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                var LatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+                self.getLocationAddressByPositions(LatLng);
+            });
+        }
         self.map.setCenter(LatLng);
         self.marker.setPosition(LatLng);
         self.getChannelToPublish();
-        //self.getChannelToPublish();
-        // self.watchPositions();
-        //deferred.resolve();
-        /*    });*/
-        /*} else {
-            alert('Geo Location feature is not supported in this browser.');
-            //deferred.reject();
-        }*/
-        //return deferred.promise;*/
     }
 
     this.getLocationAddressByPositions = function(LatLng) {
@@ -256,9 +156,7 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
                 'latLng': LatLng
             }, function(results, status) {
                 if (status == google.maps.GeocoderStatus.OK) {
-                    console.log("driver current location = ", results[0].formatted_address);
                     self.currentLocation = results[0].formatted_address;
-                    console.log('self.address_type,tripsummary', self.tripsummary)
                     if (self.tripsummary)
                         self.addDirectionRoutes(self.address_type, self.current_location, self.tripsummary);
                 }
@@ -274,7 +172,6 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
             self.map.setCenter(center);
         }
         var isDriverLoggedIn = localStorage.getItem('isLoggedIn');
-        console.log('Sending to Faye', position);
         if (isDriverLoggedIn == 'true') {
             self.sendLocationsToServerThroughFaye(position);
             if (self.address_type == "pickup")
@@ -284,14 +181,7 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
         }
     };
 
-    /*// onError Callback receives a PositionError object
-    this.onErrorInterval = function(error) {
-        //alert('code: ' + error.code + '\n' +
-        //  'message: ' + error.message + '\n');
-    }*/
-
     this.checkLocationReached = function(position) {
-
         var p1 = new google.maps.LatLng(position.coords.latitude, position.coords.longitude); //driver current location
         if (self.cntrlName == "Boarded") {
             var p2 = new google.maps.LatLng(self.tripsummary.pickupAtLat, self.tripsummary.pickupAtLng); //pickup location
@@ -346,25 +236,21 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
     this.sendLocationsToServerThroughFaye = function(p) {
         var Logger = {
             incoming: function(message, callback) {
-                console.log('incoming home page', message);
+                //console.log('incoming home page', message);
                 callback(message);
-                //console.log(message);
             },
             outgoing: function(message, callback) {
                 message.ext = message.ext || {};
                 //message.ext.auth_token = $window.sessionStorage['Auth-Token'];
                 message.ext.user_type = "driver";
-                console.log('outgoing home page', message);
-                //console.log(message);
+                //console.log('outgoing home page', message);
                 callback(message);
             }
         };
 
         var msg = { latitude: p.coords.latitude, longitude: p.coords.longitude, platform: device.platform };
-        //console.log('Pushing out',self.channelName);
         var client = Faye.getClient();
         var isUserlogedIn = localStorage.getItem('isLoggedIn');
-        console.log('self.channelName', self.channelName);
         if (self.channelName && isUserlogedIn === 'true') {
             var publication = client.publish('/publish/' + self.channelName, msg);
             client.addExtension(Logger);
@@ -402,16 +288,12 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
             anchorPoint: new google.maps.Point(0, -29)
         })
 
-        //var source_placeDetails, destination_placeDetails;
-
         var get_source_placeId = tripsummary.source_place_id;
         var get_destination_placeId = tripsummary.destination_place_id;
         service.getDetails({
             placeId: get_source_placeId
         }, function(place, status) {
             if (status === google.maps.places.PlacesServiceStatus.OK) {
-                //source_placeDetails = place;
-
                 S_marker.setIcon( /** @type {google.maps.Icon} */ ({
                     url: place.icon,
                     size: new google.maps.Size(71, 71),
@@ -447,8 +329,6 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
 
         })
 
-
-
         function route(origin_place_id, destination_place_id, travel_mode,
             directionsService, directionsDisplay) {
             if (!origin_place_id || !destination_place_id) {
@@ -482,59 +362,6 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
                 }
             });
         }
-
-
-
-        //old///
-
-        // var source, destination;
-        // var directionsDisplay;
-        // var directionsService = new google.maps.DirectionsService();
-        // directionsDisplay = new google.maps.DirectionsRenderer({
-        //     suppressMarkers: true,
-        //     polylineOptions: {
-        //         strokeColor: "#9ACD32",
-        //         strokeWeight: 5
-        //     }
-        // });
-        // directionsDisplay.setMap(self.map);
-        // calcRoute(address_type, start, end, directionsService);
-
-        // function calcRoute(address_type, start, end, directionsService) {
-        //     var icons = {
-        //         start: new google.maps.MarkerImage(
-        //             'images/source_marker.9db0b1d4.png',
-        //             new google.maps.Size(44, 32), //width,height
-        //             new google.maps.Point(0, 0), // The origin point (x,y)
-        //             new google.maps.Point(22, 32)),
-        //         end: new google.maps.MarkerImage(
-        //             'images/destination_marker.23597b9e.png',
-        //             new google.maps.Size(44, 32),
-        //             new google.maps.Point(0, 0),
-        //             new google.maps.Point(22, 32))
-        //     };
-
-        //     self.start_point = start; //'Marathahalli, Bengaluru, Karnataka 560037, India';
-        //     self.end_point = end; //'Hebbal, Bengaluru, Karnataka 560024, India';
-        //     var request = {
-        //         origin: self.start_point,
-        //         destination: self.end_point,
-        //         travelMode: google.maps.TravelMode.DRIVING
-        //     };
-        //     directionsService.route(request, function(response, status) {
-        //         if (status == google.maps.DirectionsStatus.OK) {
-        //             directionsDisplay.setDirections(response);
-        //             var leg = response.routes[0].legs[0];
-        //             self.makeSourceMarker(leg.start_location, icons.start, self.start_point, self.map, address_type);
-        //             self.makeDestinationMarker(leg.end_location, icons.end, self.end_point, self.map, address_type);
-        //         }
-        //     });
-        // }
-
-
-
-
-
     }
     this.makeSourceMarker = function(position, icon, pickup_point, map, address_type) {
         var marker_pickup = new google.maps.Marker({
@@ -545,7 +372,6 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
                 "<img border='0' id='infoWindowid' align='Left' width='100%' src='images/driver/popup1.ab07a1b7.jpg'></img>" +
                 "<a href ='http://maps.google.com/maps?saddr=" + self.currentLocation + "&amp;daddr=" + pickup_point + "'class = ''><img src='images/driver/nav-icon.1a509916.png' class = 'nav-icon1'/></a>" +
                 "<a href ='http://maps.google.com/maps?saddr=" + self.currentLocation + "&amp;daddr=" + pickup_point + "'class = 'pickUpText'>" + pickup_point + "</p></div>"
-                //"<div><img border='0' align='Left' width='100%' src='images/driver/popup.png'></img><p class = 'pickUpText'>" + title + "</p></div>"
         });
         map.setCenter(position);
         if (address_type == "pickup")
@@ -570,17 +396,18 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
     this.pickupInfoWindow = function(marker_pickup, title) {
         var infoWindow = new google.maps.InfoWindow();
         infoWindow.setContent(title);
+        infoWindow.close();
         infoWindow.open(self.map, marker_pickup);
         google.maps.event.addListener(marker_pickup, "click", function(e) {
             infoWindow.setContent(title);
             infoWindow.open(self.map, marker_pickup);
         });
-
     }
 
     this.dropoffInfoWindow = function(marker_dropoff, title) {
         var infoWindow = new google.maps.InfoWindow();
         infoWindow.setContent(title);
+        infoWindow.close();
         infoWindow.open(self.map, marker_dropoff);
         google.maps.event.addListener(marker_dropoff, "click", function(e) {
             infoWindow.setContent(title);
@@ -588,7 +415,5 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services) {
         });
 
     }
-
-
 
 };

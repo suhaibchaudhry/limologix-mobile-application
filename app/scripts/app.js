@@ -148,17 +148,17 @@ var app = angular
         return {
             response: function(response) {
                 $("#spinner").hide();
-                if (response.status === 401 || response.status === -1) {
-                     localStorage.setItem("lastState",'')
+                if (response.status === 401 || response.status === -1) {                    
                     //notify({ classes: 'alert-success', message: "Session expired" });
                     $location.url('/login');
+                    localStorage.setItem("lastState","")
                 }
                 return response || $q.when(response);
             },
             responseError: function(rejection) {
                 if (rejection.status === 401 || rejection.status === -1) {
-                    localStorage.setItem("lastState",'')
                     $location.url('/login');
+                     localStorage.setItem("lastState","")
                 }
                 return $q.reject(rejection);
             }
@@ -180,13 +180,11 @@ var app = angular
 
         var isUserLoggedIn = localStorage.getItem('isLoggedIn');
 
-        //if (constant.driver['Auth-Token']) {
         if (isUserLoggedIn == "true") {
             //$http.defaults.headers.common['Auth-Token'] = $window.sessionStorage['Auth-Token'];
             $http.defaults.headers.common['Auth-Token'] = localStorage.getItem('Auth-Token');
 
         } else {
-            // alert('else');
             $('#custom_splash').hide();
             $state.go('core.splash')
         }
@@ -195,7 +193,6 @@ var app = angular
         $rootScope.$state = $state;
         $rootScope.$stateParams = $stateParams;
         $rootScope.$on('$stateChangeSuccess', function(event, toState) {
-            //alert(toState.name);
             event.targetScope.$watch('$viewContentLoaded', function() {
                 angular.element('#pageloader').css('display', 'block');
                 angular.element('html, body, #content').animate({ scrollTop: 0 }, 200);

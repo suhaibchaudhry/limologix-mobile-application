@@ -37,6 +37,10 @@ app
             var map_height = jQuery(window).innerHeight() - (jQuery('.b1').innerHeight() + jQuery('.navbar-header').innerHeight())
             jQuery('#dvMap_boarded').height(map_height);
 
+            if(device.platform != "Android"){
+                $('.boarded_modal-dialog').css({'margin-top':'20px'});
+            }
+
 
             function getCustomerRoute() {
                 var stored_notification = JSON.parse(localStorage.getItem("notificationInfo"));

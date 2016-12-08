@@ -27,6 +27,10 @@ app
 
             getCustomerRoute();
 
+             if(device.platform != "Android"){
+                $('.boarded_modal-dialog').css({'margin-top':'20px'});
+            }
+
             $scope.$watchGroup(['cntrlName', 'address_type', 'tripsummary', 'bool'], function() {
                 MapServices.cntrlName = $scope.cntrlName;
                 MapServices.address_type = $scope.address_type;
