@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.limo.limologix" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <preference name="loglevel" value="DEBUG" />
     <feature name="NativeSettings">
         <param name="android-package" value="com.phonegap.plugins.nativesettings.NativeSettings" />
     </feature>
@@ -8,9 +9,6 @@
     </feature>
     <feature name="BackgroundGeolocation">
         <param name="android-package" value="com.transistorsoft.cordova.bggeo.CDVBackgroundGeolocation" />
-    </feature>
-    <feature name="Device">
-        <param name="android-package" value="org.apache.cordova.device.Device" />
     </feature>
     <feature name="FCMPlugin">
         <param name="android-package" value="com.gae.scaffolder.plugin.FCMPlugin" />
@@ -23,9 +21,14 @@
         <param name="android-package" value="org.apache.cordova.whitelist.WhitelistPlugin" />
         <param name="onload" value="true" />
     </feature>
+    <feature name="Device">
+        <param name="android-package" value="org.apache.cordova.device.Device" />
+    </feature>
+    <preference name="AppName" value="Limo Logix" />
     <feature name="RequestLocationAccuracy">
         <param name="android-package" value="cordova.plugin.RequestLocationAccuracy" />
     </feature>
+    <allow-intent href="market:*" />
     <name>Limo Logix</name>
     <description>
         A sample Apache Cordova application that responds to the deviceready event.
@@ -34,6 +37,7 @@
         Apache Cordova Team
     </author>
     <content src="index.html" />
+    <preference name="cordova-background-geolocation-license" value="782e13a5d5283b482680cc66802b72c5d23c4c412612b35abbb9f0e82a0747d3" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
@@ -41,8 +45,4 @@
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
-    <allow-intent href="market:*" />
-    <preference name="loglevel" value="DEBUG" />
-    <preference name="AppName" value="Limo Logix" />
-    <preference name="cordova-background-geolocation-license" value="782e13a5d5283b482680cc66802b72c5d23c4c412612b35abbb9f0e82a0747d3" />
 </widget>
