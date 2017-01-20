@@ -26,7 +26,7 @@ app
             // }
 
 
-            // if (isLoggedIn == "true") {                
+            // if (isLoggedIn == "true") {
             //     var prestate = localStorage.getItem("lastState");
             //     alert(prestate)
             //     if (prestate) {
@@ -46,7 +46,7 @@ app
 
             // setTimeout(function() {
             //     rendersplashscreen();
-            //     // Do something after 1 second 
+            //     // Do something after 1 second
             // }, 500);
 
             function rendersplashscreen() {
@@ -60,12 +60,12 @@ app
             }
 
             $scope.moveto_admin_panel = function() {
-                //$window.open("http://limologix.softwaystaging.com","_blank");
+                //$window.open("http://dispatch.limologix.com","_blank");
                 // if(navigator.onLine){
-                window.location.href = 'http://limologix.softwaystaging.com';
+                window.location.href = 'http://dispatch.limologix.com';
                 // }
 
-                // $location.path("http://limologix.softwaystaging.com");
+                // $location.path("http://dispatch.limologix.com");
             };
             $scope.moveto_app = function() {
                 //$state.go('core.signup');

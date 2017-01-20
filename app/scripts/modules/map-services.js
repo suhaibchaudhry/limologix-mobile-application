@@ -62,7 +62,7 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services, no
         startOnBoot: false, // <-- [Android] Auto start background-service in headless mode when device is powered-up.
 
         // HTTP / SQLite config
-        url: 'http://limologix.softwaystaging.com:9800/',
+        url: 'http://dispatch.limologix.com:9800/',
         batchSync: false, // <-- [Default: false] Set true to sync locations to server in a single HTTP request.
         autoSync: false, // <-- [Default: true] Set true to sync each location to server as it arrives.
         maxDaysToPersist: 1, // <-- Maximum days to persist a location in plugin's SQLite database when HTTP fails
@@ -102,7 +102,7 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services, no
             //alert('code: ' + error.code + '\n' +
             //  'message: ' + error.message + '\n');
         }
-     
+
     this.init = function(mapId) {
         $("#spinner1").show();
         self.mapId = mapId;
@@ -112,7 +112,7 @@ function funMapService($q, $timeout, $rootScope, Faye, appSettings, services, no
         trackCycle();
     }
 
-    this.getCurrentPositions = function(position) {      
+    this.getCurrentPositions = function(position) {
         var LatLng = new google.maps.LatLng(29.6637309, -95.4892921);
         var mapOptions = {
             center: LatLng,
