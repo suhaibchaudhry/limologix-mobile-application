@@ -17,6 +17,9 @@
             "APP_NAME": "Limo Logix",
             "PACKAGE_NAME": "com.limo.limologix"
         },
+        "cordova-plugin-device": {
+            "PACKAGE_NAME": "com.limo.limologix"
+        },
         "cordova-plugin-fcm": {
             "PACKAGE_NAME": "com.limo.limologix"
         },
@@ -27,9 +30,6 @@
             "PACKAGE_NAME": "com.limo.limologix"
         },
         "cordova-plugin-whitelist": {
-            "PACKAGE_NAME": "com.limo.limologix"
-        },
-        "cordova-plugin-device": {
             "PACKAGE_NAME": "com.limo.limologix"
         }
     },
