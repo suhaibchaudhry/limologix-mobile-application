@@ -72,11 +72,11 @@ var app = angular
     ])
 
 .constant('appSettings', {
-        server_address: 'http://limologix.softwaystaging.com', //'http://172.16.10.212:9000', 
+        server_address: 'http://api.limologix.com', //'http://172.16.10.212:9000',
         version: 'v1',
-        server_images_path: "http://limologix.api.softwaystaging.com/", //'http://172.16.10.212:9000',
-        serverPath: "http://limologix.api.softwaystaging.com/api/v1/", //'http://172.16.10.212:9000/api/v1/',
-        FayeServerURL: 'http://limologix.softwaystaging.com:9292/faye', //'http://172.16.10.212:9292/faye', 
+        server_images_path: "http://api.limologix.com/", //'http://172.16.10.212:9000',
+        serverPath: "http://api.limologix.com/api/v1/", //'http://172.16.10.212:9000/api/v1/',
+        FayeServerURL: 'http://api.limologix.com:9292/faye', //'http://172.16.10.212:9292/faye', 
         serviceApis: {
             signin: 'drivers/sign_in',
             forgotPassword: 'drivers/forgot_password',
@@ -148,7 +148,7 @@ var app = angular
         return {
             response: function(response) {
                 $("#spinner").hide();
-                if (response.status === 401 || response.status === -1) {                    
+                if (response.status === 401 || response.status === -1) {
                     //notify({ classes: 'alert-success', message: "Session expired" });
                     $location.url('/login');
                     localStorage.setItem("lastState","")
@@ -169,7 +169,7 @@ var app = angular
         // //To Check network connectivity
         $rootScope.online = navigator.onLine;
         notify.config({ duration: 5000 });
-        //If driver logged in and 
+        //If driver logged in and
         var driver = $window.sessionStorage['driver'] ? JSON.parse($window.sessionStorage['driver']) : {};
         if (driver['Auth-Token']) {
             constant.driver = driver;
