@@ -72,11 +72,11 @@ var app = angular
     ])
 
 .constant('appSettings', {
-        server_address: 'http://api.limologix.com', //'http://172.16.10.212:9000',
+        server_address: 'https://api.limologix.com', //'http://172.16.10.212:9000',
         version: 'v1',
-        server_images_path: "http://api.limologix.com/", //'http://172.16.10.212:9000',
-        serverPath: "http://api.limologix.com/api/v1/", //'http://172.16.10.212:9000/api/v1/',
-        FayeServerURL: 'http://api.limologix.com:9292/faye', //'http://172.16.10.212:9292/faye', 
+        server_images_path: "https://api.limologix.com/", //'http://172.16.10.212:9000',
+        serverPath: "https://api.limologix.com/api/v1/", //'http://172.16.10.212:9000/api/v1/',
+        FayeServerURL: 'https://api.limologix.com:9393/faye', //'http://172.16.10.212:9292/faye', 
         serviceApis: {
             signin: 'drivers/sign_in',
             forgotPassword: 'drivers/forgot_password',
