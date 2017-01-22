@@ -1,0 +1,591 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+/* Begin PBXBuildFile section */
+		0207DA581B56EA530066E2B4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0207DA571B56EA530066E2B4 /* Images.xcassets */; };
+		1D3623260D0F684500981E51 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* AppDelegate.m */; };
+		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
+		301BF552109A68D80062928A /* libCordova.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 301BF535109A57CC0062928A /* libCordova.a */; };
+		302D95F114D2391D003F00A1 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 302D95EF14D2391D003F00A1 /* MainViewController.m */; };
+		302D95F214D2391D003F00A1 /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 302D95F014D2391D003F00A1 /* MainViewController.xib */; };
+		3047A5121AB8059700498E2A /* build-debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 3047A50F1AB8059700498E2A /* build-debug.xcconfig */; };
+		3047A5131AB8059700498E2A /* build-release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 3047A5101AB8059700498E2A /* build-release.xcconfig */; };
+		3047A5141AB8059700498E2A /* build.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 3047A5111AB8059700498E2A /* build.xcconfig */; };
+		6AFF5BF91D6E424B00AB3073 /* CDVLaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6AFF5BF81D6E424B00AB3073 /* CDVLaunchScreen.storyboard */; };
+		8647B5EAE57744A59D23BC6E /* NativeSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 053E3F059E1E4A598FC5BE18 /* NativeSettings.m */; };
+		0134C8AEAD7B41ED98FF5ED1 /* CDVNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 96C6D181010C41E3A50C9E30 /* CDVNotification.m */; };
+		B20D1250875A4D219CB3D879 /* CDVNotification.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0B4303730D544332B72B67B2 /* CDVNotification.bundle */; };
+		4DC473C6C4D9417EAA218FF2 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B9D34D8810948538CC3BEBB /* AudioToolbox.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		79C10A9E5BCD4F6097C7716C /* CDVBackgroundFetch.m in Sources */ = {isa = PBXBuildFile; fileRef = C6C0C66FF62E4E139983AD00 /* CDVBackgroundFetch.m */; };
+		D337CE194C1C4A8E9BA6E6F6 /* TSBackgroundFetch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57B5FDDAE3414B338E5C3017 /* TSBackgroundFetch.framework */; };
+		E6ED9AF7B2DE49ABA6CF34D2 /* libCocoaLumberjack.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADC64225CC9C45F898811A8F /* libCocoaLumberjack.a */; };
+		403C36110BA64530AC767447 /* CDVBackgroundGeolocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FAB000930514C2D8B2A7426 /* CDVBackgroundGeolocation.m */; };
+		5E468C1E6FCB434D974F85D7 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 598C65411892425CA00B96D8 /* SystemConfiguration.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		C1A97CFF09054DBCA8DB50F1 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 516984558CE8485DB46FA7A8 /* AVFoundation.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		BCADF3582BD548DA9F7AACA7 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FE2C2EFA6BC4096B4CB904E /* libsqlite3.dylib */; settings = {ATTRIBUTES = (Weak, ); }; };
+		194389854A9B4CACB77CEE30 /* TSLocationManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D01E956C151F4EC08B71ACA4 /* TSLocationManager.framework */; };
+		8A892D70BB4649039716737B /* CDVDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 52690E8B386249408177B8C0 /* CDVDevice.m */; };
+		5F5D5E125BA348579CE3C5D6 /* FCMPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 37346A80D2E4446EA89B3B8E /* FCMPlugin.m */; };
+		9E38BFD3545C4E0CB567F448 /* AppDelegate+FCMPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = B992ACCE2B514619AAF85DB7 /* AppDelegate+FCMPlugin.m */; };
+		48E33749F8EF40D68A04722E /* FirebaseAnalytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59310BCF5E964D838078AE2C /* FirebaseAnalytics.framework */; };
+		BD8B8A3E230245798F08CBBF /* FirebaseInstanceID.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 376A715F2D3A41F3805E186D /* FirebaseInstanceID.framework */; };
+		ABB0983FDF3845A3BE777884 /* FirebaseMessaging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C08A76058054914BF6EF7A7 /* FirebaseMessaging.framework */; };
+		66C0CB2218F34DB0BC7C30AB /* GoogleInterchangeUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D6131E79B154865B2044DE7 /* GoogleInterchangeUtilities.framework */; };
+		78AC9ABB66F146079F7F9966 /* GoogleIPhoneUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29E10DABF01A44698EE45468 /* GoogleIPhoneUtilities.framework */; };
+		8A1FCACD430B4FD2B0F13849 /* GoogleSymbolUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19A0C5C3579E4CF5AC81DB36 /* GoogleSymbolUtilities.framework */; };
+		AFFF7BBCDFBC47C880E199AD /* GoogleUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D39C1B9534BB413D881DEE02 /* GoogleUtilities.framework */; };
+		87B7F572E54E44D3ABFC9049 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 97B6BD13AE324C6BBB047510 /* libc++.tbd */; };
+		85EC8CA6F0CA44C6A871A270 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 9886B35A9D9F4B91840DA195 /* libz.tbd */; };
+		F05CDB99C3D3444D885E129C /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D2FC4C0DD80424C9E122B4A /* AddressBook.framework */; };
+		1B09CFB7481D417CB20572CA /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C1C2F9E3EFF4AD0B82620E0 /* libsqlite3.0.tbd */; };
+		C77B323D5C0C4866B6546C94 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84DA1952ECD3471DBF6439B1 /* Security.framework */; };
+		13F88232F00842D1B9557407 /* CDVConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = C5AA4F7DDA9C457DAE7DD572 /* CDVConnection.m */; };
+		4A19C2ED21964311A9D454C3 /* CDVReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = E87D130CE31F46C2A86DDC13 /* CDVReachability.m */; };
+		0169680236AB4C09AA5EE258 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3F70A1476784FE2B1DEAC98 /* CoreTelephony.framework */; };
+		E646820C24B24AE2965304D2 /* RequestLocationAccuracy.m in Sources */ = {isa = PBXBuildFile; fileRef = EBFA1E7D924D4DE492CF6E6C /* RequestLocationAccuracy.m */; };
+		F2060D19C6C14C2E9F6EA06A /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E77E8CB9193402B9170E698 /* CoreLocation.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		301BF534109A57CC0062928A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 301BF52D109A57CC0062928A /* CordovaLib.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D2AAC07E0554694100DB518D;
+			remoteInfo = CordovaLib;
+		};
+		301BF550109A68C00062928A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 301BF52D109A57CC0062928A /* CordovaLib.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D2AAC07D0554694100DB518D;
+			remoteInfo = CordovaLib;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		0207DA571B56EA530066E2B4 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = "Limo Logix/Images.xcassets"; sourceTree = SOURCE_ROOT; };
+		1D3623240D0F684500981E51 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		1D3623250D0F684500981E51 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		1D6058910D05DD3D006BFB54 /* Limo Logix.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Limo Logix.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		301BF52D109A57CC0062928A /* CordovaLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CordovaLib.xcodeproj; path = CordovaLib/CordovaLib.xcodeproj; sourceTree = "<group>"; };
+		301BF56E109A69640062928A /* www */ = {isa = PBXFileReference; lastKnownFileType = folder; path = www; sourceTree = SOURCE_ROOT; };
+		302D95EE14D2391D003F00A1 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
+		302D95EF14D2391D003F00A1 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
+		302D95F014D2391D003F00A1 /* MainViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainViewController.xib; sourceTree = "<group>"; };
+		3047A50F1AB8059700498E2A /* build-debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "build-debug.xcconfig"; path = cordova/build-debug.xcconfig; sourceTree = SOURCE_ROOT; };
+		3047A5101AB8059700498E2A /* build-release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "build-release.xcconfig"; path = cordova/build-release.xcconfig; sourceTree = SOURCE_ROOT; };
+		3047A5111AB8059700498E2A /* build.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = build.xcconfig; path = cordova/build.xcconfig; sourceTree = SOURCE_ROOT; };
+		32CA4F630368D1EE00C91783 /* Limo Logix-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Limo Logix-Prefix.pch"; sourceTree = "<group>"; };
+		6AFF5BF81D6E424B00AB3073 /* CDVLaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = CDVLaunchScreen.storyboard; path = "Limo Logix/CDVLaunchScreen.storyboard"; sourceTree = SOURCE_ROOT; };
+		8D1107310486CEB800E47090 /* Limo Logix-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "Limo Logix-Info.plist"; path = "Limo Logix/Limo Logix-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = SOURCE_ROOT; };
+		EB87FDF31871DA8E0020F90C /* www */ = {isa = PBXFileReference; lastKnownFileType = folder; name = www; path = ../../www; sourceTree = "<group>"; };
+		EB87FDF41871DAF40020F90C /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = ../../config.xml; sourceTree = "<group>"; };
+		F840E1F0165FE0F500CFE078 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = "Limo Logix/config.xml"; sourceTree = "<group>"; };
+		ED33DF2A687741AEAF9F8254 /* Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Bridging-Header.h"; path = "Bridging-Header.h"; sourceTree = "<group>"; };
+		053E3F059E1E4A598FC5BE18 /* NativeSettings.m */ = {isa = PBXFileReference; name = "NativeSettings.m"; path = "com.phonegap.plugins.nativesettingsopener/NativeSettings.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		01A31E2C9CDF4A7AA354EFE4 /* NativeSettings.h */ = {isa = PBXFileReference; name = "NativeSettings.h"; path = "com.phonegap.plugins.nativesettingsopener/NativeSettings.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		96C6D181010C41E3A50C9E30 /* CDVNotification.m */ = {isa = PBXFileReference; name = "CDVNotification.m"; path = "cordova-plugin-dialogs/CDVNotification.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		9C5626B4A2FA47E78B3C9E4A /* CDVNotification.h */ = {isa = PBXFileReference; name = "CDVNotification.h"; path = "cordova-plugin-dialogs/CDVNotification.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		0B4303730D544332B72B67B2 /* CDVNotification.bundle */ = {isa = PBXFileReference; name = "CDVNotification.bundle"; path = "CDVNotification.bundle"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.plug-in; explicitFileType = undefined; includeInIndex = 0; };
+		7B9D34D8810948538CC3BEBB /* AudioToolbox.framework */ = {isa = PBXFileReference; name = "AudioToolbox.framework"; path = "System/Library/Frameworks/AudioToolbox.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		C6C0C66FF62E4E139983AD00 /* CDVBackgroundFetch.m */ = {isa = PBXFileReference; name = "CDVBackgroundFetch.m"; path = "cordova-plugin-background-fetch/CDVBackgroundFetch.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		30B766DCF6D0461983E30178 /* CDVBackgroundFetch.h */ = {isa = PBXFileReference; name = "CDVBackgroundFetch.h"; path = "cordova-plugin-background-fetch/CDVBackgroundFetch.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		57B5FDDAE3414B338E5C3017 /* TSBackgroundFetch.framework */ = {isa = PBXFileReference; name = "TSBackgroundFetch.framework"; path = "Limo Logix/Plugins/cordova-plugin-background-fetch/TSBackgroundFetch.framework"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		ADC64225CC9C45F898811A8F /* libCocoaLumberjack.a */ = {isa = PBXFileReference; name = "libCocoaLumberjack.a"; path = "Limo Logix/Plugins/cordova-plugin-cocoalumberjack/libCocoaLumberjack.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		1FAB000930514C2D8B2A7426 /* CDVBackgroundGeolocation.m */ = {isa = PBXFileReference; name = "CDVBackgroundGeolocation.m"; path = "com.transistorsoft.cordova.background-geolocation/CDVBackgroundGeolocation.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		9DA28DB3A1E94D2089EAE1FF /* CDVBackgroundGeolocation.h */ = {isa = PBXFileReference; name = "CDVBackgroundGeolocation.h"; path = "com.transistorsoft.cordova.background-geolocation/CDVBackgroundGeolocation.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		598C65411892425CA00B96D8 /* SystemConfiguration.framework */ = {isa = PBXFileReference; name = "SystemConfiguration.framework"; path = "System/Library/Frameworks/SystemConfiguration.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		516984558CE8485DB46FA7A8 /* AVFoundation.framework */ = {isa = PBXFileReference; name = "AVFoundation.framework"; path = "System/Library/Frameworks/AVFoundation.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		8FE2C2EFA6BC4096B4CB904E /* libsqlite3.dylib */ = {isa = PBXFileReference; name = "libsqlite3.dylib"; path = "usr/lib/libsqlite3.dylib"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = compiled.mach-o.dylib; explicitFileType = undefined; includeInIndex = 0; };
+		D01E956C151F4EC08B71ACA4 /* TSLocationManager.framework */ = {isa = PBXFileReference; name = "TSLocationManager.framework"; path = "Limo Logix/Plugins/com.transistorsoft.cordova.background-geolocation/TSLocationManager.framework"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		52690E8B386249408177B8C0 /* CDVDevice.m */ = {isa = PBXFileReference; name = "CDVDevice.m"; path = "cordova-plugin-device/CDVDevice.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		8F6431AF84B947D1AFD6D282 /* CDVDevice.h */ = {isa = PBXFileReference; name = "CDVDevice.h"; path = "cordova-plugin-device/CDVDevice.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		37346A80D2E4446EA89B3B8E /* FCMPlugin.m */ = {isa = PBXFileReference; name = "FCMPlugin.m"; path = "cordova-plugin-fcm/FCMPlugin.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		B992ACCE2B514619AAF85DB7 /* AppDelegate+FCMPlugin.m */ = {isa = PBXFileReference; name = "AppDelegate+FCMPlugin.m"; path = "cordova-plugin-fcm/AppDelegate+FCMPlugin.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		8D327DF165A8424FB7CE82F9 /* FCMPlugin.h */ = {isa = PBXFileReference; name = "FCMPlugin.h"; path = "cordova-plugin-fcm/FCMPlugin.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		91F567DB63A246B98E38DE57 /* AppDelegate+FCMPlugin.h */ = {isa = PBXFileReference; name = "AppDelegate+FCMPlugin.h"; path = "cordova-plugin-fcm/AppDelegate+FCMPlugin.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		83450273A10F420FA8F15C18 /* Firebase.h */ = {isa = PBXFileReference; name = "Firebase.h"; path = "cordova-plugin-fcm/Firebase.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		59310BCF5E964D838078AE2C /* FirebaseAnalytics.framework */ = {isa = PBXFileReference; name = "FirebaseAnalytics.framework"; path = "Limo Logix/Plugins/cordova-plugin-fcm/FirebaseAnalytics.framework"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		376A715F2D3A41F3805E186D /* FirebaseInstanceID.framework */ = {isa = PBXFileReference; name = "FirebaseInstanceID.framework"; path = "Limo Logix/Plugins/cordova-plugin-fcm/FirebaseInstanceID.framework"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		6C08A76058054914BF6EF7A7 /* FirebaseMessaging.framework */ = {isa = PBXFileReference; name = "FirebaseMessaging.framework"; path = "Limo Logix/Plugins/cordova-plugin-fcm/FirebaseMessaging.framework"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		5D6131E79B154865B2044DE7 /* GoogleInterchangeUtilities.framework */ = {isa = PBXFileReference; name = "GoogleInterchangeUtilities.framework"; path = "Limo Logix/Plugins/cordova-plugin-fcm/GoogleInterchangeUtilities.framework"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		29E10DABF01A44698EE45468 /* GoogleIPhoneUtilities.framework */ = {isa = PBXFileReference; name = "GoogleIPhoneUtilities.framework"; path = "Limo Logix/Plugins/cordova-plugin-fcm/GoogleIPhoneUtilities.framework"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		19A0C5C3579E4CF5AC81DB36 /* GoogleSymbolUtilities.framework */ = {isa = PBXFileReference; name = "GoogleSymbolUtilities.framework"; path = "Limo Logix/Plugins/cordova-plugin-fcm/GoogleSymbolUtilities.framework"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		D39C1B9534BB413D881DEE02 /* GoogleUtilities.framework */ = {isa = PBXFileReference; name = "GoogleUtilities.framework"; path = "Limo Logix/Plugins/cordova-plugin-fcm/GoogleUtilities.framework"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		97B6BD13AE324C6BBB047510 /* libc++.tbd */ = {isa = PBXFileReference; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = sourcecode.text-based-dylib-definition; explicitFileType = undefined; includeInIndex = 0; };
+		9886B35A9D9F4B91840DA195 /* libz.tbd */ = {isa = PBXFileReference; name = "libz.tbd"; path = "usr/lib/libz.tbd"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = sourcecode.text-based-dylib-definition; explicitFileType = undefined; includeInIndex = 0; };
+		4D2FC4C0DD80424C9E122B4A /* AddressBook.framework */ = {isa = PBXFileReference; name = "AddressBook.framework"; path = "System/Library/Frameworks/AddressBook.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		5C1C2F9E3EFF4AD0B82620E0 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; name = "libsqlite3.0.tbd"; path = "usr/lib/libsqlite3.0.tbd"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = sourcecode.text-based-dylib-definition; explicitFileType = undefined; includeInIndex = 0; };
+		84DA1952ECD3471DBF6439B1 /* Security.framework */ = {isa = PBXFileReference; name = "Security.framework"; path = "System/Library/Frameworks/Security.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		C5AA4F7DDA9C457DAE7DD572 /* CDVConnection.m */ = {isa = PBXFileReference; name = "CDVConnection.m"; path = "cordova-plugin-network-information/CDVConnection.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		E87D130CE31F46C2A86DDC13 /* CDVReachability.m */ = {isa = PBXFileReference; name = "CDVReachability.m"; path = "cordova-plugin-network-information/CDVReachability.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		BC366AFBD29A4D0CB29A9FC3 /* CDVConnection.h */ = {isa = PBXFileReference; name = "CDVConnection.h"; path = "cordova-plugin-network-information/CDVConnection.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		ADFA8A78069041228EEDC869 /* CDVReachability.h */ = {isa = PBXFileReference; name = "CDVReachability.h"; path = "cordova-plugin-network-information/CDVReachability.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		B3F70A1476784FE2B1DEAC98 /* CoreTelephony.framework */ = {isa = PBXFileReference; name = "CoreTelephony.framework"; path = "System/Library/Frameworks/CoreTelephony.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		EBFA1E7D924D4DE492CF6E6C /* RequestLocationAccuracy.m */ = {isa = PBXFileReference; name = "RequestLocationAccuracy.m"; path = "cordova-plugin-request-location-accuracy/RequestLocationAccuracy.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		74A5148D9E3E4F8E871613F0 /* RequestLocationAccuracy.h */ = {isa = PBXFileReference; name = "RequestLocationAccuracy.h"; path = "cordova-plugin-request-location-accuracy/RequestLocationAccuracy.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		8E77E8CB9193402B9170E698 /* CoreLocation.framework */ = {isa = PBXFileReference; name = "CoreLocation.framework"; path = "System/Library/Frameworks/CoreLocation.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1D60588F0D05DD3D006BFB54 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				301BF552109A68D80062928A /* libCordova.a in Frameworks */,
+				4DC473C6C4D9417EAA218FF2 /* AudioToolbox.framework in Frameworks */,
+				D337CE194C1C4A8E9BA6E6F6 /* TSBackgroundFetch.framework in Frameworks */,
+				E6ED9AF7B2DE49ABA6CF34D2 /* libCocoaLumberjack.a in Frameworks */,
+				5E468C1E6FCB434D974F85D7 /* SystemConfiguration.framework in Frameworks */,
+				C1A97CFF09054DBCA8DB50F1 /* AVFoundation.framework in Frameworks */,
+				BCADF3582BD548DA9F7AACA7 /* libsqlite3.dylib in Frameworks */,
+				194389854A9B4CACB77CEE30 /* TSLocationManager.framework in Frameworks */,
+				48E33749F8EF40D68A04722E /* FirebaseAnalytics.framework in Frameworks */,
+				BD8B8A3E230245798F08CBBF /* FirebaseInstanceID.framework in Frameworks */,
+				ABB0983FDF3845A3BE777884 /* FirebaseMessaging.framework in Frameworks */,
+				66C0CB2218F34DB0BC7C30AB /* GoogleInterchangeUtilities.framework in Frameworks */,
+				78AC9ABB66F146079F7F9966 /* GoogleIPhoneUtilities.framework in Frameworks */,
+				8A1FCACD430B4FD2B0F13849 /* GoogleSymbolUtilities.framework in Frameworks */,
+				AFFF7BBCDFBC47C880E199AD /* GoogleUtilities.framework in Frameworks */,
+				87B7F572E54E44D3ABFC9049 /* libc++.tbd in Frameworks */,
+				85EC8CA6F0CA44C6A871A270 /* libz.tbd in Frameworks */,
+				F05CDB99C3D3444D885E129C /* AddressBook.framework in Frameworks */,
+				1B09CFB7481D417CB20572CA /* libsqlite3.0.tbd in Frameworks */,
+				C77B323D5C0C4866B6546C94 /* Security.framework in Frameworks */,
+				0169680236AB4C09AA5EE258 /* CoreTelephony.framework in Frameworks */,
+				F2060D19C6C14C2E9F6EA06A /* CoreLocation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		080E96DDFE201D6D7F000001 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				302D95EE14D2391D003F00A1 /* MainViewController.h */,
+				302D95EF14D2391D003F00A1 /* MainViewController.m */,
+				302D95F014D2391D003F00A1 /* MainViewController.xib */,
+				1D3623240D0F684500981E51 /* AppDelegate.h */,
+				1D3623250D0F684500981E51 /* AppDelegate.m */,
+			);
+			name = Classes;
+			path = "Limo Logix/Classes";
+			sourceTree = SOURCE_ROOT;
+		};
+		19C28FACFE9D520D11CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1D6058910D05DD3D006BFB54 /* Limo Logix.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
+			isa = PBXGroup;
+			children = (
+				EB87FDF41871DAF40020F90C /* config.xml */,
+				EB87FDF31871DA8E0020F90C /* www */,
+				EB87FDF11871DA420020F90C /* Staging */,
+				301BF52D109A57CC0062928A /* CordovaLib.xcodeproj */,
+				080E96DDFE201D6D7F000001 /* Classes */,
+				307C750510C5A3420062BCA9 /* Plugins */,
+				29B97315FDCFA39411CA2CEA /* Other Sources */,
+				29B97317FDCFA39411CA2CEA /* Resources */,
+				29B97323FDCFA39411CA2CEA /* Frameworks */,
+				19C28FACFE9D520D11CA2CBB /* Products */,
+			);
+			name = CustomTemplate;
+			sourceTree = "<group>";
+		};
+		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+				32CA4F630368D1EE00C91783 /* Limo Logix-Prefix.pch */,
+				29B97316FDCFA39411CA2CEA /* main.m */,
+				ED33DF2A687741AEAF9F8254 /* Bridging-Header.h */,
+			);
+			name = "Other Sources";
+			path = "Limo Logix";
+			sourceTree = "<group>";
+		};
+		29B97317FDCFA39411CA2CEA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				0207DA571B56EA530066E2B4 /* Images.xcassets */,
+				3047A50E1AB8057F00498E2A /* config */,
+				8D1107310486CEB800E47090 /* Limo Logix-Info.plist */,
+				6AFF5BF81D6E424B00AB3073 /* CDVLaunchScreen.storyboard */,
+				0B4303730D544332B72B67B2 /* CDVNotification.bundle */,
+			);
+			name = Resources;
+			path = "Limo Logix/Resources";
+			sourceTree = "<group>";
+		};
+		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7B9D34D8810948538CC3BEBB /* AudioToolbox.framework */,
+				57B5FDDAE3414B338E5C3017 /* TSBackgroundFetch.framework */,
+				ADC64225CC9C45F898811A8F /* libCocoaLumberjack.a */,
+				598C65411892425CA00B96D8 /* SystemConfiguration.framework */,
+				516984558CE8485DB46FA7A8 /* AVFoundation.framework */,
+				8FE2C2EFA6BC4096B4CB904E /* libsqlite3.dylib */,
+				D01E956C151F4EC08B71ACA4 /* TSLocationManager.framework */,
+				59310BCF5E964D838078AE2C /* FirebaseAnalytics.framework */,
+				376A715F2D3A41F3805E186D /* FirebaseInstanceID.framework */,
+				6C08A76058054914BF6EF7A7 /* FirebaseMessaging.framework */,
+				5D6131E79B154865B2044DE7 /* GoogleInterchangeUtilities.framework */,
+				29E10DABF01A44698EE45468 /* GoogleIPhoneUtilities.framework */,
+				19A0C5C3579E4CF5AC81DB36 /* GoogleSymbolUtilities.framework */,
+				D39C1B9534BB413D881DEE02 /* GoogleUtilities.framework */,
+				97B6BD13AE324C6BBB047510 /* libc++.tbd */,
+				9886B35A9D9F4B91840DA195 /* libz.tbd */,
+				4D2FC4C0DD80424C9E122B4A /* AddressBook.framework */,
+				5C1C2F9E3EFF4AD0B82620E0 /* libsqlite3.0.tbd */,
+				84DA1952ECD3471DBF6439B1 /* Security.framework */,
+				B3F70A1476784FE2B1DEAC98 /* CoreTelephony.framework */,
+				8E77E8CB9193402B9170E698 /* CoreLocation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		301BF52E109A57CC0062928A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				301BF535109A57CC0062928A /* libCordova.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		3047A50E1AB8057F00498E2A /* config */ = {
+			isa = PBXGroup;
+			children = (
+				3047A50F1AB8059700498E2A /* build-debug.xcconfig */,
+				3047A5101AB8059700498E2A /* build-release.xcconfig */,
+				3047A5111AB8059700498E2A /* build.xcconfig */,
+			);
+			name = config;
+			sourceTree = "<group>";
+		};
+		307C750510C5A3420062BCA9 /* Plugins */ = {
+			isa = PBXGroup;
+			children = (
+				053E3F059E1E4A598FC5BE18 /* NativeSettings.m */,
+				01A31E2C9CDF4A7AA354EFE4 /* NativeSettings.h */,
+				96C6D181010C41E3A50C9E30 /* CDVNotification.m */,
+				9C5626B4A2FA47E78B3C9E4A /* CDVNotification.h */,
+				C6C0C66FF62E4E139983AD00 /* CDVBackgroundFetch.m */,
+				30B766DCF6D0461983E30178 /* CDVBackgroundFetch.h */,
+				1FAB000930514C2D8B2A7426 /* CDVBackgroundGeolocation.m */,
+				9DA28DB3A1E94D2089EAE1FF /* CDVBackgroundGeolocation.h */,
+				52690E8B386249408177B8C0 /* CDVDevice.m */,
+				8F6431AF84B947D1AFD6D282 /* CDVDevice.h */,
+				37346A80D2E4446EA89B3B8E /* FCMPlugin.m */,
+				B992ACCE2B514619AAF85DB7 /* AppDelegate+FCMPlugin.m */,
+				8D327DF165A8424FB7CE82F9 /* FCMPlugin.h */,
+				91F567DB63A246B98E38DE57 /* AppDelegate+FCMPlugin.h */,
+				83450273A10F420FA8F15C18 /* Firebase.h */,
+				C5AA4F7DDA9C457DAE7DD572 /* CDVConnection.m */,
+				E87D130CE31F46C2A86DDC13 /* CDVReachability.m */,
+				BC366AFBD29A4D0CB29A9FC3 /* CDVConnection.h */,
+				ADFA8A78069041228EEDC869 /* CDVReachability.h */,
+				EBFA1E7D924D4DE492CF6E6C /* RequestLocationAccuracy.m */,
+				74A5148D9E3E4F8E871613F0 /* RequestLocationAccuracy.h */,
+			);
+			name = Plugins;
+			path = "Limo Logix/Plugins";
+			sourceTree = SOURCE_ROOT;
+		};
+		EB87FDF11871DA420020F90C /* Staging */ = {
+			isa = PBXGroup;
+			children = (
+				F840E1F0165FE0F500CFE078 /* config.xml */,
+				301BF56E109A69640062928A /* www */,
+			);
+			name = Staging;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		1D6058900D05DD3D006BFB54 /* Limo Logix */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "Limo Logix" */;
+			buildPhases = (
+				304B58A110DAC018002A0835 /* Copy www directory */,
+				1D60588D0D05DD3D006BFB54 /* Resources */,
+				1D60588E0D05DD3D006BFB54 /* Sources */,
+				1D60588F0D05DD3D006BFB54 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				301BF551109A68C00062928A /* PBXTargetDependency */,
+			);
+			name = "Limo Logix";
+			productName = "Limo Logix";
+			productReference = 1D6058910D05DD3D006BFB54 /* Limo Logix.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		29B97313FDCFA39411CA2CEA /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 510;
+			};
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "__NON-CLI__" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 1;
+			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 301BF52E109A57CC0062928A /* Products */;
+					ProjectRef = 301BF52D109A57CC0062928A /* CordovaLib.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				1D6058900D05DD3D006BFB54 /* Limo Logix */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		301BF535109A57CC0062928A /* libCordova.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libCordova.a;
+			remoteRef = 301BF534109A57CC0062928A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1D60588D0D05DD3D006BFB54 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				302D95F214D2391D003F00A1 /* MainViewController.xib in Resources */,
+				0207DA581B56EA530066E2B4 /* Images.xcassets in Resources */,
+				6AFF5BF91D6E424B00AB3073 /* CDVLaunchScreen.storyboard in Resources */,
+				B20D1250875A4D219CB3D879 /* CDVNotification.bundle in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		304B58A110DAC018002A0835 /* Copy www directory */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy www directory";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "NODEJS_PATH=/usr/local/bin; NVM_NODE_PATH=~/.nvm/versions/node/`nvm version 2>/dev/null`/bin; N_NODE_PATH=`find /usr/local/n/versions/node/* -maxdepth 0 -type d 2>/dev/null | tail -1`/bin; XCODE_NODE_PATH=`xcode-select --print-path`/usr/share/xcs/Node/bin; PATH=$NODEJS_PATH:$NVM_NODE_PATH:$N_NODE_PATH:$XCODE_NODE_PATH:$PATH && node cordova/lib/copy-www-build-step.js";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1D60588E0D05DD3D006BFB54 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
+				1D3623260D0F684500981E51 /* AppDelegate.m in Sources */,
+				302D95F114D2391D003F00A1 /* MainViewController.m in Sources */,
+				8647B5EAE57744A59D23BC6E /* NativeSettings.m in Sources */,
+				0134C8AEAD7B41ED98FF5ED1 /* CDVNotification.m in Sources */,
+				79C10A9E5BCD4F6097C7716C /* CDVBackgroundFetch.m in Sources */,
+				403C36110BA64530AC767447 /* CDVBackgroundGeolocation.m in Sources */,
+				8A892D70BB4649039716737B /* CDVDevice.m in Sources */,
+				5F5D5E125BA348579CE3C5D6 /* FCMPlugin.m in Sources */,
+				9E38BFD3545C4E0CB567F448 /* AppDelegate+FCMPlugin.m in Sources */,
+				13F88232F00842D1B9557407 /* CDVConnection.m in Sources */,
+				4A19C2ED21964311A9D454C3 /* CDVReachability.m in Sources */,
+				E646820C24B24AE2965304D2 /* RequestLocationAccuracy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		301BF551109A68C00062928A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = CordovaLib;
+			targetProxy = 301BF550109A68C00062928A /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		1D6058940D05DD3E006BFB54 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3047A50F1AB8059700498E2A /* build-debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Limo Logix/Limo Logix-Prefix.pch";
+				GCC_THUMB_SUPPORT = NO;
+				GCC_VERSION = "";
+				INFOPLIST_FILE = "Limo Logix/Limo Logix-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				PRODUCT_NAME = "Limo Logix";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"Limo Logix/Plugins/cordova-plugin-background-fetch\"",
+					"\"Limo Logix/Plugins/com.transistorsoft.cordova.background-geolocation\"",
+					"\"Limo Logix/Plugins/cordova-plugin-fcm\"",
+					"\"Limo Logix/Plugins/cordova-plugin-fcm\"",
+					"\"Limo Logix/Plugins/cordova-plugin-fcm\"",
+					"\"Limo Logix/Plugins/cordova-plugin-fcm\"",
+					"\"Limo Logix/Plugins/cordova-plugin-fcm\"",
+					"\"Limo Logix/Plugins/cordova-plugin-fcm\"",
+					"\"Limo Logix/Plugins/cordova-plugin-fcm\"",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Limo Logix/Plugins/cordova-plugin-cocoalumberjack\"",
+				);
+			};
+			name = Debug;
+		};
+		1D6058950D05DD3E006BFB54 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3047A5101AB8059700498E2A /* build-release.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Limo Logix/Limo Logix-Prefix.pch";
+				GCC_THUMB_SUPPORT = NO;
+				GCC_VERSION = "";
+				INFOPLIST_FILE = "Limo Logix/Limo Logix-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				PRODUCT_NAME = "Limo Logix";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"Limo Logix/Plugins/cordova-plugin-background-fetch\"",
+					"\"Limo Logix/Plugins/com.transistorsoft.cordova.background-geolocation\"",
+					"\"Limo Logix/Plugins/cordova-plugin-fcm\"",
+					"\"Limo Logix/Plugins/cordova-plugin-fcm\"",
+					"\"Limo Logix/Plugins/cordova-plugin-fcm\"",
+					"\"Limo Logix/Plugins/cordova-plugin-fcm\"",
+					"\"Limo Logix/Plugins/cordova-plugin-fcm\"",
+					"\"Limo Logix/Plugins/cordova-plugin-fcm\"",
+					"\"Limo Logix/Plugins/cordova-plugin-fcm\"",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Limo Logix/Plugins/cordova-plugin-cocoalumberjack\"",
+				);
+			};
+			name = Release;
+		};
+		C01FCF4F08A954540054247B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3047A5111AB8059700498E2A /* build.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_THUMB_SUPPORT = NO;
+				GCC_VERSION = "";
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = NO;
+			};
+			name = Debug;
+		};
+		C01FCF5008A954540054247B /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3047A5111AB8059700498E2A /* build.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_THUMB_SUPPORT = NO;
+				GCC_VERSION = "";
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = NO;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "Limo Logix" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1D6058940D05DD3E006BFB54 /* Debug */,
+				1D6058950D05DD3E006BFB54 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "__NON-CLI__" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01FCF4F08A954540054247B /* Debug */,
+				C01FCF5008A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 29B97313FDCFA39411CA2CEA /* Project object */;
+}
