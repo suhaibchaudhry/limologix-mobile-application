@@ -222,7 +222,7 @@
 		</data>
 		<key>CDVLaunchScreen.storyboardc/01J-lp-oVM-view-Ze5-6b-2t3.nib</key>
 		<data>
-		X231F/rE+2jhWts4C8rhHojQ2oI=
+		R16BUuOwSPMH2GUGhb+pgjzH3wY=
 		</data>
 		<key>CDVLaunchScreen.storyboardc/Info.plist</key>
 		<data>
@@ -230,7 +230,7 @@
 		</data>
 		<key>CDVLaunchScreen.storyboardc/UIViewController-01J-lp-oVM.nib</key>
 		<data>
-		VX8ctknqy+Pzxr5mSfDErV3dN34=
+		tE+986LEcoh3FQwAsZN8VS4QYSA=
 		</data>
 		<key>CDVNotification.bundle/beep.wav</key>
 		<data>
@@ -242,7 +242,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		CTDtWSVjXMqqZYuiYe09EeCLSi4=
+		l+2okxlH+S9c7KamhCgc1sm4pjM=
 		</data>
 		<key>LaunchImage-700-568h@2x.png</key>
 		<data>
@@ -262,7 +262,7 @@
 		</data>
 		<key>MainViewController.nib</key>
 		<data>
-		nfukoODE3X8iViqcWo64JbX2+NM=
+		q2VmPxdJR9O8/w2S2rTuGxidGE4=
 		</data>
 		<key>PkgInfo</key>
 		<data>
@@ -274,7 +274,7 @@
 		</data>
 		<key>config.xml</key>
 		<data>
-		GbhsqPAJAI+ERr7xwwsUedad7Cs=
+		SK5atA5LC3kmmDIMTeO4ZkJ7B+M=
 		</data>
 		<key>embedded.mobileprovision</key>
 		<data>
@@ -460,21 +460,21 @@
 		<data>
 		dhHlRUm33dh1etAi7Zi0WYcGlfU=
 		</data>
-		<key>www/images/driver/bird-logo.978a91f0.png</key>
+		<key>www/images/driver/bird-logo.4bbedd5f.png</key>
 		<data>
-		cecZdvu3y7/M5npQE+ato3cjFtg=
+		ao2VsMVmNcvmzcioQZOWwx2Ua3s=
 		</data>
-		<key>www/images/driver/bird-new-driver-logo.4e5c521b.png</key>
+		<key>www/images/driver/bird-new-driver-logo.9ba95e27.png</key>
 		<data>
-		8pQyFOYReTP8iOU8VyHR+vDf8PE=
+		O6yCeo3nRu62S6PrML8sRn7Tx9I=
 		</data>
 		<key>www/images/driver/gps-icon.3919872e.png</key>
 		<data>
 		TyaPUYB11RA3kwi0HWDvMk/hXto=
 		</data>
-		<key>www/images/driver/header_logo-old.3242d105.png</key>
+		<key>www/images/driver/header_logo-old.042144c3.png</key>
 		<data>
-		8lcw80QQXs1ogCH+iW+qAy+NpXA=
+		eYJISQ2xqcQTcDa4BU3BQatx8DQ=
 		</data>
 		<key>www/images/driver/header_logo.0c1066f4.png</key>
 		<data>
@@ -488,9 +488,9 @@
 		<data>
 		ijIhpNWfhTmSQ2nYPuHLYQjM23k=
 		</data>
-		<key>www/images/driver/logo-1.100941b5.png</key>
+		<key>www/images/driver/logo-1.78e7b237.png</key>
 		<data>
-		AdhWCNuA0lWA5xfIvIw2nZ0yZ0Y=
+		//I0GNW5Eb+z+zjX6OveO3f4AZM=
 		</data>
 		<key>www/images/driver/logo.e90f15aa.png</key>
 		<data>
@@ -516,9 +516,9 @@
 		<data>
 		b698wLR6hWaKuoQZsqN7AjaeHDs=
 		</data>
-		<key>www/images/driver/nav-icon.13b0cd7f.png</key>
+		<key>www/images/driver/nav-icon.1a509916.png</key>
 		<data>
-		7vpZYWTx45QvvYpL/5otmt3El+s=
+		EVsjDglvx74N2YhBDjMbGQOF0aU=
 		</data>
 		<key>www/images/driver/popup.68e646a6.png</key>
 		<data>
@@ -528,17 +528,17 @@
 		<data>
 		7jD9qnHYgAhD+KuMXQDfGWFGoz0=
 		</data>
-		<key>www/images/driver/splashscreen.04a501b1.png</key>
+		<key>www/images/driver/splashscreen.46715752.png</key>
 		<data>
-		h5AIcPkTjS8/Nw0v2HdKB2ymtEY=
+		clLo5dm3z+VC93UyH+IVRU2HigU=
 		</data>
-		<key>www/images/driver/toggle-active.75399f57.png</key>
+		<key>www/images/driver/toggle-active.6675cd1b.png</key>
 		<data>
-		vW9GKVrjzSeASvArZ0Nxis0gqzM=
+		EPX3rHSgIqgDeDi1cn/amG7CF5s=
 		</data>
-		<key>www/images/driver/toggle-inactive.3159b15b.png</key>
+		<key>www/images/driver/toggle-inactive.71b47472.png</key>
 		<data>
-		Y1r3vqrLxa8avfZ5Rp8MeD6jkvs=
+		ISrbjDVSyf3/PWyWnb0QYnP6JE8=
 		</data>
 		<key>www/images/flags/Afghanistan.93ccdf57.png</key>
 		<data>
@@ -612,9 +612,9 @@
 		<data>
 		S+9+pIk1TrozPg6w0wB37GeY85s=
 		</data>
-		<key>www/images/flags/Bhutan.8b4d4401.png</key>
+		<key>www/images/flags/Bhutan.ce722bf0.png</key>
 		<data>
-		55BE1YSzgIneEEeSUbrkCdkxST4=
+		KAXc4Nv9P73fqZZxLfB6DSSA+Rc=
 		</data>
 		<key>www/images/flags/Bolivia.067aca36.png</key>
 		<data>
@@ -632,9 +632,9 @@
 		<data>
 		WIJBunnYI85UQ+txMTAK6qaoG6w=
 		</data>
-		<key>www/images/flags/Brunei.285965cc.png</key>
+		<key>www/images/flags/Brunei.d6b1766d.png</key>
 		<data>
-		inKeBJpPGnFkCWS0TfjSBvuGBmc=
+		rw+ouwci1wNfHJAWirJgVeuUNDs=
 		</data>
 		<key>www/images/flags/Bulgaria.5a3b9e74.png</key>
 		<data>
@@ -820,9 +820,9 @@
 		<data>
 		asECfqYss/mMiebpaAo2+8//dMo=
 		</data>
-		<key>www/images/flags/Guyana.b4ee85fa.png</key>
+		<key>www/images/flags/Guyana.5b9783b6.png</key>
 		<data>
-		sQd3DRtkROhEWOlyHFJuSSCWjpE=
+		D07Jf5VpuDTnOvGMbJDMNpmp9dU=
 		</data>
 		<key>www/images/flags/Haiti.8327734c.png</key>
 		<data>
@@ -896,9 +896,9 @@
 		<data>
 		krFWdeLePxjDBSvVcjlRZpg1M4Q=
 		</data>
-		<key>www/images/flags/Korea,-South.2b9378a4.png</key>
+		<key>www/images/flags/Korea,-South.7857adf7.png</key>
 		<data>
-		X7WIcgJpslw9CHWFMbrm/KrKzRA=
+		XfzFG7indoWqYLj2byeNA4KEu1k=
 		</data>
 		<key>www/images/flags/Kosovo.cf5f61e5.png</key>
 		<data>
@@ -976,9 +976,9 @@
 		<data>
 		IE2SUCk/q3bbo4WN2LSRpc3OXAA=
 		</data>
-		<key>www/images/flags/Marshall-Islands.9c8b3184.png</key>
+		<key>www/images/flags/Marshall-Islands.9cb1b7fd.png</key>
 		<data>
-		SbfzQ9Ml9AnbTNV15oixyS5DLlE=
+		e07nwv6Pp/WilN3B8voEsZ4RF20=
 		</data>
 		<key>www/images/flags/Mauritania.d53bbfc7.png</key>
 		<data>
@@ -1116,9 +1116,9 @@
 		<data>
 		7NQUAgBRfAxDOi7A3Fyf+sl0MMM=
 		</data>
-		<key>www/images/flags/Saint-Kitts-and-Nevis.baf19071.png</key>
+		<key>www/images/flags/Saint-Kitts-and-Nevis.e649c8fe.png</key>
 		<data>
-		v69BZf/W4DqTsaCKgFtbw26LLyc=
+		PNkUsFjPXCzOApvi+uPDh7tVDSc=
 		</data>
 		<key>www/images/flags/Saint-Lucia.5286a3a2.png</key>
 		<data>
@@ -1152,9 +1152,9 @@
 		<data>
 		xZxbJZcoTQxuEY55Xa4u8G4F0EQ=
 		</data>
-		<key>www/images/flags/Seychelles.4cdaca0c.png</key>
+		<key>www/images/flags/Seychelles.31e8c2c6.png</key>
 		<data>
-		uxElnA2dORHcOTWDBM7tqVE201U=
+		+mExMIgBamqkmMxxWr+LIpREJYM=
 		</data>
 		<key>www/images/flags/Sierra-Leone.7c4c9fd0.png</key>
 		<data>
@@ -1276,9 +1276,9 @@
 		<data>
 		cgVHXenRFxWNa0PvDlRttHDxf/I=
 		</data>
-		<key>www/images/flags/United-Kingdom.2f422cdc.png</key>
+		<key>www/images/flags/United-Kingdom.773e9077.png</key>
 		<data>
-		gddfmmlM6N4z+ONDRz/JWMcvkFk=
+		wmhiCXw2U7+HKiJyjZsGJxhZfnI=
 		</data>
 		<key>www/images/flags/United-States-of-America.42ddfa1a.png</key>
 		<data>
@@ -1392,13 +1392,13 @@
 		<data>
 		xnKvFhw83Ob4lTXy5s1njHhM5fo=
 		</data>
-		<key>www/images/yeoman.7c695219.png</key>
+		<key>www/images/yeoman.124cbfa8.png</key>
 		<data>
-		ai8GorzB1cRGWTt9gozE4j1RgvM=
+		u2Vj+xJ8keRUD6urz1JyqZ/kFEQ=
 		</data>
 		<key>www/index.html</key>
 		<data>
-		tl/YVsB7qNeqympavtKWIATHeV0=
+		T8fL/T430D9MPMxH80O+/KTKtIk=
 		</data>
 		<key>www/languages/cz.json</key>
 		<data>
@@ -1576,9 +1576,9 @@
 		<data>
 		OrBXaL2Qg0evJ235dhdXG1+VDCg=
 		</data>
-		<key>www/scripts/app.b01ba447.js</key>
+		<key>www/scripts/app.3c17603b.js</key>
 		<data>
-		aCnjTB3Uqy9n4fyrQv7Agd2U5U0=
+		N+bzaCLNulFReiCMydmDSN4i0p8=
 		</data>
 		<key>www/scripts/jsons/chats.json</key>
 		<data>
@@ -1624,13 +1624,13 @@
 		<data>
 		NyXGqpKf17IRCk93zTlYFY+i0kQ=
 		</data>
-		<key>www/scripts/oldieshim.422ace3f.js</key>
+		<key>www/scripts/oldieshim.ad32d64c.js</key>
 		<data>
-		V+oLC9U+28T4pJIOKiEgU3CO6II=
+		LZSx7wU3FttUKsJBbF7OK8g0Uro=
 		</data>
-		<key>www/scripts/vendor.9854f09d.js</key>
+		<key>www/scripts/vendor.3d00e124.js</key>
 		<data>
-		SzN0Jsq+5Ah0IrqaiNPQHAvHJoI=
+		iHT9Jnepk/LuuUPJiGLgK8QE68k=
 		</data>
 		<key>www/scripts/vendor/datatables/ColReorder/Readme.txt</key>
 		<data>
@@ -3066,7 +3066,7 @@
 		</data>
 		<key>www/styles/main.8d068488.css</key>
 		<data>
-		geS8/21sBd0rHweBsjmUUrVaugo=
+		e82PqEQGCo1aogqSBzT5ys/gPtc=
 		</data>
 		<key>www/styles/vendor.b6dc3ee5.css</key>
 		<data>
@@ -3370,7 +3370,7 @@
 		</data>
 		<key>www/views/tmpl/profile/availability.html</key>
 		<data>
-		uw/3TxiVD6Mn5IzZC1iD7PUh3G0=
+		SF22AXLzETX8KDjiO1vMChfa1C4=
 		</data>
 		<key>www/views/tmpl/profile/forgot_password.html</key>
 		<data>
@@ -3418,11 +3418,11 @@
 		</data>
 		<key>www/views/tmpl/signup/signup-old.html</key>
 		<data>
-		JTgoujy5vFUxVWC3ajMJFKcw5uQ=
+		ezhRM9/4+i1w13NIFI6cpbMobXQ=
 		</data>
 		<key>www/views/tmpl/signup/signup.html</key>
 		<data>
-		CBAyiVBY7yBLfAFQgSaerBJeIuY=
+		I4b6hs64WTK5wsYeKgc6H5Fqixk=
 		</data>
 		<key>www/views/tmpl/splash/splash.html</key>
 		<data>
@@ -4062,11 +4062,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			X231F/rE+2jhWts4C8rhHojQ2oI=
+			R16BUuOwSPMH2GUGhb+pgjzH3wY=
 			</data>
 			<key>hash2</key>
 			<data>
-			NzlbpYydJLrEJ+LmKulOicXh6Du/myqCblxGW2w5xYY=
+			7htLRFYZL28S0B/wGFmPpB0MfnQ6bsPU2owlE747E+w=
 			</data>
 		</dict>
 		<key>CDVLaunchScreen.storyboardc/Info.plist</key>
@@ -4084,11 +4084,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			VX8ctknqy+Pzxr5mSfDErV3dN34=
+			tE+986LEcoh3FQwAsZN8VS4QYSA=
 			</data>
 			<key>hash2</key>
 			<data>
-			JIc/pmSgEOAN9CVnyCskIzAbK7xFXLEwq4CK6nhIg4E=
+			U94KQBwye6B1Ct4KMn1lJie9UGpa6UQiGt+KN/kbpLA=
 			</data>
 		</dict>
 		<key>CDVNotification.bundle/beep.wav</key>
@@ -4161,11 +4161,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			nfukoODE3X8iViqcWo64JbX2+NM=
+			q2VmPxdJR9O8/w2S2rTuGxidGE4=
 			</data>
 			<key>hash2</key>
 			<data>
-			V7px9P4NMLMVw9lAWsTt2t96CbrBqBNcE9VoxZW/utU=
+			C4GIBMxHvTctxAiGhriFLgAPKs7WZn1CoGM8YPVRanM=
 			</data>
 		</dict>
 		<key>archived-expanded-entitlements.xcent</key>
@@ -4183,11 +4183,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			GbhsqPAJAI+ERr7xwwsUedad7Cs=
+			SK5atA5LC3kmmDIMTeO4ZkJ7B+M=
 			</data>
 			<key>hash2</key>
 			<data>
-			HIFQvE4SdmizO4GNJQXQQHdbRTqUDGRtwVpZUYsBaF4=
+			Qs2ndnI+isMNwgIQQr78HNAgrEBzW96yLGWim6soBDM=
 			</data>
 		</dict>
 		<key>embedded.mobileprovision</key>
@@ -4696,26 +4696,26 @@
 			sz5G+smRVnpY8BumPnhFPL1mkqCvxUeUIfrhH/W5+HQ=
 			</data>
 		</dict>
-		<key>www/images/driver/bird-logo.978a91f0.png</key>
+		<key>www/images/driver/bird-logo.4bbedd5f.png</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			cecZdvu3y7/M5npQE+ato3cjFtg=
+			ao2VsMVmNcvmzcioQZOWwx2Ua3s=
 			</data>
 			<key>hash2</key>
 			<data>
-			YV96SkkhgCm5Wlo0UE8i0QNAdt9xrHHnKlT8tajrx9U=
+			Q0qQMByRfuHqz8sZrC2yi5h4rLjwZo9fS4ajOR9v4FQ=
 			</data>
 		</dict>
-		<key>www/images/driver/bird-new-driver-logo.4e5c521b.png</key>
+		<key>www/images/driver/bird-new-driver-logo.9ba95e27.png</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			8pQyFOYReTP8iOU8VyHR+vDf8PE=
+			O6yCeo3nRu62S6PrML8sRn7Tx9I=
 			</data>
 			<key>hash2</key>
 			<data>
-			rsnJn6t43lKAETptHwrLvvdF/ZSkwDwqS/US18MrRSA=
+			H4JcpGqsVQ70WT5zlYEd7rSigLTqBdqwcYzC6f+nTUA=
 			</data>
 		</dict>
 		<key>www/images/driver/gps-icon.3919872e.png</key>
@@ -4729,15 +4729,15 @@
 			wMGTtSVr4gLuEOh2qdVVuoGq+8thDRLfNwzir5uCOLg=
 			</data>
 		</dict>
-		<key>www/images/driver/header_logo-old.3242d105.png</key>
+		<key>www/images/driver/header_logo-old.042144c3.png</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			8lcw80QQXs1ogCH+iW+qAy+NpXA=
+			eYJISQ2xqcQTcDa4BU3BQatx8DQ=
 			</data>
 			<key>hash2</key>
 			<data>
-			9gnpcWtiPG8EXbmqvklyXIeA7KrktV63aVkZiJUGO0g=
+			sQQ3hAuaY+Bju5xBrtIbuqbgo9BDNXpXKp1/fgMsI6o=
 			</data>
 		</dict>
 		<key>www/images/driver/header_logo.0c1066f4.png</key>
@@ -4773,15 +4773,15 @@
 			EsghfGEJ2DvFXkZosdRYDcfBKC9ZmZeYC4PfCVQrWAQ=
 			</data>
 		</dict>
-		<key>www/images/driver/logo-1.100941b5.png</key>
+		<key>www/images/driver/logo-1.78e7b237.png</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			AdhWCNuA0lWA5xfIvIw2nZ0yZ0Y=
+			//I0GNW5Eb+z+zjX6OveO3f4AZM=
 			</data>
 			<key>hash2</key>
 			<data>
-			B1CGx5RZImxA2fwLGo0hKJ0QJQTiwdeHcCeeND+CRmU=
+			VVIIbyxLA7Zlrnm+vq3ukwws/64mKK0KW9X4/I85m4I=
 			</data>
 		</dict>
 		<key>www/images/driver/logo.e90f15aa.png</key>
@@ -4850,15 +4850,15 @@
 			IMMAcoQc+fvkOYQ8vX+vO4+qa7Tqah5vFLg6UeSl4Bk=
 			</data>
 		</dict>
-		<key>www/images/driver/nav-icon.13b0cd7f.png</key>
+		<key>www/images/driver/nav-icon.1a509916.png</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			7vpZYWTx45QvvYpL/5otmt3El+s=
+			EVsjDglvx74N2YhBDjMbGQOF0aU=
 			</data>
 			<key>hash2</key>
 			<data>
-			nSXLCWeoWodpAw5PADgGHTKvyMQoXd5cLBPc50Fs63k=
+			UMjEk7FAifRRqscmb49AQBQCUcI9AHAAjxeGm2L2rYM=
 			</data>
 		</dict>
 		<key>www/images/driver/popup.68e646a6.png</key>
@@ -4883,37 +4883,37 @@
 			DT9KsdDpSyy6WloYOiOTO3WaOJyyK1TIPaOonBC7AMs=
 			</data>
 		</dict>
-		<key>www/images/driver/splashscreen.04a501b1.png</key>
+		<key>www/images/driver/splashscreen.46715752.png</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			h5AIcPkTjS8/Nw0v2HdKB2ymtEY=
+			clLo5dm3z+VC93UyH+IVRU2HigU=
 			</data>
 			<key>hash2</key>
 			<data>
-			0YY3VHMyZAYxHGgSqkVd2xzkmYrRk9IRWbRJtkSLmwo=
+			sj9rPjwYtCQ1vQ2qYTS27onL/72Tqfn9VwN0wqRXKQM=
 			</data>
 		</dict>
-		<key>www/images/driver/toggle-active.75399f57.png</key>
+		<key>www/images/driver/toggle-active.6675cd1b.png</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			vW9GKVrjzSeASvArZ0Nxis0gqzM=
+			EPX3rHSgIqgDeDi1cn/amG7CF5s=
 			</data>
 			<key>hash2</key>
 			<data>
-			tzvrk6fS3rCZIPg/rISlgA0pR1TAUy5AA0xjMw/aNPk=
+			q7u4EbfnrWIDc+5W0ru4CiGrqX6/+bwKZdmY6NrW/+I=
 			</data>
 		</dict>
-		<key>www/images/driver/toggle-inactive.3159b15b.png</key>
+		<key>www/images/driver/toggle-inactive.71b47472.png</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			Y1r3vqrLxa8avfZ5Rp8MeD6jkvs=
+			ISrbjDVSyf3/PWyWnb0QYnP6JE8=
 			</data>
 			<key>hash2</key>
 			<data>
-			qP3wBidMOoxFb+tJDG/RiF1dSZ1lZnhqHfWU34vzWnc=
+			t2SkmLdjNnnQNbPMs0OYonADVGzvSE0iEQM9lScETyA=
 			</data>
 		</dict>
 		<key>www/images/flags/Afghanistan.93ccdf57.png</key>
@@ -5114,15 +5114,15 @@
 			mts/3ywYYZGyMmzuvig+hkz21xwI7XfEe0RGOuSBIlY=
 			</data>
 		</dict>
-		<key>www/images/flags/Bhutan.8b4d4401.png</key>
+		<key>www/images/flags/Bhutan.ce722bf0.png</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			55BE1YSzgIneEEeSUbrkCdkxST4=
+			KAXc4Nv9P73fqZZxLfB6DSSA+Rc=
 			</data>
 			<key>hash2</key>
 			<data>
-			6uJUUJ6/8UrcTEtiE/rEFtIBAxIUVATtOCDlsFfEPJk=
+			OO6dcIoLj0zRNsWQFXBzF0XMqLBcaJVCfw1IcgLROdw=
 			</data>
 		</dict>
 		<key>www/images/flags/Bolivia.067aca36.png</key>
@@ -5169,15 +5169,15 @@
 			PqkjpdcPE+eDcvPc/NEXXOFPXpjohUDMZUhTWDo35pU=
 			</data>
 		</dict>
-		<key>www/images/flags/Brunei.285965cc.png</key>
+		<key>www/images/flags/Brunei.d6b1766d.png</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			inKeBJpPGnFkCWS0TfjSBvuGBmc=
+			rw+ouwci1wNfHJAWirJgVeuUNDs=
 			</data>
 			<key>hash2</key>
 			<data>
-			eaF9F5Q2MU9GQfB+x65ta/3UMVaaYwgaX0H/haxJ9Fc=
+			C25kda4a4O4SkuxvkEFiJ6lp5/F8OVFvAUsQ8jXIKV8=
 			</data>
 		</dict>
 		<key>www/images/flags/Bulgaria.5a3b9e74.png</key>
@@ -5686,15 +5686,15 @@
 			C1gtOW/dX1DE4z21CtsVaRLcZlnTP7rqvpC+NhX3Rmk=
 			</data>
 		</dict>
-		<key>www/images/flags/Guyana.b4ee85fa.png</key>
+		<key>www/images/flags/Guyana.5b9783b6.png</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			sQd3DRtkROhEWOlyHFJuSSCWjpE=
+			D07Jf5VpuDTnOvGMbJDMNpmp9dU=
 			</data>
 			<key>hash2</key>
 			<data>
-			Y2cg5oKQWd5BZiMF5Tj+LaSh4hPi1Yi0z8dtpquP9OU=
+			360e6BF2roy7l/vEuF0Te4L+R+Ak658vlLq20IedwHw=
 			</data>
 		</dict>
 		<key>www/images/flags/Haiti.8327734c.png</key>
@@ -5895,15 +5895,15 @@
 			Ob/YJSnWwbOtXxbFzahzMv2Skco6cIhIimsoLlA16MQ=
 			</data>
 		</dict>
-		<key>www/images/flags/Korea,-South.2b9378a4.png</key>
+		<key>www/images/flags/Korea,-South.7857adf7.png</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			X7WIcgJpslw9CHWFMbrm/KrKzRA=
+			XfzFG7indoWqYLj2byeNA4KEu1k=
 			</data>
 			<key>hash2</key>
 			<data>
-			TWZhcPK6WpKeaacZP7epQDEhsW04y0OVZi0C+Ue7Vp0=
+			coo4staU5d8RjKMQXLGJuJYfj0Et/szIvpxXb74KozY=
 			</data>
 		</dict>
 		<key>www/images/flags/Kosovo.cf5f61e5.png</key>
@@ -6115,15 +6115,15 @@
 			3qntpz6oK+rClNj21YPN20Jpt2fPIvwgKe4/QtOP5SI=
 			</data>
 		</dict>
-		<key>www/images/flags/Marshall-Islands.9c8b3184.png</key>
+		<key>www/images/flags/Marshall-Islands.9cb1b7fd.png</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			SbfzQ9Ml9AnbTNV15oixyS5DLlE=
+			e07nwv6Pp/WilN3B8voEsZ4RF20=
 			</data>
 			<key>hash2</key>
 			<data>
-			5EPGUoouSkZb/Mwh1v3xMlY4MpS70YTM+s/dJ0DFweA=
+			ZlvQWfmMaykLcFE+pSn6U4oVZgW3qzZBAo/ClYuByMM=
 			</data>
 		</dict>
 		<key>www/images/flags/Mauritania.d53bbfc7.png</key>
@@ -6500,15 +6500,15 @@
 			VI8BLDh0X+4cGtwFpDvc0jKlxLXIti5GmjCpJrJWfBM=
 			</data>
 		</dict>
-		<key>www/images/flags/Saint-Kitts-and-Nevis.baf19071.png</key>
+		<key>www/images/flags/Saint-Kitts-and-Nevis.e649c8fe.png</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			v69BZf/W4DqTsaCKgFtbw26LLyc=
+			PNkUsFjPXCzOApvi+uPDh7tVDSc=
 			</data>
 			<key>hash2</key>
 			<data>
-			Xm4ikl66zvsZhd53NT+EcNVhyUJiKSwyB5KbVrXdlEo=
+			ZRGUFh5NSMyk47ITv9zswpUU4sk5qUQgdrK0IqlLWcs=
 			</data>
 		</dict>
 		<key>www/images/flags/Saint-Lucia.5286a3a2.png</key>
@@ -6599,15 +6599,15 @@
 			fBupucRfhaoaQGWWDxUHQ5GowWgUsUSXWYSm5mn9fX4=
 			</data>
 		</dict>
-		<key>www/images/flags/Seychelles.4cdaca0c.png</key>
+		<key>www/images/flags/Seychelles.31e8c2c6.png</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			uxElnA2dORHcOTWDBM7tqVE201U=
+			+mExMIgBamqkmMxxWr+LIpREJYM=
 			</data>
 			<key>hash2</key>
 			<data>
-			Og1d6uakRd7JIWthExeb0UmmWdBSRZcFBnzVBSZc6LQ=
+			dO/KxKEwv1FbL6PWYb/EqYNw+Pzx7XdwyHtKIPVzd8E=
 			</data>
 		</dict>
 		<key>www/images/flags/Sierra-Leone.7c4c9fd0.png</key>
@@ -6940,15 +6940,15 @@
 			YQQYA190yVdp9qPOQpnBmdHWYbuvX0KDzYLrIIGO90Q=
 			</data>
 		</dict>
-		<key>www/images/flags/United-Kingdom.2f422cdc.png</key>
+		<key>www/images/flags/United-Kingdom.773e9077.png</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			gddfmmlM6N4z+ONDRz/JWMcvkFk=
+			wmhiCXw2U7+HKiJyjZsGJxhZfnI=
 			</data>
 			<key>hash2</key>
 			<data>
-			rHdCISQIQrlw3JvBwF2p7/E2YtCZlmZAhiliuYWQCGw=
+			yk7vneBx4d3giexGTFEmtBDQWoRXU/vql7uWVUSLxc0=
 			</data>
 		</dict>
 		<key>www/images/flags/United-States-of-America.42ddfa1a.png</key>
@@ -7259,26 +7259,26 @@
 			5edp2s7qj0K9ZwBB//AEwDQ4K36PHL3e5QSEJsrn4aQ=
 			</data>
 		</dict>
-		<key>www/images/yeoman.7c695219.png</key>
+		<key>www/images/yeoman.124cbfa8.png</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			ai8GorzB1cRGWTt9gozE4j1RgvM=
+			u2Vj+xJ8keRUD6urz1JyqZ/kFEQ=
 			</data>
 			<key>hash2</key>
 			<data>
-			TGh2EALKjZ3WDTiTqXrzIhT+HJhQpWR04lM8HNbzIek=
+			5aTAg6BFrsYDwciAaOio20LXmlkhE6PDkZUzZXbUxl0=
 			</data>
 		</dict>
 		<key>www/index.html</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			tl/YVsB7qNeqympavtKWIATHeV0=
+			T8fL/T430D9MPMxH80O+/KTKtIk=
 			</data>
 			<key>hash2</key>
 			<data>
-			BfqocOKClW8rGgYW1/s4p07Yj7D32vE3QHr7ZO4Ugkc=
+			nUk6WZ2t+UOmh6iv4UwaY8SARO0bu4CfIwsGide07tg=
 			</data>
 		</dict>
 		<key>www/languages/cz.json</key>
@@ -7765,15 +7765,15 @@
 			PDZnqIzKCJ9O1LrF7WGfWaM73a1eJGobbhAyqOtGC8U=
 			</data>
 		</dict>
-		<key>www/scripts/app.b01ba447.js</key>
+		<key>www/scripts/app.3c17603b.js</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			aCnjTB3Uqy9n4fyrQv7Agd2U5U0=
+			N+bzaCLNulFReiCMydmDSN4i0p8=
 			</data>
 			<key>hash2</key>
 			<data>
-			YVqdzBJWHC1F0tN0wmtaqctBjaC13XG6w+Np9bT52us=
+			MVFiYPUP0Lhejy7g4VlekTQQpmoE3lOMvYT9y1doNKY=
 			</data>
 		</dict>
 		<key>www/scripts/jsons/chats.json</key>
@@ -7897,26 +7897,26 @@
 			7eo+j9kdT9G8TUFdbU+DeYsAWtrkrSoeNfaEqEM9Pkg=
 			</data>
 		</dict>
-		<key>www/scripts/oldieshim.422ace3f.js</key>
+		<key>www/scripts/oldieshim.ad32d64c.js</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			V+oLC9U+28T4pJIOKiEgU3CO6II=
+			LZSx7wU3FttUKsJBbF7OK8g0Uro=
 			</data>
 			<key>hash2</key>
 			<data>
-			xphARHuWDx7MCUINQzXyURG62LZNjx7sJDUhurM83Ps=
+			lIjUXoWS5Vs15ZVXfu04Zmew/LsKBZcW6WD3TUUaC58=
 			</data>
 		</dict>
-		<key>www/scripts/vendor.9854f09d.js</key>
+		<key>www/scripts/vendor.3d00e124.js</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			SzN0Jsq+5Ah0IrqaiNPQHAvHJoI=
+			iHT9Jnepk/LuuUPJiGLgK8QE68k=
 			</data>
 			<key>hash2</key>
 			<data>
-			kkW4c4DTP4vb7I3VZtdHF36DHbbgPxu4tQMu8Tu59/4=
+			RXFG89pzpeBqrZbGTau1G9qmSJUvFH3ng15Suyv4b/Q=
 			</data>
 		</dict>
 		<key>www/scripts/vendor/datatables/ColReorder/Readme.txt</key>
@@ -11861,11 +11861,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			geS8/21sBd0rHweBsjmUUrVaugo=
+			e82PqEQGCo1aogqSBzT5ys/gPtc=
 			</data>
 			<key>hash2</key>
 			<data>
-			sWVJpYe7OHqDcK9MjaFl/JgYXd2XHSZvu59gWRfXuQM=
+			vahdLT7vEd79gfKV0dmAsDvNQgsPENgvcypNB75XPx4=
 			</data>
 		</dict>
 		<key>www/styles/vendor.b6dc3ee5.css</key>
@@ -12697,11 +12697,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			uw/3TxiVD6Mn5IzZC1iD7PUh3G0=
+			SF22AXLzETX8KDjiO1vMChfa1C4=
 			</data>
 			<key>hash2</key>
 			<data>
-			b6LSMOa5LxEKOLim5YMQHW+3eX2TbbnPlwqwFdWwvY0=
+			aC4aupuD0e9oA7QssyCuKqINZkOCv3nXD5rPV+6UX5g=
 			</data>
 		</dict>
 		<key>www/views/tmpl/profile/forgot_password.html</key>
@@ -12829,22 +12829,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			JTgoujy5vFUxVWC3ajMJFKcw5uQ=
+			ezhRM9/4+i1w13NIFI6cpbMobXQ=
 			</data>
 			<key>hash2</key>
 			<data>
-			pG/DjyURMCclKeB51JRG1NgYspq6qnjxVqYreD5d9OU=
+			y6SZqH03rYsBlQ6Trki0Va1XlHMWW1blSzSTEd+qjG0=
 			</data>
 		</dict>
 		<key>www/views/tmpl/signup/signup.html</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			CBAyiVBY7yBLfAFQgSaerBJeIuY=
+			I4b6hs64WTK5wsYeKgc6H5Fqixk=
 			</data>
 			<key>hash2</key>
 			<data>
-			wliMF/ls9bGoD2gj386De6teJGyzL1XcYI9jIghA2DY=
+			PZYs+lNFij4jAzslUJ+kB1DbZ1xuFjxpLQh7o5naCkk=
 			</data>
 		</dict>
 		<key>www/views/tmpl/splash/splash.html</key>
