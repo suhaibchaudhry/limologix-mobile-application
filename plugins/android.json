@@ -31,6 +31,9 @@
         },
         "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "com.limologix.driverapp"
+        },
+        "cordova-plugin-media-capture": {
+            "PACKAGE_NAME": "com.limologix.driverapp"
         }
     },
     "dependent_plugins": {
@@ -41,6 +44,12 @@
             "PACKAGE_NAME": "com.limologix.driverapp"
         },
         "cordova-plugin-cocoalumberjack": {
+            "PACKAGE_NAME": "com.limologix.driverapp"
+        },
+        "cordova-plugin-compat": {
+            "PACKAGE_NAME": "com.limologix.driverapp"
+        },
+        "cordova-plugin-file": {
             "PACKAGE_NAME": "com.limologix.driverapp"
         }
     }
