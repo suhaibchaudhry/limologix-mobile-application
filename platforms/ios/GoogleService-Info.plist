@@ -7,21 +7,21 @@
 	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
 	<string>ca-app-pub-3940256099942544/4411468910</string>
 	<key>CLIENT_ID</key>
-	<string>722205982569-55bi4jn9aa33ovgr22elcq2rm9tbm9nv.apps.googleusercontent.com</string>
+	<string>2017982910-pdqea84hppmd2vo4366c0qjql5ii2oi2.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.722205982569-55bi4jn9aa33ovgr22elcq2rm9tbm9nv</string>
+	<string>com.googleusercontent.apps.2017982910-pdqea84hppmd2vo4366c0qjql5ii2oi2</string>
 	<key>API_KEY</key>
-	<string>AIzaSyAf7OSW3qfvZKyLAch41pQ6LVtn9lJr_e4</string>
+	<string>AIzaSyDP7nm6OoRMIsoNDTqT4c5oYnx83vRB2DA</string>
 	<key>GCM_SENDER_ID</key>
-	<string>722205982569</string>
+	<string>2017982910</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.limologix.driverapp</string>
 	<key>PROJECT_ID</key>
-	<string>limo-logix</string>
+	<string>limologix-ios</string>
 	<key>STORAGE_BUCKET</key>
-	<string>limo-logix.appspot.com</string>
+	<string>limologix-ios.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<true/>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -33,8 +33,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true/>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:722205982569:ios:1367298815fed17c</string>
+	<string>1:2017982910:ios:1367298815fed17c</string>
 	<key>DATABASE_URL</key>
-	<string>https://limo-logix.firebaseio.com</string>
+	<string>https://limologix-ios.firebaseio.com</string>
 </dict>
 </plist>
