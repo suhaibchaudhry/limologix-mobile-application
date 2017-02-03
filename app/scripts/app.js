@@ -76,7 +76,7 @@ var app = angular
         version: 'v1',
         server_images_path: "https://api.limologix.com/", //'http://172.16.10.212:9000',
         serverPath: "https://api.limologix.com/api/v1/", //'http://172.16.10.212:9000/api/v1/',
-        FayeServerURL: 'https://api.limologix.com:9393/faye', //'http://172.16.10.212:9292/faye', 
+        FayeServerURL: 'http://api.limologix.com:9292/faye', //'http://172.16.10.212:9292/faye', 
         serviceApis: {
             signin: 'drivers/sign_in',
             forgotPassword: 'drivers/forgot_password',
