@@ -1,27 +1,27 @@
 {
   "project_info": {
-    "project_number": "722205982569",
-    "firebase_url": "https://limo-logix.firebaseio.com",
-    "project_id": "limo-logix",
-    "storage_bucket": "limo-logix.appspot.com"
+    "project_number": "274708961570",
+    "firebase_url": "https://limologix-android.firebaseio.com",
+    "project_id": "limologix-android",
+    "storage_bucket": "limologix-android.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:722205982569:android:1367298815fed17c",
+        "mobilesdk_app_id": "1:274708961570:android:1367298815fed17c",
         "android_client_info": {
           "package_name": "com.limologix.driverapp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "722205982569-6gfvbh1fm0lioc1abhp3rb88u1k8qlan.apps.googleusercontent.com",
+          "client_id": "274708961570-qmktsg8e6407rmqhlgeijiql8see4cgg.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBe2Ovdv7tCGB8mT9H-LtOmCr6eHkSoVrw"
+          "current_key": "AIzaSyB0IpQ9TwGF82TeNlYo-u_MI9FRKOjcdhc"
         }
       ],
       "services": {
